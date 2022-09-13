@@ -1,9 +1,10 @@
 ---
-name: "\U0001F41E BUG"
-about: Create a report to help us improve
+name: "✅ FEATURE"
+about: 이슈를 작성해주세요.
 title: ''
-labels: bug
+labels: ''
 assignees: ''
+
 ---
 
 ## Description

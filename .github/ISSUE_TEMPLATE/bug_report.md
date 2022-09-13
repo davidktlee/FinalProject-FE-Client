@@ -1,5 +1,5 @@
 ---
-name: "\U0001F41E BUG"
+name: Bug report
 about: 버그 관련 이슈를 남겨주세요.
 title: ''
 labels: bug
