@@ -56,9 +56,6 @@ const ProductDetail = () => (
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5 justify-between">
               <div className="flex">
                 <span className="mr-3">도수</span>
-                {/* <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button> */}
               </div>
               <div className="flex ml-6 items-center">
                 <span className="mr-3">Size</span>
