@@ -7,7 +7,7 @@ import Main from '../pages/Main'
 import MyPage from '../pages/MyPage'
 import Order from '../pages/Order'
 import ProductDetail from '../pages/ProductDetail'
-import Signup from '../pages/Signup'
+import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
 
@@ -16,7 +16,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/sign" element={<Signup />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
