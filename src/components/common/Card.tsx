@@ -1,7 +1,15 @@
 import React from 'react'
-
-const Card = () => {
-  return <div>Card</div>
+interface PropTypes {
+  items: string[]
+}
+const Card = ({ items }: PropTypes) => {
+  return (
+    <>
+      {items.map((el: string) => (
+        <div>{el}</div>
+      ))}
+    </>
+  )
 }
 
 export default Card

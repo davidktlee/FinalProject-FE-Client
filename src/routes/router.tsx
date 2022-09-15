@@ -9,6 +9,7 @@ import Order from '../pages/Order'
 import ProductDetail from '../pages/ProductDetail'
 import Signup from '../pages/Signup'
 import NotFound from '../components/NotFound'
+import EventDetail from '../components/EventDetail'
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
