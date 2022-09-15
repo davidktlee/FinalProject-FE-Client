@@ -1,7 +1,13 @@
-import React from 'react'
+import React,{useState} from 'react'
+import Toast from '../components/common/Toast';
 
 const Main = () => {
-  return <div>Main</div>
+
+
+  return (
+    <div>
+    </div>
+  )
 }
 
 export default Main
