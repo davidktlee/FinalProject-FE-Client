@@ -51,57 +51,60 @@ const Main = () => {
         <Toast type="success" message="성공하셨습니다!!!" position="bottom" timer={1500} />
         <Toast type="failed" message="실패하셨습니다!!!" position="top" timer={1500} />
       </div> */}
-      <Banner />
-      <section className="md:flex">
-        {/* 메인의 왼쪽 검색 필터 */}
-        <span className="hidden md:block w-[280px] ">
-          <ControlBar />
-        </span>
-        {/*메인에서 상품 리스트 */}
-        <div className="">
-          <div className="border-b-2 border-solid border-[#A4C8E1] text-white">
-            <button
-              onClick={(e) => {
-                dispatch({ type: 'all' })
-                changeSelects(e)
-              }}
-              style={{ backgroundColor: state.all }}
-              className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
-              value="all"
-            >
-              All
-            </button>
-            <button
-              onClick={(e) => {
-                dispatch({ type: 'oneDay' })
-                changeSelects(e)
-              }}
-              style={{ backgroundColor: state.oneDay }}
-              className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
-              value="oneDay"
-            >
-              One Day
-            </button>
-            <button
-              onClick={(e) => {
-                dispatch({ type: 'monthly' })
-                changeSelects(e)
-              }}
-              style={{ backgroundColor: state.monthly }}
-              className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
-              value="monthly"
-            >
-              Monthly
-            </button>
+
+      <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto">
+        <Banner />
+        <section className="md:flex">
+          {/* 메인의 왼쪽 검색 필터 */}
+          <span className="hidden md:block w-[280px] ">
+            <ControlBar />
+          </span>
+          {/*메인에서 상품 리스트 */}
+          <div className="">
+            <div className="border-b-2 border-solid border-[#A4C8E1] text-white">
+              <button
+                onClick={(e) => {
+                  dispatch({ type: 'all' })
+                  changeSelects(e)
+                }}
+                style={{ backgroundColor: state.all }}
+                className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
+                value="all"
+              >
+                All
+              </button>
+              <button
+                onClick={(e) => {
+                  dispatch({ type: 'oneDay' })
+                  changeSelects(e)
+                }}
+                style={{ backgroundColor: state.oneDay }}
+                className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
+                value="oneDay"
+              >
+                One Day
+              </button>
+              <button
+                onClick={(e) => {
+                  dispatch({ type: 'monthly' })
+                  changeSelects(e)
+                }}
+                style={{ backgroundColor: state.monthly }}
+                className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
+                value="monthly"
+              >
+                Monthly
+              </button>
+            </div>
+            <CardContainer />
+            <CardContainer />
           </div>
-          <CardContainer />
-          <CardContainer />
-        </div>
-      </section>
-      <Event />
-      <Recommend />
-      <Review />
-      <Notice />
+        </section>
+        <Event />
+        <Recommend />
+        <Review />
+        <Notice />
+      </div>
     </div>
   )
 }
