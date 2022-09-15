@@ -15,8 +15,8 @@ interface InitialState {
 }
 const initialState: InitialState = {
   all: '#1B304A',
-  oneDay: '#A4C8E1',
-  monthly: '#A4C8E1'
+  oneDay: '#9AD0F6',
+  monthly: '#9AD0F6'
 }
 interface ActionType {
   type: string
@@ -24,11 +24,11 @@ interface ActionType {
 const reducer = (state: InitialState, action: ActionType) => {
   switch (action.type) {
     case 'all':
-      return { ...state, all: '#1B304A', oneDay: '#A4C8E1', monthly: '#A4C8E1' }
+      return { ...state, all: '#102B91', oneDay: '#9AD0F6', monthly: '#9AD0F6' }
     case 'oneDay':
-      return { ...state, all: '#A4C8E1', oneDay: '#1B304A', monthly: '#A4C8E1' }
+      return { ...state, all: '#9AD0F6', oneDay: '#102B91', monthly: '#9AD0F6' }
     case 'monthly':
-      return { ...state, all: '#A4C8E1', oneDay: '#A4C8E1', monthly: '#1B304A' }
+      return { ...state, all: '#9AD0F6', oneDay: '#9AD0F6', monthly: '#102B91' }
     default:
       return state
   }
@@ -46,19 +46,19 @@ const Main = () => {
     // const {data: productLists} = useQuery(queryKey, queryFn, options)
   }, [selects])
   return (
-    <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto">
-      <div>
+    <div className="flex flex-col items-center sm:w-[355px] md:w-[1280px] mx-auto">
+      {/* <div>
         <Toast type="success" message="성공하셨습니다!!!" position="bottom" timer={1500} />
         <Toast type="failed" message="실패하셨습니다!!!" position="top" timer={1500} />
-      </div>
+      </div> */}
       <Banner />
-      <div className="md:grid md:grid-cols-3 sm:grid sm:grid-cols-1">
+      <section className="md:flex">
         {/* 메인의 왼쪽 검색 필터 */}
-        <span className="hidden md:block w-[280px]">
+        <span className="hidden md:block w-[280px] ">
           <ControlBar />
         </span>
         {/*메인에서 상품 리스트 */}
-        <div className="sm:col-span-3 md:col-span-2">
+        <div className="">
           <div className="border-b-2 border-solid border-[#A4C8E1] text-white">
             <button
               onClick={(e) => {
@@ -66,7 +66,7 @@ const Main = () => {
                 changeSelects(e)
               }}
               style={{ backgroundColor: state.all }}
-              className="w-32 h-6 rounded-t-md border-none bg-cyan-100 mx-2  text-white"
+              className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
               value="all"
             >
               All
@@ -77,7 +77,7 @@ const Main = () => {
                 changeSelects(e)
               }}
               style={{ backgroundColor: state.oneDay }}
-              className="w-32 h-6 rounded-t-md border-none bg-cyan-100 mx-2 text-white"
+              className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
               value="oneDay"
             >
               One Day
@@ -88,15 +88,16 @@ const Main = () => {
                 changeSelects(e)
               }}
               style={{ backgroundColor: state.monthly }}
-              className="w-32 h-6 rounded-t-md border-none bg-cyan-100 mx-2 text-white"
+              className="w-[150px] h-[40px] rounded-t-md border-none  mr-[10px]  text-white text-[18px]"
               value="monthly"
             >
               Monthly
             </button>
           </div>
           <CardContainer />
+          <CardContainer />
         </div>
-      </div>
+      </section>
       <Event />
       <Recommend />
       <Review />
