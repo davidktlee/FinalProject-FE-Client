@@ -4,16 +4,11 @@ import { useQuery, useQueryClient } from 'react-query';
 import { axiosInstance, getJWTToken } from '../../axiosinstance';
 import { clearStoredUser, getStoredUser, setStoredUser } from '../../local-storage/userStorage';
 import { queryKeys } from '../../react-query/queryKeys';
+import { UserDataType } from '../types/userTypes';
 
 
 
-export interface UserDataType {
-  email:string;
-  name: string;
-  address: string;
-  phone: string;
-  token: string;
-}
+
 
 
 //유저 정보를 보내서 토큰을 추출한 뒤에 보내고 유저 정보를 가져오기 <GET 요청>

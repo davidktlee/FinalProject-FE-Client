@@ -102,6 +102,7 @@ const Main = () => {
       <Review />
       <Notice />
     </div>
+    </div>
   )
 }
 
