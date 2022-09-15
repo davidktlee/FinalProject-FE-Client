@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import Event from '../components/main/Event'
 import Notice from '../components/main/Notice'
 import Recommend from '../components/main/Recommend'
@@ -6,7 +6,7 @@ import Review from '../components/Review'
 import Banner from './../components/Banner'
 import ControlBar from './../components/ControlBar'
 import CardContainer from './../components/main/CardContainer'
-import OneDay from './../components/favorite/OneDay'
+import Toast from '../components/common/Toast'
 
 interface InitialState {
   all: string
@@ -47,6 +47,10 @@ const Main = () => {
   }, [selects])
   return (
     <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto">
+      <div>
+        <Toast type="success" message="성공하셨습니다!!!" position="bottom" timer={1500} />
+        <Toast type="failed" message="실패하셨습니다!!!" position="top" timer={1500} />
+      </div>
       <Banner />
       <div className="md:grid md:grid-cols-3 sm:grid sm:grid-cols-1">
         {/* 메인의 왼쪽 검색 필터 */}
