@@ -1,21 +1,25 @@
 import React from 'react';
 import { QueryClient } from 'react-query';
+import useToast from '../common/hooks/useToast';
 
 
 
 // todo : 테일윈드 toast 컴포넌트 만들기
-
+// type={type} message={message} position={position} timer={timer}
 const queryErrorHandler = (error: unknown) => {
 
   const id = 'react-query-error';
   const title = error instanceof Error ? error.toString().replace(/^Error:\s*/,'') : '서버와의 연결에 문제가 발생하였습니다.'
-
-  // toast 를 custom hook 으로 만들어서 사용해야함.
-
+  useToast({
+    type: 'failed',
+    message: title,
+    position: 'bottom',
+    timer: 2000
+  })
 }
 
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       onError: queryErrorHandler,
