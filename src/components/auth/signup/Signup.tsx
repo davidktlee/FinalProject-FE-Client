@@ -86,19 +86,19 @@ const Signup = () => {
     </div>
     {/* 컴포넌트로 빼기 */}
     <div className='flex flex-col'>
-      <label><span className="font-semibold">생년월일</span></label>
+      <label><span className="block py-1">생년월일</span></label>
       <div className='flex items-center gap-x-4'>
         <label>
         <input type="number" className='h-10 border border-solid border-gray-200 rounded-md' min={1900} /> 
-        <span className='font-semibold ml-2'>년</span>
+        <span className=' ml-2'>년</span>
         </label>
         <label>
         <input type="number" className='h-10 border border-solid border-gray-200 rounded-md' min={1} max={13} /> 
-        <span className='font-semibold ml-2'>월</span>
+        <span className=' ml-2'>월</span>
         </label>
         <label>
         <input type="number" className='h-10 border border-solid border-gray-200 rounded-md' min={1} max={31} /> 
-        <span className='font-semibold ml-2'>일</span>
+        <span className=' ml-2'>일</span>
         </label>
       </div>
     </div>
