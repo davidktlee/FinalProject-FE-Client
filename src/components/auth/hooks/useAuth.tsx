@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/hooks/useToast'
-import { UserDataType, useUser } from './useUser'
+import { RegisterType, UserDataType } from '../types/userTypes'
+import {  useUser } from './useUser'
 
 enum RequestType {
   signUp = 'signup',
@@ -12,14 +13,7 @@ type UserResponse = { user: UserDataType }
 type ErrorResponse = { message: string }
 type AuthResponseType = UserResponse | ErrorResponse
 
-export interface RegisterType {
-  name: string
-  address: string
-  phone: string
-  email: string
-  birthday: string
-  password: string
-}
+
 export const useAuth = () => {
   const { clearUser, updateUser } = useUser()
   
