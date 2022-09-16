@@ -3,11 +3,11 @@ import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
   return (
-    <nav className="fixed w-full flex flex-col">
+    <nav className="fixed w-full flex flex-col bg-white">
       <div className='flex justify-center items-center h-10 bg-[#a4c8e1] text-white w-full mb-4'>
         <p>원데이, 먼슬리 등 상품 부가세 포함 5,000엔 이상 구입 <span className='text-lg'>배송비 무료</span></p>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 ">
         <div className='flex-1 flex items-center justify-between'>
         <div>
           <span className="text-2xl font-bold p-4 pr-8">LENSSIS</span>
