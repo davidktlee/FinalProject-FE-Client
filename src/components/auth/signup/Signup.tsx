@@ -77,8 +77,13 @@ const Signup = () => {
 
     <Input type="text" type2='text' double={true} label="주소" isRequired={false} flexDirection='vertical' placeholder='기본 주소' placeholder2='상세 주소' />
     <Input type='number' double={false} label="전화번호" isRequired={false} flexDirection="horizontal" placeholder='예시:1111222223333' />
-    <Input type="email" double={false} label="e-mail" isRequired={false} flexDirection="horizontal" placeholder='info@lenssis.jp' />
-
+    <div className='relative pb-6'>
+    <Input type="email" double={false} label="e-mail" isRequired={true} flexDirection="horizontal" placeholder='info@lenssis.jp' />
+    <div className='absolute flex items-center left-0 bottom-4 gap-1'>
+      <svg className='mx-auto' width={20} height={20} xmlns="http://www.w3.org/2000/svg"><image href="/assets/smallInfo.svg" /></svg>
+      <span className='text-gray-400 text-xs'>메일 주소가 로그인 아이디입니다.</span>
+      </div>
+    </div>
     {/* 컴포넌트로 빼기 */}
     <div className='flex flex-col'>
       <label><span className="font-semibold">생년월일</span></label>
@@ -100,12 +105,12 @@ const Signup = () => {
 
 
    <Input type="text" type2="text" double={true} label="비밀번호" isRequired={true} flexDirection="vertical" placeholder='반각 영숫자 기호 8, 32문자' placeholder2='확인을 위해 다시 한번 입력하세요' />
-   <Input type="text" double={false} label="소개자 코드" isRequired={false} flexDirection="horizontal" placeholder='소개자 코드 ' />
+   
     {pathname === '/signup' && <Recaptcha />}
     </div>
     <div className='flex w-full items-center mt-8 h-[45px] gap-4'>
-      <Link to="/" className='flex-1 h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center'><span className='text-[14px] font-bold'>취소</span></Link>
-      <button className='flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer'>회원 가입</button>
+      <Link to="/" className='rounded-md flex-1 h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center'><span className='text-[14px] font-bold'>취소</span></Link>
+      <button className='rounded-md flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer'>회원 가입</button>
       
     </div>
     </div>

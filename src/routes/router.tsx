@@ -12,7 +12,7 @@ import EventDetail from '../components/EventDetail'
 import AllProductList from '../components/main/productList/AllProductList'
 import OneDayProductList from '../components/main/productList/OneDayProductList'
 import MonthlyProductList from '../components/main/productList/MonthlyProductList'
-import Header from '../components/common/Header'
+import Header from '../components/common/header/Header'
 
 const Router = () => {
   return (
