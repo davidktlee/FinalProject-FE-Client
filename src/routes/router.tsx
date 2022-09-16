@@ -10,12 +10,19 @@ import ProductDetail from '../pages/ProductDetail'
 import Signup from '../pages/Signup'
 import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
+import AllProductList from '../components/main/productList/AllProductList'
+import OneDayProductList from '../components/main/productList/OneDayProductList'
+import MonthlyProductList from '../components/main/productList/MonthlyProductList'
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main />}>
+          <Route path="all" element={<AllProductList />} />
+          <Route path="oneday" element={<OneDayProductList />} />
+          <Route path="monthly" element={<MonthlyProductList />} />
+        </Route>
         <Route path="/sign" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<ProductDetail />} />
