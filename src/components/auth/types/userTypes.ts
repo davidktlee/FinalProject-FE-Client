@@ -1,6 +1,7 @@
 export interface RegisterType {
   name: string
   readname: string
+  postCode: number;
   postNumber:string;
   address: string
   phone: string
