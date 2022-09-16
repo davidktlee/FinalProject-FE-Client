@@ -7,6 +7,7 @@ import Banner from './../components/Banner'
 import ControlBar from './../components/ControlBar'
 import Toast from '../components/common/Toast'
 import { NavLink, Outlet } from 'react-router-dom'
+import CardContainer from '../components/main/CardContainer'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
@@ -26,21 +27,21 @@ const Main = () => {
 
       <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto">
         <Banner />
-        <section className="md:flex">
+        <section className="md:flex ">
           {/* 메인의 왼쪽 검색 필터 */}
           <span className="hidden md:block w-[280px]">
             <ControlBar />
           </span>
           {/*메인에서 상품 리스트 */}
           <div className="border-2 border-solid border-[#9AD0F6] rounded-xl">
-            <div className="md:w-[820px] border-b-2 border-solid flex justify-center items-end">
+            <div className="md:w-[880px] border-b-2 border-solid flex justify-center items-end">
               <NavLink
                 style={({ isActive }) => ({
                   borderBottom: isActive ? '3px solid #102B91' : 'none',
                   fontWeight: isActive ? '800' : 'normal'
                 })}
                 className="w-[120px] md:w-[220px] h-[44px] rounded-t-md border-none box-border text-black text-[20px] no-underline text-center flex justify-center items-center"
-                to="all"
+                to="/"
                 state="all"
               >
                 All
@@ -68,9 +69,12 @@ const Main = () => {
                 Monthly
               </NavLink>
             </div>
-            <Outlet />
+            <div className="md:flex md:justify-center">
+              <Outlet />
+            </div>
           </div>
         </section>
+        <CardContainer />
         <Event />
         <Recommend />
         <Review />

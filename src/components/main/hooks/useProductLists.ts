@@ -34,7 +34,6 @@ const getProductsList = async (selectOption: string) => {
     return data
   } catch (err) {
     // useQuery 에러 처리로?
-    return []
   }
 }
 export const useGetProductsList = (selectOption: string): ResponseType[] => {

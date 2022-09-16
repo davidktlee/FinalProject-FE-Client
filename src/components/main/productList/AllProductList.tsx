@@ -6,12 +6,12 @@ import CardContainer from './../CardContainer'
 function AllProductList() {
   const { state } = useLocation()
 
-  useGetProductsList(state as string)
+  // useGetProductsList(state as string)
 
   return (
-    <div>
+    <div className="">
       <CardContainer />
-      카드 컨테이너
+      <button>More</button>
     </div>
   )
 }
