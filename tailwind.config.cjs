@@ -17,6 +17,14 @@ module.exports = {
         toast: 'toast .6s ease-in-out',
         drop: 'drop .6s ease-in-out'
       }
+    },
+    screens: {
+      xs: '440px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px'
     }
   },
   plugins: []
