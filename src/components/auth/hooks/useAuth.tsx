@@ -1,75 +1,56 @@
 import axios, { AxiosResponse } from 'axios'
 import { axiosInstance } from '../../axiosinstance'
-
-
+import useToast from '../../common/hooks/useToast'
+import { RegisterType, UserDataType } from '../types/userTypes'
+import {  useUser } from './useUser'
 
 enum RequestType {
   signUp = 'signup',
   signIn = 'signIn'
 }
 
-type UserResponse = { user: Record<string, string> }
+type UserResponse = { user: UserDataType }
 type ErrorResponse = { message: string }
 type AuthResponseType = UserResponse | ErrorResponse
-interface userDataType {
 
-}
-interface RegisterType {
-  name: string;
-  address: string;
-  basicAddress: string;
-  detailAddress: string;
-  phone: string;
-  email:string;
-  birthday:string;
-  password:string;
-  
-}
+
 export const useAuth = () => {
-  const authServerCall = async (urlEndpoint: RequestType, userData:Partial<RegisterType>): Promise<void> => {
+  const { clearUser, updateUser } = useUser()
+  
+  const authServerCall = async (urlEndpoint: RequestType, userData: Partial<RegisterType>): Promise<void> => {
     try {
-      
-      if(urlEndpoint === RequestType.signIn){
-        const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
-          url: urlEndpoint,
-          method: 'POST',
-          data: userData,
-          headers: { ContentType: 'application/json' }
+      const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
+        url: urlEndpoint,
+        method: 'POST',
+        data: userData,
+        headers: { ContentType: 'application/json' }
+      })
+      if (status === 400) {
+        const title = 'message' in data ? data.message : '인증되지 않았습니다.'
+        useToast({
+          type:'failed',
+          message: title,
+          position: 'bottom',
+          timer: 1500
         })
-        if (status === 400) {
-          const title = 'message' in data ? data.message : '인증되지 않았습니다.'
-          // title 사용 로직 작성
-          return
-        }
-        if ('user' in data && 'token' in data.user) {
-          // userdata 사용 로직 작성
-        }
+        return
       }
-      if(urlEndpoint === RequestType.signUp){
-        const {data,status}: AxiosResponse<AuthResponseType> = await axiosInstance({
-          url: urlEndpoint,
-          method: 'POST',
-          data: userData,
-          headers: {
-            ContentType: 'application/json'
-          }
-        })
-        if (status === 400) {
-          const title = 'message' in data ? data.message : '인증되지 않았습니다.'
-          // title 사용 로직 작성
-          return
-        }
-        if ('user' in data && 'token' in data.user) {
-          // userdata 사용 로직 작성
-        }
+      if ('user' in data && 'token' in data.user) {
+        // userdata 사용 로직 작성
+        updateUser(data.user)
       }
-      
     } catch (errorResponse) {
       const title =
-        axios.isAxiosError(errorResponse) && errorResponse?.response?.data
-          ? errorResponse.response.data
+        axios.isAxiosError(errorResponse) && errorResponse?.message
+          ? errorResponse.message
           : '서버에서 에러가 발생했습니다.'
-      // title 사용 로직 작성
+          useToast({
+            type:'failed',
+            message: title,
+            position: 'bottom',
+            timer: 1500
+          })
+      return
     }
   }
   const signin = async (email: string, password: string) => {
@@ -77,14 +58,16 @@ export const useAuth = () => {
       email,
       password
     }
-    authServerCall(RequestType.signIn, userObj )
+    authServerCall(RequestType.signIn, userObj)
   }
 
   const signup = async (newUser: RegisterType) => {
-    authServerCall(RequestType.signUp,newUser)
+    authServerCall(RequestType.signUp, newUser)
   }
 
-  const signout = () => {}
+  const signout = () => {
+    clearUser()
+  }
 
   return {
     signin,
