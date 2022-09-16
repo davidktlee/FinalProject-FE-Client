@@ -1,19 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  corePlugins: {
-    preflight: false
-  },
   theme: {
     extend: {
       keyframes: {
         toast: {
-          '0%': {transform: 'translateY(100%)'},
-          '100%':{transform: 'translateY(0%)'}
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0%)' }
         },
         drop: {
-          '0%': {transform: 'translateY(-100%)'},
-          '100%':{transform: 'translateY(0%)'}
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(0%)' }
         }
       },
       animation: {

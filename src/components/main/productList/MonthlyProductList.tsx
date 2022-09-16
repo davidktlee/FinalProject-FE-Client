@@ -6,7 +6,7 @@ import { useGetProductsList } from '../hooks/useProductLists'
 function MonthlyProductList() {
   const { state } = useLocation()
 
-  useGetProductsList(state as string)
+  // useGetProductsList(state as string)
 
   return (
     <div>
