@@ -55,8 +55,8 @@ const Signup = () => {
     open({onComplete: handleComplete})
   }
   return (
-    <div className='w-full h-[1846px] bg-[#F4F6F8] text-base '>
-      <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[160px]'>회원가입</h3>
+    <div className='w-full h-[1446px] bg-[#F4F6F8] text-base '>
+      <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[140px]'>회원가입</h3>
     <div className=' absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-lg p-10'>
     
     <div className=''>

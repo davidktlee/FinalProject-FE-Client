@@ -13,6 +13,7 @@ import AllProductList from '../components/main/productList/AllProductList'
 import OneDayProductList from '../components/main/productList/OneDayProductList'
 import MonthlyProductList from '../components/main/productList/MonthlyProductList'
 import Header from '../components/common/header/Header'
+import Footer from '../components/common/footer/Footer'
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
