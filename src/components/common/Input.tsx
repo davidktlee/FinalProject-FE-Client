@@ -15,7 +15,7 @@ interface InputProps {
 const Input = ({label,placeholder,type,double, flexDirection,type2,placeholder2,isRequired,readonly}:InputProps) => {
   if(double){
     return (
-      <div className='flex flex-col justify-center my-4 w-[660px] h-fit gap-2'>
+      <div className='flex flex-col justify-center my-4 w-full h-fit gap-2'>
        <label><span className='text-rose-400'>{isRequired && '*'}</span><span className='font-semibold' >{label}</span></label>
        <div className={`${flexDirection === 'horizontal' ? 'flex items-center justify-start gap-x-4' : 'flex flex-col justify-center gap-y-2'}`}>
        <input className='grow h-10 border border-solid border-gray-200 rounded-md' type={type} placeholder={placeholder} disabled={readonly} />
