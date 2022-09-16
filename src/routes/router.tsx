@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Cart from '../pages/Cart'
 import Favorite from '../pages/Favorite'
-import Login from '../pages/Login'
+import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
 import MyPage from '../pages/MyPage'
 import Order from '../pages/Order'
@@ -26,7 +26,7 @@ const Router = () => {
           <Route path="/monthly" element={<MonthlyProductList />} />
         </Route>
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<SigninPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />

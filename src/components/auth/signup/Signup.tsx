@@ -56,13 +56,13 @@ const Signup = () => {
   }
   return (
     <div className='w-full h-[1446px] bg-[#F4F6F8] text-base '>
-      <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[140px]'>회원가입</h3>
+      <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[110]'>회원가입</h3>
     <div className=' absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-lg p-10'>
     
     <div className=''>
     <h4 className='font-bold'>고객정보</h4>
-    <Input type="text" type2='text' double={true} label="이름" isRequired={true} flexDirection="horizontal" placeholder='성' placeholder2='이름' />
-    <Input type="text" type2='text' double={true} label="이름 읽는 법" isRequired={true} flexDirection="horizontal" placeholder='세이' placeholder2='메이' />
+    <Input type="text" type2='text' double={true} label="이름" isRequired={true} flexDirection="horizontal" placeholder='성' placeholder2='이름' inputWidth='[400px]' inputHeight='10' />
+    <Input type="text" type2='text' double={true} label="이름 읽는 법" isRequired={true} flexDirection="horizontal" placeholder='세이' placeholder2='메이' inputWidth='[400px]' inputHeight='10'/>
     
     {/* 컴포넌트로 빼기 */}
     <div className='flex flex-col gap-4 w-full'>
@@ -75,10 +75,10 @@ const Signup = () => {
     </div>
     </div>
 
-    <Input type="text" type2='text' double={true} label="주소" isRequired={false} flexDirection='vertical' placeholder='기본 주소' placeholder2='상세 주소' />
-    <Input type='number' double={false} label="전화번호" isRequired={false} flexDirection="horizontal" placeholder='예시:1111222223333' />
+    <Input type="text" type2='text' double={true} label="주소" isRequired={false} flexDirection='vertical' placeholder='기본 주소' placeholder2='상세 주소' inputWidth='[400px]' inputHeight='10'/>
+    <Input type='number' double={false} label="전화번호" isRequired={false} flexDirection="horizontal" placeholder='예시:1111222223333' inputWidth='[400px]' inputHeight='10'/>
     <div className='relative pb-6'>
-    <Input type="email" double={false} label="e-mail" isRequired={true} flexDirection="horizontal" placeholder='info@lenssis.jp' />
+    <Input type="email" double={false} label="e-mail" isRequired={true} flexDirection="horizontal" placeholder='info@lenssis.jp' inputWidth='[400px]' inputHeight='10'/>
     <div className='absolute flex items-center left-0 bottom-4 gap-1'>
       <svg className='mx-auto' width={20} height={20} xmlns="http://www.w3.org/2000/svg"><image href="/assets/smallInfo.svg" /></svg>
       <span className='text-gray-400 text-xs'>메일 주소가 로그인 아이디입니다.</span>
@@ -104,14 +104,13 @@ const Signup = () => {
     </div>
 
 
-   <Input type="text" type2="text" double={true} label="비밀번호" isRequired={true} flexDirection="vertical" placeholder='반각 영숫자 기호 8, 32문자' placeholder2='확인을 위해 다시 한번 입력하세요' />
+   <Input type="text" type2="text" double={true} label="비밀번호" isRequired={true} flexDirection="vertical" placeholder='반각 영숫자 기호 8, 32문자' placeholder2='확인을 위해 다시 한번 입력하세요' inputWidth='[400px]' inputHeight='10' />
    
     {pathname === '/signup' && <Recaptcha />}
     </div>
     <div className='flex w-full items-center mt-8 h-[45px] gap-4'>
       <Link to="/" className='rounded-md flex-1 h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center'><span className='text-[14px] font-bold'>취소</span></Link>
       <button className='rounded-md flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer'>회원 가입</button>
-      
     </div>
     </div>
     </div>
