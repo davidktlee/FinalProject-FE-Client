@@ -55,20 +55,20 @@ const Signup = () => {
     open({onComplete: handleComplete})
   }
   return (
-    <div className='w-full h-[1846px] bg-[#F4F6F8] text-base'>
+    <div className='w-full h-[1846px] bg-[#F4F6F8] text-base '>
       <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[160px]'>회원가입</h3>
-    <div className=' absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-md border border-solid border-[#c2c2c2] p-2'>
+    <div className=' absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-lg p-10'>
     
-    <div className='pl-[2%]'>
+    <div className=''>
     <h4 className='font-bold'>고객정보</h4>
     <Input type="text" type2='text' double={true} label="이름" isRequired={true} flexDirection="horizontal" placeholder='성' placeholder2='이름' />
     <Input type="text" type2='text' double={true} label="이름 읽는 법" isRequired={true} flexDirection="horizontal" placeholder='세이' placeholder2='메이' />
     
     {/* 컴포넌트로 빼기 */}
     <div className='flex flex-col gap-4 w-full'>
-      <label className='font-semibold'>우편번호</label>
+      <label className=''>우편번호</label>
       <div className='flex justify-start items-center gap-2'>
-      <input type="text" className='grow h-10 border border-solid border-gray-200 rounded-md' />
+      <input type="text" className='grow h-10 border border-solid border-gray-200 rounded-md max-w-[400px]' />
       <div className='grow'>
     <button className='w-40 h-11 bg-[#3e6d87] rounded-md text-white font-bold border-none cursor-pointer' onClick={addressPopupHandler}>주소 검색</button>
     </div>
