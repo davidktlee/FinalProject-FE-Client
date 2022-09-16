@@ -16,7 +16,7 @@ type AuthResponseType = UserResponse | ErrorResponse
 
 export const useAuth = () => {
   const { clearUser, updateUser } = useUser()
-  
+
   const authServerCall = async (urlEndpoint: RequestType, userData: Partial<RegisterType>): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
@@ -28,7 +28,7 @@ export const useAuth = () => {
       if (status === 400) {
         const title = 'message' in data ? data.message : '인증되지 않았습니다.'
         useToast({
-          type:'failed',
+          type: 'failed',
           message: title,
           position: 'bottom',
           timer: 1500
@@ -44,12 +44,12 @@ export const useAuth = () => {
         axios.isAxiosError(errorResponse) && errorResponse?.message
           ? errorResponse.message
           : '서버에서 에러가 발생했습니다.'
-          useToast({
-            type:'failed',
-            message: title,
-            position: 'bottom',
-            timer: 1500
-          })
+      useToast({
+        type: 'failed',
+        message: title,
+        position: 'bottom',
+        timer: 1500
+      })
       return
     }
   }
