@@ -10,10 +10,12 @@ import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
+import Header from '../components/common/Header'
 
 const Router = () => {
   return (
     <BrowserRouter>
+    <Header />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/signup" element={<SignupPage />} />
