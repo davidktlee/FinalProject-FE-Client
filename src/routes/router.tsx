@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Cart from '../pages/Cart'
 import Favorite from '../pages/Favorite'
@@ -10,14 +9,21 @@ import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
+import AllProductList from '../components/main/productList/AllProductList'
+import OneDayProductList from '../components/main/productList/OneDayProductList'
+import MonthlyProductList from '../components/main/productList/MonthlyProductList'
 import Header from '../components/common/Header'
 
 const Router = () => {
   return (
     <BrowserRouter>
-    <Header />
+      <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main />}>
+          <Route index element={<AllProductList />} />
+          <Route path="/oneday" element={<OneDayProductList />} />
+          <Route path="/monthly" element={<MonthlyProductList />} />
+        </Route>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<ProductDetail />} />
