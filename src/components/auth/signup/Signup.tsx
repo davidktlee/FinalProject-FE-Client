@@ -103,9 +103,9 @@ const Signup = () => {
    <Input type="text" double={false} label="소개자 코드" isRequired={false} flexDirection="horizontal" placeholder='소개자 코드 ' />
     {pathname === '/signup' && <Recaptcha />}
     </div>
-    <div className='flex w-full items-center mt-8 h-[45px] space-x-4'>
-      <Link to="/" className='grow h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center no-underline'><span className='text-[14px] font-bold'>취소</span></Link>
-      <button className='grow h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer'>회원 가입</button>
+    <div className='flex w-full items-center mt-8 h-[45px] gap-4'>
+      <Link to="/" className='flex-1 h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center'><span className='text-[14px] font-bold'>취소</span></Link>
+      <button className='flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer'>회원 가입</button>
       
     </div>
     </div>
