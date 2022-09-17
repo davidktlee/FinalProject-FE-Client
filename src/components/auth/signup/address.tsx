@@ -18,6 +18,7 @@ const address = () => {
         fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
       }
       setPostCode(data.zonecode)
+      setAddress(fullAddress);
     }
 
   return (
