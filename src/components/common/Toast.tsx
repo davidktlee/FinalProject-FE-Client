@@ -23,7 +23,7 @@ const Toast = ({ type, message, position, timer }: ToastProps) => {
 
   return (
     <div
-      className={`overflow-hidden h-24 w-[600px] absolute bottom-0 left-1/2 -translate-x-1/2
+      className={`overflow-hidden h-24 w-[600px] absolute bottom-0 left-1/2 -translate-x-1/2 z-[9999px]
     ${position === 'bottom' && 'bottom-4'}
     ${position === 'top' && 'top-4'}
     `}
