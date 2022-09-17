@@ -19,17 +19,16 @@ const Main = () => {
     // const {data: productLists} = useQuery([queryKey,selects], queryFn, options)
   }, [selects])
   return (
-    <div className="flex flex-col items-center sm:w-[355px] md:w-[1280px] mx-auto">
+    <div className="flex flex-col items-center sm:w-[355px] md:w-[1280px] mx-auto ">
       {/* <div>
         <Toast type="success" message="성공하셨습니다!!!" position="bottom" timer={1500} />
         <Toast type="failed" message="실패하셨습니다!!!" position="top" timer={1500} />
       </div> */}
 
-      <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto">
-        <Banner />
+      <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto my-[80px] ">
         <section className="md:flex ">
           {/* 메인의 왼쪽 검색 필터 */}
-          <span className="hidden md:block w-[280px]">
+          <span className="hidden xl:block w-[280px]">
             <ControlBar />
           </span>
           {/*메인에서 상품 리스트 */}
@@ -74,6 +73,7 @@ const Main = () => {
             </div>
           </div>
         </section>
+        <Banner />
         <CardContainer />
         <Event />
         <Recommend />
