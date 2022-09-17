@@ -11,8 +11,8 @@ const Signin = () => {
         </h3>
         {/*label,placeholder,type,double, flexDirection,type2,placeholder2,isRequired,readonly */}
         <div className='px-6 w-full'>
-        <Input label="Email" placeholder='Email' type="text" double={false} flexDirection="horizontal" isRequired={false}  inputWidth={'full'} inputHeight="12"  labelColor='gray-400' labelBold='bold'/>
-        <Input label="Password" placeholder='Password' type="password" double={false} flexDirection="horizontal" isRequired={false} inputWidth={'full'}  inputHeight="12" labelColor='gray-400' labelBold='bold' />
+        <Input name="email" value="" onChange={() => {}} label="Email" placeholder='Email' type="text" double={false} flexDirection="horizontal" isRequired={false}  inputWidth={'full'} inputHeight="12"  labelColor='gray-400' labelBold='bold'/>
+        <Input name="password" value="" onChange={() => {}} label="Password" placeholder='Password' type="password" double={false} flexDirection="horizontal" isRequired={false} inputWidth={'full'}  inputHeight="12" labelColor='gray-400' labelBold='bold' />
         <button className='bg-[#A4CBE1] w-full h-12 rounded-lg mt-7'><span className='text-white font-bold'>Sign in</span></button>
         </div>
         
