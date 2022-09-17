@@ -56,7 +56,7 @@ const Signup = () => {
   }
   return (
     <div className='w-full h-[1446px] bg-[#F4F6F8] text-base '>
-      <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[110]'>회원가입</h3>
+      <h3 className='text-[#1B304A] font-bold text-[22px] text-center w-full pt-[160px]'>회원가입</h3>
     <div className=' absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-lg p-10'>
     
     <div className=''>
@@ -70,7 +70,7 @@ const Signup = () => {
       <div className='flex justify-start items-center gap-2'>
       <input type="text" className='grow h-10 border border-solid border-gray-200 rounded-md max-w-[400px]' />
       <div className='grow'>
-    <button className='w-40 h-11 bg-[#3e6d87] rounded-md text-white font-bold border-none cursor-pointer' onClick={addressPopupHandler}>주소 검색</button>
+    <button className='w-40 h-11 bg-[#3e6d87] rounded-md text-white font-bold border-none cursor-pointer' onClick={addressPopupHandler}>우편 번호 검색</button>
     </div>
     </div>
     </div>
@@ -88,16 +88,16 @@ const Signup = () => {
     <div className='flex flex-col'>
       <label><span className="block py-1">생년월일</span></label>
       <div className='flex items-center gap-x-4'>
-        <label>
-        <input type="number" className='h-10 border border-solid border-gray-200 rounded-md' min={1900} /> 
+        <label className=''>
+        <input type="number" className='h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]' min={1900} /> 
         <span className=' ml-2'>년</span>
         </label>
-        <label>
-        <input type="number" className='h-10 border border-solid border-gray-200 rounded-md' min={1} max={13} /> 
+        <label className=''>
+        <input type="number" className='h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]' min={1} max={13} /> 
         <span className=' ml-2'>월</span>
         </label>
-        <label>
-        <input type="number" className='h-10 border border-solid border-gray-200 rounded-md' min={1} max={31} /> 
+        <label className=''>
+        <input type="number" className='h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]' min={1} max={31} /> 
         <span className=' ml-2'>일</span>
         </label>
       </div>

@@ -5,7 +5,7 @@ import Logo from '../header/Logo'
 const Footer = () => {
   return <div className='bg-[#F4F6F8] w-full z-50 relative flex flex-col items-center gap-4 text-[#1b304a] pt-8 border-t-2 border-solid border-gray-200'>
     <ul className='w-full mx-auto flex flex-col justify-center items-center gap-y-1'>
-      <li className='font-bold pb-2 text-2xl'>LENSSIS</li>
+      <li className='font-[900] pb-2 text-2xl tracking-tight'>LENSSIS</li>
       <li>주식회사 <span className='font-bold'>LENSSIS</span></li>
       <li>전화번호 <span className='font-bold'>050-3558-4887</span></li>
       <li>문의시간 <span className='font-bold'>평일 10:00 17:30</span></li>
