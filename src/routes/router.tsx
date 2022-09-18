@@ -12,10 +12,8 @@ import EventDetail from '../components/EventDetail'
 import AllProductList from '../components/main/productList/AllProductList'
 import OneDayProductList from '../components/main/productList/OneDayProductList'
 import MonthlyProductList from '../components/main/productList/MonthlyProductList'
-import Header from '../components/common/header/Header'
-import Footer from '../components/common/footer/Footer'
-import ProductInfo from '../components/ProductDetail/ProductInfo'
-import ProductInquiry from '../components/ProductDetail/ProductInquiry'
+import Header from '../components/header/Header'
+import Footer from '../components/footer/Footer'
 
 const Router = () => {
   return (
@@ -30,9 +28,6 @@ const Router = () => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        {/* <Route path="/product/:id/info" element={<ProductInfo />} />
-          <Route path="/product/:id/inqury" element={<ProductInquiry />} />
-        </Route> */}
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
