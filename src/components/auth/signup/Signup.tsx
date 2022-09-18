@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState,useEffect } from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode'
 import { Link, useLocation } from 'react-router-dom'
-import useToast from '../../common/hooks/useToast'
+import useToast from '../../common/toast/hooks/useToast'
 import Input from '../../common/Input'
-import Toast from '../../common/Toast'
+import Toast from '../../common/toast/ToastItem'
 import useForm from '../hooks/useForm'
 import {
   VALIDATOR_EMAIL,
@@ -17,8 +17,9 @@ import {
 } from '../hooks/validator'
 import { RegisterType } from '../types/userTypes'
 import Birth from './birth/Birth'
-import Post from './post/Post'
+import Post from '../../common/post/Post'
 import Recaptcha from './Recaptcha'
+import { getRandomId } from '../../common/util/randomId'
 /** 필수 입력정보
  * 이름 / 우편번호 / 기본 주소 / 상세 주소 / 전화번호 / 이메일 주소 / 생일 / 비밀번호 / 자동 등록 방지
  *  */
@@ -44,6 +45,7 @@ export type SignupRecordType = Record<keyof SignupFormType, string>
 const Signup = () => {
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
   const { pathname } = useLocation()
+  const { fireToast } = useToast()
   const [formValue, setFormValue] = useState<SignupRecordType>({
     lastname: '',
     firstname: '',
@@ -97,9 +99,14 @@ const Signup = () => {
   }
   
   const submitFormHandler = () => {
-    if(formValue.password !== formValue.passwordConfirm) {
-      return;
-    }
+   
+    // fireToast({
+    //   id:getRandomId(),
+    //   message:'토스트 테스트 중~',
+    //   position: 'top',
+    //   timer: 2500,
+    //   type: 'success'
+    // })
     const formData = {
       name: `${formValue.lastname}${formValue.firstname}` ,
       readname: `${formValue.lastReadname}${formValue.firstReadname}`,
@@ -108,9 +115,11 @@ const Signup = () => {
       phone: formValue.phone,
       email: formValue.email,
       birthday: `${formValue.birthYear}${formValue.birthMonth}${formValue.birthDay}`,
-      password: formValue.password
+      password: formValue.password,
+      passwordConfirm:formValue.passwordConfirm
     }
-    console.log(formData)
+    
+
   }
   const totalvalidate = () => {
     
