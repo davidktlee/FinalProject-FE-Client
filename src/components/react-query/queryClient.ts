@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryClient } from 'react-query';
-import useToast from '../common/hooks/useToast';
+import useToast from '../common/toast/hooks/useToast';
+import { getRandomId } from '../common/util/randomId';
 
 
 
@@ -8,14 +9,9 @@ import useToast from '../common/hooks/useToast';
 // type={type} message={message} position={position} timer={timer}
 const queryErrorHandler = (error: unknown) => {
 
-  const id = 'react-query-error';
+  // const id = 'react-query-error';
   const title = error instanceof Error ? error.toString().replace(/^Error:\s*/,'') : '서버와의 연결에 문제가 발생하였습니다.'
-  useToast({
-    type: 'failed',
-    message: title,
-    position: 'bottom',
-    timer: 2000
-  })
+ // title을 사용하는 토스트 작성 필요
 }
 
 

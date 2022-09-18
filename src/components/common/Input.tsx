@@ -1,6 +1,6 @@
 import { ChangeEvent,useReducer,useEffect,useState } from 'react';
 import { validate, ValidatorType } from '../auth/hooks/validator';
-import FormErrorMessage from '../auth/shared/FormErrorMessage';
+import FormErrorMessage from './shared/FormErrorMessage';
 
 interface InputProps {
   label:string
@@ -53,8 +53,8 @@ const Input = ({label,placeholder,type,double, flexDirection,type2,placeholder2,
        <input name={name} onChange={onChange} value={value} onBlur={onBlur} className={`grow h-${inputHeight} border border-solid border-gray-200 rounded-md max-w-${inputWidth} pl-2 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60`} type={type} placeholder={placeholder} readOnly={readonly} />
        <input name={name2} onChange={onChange}value={value2} onBlur={onBlur} className={`grow h-${inputHeight} border border-solid border-gray-200 rounded-md max-w-${inputWidth} pl-2 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60`} type={type2} placeholder={placeholder2} readOnly={readonly2} />
        </div>
-       {isBlur && !isValidValue && <FormErrorMessage errorText={errorText} errorTitle={placeholder} textColor="rose-400" textSize='xs' titleSize='sm' titleColor='rose-500' />}
-       {isBlur && !isValidValue2 && <FormErrorMessage errorText={errorText} errorTitle={placeholder2 || ''} textColor="rose-400" textSize='xs' titleSize='sm' titleColor='rose-600' /> }
+       {isBlur && !isValidValue && <FormErrorMessage errorText={errorText} errorTitle={placeholder} textSize='xs' titleSize='sm'  />}
+       {isBlur && !isValidValue2 && <FormErrorMessage errorText={errorText} errorTitle={placeholder2 || ''} textSize='xs' titleSize='sm' /> }
       </div>
     );  
   }
@@ -65,7 +65,7 @@ const Input = ({label,placeholder,type,double, flexDirection,type2,placeholder2,
        <div className={`${flexDirection === 'horizontal' ? 'flex items-center justify-start' : 'flex flex-col justify-center gap-y-2'}`}>
        <input name={name} onChange={onChange} value={value} onBlur={onBlur} className={`w-full h-${inputHeight} border border-solid border-gray-200 rounded-md max-w-${inputWidth} pl-2 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60`} type={type}  placeholder={placeholder} readOnly={readonly} />
        </div>
-       {isBlur && !isValidValue && <FormErrorMessage errorText={errorText} errorTitle={placeholder} textColor="rose-400" textSize='xs' titleSize='sm' titleColor='rose-500' /> }
+       {isBlur && !isValidValue && <FormErrorMessage errorText={errorText} errorTitle={placeholder}  textSize='xs' titleSize='sm'  /> }
       </div>
       )  
   }
