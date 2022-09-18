@@ -12,8 +12,8 @@ import EventDetail from '../components/EventDetail'
 import AllProductList from '../components/main/productList/AllProductList'
 import OneDayProductList from '../components/main/productList/OneDayProductList'
 import MonthlyProductList from '../components/main/productList/MonthlyProductList'
-import Header from '../components/common/header/Header'
-import Footer from '../components/common/footer/Footer'
+import Header from '../components/header/Header'
+import Footer from '../components/footer/Footer'
 
 const Router = () => {
   return (
