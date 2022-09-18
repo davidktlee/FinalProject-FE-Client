@@ -31,10 +31,10 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
   }
   useEffect(() => {
     
-    const validDay =  validate(birthDay.value,[VALIDATOR_MAX(31),VALIDATOR_MIN(1)])
-    const validMonth = validate(birthMonth.value,[VALIDATOR_MAX(12),VALIDATOR_MIN(1)])
-    const validYear = validate(birthYear.value,[VALIDATOR_MAX(date.getFullYear()),VALIDATOR_MIN(1900)])
-    if(!birthMonth.value || !birthYear.value || !birthDay.value){
+    const validDay =  validate(birthDay,[VALIDATOR_MAX(31),VALIDATOR_MIN(1)])
+    const validMonth = validate(birthMonth,[VALIDATOR_MAX(12),VALIDATOR_MIN(1)])
+    const validYear = validate(birthYear,[VALIDATOR_MAX(date.getFullYear()),VALIDATOR_MIN(1900)])
+    if(!birthMonth || !birthYear || !birthDay){
       setBirthValid(false)
     }else{
       const totalValid = (validDay && validMonth && validYear)
@@ -53,7 +53,7 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                 <input
                   name="birthYear"
                   onChange={(e) => changeFormHandler(e,[VALIDATOR_MINLENGTH(3),VALIDATOR_MAXLENGTH(5)])}
-                  value={formValue.birthYear.value}
+                  value={formValue.birthYear}
                   type="number"
                   className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]"
                   onBlur={onBlur}
@@ -64,7 +64,7 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                 <input
                   name="birthMonth"
                   onChange={(e) => changeFormHandler(e,[VALIDATOR_MIN(1),VALIDATOR_MAX(12)])}
-                  value={formValue.birthMonth.value}
+                  value={formValue.birthMonth}
                   type="number"
                   className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]"
                   onBlur={onBlur}
@@ -75,7 +75,7 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                 <input
                   name="birthDay"
                   onChange={(e) => changeFormHandler(e,[VALIDATOR_MINLENGTH(1),VALIDATOR_MAXLENGTH(31)])}
-                  value={formValue.birthDay.value}
+                  value={formValue.birthDay}
                   type="number"
                   className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]"
                   onBlur={onBlur}
