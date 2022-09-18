@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Footer from './components/common/footer/Footer'
+import Footer from './components/footer/Footer'
 
 import Router from './routes/router'
 
