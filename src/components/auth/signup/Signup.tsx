@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState,useEffect } from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode'
 import { Link, useLocation } from 'react-router-dom'
 import useToast from '../../common/hooks/useToast'
@@ -24,91 +24,43 @@ import Recaptcha from './Recaptcha'
  *  */
 
 export type SignupFormType = {
-  lastname: { value: string; isValid: boolean }
-  firstname: { value: string; isValid: boolean }
-  lastReadname: { value: string; isValid: boolean }
-  firstReadname: { value: string; isValid: boolean }
-  postCode: { value: string; isValid: boolean }
-  address: { value: string; isValid: boolean }
-  detailAddress: { value: string; isValid: boolean }
-  phone: { value: string; isValid: boolean }
-  email: { value: string; isValid: boolean }
-  password: { value: string; isValid: boolean }
-  passwordConfirm: { value: string; isValid: boolean }
-  birthYear: { value: string; isValid: boolean }
-  birthMonth: { value: string; isValid: boolean }
-  birthDay: { value: string; isValid: boolean }
+  lastname: string;
+  firstname: string;
+  lastReadname: string;
+  firstReadname: string;
+  postCode: string;
+  address: string;
+  detailAddress: string;
+  phone: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  birthYear: string;
+  birthMonth: string;
+  birthDay: string;
 }
-export type SignupRecordType = Record<keyof SignupFormType, { value: string; isValid: boolean }>
+export type SignupRecordType = Record<keyof SignupFormType, string>
 
 const Signup = () => {
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
   const { pathname } = useLocation()
-  // const toast = useToast({
-    // type:'failed',
-    // message:'비밀번호와 비밀번호 확인이 달라요',
-    // position:'top',
-    // timer: 2000
-  // })
   const [formValue, setFormValue] = useState<SignupRecordType>({
-    lastname: {
-      value: '',
-      isValid: false
-    },
-    firstname: {
-      value: '',
-      isValid: false
-    },
-    lastReadname: {
-      value: '',
-      isValid: false
-    },
-    firstReadname: {
-      value: '',
-      isValid: false
-    },
-    postCode: {
-      value: '',
-      isValid: false
-    },
-    address: {
-      value: '',
-      isValid: false
-    },
-    detailAddress: {
-      value: '',
-      isValid: false
-    },
-    phone: {
-      value: '',
-      isValid: false
-    },
-    email: {
-      value: '',
-      isValid: false
-    },
-    password: {
-      value: '',
-      isValid: false
-    },
-    passwordConfirm: {
-      value: '',
-      isValid: false
-    },
-    birthYear: {
-      value: '',
-      isValid: false
-    },
-    birthMonth: {
-      value: '',
-      isValid: false
-    },
-    birthDay: {
-      value: '',
-      isValid: false
-    }
+    lastname: '',
+    firstname: '',
+    lastReadname: '',
+    firstReadname: '',
+    postCode: '',
+    address: '',
+    detailAddress: '',
+    phone: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    birthYear: '',
+    birthMonth: '',
+    birthDay: ''
   })
-
+  const [totalValid,setTotalValid] = useState(false);
   const handleComplete = (data: any) => {
     let fullAddress = data.address
     let extraAddress = ''
@@ -124,14 +76,8 @@ const Signup = () => {
     }
     setFormValue((prev) => ({
       ...prev,
-      postCode: {
-        value: data.zonecode,
-        isValid: true
-      },
-      address: {
-        value: fullAddress,
-        isValid: true
-      }
+      postCode: data.zonecode,
+      address: fullAddress
     }))
   }
 
@@ -145,33 +91,53 @@ const Signup = () => {
     } = e
     setFormValue((prev) => ({
       ...prev,
-      [name]: {
-        value
-      }
+      [name]: value
+      
     }))
   }
   
   const submitFormHandler = () => {
-    if(formValue.password.value !== formValue.passwordConfirm.value) {
-      
-      
+    if(formValue.password !== formValue.passwordConfirm) {
       return;
     }
     const formData = {
-      name: `${formValue.lastname.value}${formValue.firstname.value}` ,
-      readname: `${formValue.lastReadname.value}${formValue.firstReadname.value}`,
-      postCode: formValue.postCode.value,
-      address: `${formValue.address.value} ${formValue.detailAddress.value}`,
-      phone: formValue.phone.value,
-      email: formValue.email.value,
-      birthday: `${formValue.birthYear.value}${formValue.birthMonth.value}${formValue.birthDay.value}`,
-      password: formValue.password.value
+      name: `${formValue.lastname}${formValue.firstname}` ,
+      readname: `${formValue.lastReadname}${formValue.firstReadname}`,
+      postCode: formValue.postCode,
+      address: `${formValue.address} ${formValue.detailAddress}`,
+      phone: formValue.phone,
+      email: formValue.email,
+      birthday: `${formValue.birthYear}${formValue.birthMonth}${formValue.birthDay}`,
+      password: formValue.password
     }
     console.log(formData)
   }
+  const totalvalidate = () => {
+    
+    let totalValidation = true;
+    
+    const formValueArray = Object.values(formValue);
+    formValueArray.map((item) => {
+      const {password,passwordConfirm} = formValue;
+      if(!item){
+        totalValidation = false;
+        return;
+      }
+      if(password !== passwordConfirm){
+        totalValidation = false
+        return;
+      }
+    })
+    setTotalValid(totalValidation)
+  }
+
+  useEffect(() => {
+    totalvalidate()
+  }, [formValue])
+  
   return (
     <>
-    {formValue.password.value !== formValue.passwordConfirm.value}
+    {formValue.password !== formValue.passwordConfirm}
     <div className="w-full h-[1846px] bg-[#F4F6F8] text-base ">
       <h3 className="text-[#1B304A] font-bold text-[22px] text-center w-full pt-[160px]">회원가입</h3>
       <div className=" absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-lg p-10 mt-8">
@@ -181,8 +147,8 @@ const Signup = () => {
             name="lastname"
             name2="firstname"
             onChange={changeFormHandler}
-            value={formValue.lastname.value}
-            value2={formValue.firstname.value}
+            value={formValue.lastname}
+            value2={formValue.firstname}
             type="text"
             type2="text"
             double={true}
@@ -200,8 +166,8 @@ const Signup = () => {
             name="lastReadname"
             name2="firstReadname"
             onChange={changeFormHandler}
-            value={formValue.lastReadname.value}
-            value2={formValue.firstReadname.value}
+            value={formValue.lastReadname}
+            value2={formValue.firstReadname}
             type="text"
             type2="text"
             double={true}
@@ -229,7 +195,7 @@ const Signup = () => {
             double={false}
             label="전화번호"
             onChange={changeFormHandler}
-            value={formValue.phone.value}
+            value={formValue.phone}
             isRequired={false}
             flexDirection="horizontal"
             placeholder="예시:01022743334"
@@ -245,7 +211,7 @@ const Signup = () => {
               type="email"
               double={false}
               onChange={changeFormHandler}
-              value={formValue.email.value}
+              value={formValue.email}
               label="e-mail"
               isRequired={true}
               flexDirection="horizontal"
@@ -270,8 +236,8 @@ const Signup = () => {
             name="password"
             name2="passwordConfirm"
             onChange={changeFormHandler}
-            value={formValue.password.value}
-            value2={formValue.passwordConfirm.value}
+            value={formValue.password}
+            value2={formValue.passwordConfirm}
             type="password"
             type2="password"
             double={true}
@@ -296,10 +262,11 @@ const Signup = () => {
             <span className="text-[14px] font-bold">취소</span>
           </Link>
           <button
-            className="rounded-md flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer"
+            className="rounded-md flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
             onClick={submitFormHandler}
+            disabled={!totalValid}
           >
-            회원 가입
+            <span>회원 가입</span>
           </button>
         </div>
       </div>
