@@ -1,13 +1,13 @@
 import { useState, ChangeEvent } from 'react'
-import Input from '../../../common/Input'
-import { SignupFormType,SignupRecordType } from '../Signup'
+import Input from '../Input'
+import { SignupFormType,SignupRecordType } from '../../auth/signup/Signup'
 import {
   ValidatorType,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
-} from '../../hooks/validator'
-import FormErrorMessage from '../../shared/FormErrorMessage'
+} from '../../auth/hooks/validator'
+import FormErrorMessage from '../shared/FormErrorMessage'
 
 
 interface PostProps {

@@ -4,15 +4,14 @@ import App from './App'
 import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-
+import {RecoilRoot} from 'recoil';
 const client = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <QueryClientProvider client={client}>
-
-    
+    <RecoilRoot>
     <App />
-  
+    </RecoilRoot>
     <ReactQueryDevtools />
   </QueryClientProvider>
 )

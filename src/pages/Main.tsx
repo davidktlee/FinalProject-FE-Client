@@ -5,7 +5,7 @@ import Recommend from '../components/main/Recommend'
 import Review from '../components/Review'
 import Banner from './../components/Banner'
 import ControlBar from './../components/ControlBar'
-import Toast from '../components/common/Toast'
+import Toast from '../components/common/toast/ToastItem'
 import { NavLink, Outlet } from 'react-router-dom'
 import CardContainer from '../components/main/CardContainer'
 

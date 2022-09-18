@@ -1,6 +1,6 @@
 import {ChangeEvent,useState,useEffect} from 'react';
 import { validate, ValidatorType, VALIDATOR_MAX, VALIDATOR_MAXLENGTH, VALIDATOR_MIN, VALIDATOR_MINLENGTH } from '../../hooks/validator';
-import FormErrorMessage from '../../shared/FormErrorMessage';
+import FormErrorMessage from '../../../common/shared/FormErrorMessage';
 import { SignupFormType, SignupRecordType } from '../Signup';
 
 
