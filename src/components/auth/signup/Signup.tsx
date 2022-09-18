@@ -100,20 +100,13 @@ const Signup = () => {
   
   const submitFormHandler = () => {
    
-    fireToast({
-      id:getRandomId(),
-      message:'토스트 테스트 중~',
-      position: 'top',
-      timer: 2500,
-      type: 'success'
-    })
-    fireToast({
-      id:getRandomId(),
-      message:'토스트 테스트 중~',
-      position: 'bottom',
-      timer: 2500,
-      type: 'failed'
-    })
+    // fireToast({
+    //   id:getRandomId(),
+    //   message:'토스트 테스트 중~',
+    //   position: 'top',
+    //   timer: 2500,
+    //   type: 'success'
+    // })
     const formData = {
       name: `${formValue.lastname}${formValue.firstname}` ,
       readname: `${formValue.lastReadname}${formValue.firstReadname}`,
@@ -122,9 +115,11 @@ const Signup = () => {
       phone: formValue.phone,
       email: formValue.email,
       birthday: `${formValue.birthYear}${formValue.birthMonth}${formValue.birthDay}`,
-      password: formValue.password
+      password: formValue.password,
+      passwordConfirm:formValue.passwordConfirm
     }
-    console.log(formData)
+    
+
   }
   const totalvalidate = () => {
     

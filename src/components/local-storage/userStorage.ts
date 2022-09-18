@@ -1,9 +1,10 @@
-import { UserDataType } from "../auth/hooks/useUser";
+import { UserDataType } from "../auth/types/userTypes";
 
 const LOCALSTORAGE_USER_KEY = 'lenssis_user';
 
 export const getStoredUser = ():UserDataType | null => {
   const storedUser = localStorage.getItem(LOCALSTORAGE_USER_KEY);
+  
   return storedUser ? JSON.parse(storedUser) : null;
 }
 

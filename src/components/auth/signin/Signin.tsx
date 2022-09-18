@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState,useEffect } from 'react';
 import Input from '../../common/Input';
+import { useUser } from '../hooks/useUser';
 import { VALIDATOR_EMAIL, VALIDATOR_MAXLENGTH, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../hooks/validator';
 
 
@@ -26,10 +27,11 @@ const Signin = () => {
   console.log(formValue)
   }
 
+  const {user} = useUser()
+  console.log(user);
+
   const totalvalidate = () => {
-    
     let totalValidation = true;
-    
     const formValueArray = Object.values(formValue);
     formValueArray.map((item) => {
       const {password,email} = formValue;
@@ -44,7 +46,6 @@ const Signin = () => {
     })
     setTotalValid(totalValidation)
   }
-
   useEffect(() => {
     totalvalidate()
   }, [formValue])

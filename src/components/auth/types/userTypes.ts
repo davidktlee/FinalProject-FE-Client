@@ -2,22 +2,28 @@ export interface RegisterType {
   name: string
   readname: string
   postCode: number;
-  postNumber:string;
-  address: string
-  phone: string
-  email: string
-  birthday: string
-  password: string
-  recommandCode: string;
+  password: string;
+  passwordConfirm:string;
+  address: string;
+  phone: string;
+  email: string;
+  birthday: string;
+}
+export interface SigninType {
+  email:string;
+  password:string;
 }
 
 export interface UserDataType {
-  name: string;
-  readname:string;
-  postNumber:string;
-  address: string;
-  phone: string;
-  email:string;
-  birthday:string;
+  refreshToken:string
   token: string;
 }
+// "address": "string",
+//   "birthday": "string",
+//   "checkedPassWord": "string",
+//   "email": "string",
+//   "name": "string",
+//   "password": "string",
+//   "phone": "string",
+//   "postCode": 0,
+//   "readname": "string"
