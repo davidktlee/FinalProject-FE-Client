@@ -3,7 +3,12 @@ import React from 'react'
 const ProductRecommend = () => {
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mb-10 mx-auto ring-2 ring-[#DADADA] rounded-2xl shadow-lg">
+      <div className="container px-5 py-10 mb-10 mx-auto ring-2 ring-[#DADADA] rounded-2xl shadow-lg">
+        <div className="flex justify-between px-10">
+          <p className="font-bold text-lg text-black">이런 상품도 있어요!</p>
+          <p>랜덤으로 상품 8개 보여주기</p>
+        </div>
+        <div className="divider h-[1px] mt-4 mb-8 bg-[#BCBCBC]"></div>
         <div className="flex flex-wrap -m-4 p-4">
           <div className="lg:w-1/4 md:w-1/2 p-2 w-full">
             <a className="block relative h-48 rounded overflow-hidden">

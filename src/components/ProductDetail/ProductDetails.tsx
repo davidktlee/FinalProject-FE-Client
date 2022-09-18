@@ -1,5 +1,7 @@
 import React from 'react'
+import ProductBanner from './ProductBanner'
 import ProductRecommend from './ProductRecommend'
+import ProductTabs from './ProductTabs'
 
 const ProductDetails = () => {
   return (
@@ -15,7 +17,7 @@ const ProductDetails = () => {
                 width="465"
                 height="460"
               />
-              <div className="flex justify-center gap-3 md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px]">
+              <div className="flex justify-center gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px]">
                 <img className="rounded" src="https://dummyimage.com/105x105" />
                 <img className="rounded" src="https://dummyimage.com/105x105" />
                 <img className="rounded" src="https://dummyimage.com/105x105" />
@@ -64,15 +66,15 @@ const ProductDetails = () => {
                   <span className="ring-2 rounded px-2 text-sm"> 실리콘</span>
                 </div>
                 <div className="point flex flex-initial my-2 ">
-                  <p className="flex-none">포인트</p>
+                  <p className="flex-1">포인트</p>
                   <p className="flex-1">구매 금액의 1%</p>
                 </div>
                 <div className="card flex my-2">
-                  <p className="flex-none">카드 혜택</p>
+                  <p className="flex-1">카드 혜택</p>
                   <p className="flex-1">무이자 할부 카드 안내</p>
                 </div>
                 <div className="delivery flex my-2">
-                  <p className="flex-none">배송 안내</p>
+                  <p className="flex-1">배송 안내</p>
                   <p className="flex-1">2,500원(50,000원 이상 구매 시 무료)</p>
                 </div>
                 <div className="degree"></div>
@@ -150,6 +152,8 @@ const ProductDetails = () => {
         </div>
       </section>
       <ProductRecommend />
+      <ProductBanner />
+      <ProductTabs />
     </div>
   )
 }
