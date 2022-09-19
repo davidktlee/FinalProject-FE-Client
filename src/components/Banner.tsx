@@ -1,9 +1,12 @@
+import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react' // basic
 import SwiperCore, { Navigation, Pagination } from 'swiper'
-import 'swiper/css' //basic
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import { useEffect, useRef, useState } from 'react'
+
+import 'swiper/swiper.min.css'
+import 'swiper/components/navigation/navigation.scss'
+import 'swiper/components/pagination/pagination.scss'
+import 'swiper/components/scrollbar/scrollbar.scss'
+import { useRef } from 'react'
 
 const imgs = [
   '/assets/KakaoTalk_20220714_125021628.jpg',
@@ -12,53 +15,81 @@ const imgs = [
 ]
 
 const Banner = () => {
-  const [swiperSettings, setSwiperSettings] = useState<any>(null) // 타입 고쳐야함
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
+
   SwiperCore.use([Navigation, Pagination])
   const settings = {
-    spaceBetween: 50,
-    // navigation: {
-    //   prevEl: prevRef.current,
-    //   nextEl: nextRef.current
-    // },
+    spaceBetween: 10,
+    navigation: {
+      prevEl: prevRef.current,
+      nextEl: nextRef.current
+    },
     scrollbar: { draggable: true },
     pagination: { clickable: true },
-    autoplay: { delay: 1000 },
-    style: { width: '1180px', height: '400px', borderRadius: '20px' },
-    slidesPerView: 1
+    slidesPerView: 1,
+    loop: true,
+    autoplay: { delay: 2000, disableOnInteraction: true },
+    watchOverflow: true
   }
-  useEffect(() => {
-    if (!swiperSettings) {
-      setSwiperSettings(settings)
-    }
-  }, [swiperSettings])
 
   return (
-    <div className="w-full mx-auto">
-      <button ref={prevRef}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M20 12C20 16.4183 16.4183 20 12 20V22C17.5228 22 22 17.5228 22 12H20ZM12 20C7.58172 20 4 16.4183 4 12H2C2 17.5228 6.47715 22 12 22V20ZM4 12C4 7.58172 7.58172 4 12 4V2C6.47715 2 2 6.47715 2 12H4ZM12 4C16.4183 4 20 7.58172 20 12H22C22 6.47715 17.5228 2 12 2V4Z"
-            fill="#ABC8DF"
+    <div className="container my-10 relative">
+      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[9999999] hover:color-white">
+        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle
+            cx="17.5"
+            cy="17.5"
+            r="17.5"
+            transform="rotate(-180 17.5 17.5)"
+            fill="white"
+            fillOpacity="0.5"
           />
           <path
-            d="M13.2929 17.7071C13.6834 18.0976 14.3166 18.0976 14.7071 17.7071C15.0976 17.3166 15.0976 16.6834 14.7071 16.2929L13.2929 17.7071ZM9 12L8.29289 11.2929C7.90237 11.6834 7.90237 12.3166 8.29289 12.7071L9 12ZM14.7071 7.70711C15.0976 7.31658 15.0976 6.68342 14.7071 6.29289C14.3166 5.90237 13.6834 5.90237 13.2929 6.29289L14.7071 7.70711ZM14.7071 16.2929L9.70711 11.2929L8.29289 12.7071L13.2929 17.7071L14.7071 16.2929ZM9.70711 12.7071L14.7071 7.70711L13.2929 6.29289L8.29289 11.2929L9.70711 12.7071Z"
-            fill="#ABC8DF"
+            d="M22 25L13 17.5L22 10"
+            stroke="#92C8ED"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M22 25L13 17.5L22 10"
+            stroke="#ABC8DF"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
-        {'<'}
       </button>
-      <Swiper {...swiperSettings}>
+      <Swiper {...settings} style={{ borderRadius: '25px', overflow: 'hidden' }}>
         {imgs.map((img: string, index: number) => (
-          <div>
-            <SwiperSlide>
-              <img src={img} alt="" width="1180" height="400" />
+          <div key={index}>
+            <SwiperSlide key={index}>
+              {/* key값 id 값 넣어주기 */}
+              <img src={img} alt="" className="w-full h-[400px] object-cover " />
             </SwiperSlide>
           </div>
         ))}
       </Swiper>
-      <button ref={nextRef}>{'>'}</button>
+      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[9999999] hover:color-white">
+        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="17.5" cy="17.5" r="17.5" fill="white" fillOpacity="0.5" />
+          <path
+            d="M13 10L22 17.5L13 25"
+            stroke="#92C8ED"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M13 10L22 17.5L13 25"
+            stroke="#ABC8DF"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   )
 }

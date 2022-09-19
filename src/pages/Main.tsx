@@ -19,21 +19,21 @@ const Main = () => {
     // const {data: productLists} = useQuery([queryKey,selects], queryFn, options)
   }, [selects])
   return (
-    <div className="flex flex-col items-center sm:w-[355px] md:w-[1280px] mx-auto ">
+    <div className="container mx-auto ">
       {/* <div>
         <Toast type="success" message="성공하셨습니다!!!" position="bottom" timer={1500} />
         <Toast type="failed" message="실패하셨습니다!!!" position="top" timer={1500} />
       </div> */}
 
-      <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto my-[80px] ">
-        <section className="md:flex ">
+      <div className="pt-44">
+        <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
-          <span className="hidden xl:block w-[280px]">
+          <div className="hidden lg:block xl:block w-[280px] mr-12">
             <ControlBar />
-          </span>
+          </div>
           {/*메인에서 상품 리스트 */}
-          <div className="border-2 border-solid border-[#9AD0F6] rounded-xl">
-            <div className="md:w-[880px] border-b-2 border-solid flex justify-center items-end">
+          <div className="w-full border-2 border-solid border-[#9AD0F6] rounded-xl">
+            <div className="container px-4 border-b-2 border-solid flex justify-center items-end">
               <NavLink
                 style={({ isActive }) => ({
                   borderBottom: isActive ? '3px solid #102B91' : 'none',
@@ -68,16 +68,18 @@ const Main = () => {
                 Monthly
               </NavLink>
             </div>
-            <div className="md:flex md:justify-center">
+            <div className="md:flex md:justify-center w-full mx-auto">
               <Outlet />
             </div>
           </div>
         </section>
         <Banner />
-        <CardContainer />
-        <Event />
+        <div className="container border-2 border-solid border-[#9AD0F6] rounded-xl">
+          <CardContainer data='new'/>
+        </div>
+        {/* <Event />
         <Recommend />
-        <Review />
+        <Review /> */}
         <Notice />
       </div>
     </div>

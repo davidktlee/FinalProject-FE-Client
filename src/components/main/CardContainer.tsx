@@ -72,27 +72,48 @@ interface Item {
   salePrice: string
   img: string
 }
+interface Props {
+  data: Data
+}
+type Data = 'new' | 'rank'
 
-const CardContainer = () => {
+const CardContainer = ({ data }: Props) => {
   return (
     <div className="">
-      <h2 className="m-2">(받아온 데이터리스트 종류 rank | new)</h2>
-      {/* newData 면 <div className="grid grid-col-2 xl:grid-col-4 gap-2"></div> */}
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-2">
-        {items.map((item: Item) => (
-          <Card
-            key={item.id}
-            title={item.title}
-            rank={item.rank}
-            id={item.id}
-            series={item.series}
-            price={item.price}
-            tag={item.tag}
-            salePrice={item.salePrice}
-            img={item.img}
-          />
-        ))}
-      </div>
+      <h2>(받아온 데이터리스트 종류 rank | new)</h2>
+      {data === 'new' ? (
+        <div className="grid grid-cols-2 xl:grid-cols-4">
+          {items.map((item: Item) => (
+            <Card
+              key={item.id}
+              title={item.title}
+              rank={item.rank}
+              id={item.id}
+              series={item.series}
+              price={item.price}
+              tag={item.tag}
+              salePrice={item.salePrice}
+              img={item.img}
+            />
+          ))}
+        </div>
+      ) : data === 'rank' ? (
+        <div className="grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 gap-2 mx-auto  ">
+          {items.map((item: Item) => (
+            <Card
+              key={item.id}
+              title={item.title}
+              rank={item.rank}
+              id={item.id}
+              series={item.series}
+              price={item.price}
+              tag={item.tag}
+              salePrice={item.salePrice}
+              img={item.img}
+            />
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

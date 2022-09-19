@@ -23,32 +23,59 @@ const Card = ({ title, id, rank, series, price, tag, salePrice, img }: PropTypes
         className="relative flex flex-col ml-[20px] xl:ml-[11px]  xl:w-[260px] xl:h-[305px] xl:my-[40px] "
       >
         {/* 순위 라벨/ 순위 라벨 값이 1일 때 ? 3일 때 ? : 아닐 때 */}
-        <span className="absolute xl:top-2 xl:left-4 w-4 h-4">
-          <span className="absolute xl:top-0.8 xl:left-2 text-white font-bold">
-            {Number(rank) > 0 ? rank : null}
+        {+rank > 0 ? (
+          <span className="absolute xl:top-2 xl:left-4 w-4 h-4">
+            <span className="absolute top-2 left-[12px] xl:top-[4px] xl:left-[14px] text-white font-bold">
+              {rank}
+            </span>
+            <svg width="39" height="49" viewBox="0 0 39 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g filter="url(#filter0_d_375_19039)">
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M8.70067 5C6.65685 5 5 6.65684 5 8.70067V39.9997L17.5021 29.0498L30 39.996V8.70067C30 6.65685 28.3432 5 26.2993 5H8.70067Z"
+                  fill="#FFDF5D"
+                />
+              </g>
+              <defs>
+                <filter
+                  id="filter0_d_375_19039"
+                  x="0.374163"
+                  y="0.374163"
+                  width="37.9523"
+                  height="47.9521"
+                  filterUnits="userSpaceOnUse"
+                  colorInterpolationFilters="sRGB"
+                >
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                  <feColorMatrix
+                    in="SourceAlpha"
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha"
+                  />
+                  <feOffset dx="1.85034" dy="1.85034" />
+                  <feGaussianBlur stdDeviation="3.23809" />
+                  <feComposite in2="hardAlpha" operator="out" />
+                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0" />
+                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_375_19039" />
+                  <feBlend
+                    mode="normal"
+                    in="SourceGraphic"
+                    in2="effect1_dropShadow_375_19039"
+                    result="shape"
+                  />
+                </filter>
+              </defs>
+            </svg>
+            {/* <img className="" src="/assets/Bookmark.svg" alt="" style={{ color: rankColor[rank] }} /> */}
           </span>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill={rankColor[rank]}
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z"
-              stroke="current"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        ) : null}
 
-          {/* <img className="" src="/assets/Bookmark.svg" alt="" style={{ color: rankColor[rank] }} /> */}
-        </span>
         <img
           src={img}
           alt=""
-          className="w-[172px] h-[128px] rounded-xl xl:w-[260px] xl:h-[185px] border-2 border-solid"
+          className="w-[172px] h-[128px] rounded-xl md:w-[260px] md:h-[185px] border-2 border-solid"
         />
         <div className=" flex flex-col">
           <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px]">{series}</div>
