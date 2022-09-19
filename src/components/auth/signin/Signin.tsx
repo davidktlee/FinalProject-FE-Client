@@ -1,5 +1,8 @@
 import React, { ChangeEvent, useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../common/Input';
+import useToast from '../../common/toast/hooks/useToast';
+import { useAuth } from '../hooks/useAuth';
 import { useUser } from '../hooks/useUser';
 import { VALIDATOR_EMAIL, VALIDATOR_MAXLENGTH, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../hooks/validator';
 
@@ -10,12 +13,15 @@ interface formValueType {
 }
 
 const Signin = () => {
-
+  const {signin} = useAuth()
   const [formValue,setFormValue] = useState({
     email:'',
     password:''
   })
   const [totalValid,setTotalValid] = useState(false)
+  const navigate = useNavigate()
+  const {fireToast} = useToast()
+  
   const onChange = (e:ChangeEvent<HTMLInputElement>) => {
     const {currentTarget:{value,name}} = e;
     setFormValue(prev => ({
@@ -23,8 +29,9 @@ const Signin = () => {
       [name]:value
     }))
   }
+  
   const submitSigninHandler = () => {
-  console.log(formValue)
+    signin({email:formValue.email,password:formValue.password})
   }
 
   const {user} = useUser()
@@ -50,6 +57,18 @@ const Signin = () => {
     totalvalidate()
   }, [formValue])
   
+
+  if(user) {
+    fireToast({
+      id:'로그인 확인',
+      message:'로그인 상태이므로 이전 페이지로 이동합니다.',
+      position: 'top',
+      timer:5000,
+      type:'complete'
+    })
+    navigate('/')
+  }
+
   return (
     <div className='w-full h-screen bg-[#F4F6F8] relative'>
       <div className='absolute top-[36%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-fit mt-[120px] bg-white rounded-lg shadow-[-5px_0_30px_1px] shadow-indigo-100 pb-12 border border-solid border-gray-200'>

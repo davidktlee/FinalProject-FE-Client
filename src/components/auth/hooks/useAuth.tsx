@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
 
@@ -21,7 +22,7 @@ interface UseAuth {
 export const useAuth = ():UseAuth => {
   const { clearUser, updateUser } = useUser()
   const {fireToast} = useToast()
-
+  const navigate = useNavigate()
   const authSignUp = async (urlEndpoint: AuthEndpoint, userData: RegisterType): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
@@ -41,7 +42,16 @@ export const useAuth = ():UseAuth => {
           type:'failed'
         })
         return
+      }else{
+        fireToast({
+          id:'회원가입 성공',
+          message:'가입하신 이메일로 로그인 해주세요!',
+          position: 'bottom',
+          timer:5000,
+          type:'success'
+        })
       }
+      navigate('/signin')
 
     } catch (errorResponse) {
       const title =
@@ -64,7 +74,10 @@ export const useAuth = ():UseAuth => {
         url: urlEndpoint,
         method: 'POST',
         data: userData,
-        headers: { ContentType: 'application/json' }
+        headers: {
+          ContentType: 'application/json',
+          withCredentials:false
+      }
       })
       if (status === 400) {
         const title = 'message' in data ? data.message : '인증되지 않았습니다.'
