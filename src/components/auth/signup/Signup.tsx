@@ -142,7 +142,7 @@ const Signup = () => {
   return (
     <>
     {formValue.password !== formValue.passwordConfirm}
-    <div className="w-full h-[1846px] bg-[#F4F6F8] text-base ">
+    
       
       <PageLayout layoutWidth='3/5' title='회원가입' >
       
@@ -276,7 +276,7 @@ const Signup = () => {
         </div>
       
       </PageLayout>
-    </div>
+    
     </>
   )
 }
