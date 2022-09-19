@@ -5,10 +5,6 @@ import ProductInquiry from './ProductInquiry'
 const ProductAbout = () => {
   const [tabState, setTabState] = useState<boolean>(false)
 
-  const handleTab = () => {
-    setTabState(!tabState)
-  }
-
   return (
     // border-blue-500, text-blue-500
     <section className="text-gray-600 body-font">
@@ -16,7 +12,7 @@ const ProductAbout = () => {
         <div className="bg-white">
           <nav className="flex justify-between ">
             <button
-              onClick={handleTab}
+              onClick={() => setTabState(true)}
               className={`${
                 tabState && 'border-[#030303] border-b-4 text-[#030303]'
               } flex-1 text-gray-600 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}
@@ -25,7 +21,7 @@ const ProductAbout = () => {
             </button>
 
             <button
-              onClick={handleTab}
+              onClick={() => setTabState(false)}
               className={`${
                 !tabState && 'border-[#030303] border-b-4 text-[#030303]'
               } flex-1 text-gray-600 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}

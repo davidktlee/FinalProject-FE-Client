@@ -14,6 +14,9 @@ import OneDayProductList from '../components/main/productList/OneDayProductList'
 import MonthlyProductList from '../components/main/productList/MonthlyProductList'
 import Header from '../components/header/Header'
 import Footer from '../components/footer/Footer'
+import AllFavoriteList from '../components/favorite/AllFavoriteList'
+import OneDayFavorite from '../components/favorite/OneDayFavorite'
+import MonthlyFavorite from '../components/favorite/MonthlyFavorite'
 
 const Router = () => {
   return (
@@ -30,7 +33,11 @@ const Router = () => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
-        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/favorite" element={<Favorite />}>
+          <Route path="all" element={<AllFavoriteList />} />
+          <Route path="oneday" element={<OneDayFavorite />} />
+          <Route path="monthly" element={<MonthlyFavorite />} />
+        </Route>
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />
