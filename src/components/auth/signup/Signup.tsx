@@ -144,7 +144,7 @@ const Signup = () => {
     {formValue.password !== formValue.passwordConfirm}
     
       
-      <PageLayout layoutWidth='3/5' title='회원가입' >
+      <PageLayout layoutWidth='3/5' title='회원가입' isTitleVisible={true} >
       
         <div className="">
           <h4 className="font-bold">고객정보</h4>
