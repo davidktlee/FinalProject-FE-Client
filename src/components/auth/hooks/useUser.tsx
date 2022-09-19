@@ -1,53 +1,53 @@
 import { AxiosResponse } from 'axios';
-import React from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { axiosInstance, getJWTToken } from '../../axiosinstance';
 import { clearStoredUser, getStoredUser, setStoredUser } from '../../local-storage/userStorage';
 import { queryKeys } from '../../react-query/queryKeys';
 import { UserDataType } from '../types/userTypes';
-
-
-
-
-
-
-//유저 정보를 보내서 토큰을 추출한 뒤에 보내고 유저 정보를 가져오기 <GET 요청>
-const fetchUser = async (user:UserDataType | null) => {
-    if(!user) return;
-    const { data }: AxiosResponse<{user: UserDataType}> = await axiosInstance.get(
-      `/signin`,{
-        headers: getJWTToken(user)
+import {queryClient} from '../../react-query/queryClient'
+const getUser = async (user:UserDataType | null, signal:AbortSignal): Promise<UserDataType | null> => {
+    if(!user) return null;
+    const { data }: AxiosResponse<UserDataType> = await axiosInstance.get(
+      `/member/userinfo`,{
+        headers: getJWTToken(user),
+        signal
       }
     );
-    
-      return data.user
-}
+      return data
+  }
 
 interface UseUser {
-  // user: UserDataType | null;
+  user: UserDataType | null;
   updateUser: (user:UserDataType) => void;
   clearUser: () => void;
 }
 
 export const useUser = () : UseUser => {
-const queryClient = useQueryClient();
-// const {data: user} = useQuery(queryKeys.user, () => fetchUser(user),
-//   {
-//     initialData:getStoredUser()
-//   })
+  const queryclient = useQueryClient()
+  const {data:user } = useQuery(queryKeys.user, ({signal}) => getUser(user,signal), {
+    initialData: getStoredUser(),
+    onSuccess: (received: UserDataType | null) => {
+      if(!received) {
+        clearStoredUser()
+      }else {
+        setStoredUser(received);
+      }
+    }
+  })
 
-const updateUser = (newUser:UserDataType):void => {
-  queryClient.setQueriesData(queryKeys.user, newUser)
-}
-
-const clearUser = () => {
-  queryClient.setQueriesData(queryKeys.user, null);
-}
-
-  return {
-    // user,
-    updateUser,
-    clearUser
+  const updateUser = (newUser:UserDataType):void => {
+    // get new token
+    queryclient.setQueryData(queryKeys.user, newUser)
   }
+
+  const clearUser = () => {
+    queryClient.setQueryData(queryKeys.user, null);
+  }
+
+    return {
+      user,
+      updateUser,
+      clearUser
+    }
 };
 

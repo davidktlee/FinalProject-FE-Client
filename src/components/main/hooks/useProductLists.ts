@@ -24,20 +24,16 @@ interface ResponseType {
 }
 
 const getProductsList = async (selectOption: string) => {
-  try {
-    const { data }: AxiosResponse<ResponseType[]> = await axiosInstance({
-      url: `/product/${selectOption}`,
-      headers: {
-        ContentType: 'application/json'
-      }
-    })
-    return data
-  } catch (err) {
-    // useQuery 에러 처리로?
-  }
+  const { data }: AxiosResponse<ResponseType[]> = await axiosInstance({
+    url: `/product/${selectOption}`,
+    headers: {
+      ContentType: 'application/json'
+    }
+  })
+  return data
 }
 export const useGetProductsList = (selectOption: string): ResponseType[] => {
-  const fallback: ResponseType[] = []
+  const fallback: [] = []
   const { data = fallback } = useQuery(queryKeys.product /* 키 바꿔야함 */, () =>
     getProductsList(selectOption)
   )

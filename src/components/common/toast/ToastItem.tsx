@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { Toast } from '../../../store/toast'
 
-interface ToastProps {
-  type: 'success' | 'warning' | 'failed' | 'complete'
-  message: string
-  position: 'bottom' | 'top'
-  timer: number
-}
 
-const Toast = ({ type, message, position, timer }: ToastProps) => {
+
+const ToastItem = ({ type, message, position, timer }: Toast) => {
   const [isShow, setIsShow] = useState(true)
-
 
 
   useEffect(() => {
@@ -23,7 +18,7 @@ const Toast = ({ type, message, position, timer }: ToastProps) => {
 
   return (
     <div
-      className={`overflow-hidden h-24 w-[600px] absolute bottom-0 left-1/2 -translate-x-1/2
+      className={`overflow-hidden h-24 w-[600px] fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999]
     ${position === 'bottom' && 'bottom-4'}
     ${position === 'top' && 'top-4'}
     `}
@@ -158,4 +153,4 @@ const Toast = ({ type, message, position, timer }: ToastProps) => {
   )
 }
 
-export default Toast
+export default ToastItem
