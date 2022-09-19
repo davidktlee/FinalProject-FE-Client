@@ -1,13 +1,13 @@
 import { useState, ChangeEvent } from 'react'
-import Input from '../../../common/Input'
-import { SignupFormType,SignupRecordType } from '../Signup'
+import Input from '../Input'
+import { SignupFormType,SignupRecordType } from '../../auth/signup/Signup'
 import {
   ValidatorType,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
-} from '../../hooks/validator'
-import FormErrorMessage from '../../shared/FormErrorMessage'
+} from '../../auth/hooks/validator'
+import FormErrorMessage from '../shared/FormErrorMessage'
 
 
 interface PostProps {
@@ -33,7 +33,7 @@ const Post = ({ formValue, setFormValue, changeFormHandler,addressPopupHandler }
           <input
             name="postCode"
             onChange={(e) => changeFormHandler(e, [VALIDATOR_REQUIRE()])}
-            value={formValue.postCode.value}
+            value={formValue.postCode}
             type="text"
             className="grow h-10 border border-solid border-gray-200 rounded-md max-w-[400px]"
             readOnly
@@ -48,15 +48,15 @@ const Post = ({ formValue, setFormValue, changeFormHandler,addressPopupHandler }
             </button>
           </div>
         </div>
-        <div>{isBlur && !formValue.postCode.isValid && <FormErrorMessage errorTitle='우편번호누락' errorText='우편 번호 검색을 통해 주소를 입력해주세요.' />}</div>
+        <div>{isBlur && !formValue.postCode && <FormErrorMessage errorTitle='우편번호누락' errorText='우편 번호 검색을 통해 주소를 입력해주세요.' />}</div>
       </div>
 
       <Input
         name="address"
         name2="detailAddress"
         onChange={(e) => changeFormHandler(e, [VALIDATOR_REQUIRE()])}
-        value={formValue.address.value}
-        value2={formValue.detailAddress.value}
+        value={formValue.address}
+        value2={formValue.detailAddress}
         type="text"
         type2="text"
         double={true}
