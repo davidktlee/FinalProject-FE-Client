@@ -8,7 +8,7 @@ import {queryClient} from '../../react-query/queryClient'
 const getUser = async (user:UserDataType | null, signal:AbortSignal): Promise<UserDataType | null> => {
     if(!user) return null;
     const { data }: AxiosResponse<UserDataType> = await axiosInstance.get(
-      `/member/userinfo`,{
+      `/member/login`,{
         headers: getJWTToken(user),
         signal
       }
@@ -24,6 +24,7 @@ interface UseUser {
 
 export const useUser = () : UseUser => {
   const queryclient = useQueryClient()
+  // @ts-ignored
   const {data:user } = useQuery(queryKeys.user, ({signal}) => getUser(user,signal), {
     initialData: getStoredUser(),
     onSuccess: (received: UserDataType | null) => {

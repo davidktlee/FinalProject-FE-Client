@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { ChangeEvent, useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../common/Input';
@@ -14,6 +15,7 @@ interface formValueType {
 
 const Signin = () => {
   const {signin} = useAuth()
+  const {user} = useUser()
   const [formValue,setFormValue] = useState({
     email:'',
     password:''
@@ -32,9 +34,16 @@ const Signin = () => {
   
   const submitSigninHandler = () => {
     signin({email:formValue.email,password:formValue.password})
+    // axios.post('http://43.200.50.49:8080/member/login',{
+    //   body: {
+    //     email:formValue.email,
+    //     password:formValue.password
+    //   },
+    //   withCredentials:false
+    // })
   }
 
-  const {user} = useUser()
+  
   console.log(user);
 
   const totalvalidate = () => {
@@ -66,7 +75,7 @@ const Signin = () => {
       timer:5000,
       type:'complete'
     })
-    navigate('/')
+    navigate(-1)
   }
 
   return (

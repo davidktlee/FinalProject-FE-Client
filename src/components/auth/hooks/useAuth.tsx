@@ -76,8 +76,8 @@ export const useAuth = ():UseAuth => {
         data: userData,
         headers: {
           ContentType: 'application/json',
-          withCredentials:false
-      }
+         },
+        withCredentials:false
       })
       if (status === 400) {
         const title = 'message' in data ? data.message : '인증되지 않았습니다.'
@@ -92,6 +92,7 @@ export const useAuth = ():UseAuth => {
       }
       if ('token' in data) {
         // 토큰
+        
         updateUser(data)
       }
     } catch (errorResponse) {
