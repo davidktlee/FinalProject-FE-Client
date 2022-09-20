@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Event from '../components/main/Event'
-import Notice from '../components/main/Notice'
+import Event from '../components/main/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Review from '../components/Review'
 import Banner from './../components/Banner'
 import ControlBar from './../components/ControlBar'
 import Toast from '../components/common/toast/ToastItem'
-import { NavLink, Outlet } from 'react-router-dom'
 import CardContainer from '../components/main/CardContainer'
 import AllProductList from '../components/main/productList/AllProductList'
-import { NoticePageTitle } from '../constants/NoticeTitles'
 import NoticePage from './NoticePage'
 
 const Main = () => {
@@ -46,9 +43,13 @@ const Main = () => {
         <div className="container border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
           <CardContainer data="new" />
         </div>
-        {/* <Event />
-        <Recommend />
-        <Review /> */}
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <Event />
+        </div>
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <Recommend />
+        </div>
+        {/* <Review />  */}
         <div className="container my-[100px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
           <NoticePage />
         </div>

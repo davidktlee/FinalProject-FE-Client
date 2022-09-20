@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import NoticeTitle from './notice/NoticeTitle'
-const Notice = () => {
+const MainNotice = () => {
   const navigate = useNavigate()
   return (
     <>
@@ -18,4 +18,4 @@ const Notice = () => {
   )
 }
 
-export default Notice
+export default MainNotice

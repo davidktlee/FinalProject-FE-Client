@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, useLocation } from 'react-router'
 import PageLayout from '../components/common/ui/PageLayout'
-import Notice from '../components/main/Notice'
+import MainNotice from '../components/main/MainNotice'
 import NoticeTitle from '../components/main/notice/NoticeTitle'
 
 function NoticePage() {
@@ -11,11 +11,11 @@ function NoticePage() {
     <>
       {location.pathname.includes('notice') === false ? (
         <div className="w-[90%] mx-auto">
-          <Notice />
+          <MainNotice />
           <Outlet />
         </div>
       ) : (
-        <PageLayout title="공지사항" layoutWidth="90%" isTitleVisible={true}>
+        <PageLayout title="공지사항" layoutWidth="[90%]" isTitleVisible={true}>
           <NoticeTitle />
           <Outlet />
         </PageLayout>

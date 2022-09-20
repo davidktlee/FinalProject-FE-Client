@@ -82,12 +82,12 @@ const CardContainer = ({ data }: Props) => {
     <>
       {data === 'new' ? (
         <>
-          <div className="flex justify-center">
+          <div className="flex justify-center my-8">
             <span className="text-center font-[600] text-[24px] my-10 border-b-[6px] border-solid border-[#1B304A]">
               {data}
             </span>
           </div>
-          <div className="grid grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4">
             {items.map((item: Item) => (
               <Card
                 key={item.id}

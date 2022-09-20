@@ -6,7 +6,7 @@ function NoticeDetail() {
   const navigate = useNavigate()
   return (
     <>
-      <PageLayout title="공지사항" layoutWidth="4/5" isTitleVisible={true}>
+      <PageLayout title="공지사항" layoutWidth="[90%]" isTitleVisible={true}>
         <div className="w-[100%]">
           <div className="flex items-center py-8 border-t-[1px] border-solid">
             <div className="ml-10 mr-28">제목</div>
@@ -25,7 +25,10 @@ function NoticeDetail() {
           <div className="border-b-[1px] border-solid pb-12">
             <div className="ml-4 border-2 border-solid w-[70%]">내용</div>
           </div>
-          <button className="w-[150px] h-[40px] my-4 font-[600] rounded-md border-none bg-[#1B304A] text-white" onClick={() => navigate(-1)}>
+          <button
+            className="w-[150px] h-[40px] my-4 font-[600] rounded-md border-none bg-[#1B304A] text-white"
+            onClick={() => navigate(-1)}
+          >
             목록
           </button>
         </div>

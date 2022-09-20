@@ -23,6 +23,7 @@ import AboutPoint from '../components/main/notice/pages/AboutPoint'
 import AboutEtc from '../components/main/notice/pages/AboutEtc'
 import NoticePage from '../pages/NoticePage'
 import NoticeDetail from './../components/main/notice/NoticeDetail'
+import EventPage from '../pages/EventPage'
 
 const Router = () => {
   return (
@@ -59,6 +60,7 @@ const Router = () => {
         </Route>
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/event" element={<EventPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>

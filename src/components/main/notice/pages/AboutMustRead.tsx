@@ -19,12 +19,12 @@ function MustRead() {
       <div className="mt-16 flex justify-center">
         <span className="hover:cursor-pointer mx-4">
           <svg width="7" height="17" viewBox="0 0 7 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5.99805 1L1.49919 8.5L5.99805 16" stroke="#6D6D6D" stroke-width="0.975844" />
+            <path d="M5.99805 1L1.49919 8.5L5.99805 16" stroke="#6D6D6D" strokeWidth="0.975844" />
           </svg>
         </span>
         <span className="hover:cursor-pointer mx-4">
           <svg width="7" height="17" viewBox="0 0 7 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.998047 16L5.4969 8.5L0.998047 1" stroke="#6D6D6D" stroke-width="0.975844" />
+            <path d="M0.998047 16L5.4969 8.5L0.998047 1" stroke="#6D6D6D" strokeWidth="0.975844" />
           </svg>
         </span>
       </div>
