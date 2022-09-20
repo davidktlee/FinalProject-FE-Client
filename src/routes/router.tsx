@@ -3,7 +3,7 @@ import Cart from '../pages/Cart'
 import Favorite from '../pages/Favorite'
 import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
-import MyPage from '../pages/MyPage'
+import MypagePage from '../pages/MypagePage'
 import Order from '../pages/Order'
 import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
@@ -31,7 +31,7 @@ const Router = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage" element={<MypagePage />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
