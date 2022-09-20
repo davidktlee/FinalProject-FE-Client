@@ -24,6 +24,7 @@ import AboutEtc from '../components/main/notice/pages/AboutEtc'
 import NoticePage from '../pages/NoticePage'
 import NoticeDetail from './../components/main/notice/NoticeDetail'
 import EventPage from '../pages/EventPage'
+import Review from '../pages/ReviewPage'
 
 const Router = () => {
   return (
@@ -62,6 +63,7 @@ const Router = () => {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/event" element={<EventPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
