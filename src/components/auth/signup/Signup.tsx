@@ -22,6 +22,7 @@ import Recaptcha from './Recaptcha'
 import { getRandomId } from '../../common/util/randomId'
 import { useAuth } from '../hooks/useAuth'
 import PageLayout from '../../common/ui/PageLayout'
+import axios from 'axios'
 /** 필수 입력정보
  * 이름 / 우편번호 / 기본 주소 / 상세 주소 / 전화번호 / 이메일 주소 / 생일 / 비밀번호 / 자동 등록 방지
  *  */
@@ -65,7 +66,7 @@ const Signup = () => {
     birthDay: ''
   })
   const [totalValid,setTotalValid] = useState(false);
-  const auth = useAuth()
+  const {signin,signup} = useAuth()
   const handleComplete = (data: any) => {
     let fullAddress = data.address
     let extraAddress = ''
@@ -115,7 +116,8 @@ const Signup = () => {
       password: formValue.password,
       passwordConfirm:formValue.passwordConfirm
     }
-    auth.signup(formData)
+    signup(formData)
+    
 
   }
   const totalvalidate = () => {

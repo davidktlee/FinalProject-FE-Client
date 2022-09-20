@@ -30,7 +30,6 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
     setIsBlur(true)
   }
   useEffect(() => {
-    
     const validDay =  validate(birthDay,[VALIDATOR_MAX(31),VALIDATOR_MIN(1)])
     const validMonth = validate(birthMonth,[VALIDATOR_MAX(12),VALIDATOR_MIN(1)])
     const validYear = validate(birthYear,[VALIDATOR_MAX(date.getFullYear()),VALIDATOR_MIN(1900)])
@@ -57,7 +56,6 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                   type="number"
                   className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]  focus:outline-1 focus:outline-[#ABC8DF]"
                   onBlur={onBlur}
-                  
                 />
                 <span className=" ml-2">년</span>
               </label>
