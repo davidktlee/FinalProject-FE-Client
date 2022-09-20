@@ -1,10 +1,11 @@
 import React from 'react';
+import CardLayout from '../common/CardLayout';
 
 const MyTracking = () => {
   return (
-    <div>
-      나는 트레킹
-    </div>
+    <CardLayout title='배송 조회'>
+      
+    </CardLayout>
   );
 };
 
