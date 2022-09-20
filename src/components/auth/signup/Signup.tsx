@@ -98,13 +98,10 @@ const Signup = () => {
     setFormValue((prev) => ({
       ...prev,
       [name]: value
-      
     }))
   }
   
   const submitFormHandler = () => {
-   
- 
     const formData:RegisterType = {
       name: `${formValue.lastname}${formValue.firstname}` ,
       readname: `${formValue.lastReadname}${formValue.firstReadname}`,
