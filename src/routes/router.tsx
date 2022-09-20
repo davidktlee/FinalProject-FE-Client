@@ -14,6 +14,14 @@ import OneDayProductList from '../components/main/productList/OneDayProductList'
 import MonthlyProductList from '../components/main/productList/MonthlyProductList'
 import Header from '../components/header/Header'
 import Footer from '../components/footer/Footer'
+import MyOrder from '../components/mypage/tabs/MyOrder'
+import MyTracking from '../components/mypage/tabs/MyTracking'
+import MyAfter from '../components/mypage/tabs/MyAfter'
+import MyProfile from '../components/mypage/tabs/MyProfile'
+import MyReview from '../components/mypage/tabs/MyReview'
+import MyGrade from '../components/mypage/tabs/MyGrade'
+import MyCoupon from '../components/mypage/tabs/MyCoupon'
+import MyClaims from '../components/mypage/tabs/aftertabs/MyClaims'
 
 const Router = () => {
   return (
@@ -31,7 +39,17 @@ const Router = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
-        <Route path="/mypage" element={<MypagePage />} />
+        <Route path="/mypage" element={<MypagePage />}>
+          <Route element={<MyOrder/>} index />
+          <Route path="mytracking"element={<MyTracking/>} />
+          <Route path="myafter"element={<MyAfter />} />
+          
+          
+          <Route path="myprofile"element={<MyProfile />} />
+          <Route path="myreview"element={<MyReview />} />
+          <Route path="mygrade"element={<MyGrade />} />
+          <Route path="mycoupon"element={<MyCoupon />} />
+        </Route>
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
