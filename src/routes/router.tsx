@@ -22,6 +22,7 @@ import AboutProduct from '../components/main/notice/pages/AboutProduct'
 import AboutPoint from '../components/main/notice/pages/AboutPoint'
 import AboutEtc from '../components/main/notice/pages/AboutEtc'
 import NoticePage from '../pages/NoticePage'
+import NoticeDetail from './../components/main/notice/NoticeDetail'
 
 const Router = () => {
   return (
@@ -56,6 +57,7 @@ const Router = () => {
           <Route path="aboutpoint" element={<AboutPoint />} />
           <Route path="etc" element={<AboutEtc />} />
         </Route>
+        <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/*" element={<NotFound />} />

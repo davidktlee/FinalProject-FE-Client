@@ -5,17 +5,15 @@ const Notice = () => {
   const navigate = useNavigate()
   return (
     <>
-      <div className="my-10 text-[24px] text-center">
+      <div className="flex justify-center items-center text-[24px]  ">
         <span
           onClick={() => navigate('/notice')}
-          className="border-b-[6px] border-solid border-[#1B304A] hover:cursor-pointer"
+          className="border-b-[6px] border-solid border-[#1B304A] my-10 hover:cursor-pointer"
         >
           공지사항
         </span>
       </div>
-      <div className="flex justify-center items-center w-full mx-auto border-b-2 border-solid ">
-        <NoticeTitle />
-      </div>
+      <NoticeTitle />
     </>
   )
 }

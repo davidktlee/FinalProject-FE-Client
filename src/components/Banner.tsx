@@ -35,7 +35,7 @@ const Banner = () => {
 
   return (
     <div className="container my-10 relative">
-      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[9999999] hover:color-white">
+      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[2] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle
             cx="17.5"
@@ -71,7 +71,7 @@ const Banner = () => {
           </div>
         ))}
       </Swiper>
-      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[9999999] hover:color-white">
+      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[1] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="17.5" cy="17.5" r="17.5" fill="white" fillOpacity="0.5" />
           <path

@@ -5,7 +5,7 @@ export const NoticeTitles = [
   { title: '결제 관련', value: 'aboutcredit' },
   { title: '제품/도수', value: 'aboutproduct' },
   { title: '쿠폰/회원정보', value: 'aboutpoint' },
-  { title: '그 외', value: 'etc' }
+  { title: '기타', value: 'etc' }
 ]
 export const NoticePageTitle = [
   { title: '필독 공지사항', value: 'mustread' },
@@ -14,5 +14,5 @@ export const NoticePageTitle = [
   { title: '결제 관련', value: 'aboutcredit' },
   { title: '제품/도수', value: 'aboutproduct' },
   { title: '쿠폰/회원정보', value: 'aboutpoint' },
-  { title: '그 외', value: 'etc' }
+  { title: '기타', value: 'etc' }
 ]

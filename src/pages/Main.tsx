@@ -9,6 +9,8 @@ import Toast from '../components/common/toast/ToastItem'
 import { NavLink, Outlet } from 'react-router-dom'
 import CardContainer from '../components/main/CardContainer'
 import AllProductList from '../components/main/productList/AllProductList'
+import { NoticePageTitle } from '../constants/NoticeTitles'
+import NoticePage from './NoticePage'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
@@ -34,21 +36,22 @@ const Main = () => {
             <ControlBar />
           </div>
           {/*메인에서 상품 리스트 */}
-          <div className="w-full border-2 border-solid border-[#9AD0F6] rounded-xl">
+          <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
             {/* <div className="container px-4  flex justify-center items-end"></div> */}
             <div className="md:flex md:justify-center w-full mx-auto">
               <AllProductList />
             </div>
           </div>
         </section>
-        <div className="container border-2 border-solid border-[#9AD0F6] rounded-xl">
+        <div className="container border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
           <CardContainer data="new" />
         </div>
         {/* <Event />
         <Recommend />
         <Review /> */}
-        <Notice />
-        <Outlet />
+        <div className="container my-[100px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <NoticePage />
+        </div>
       </div>
     </div>
   )

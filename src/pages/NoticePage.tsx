@@ -1,15 +1,26 @@
 import React from 'react'
-import { Outlet } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
+import PageLayout from '../components/common/ui/PageLayout'
 import Notice from '../components/main/Notice'
 import NoticeTitle from '../components/main/notice/NoticeTitle'
 
 function NoticePage() {
+  const location = useLocation()
+  console.log(location)
   return (
-    <div className="py-[100px]">
-      <Notice />
-      
-      <Outlet />
-    </div>
+    <>
+      {location.pathname.includes('notice') === false ? (
+        <div className="w-[90%] mx-auto">
+          <Notice />
+          <Outlet />
+        </div>
+      ) : (
+        <PageLayout title="공지사항" layoutWidth="90%" isTitleVisible={true}>
+          <NoticeTitle />
+          <Outlet />
+        </PageLayout>
+      )}
+    </>
   )
 }
 
