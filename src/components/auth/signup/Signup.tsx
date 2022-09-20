@@ -20,6 +20,8 @@ import Birth from './birth/Birth'
 import Post from '../../common/post/Post'
 import Recaptcha from './Recaptcha'
 import { getRandomId } from '../../common/util/randomId'
+import { useAuth } from '../hooks/useAuth'
+import PageLayout from '../../common/ui/PageLayout'
 /** 필수 입력정보
  * 이름 / 우편번호 / 기본 주소 / 상세 주소 / 전화번호 / 이메일 주소 / 생일 / 비밀번호 / 자동 등록 방지
  *  */
@@ -63,6 +65,7 @@ const Signup = () => {
     birthDay: ''
   })
   const [totalValid,setTotalValid] = useState(false);
+  const auth = useAuth()
   const handleComplete = (data: any) => {
     let fullAddress = data.address
     let extraAddress = ''
@@ -100,17 +103,11 @@ const Signup = () => {
   
   const submitFormHandler = () => {
    
-    // fireToast({
-    //   id:getRandomId(),
-    //   message:'토스트 테스트 중~',
-    //   position: 'top',
-    //   timer: 2500,
-    //   type: 'success'
-    // })
-    const formData = {
+ 
+    const formData:RegisterType = {
       name: `${formValue.lastname}${formValue.firstname}` ,
       readname: `${formValue.lastReadname}${formValue.firstReadname}`,
-      postCode: formValue.postCode,
+      postCode: +formValue.postCode,
       address: `${formValue.address} ${formValue.detailAddress}`,
       phone: formValue.phone,
       email: formValue.email,
@@ -118,13 +115,11 @@ const Signup = () => {
       password: formValue.password,
       passwordConfirm:formValue.passwordConfirm
     }
-    
+    auth.signup(formData)
 
   }
   const totalvalidate = () => {
-    
     let totalValidation = true;
-    
     const formValueArray = Object.values(formValue);
     formValueArray.map((item) => {
       const {password,passwordConfirm} = formValue;
@@ -147,9 +142,10 @@ const Signup = () => {
   return (
     <>
     {formValue.password !== formValue.passwordConfirm}
-    <div className="w-full h-[1846px] bg-[#F4F6F8] text-base ">
-      <h3 className="text-[#1B304A] font-bold text-[22px] text-center w-full pt-[160px]">회원가입</h3>
-      <div className=" absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-[15%] w-3/5 h-fit bg-white rounded-lg p-10 mt-8">
+    
+      
+      <PageLayout layoutWidth='3/5' title='회원가입' isTitleVisible={true} >
+      
         <div className="">
           <h4 className="font-bold">고객정보</h4>
           <Input
@@ -278,8 +274,9 @@ const Signup = () => {
             <span>회원 가입</span>
           </button>
         </div>
-      </div>
-    </div>
+      
+      </PageLayout>
+    
     </>
   )
 }
