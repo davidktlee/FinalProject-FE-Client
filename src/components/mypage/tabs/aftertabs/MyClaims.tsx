@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 
 
 // 'ALL','주문취소','상품교환','반품접수'
@@ -22,21 +22,31 @@ const claimsMenuArray = [
   },
 ]
 
-const MyClaims = () => {
+
+interface MyClaimsProps {
+  setSearchParams: (nextInit: URLSearchParamsInit, navigateOptions?: {
+    replace?: boolean | undefined;
+    state?: any;
+} | undefined) => void
+  searchParams: URLSearchParams
+}
+
+const MyClaims = ({searchParams,setSearchParams}:MyClaimsProps) => {
   // idea . query string을 통해 주문취소,상품교환,반품접수 칸으로 이동..
   // ?query -> ...
   // searchParams를 통해 params를 가져와서 그에 맞게 filtering..
 
-  const [searchParams,setSearchParams] = useSearchParams('all');
+ 
   const [activeQuery,setActiveQuery] = useState('');
   const addQueryHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const {currentTarget:{name}} = e;
-    
     setSearchParams({
       filter: name
     })
     setActiveQuery(name)
   }
+
+
   return (
     <ul className='absolute flex right-0 -top-8 gap-2 text-xs text-[#7a7a7a] mr-2'>
       {claimsMenuArray.map((item) => (
