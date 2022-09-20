@@ -28,10 +28,11 @@ export const useAuth = ():UseAuth => {
         url: urlEndpoint,
         method: 'POST',
         data: userData,
-        headers: { ContentType: 'application/json' }
+        headers: { "Content-Type":"application/json" },
+        withCredentials:false
       })
-      if (status === 400) {
-        const title = 'message' in data ? data.message : '인증되지 않았습니다.'
+      if (status >= 400) {
+        const title = 'message' in data ? data.message : '회원가입에 실패하였습니다.'
         fireToast({
           id:'인증 실패',
           message:title,

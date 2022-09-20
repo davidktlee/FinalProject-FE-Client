@@ -46,7 +46,7 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
   return (
     <div className="flex flex-col">
             <label>
-              <span className="block py-1">생년월일</span>
+              <span className="block py-1 font-semibold">생년월일</span>
             </label>
             <div className="flex items-center gap-x-4">
               <label className="">
@@ -55,8 +55,9 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                   onChange={(e) => changeFormHandler(e,[VALIDATOR_MINLENGTH(3),VALIDATOR_MAXLENGTH(5)])}
                   value={formValue.birthYear}
                   type="number"
-                  className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]"
+                  className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]  focus:outline-1 focus:outline-[#ABC8DF]"
                   onBlur={onBlur}
+                  
                 />
                 <span className=" ml-2">년</span>
               </label>
@@ -66,7 +67,7 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                   onChange={(e) => changeFormHandler(e,[VALIDATOR_MIN(1),VALIDATOR_MAX(12)])}
                   value={formValue.birthMonth}
                   type="number"
-                  className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]"
+                  className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]  focus:outline-1 focus:outline-[#ABC8DF]"
                   onBlur={onBlur}
                 />
                 <span className=" ml-2">월</span>
@@ -77,13 +78,13 @@ const Birth = ({formValue,setFormValue,changeFormHandler}:BirthProps) => {
                   onChange={(e) => changeFormHandler(e,[VALIDATOR_MINLENGTH(1),VALIDATOR_MAXLENGTH(31)])}
                   value={formValue.birthDay}
                   type="number"
-                  className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]"
+                  className="h-10 border border-solid border-gray-200 rounded-md min-w-[80px] max-w-[120px]  focus:outline-1 focus:outline-[#ABC8DF]"
                   onBlur={onBlur}
                 />
                 <span className=" ml-2">일</span>
               </label>
             </div>
-            {isBlur && !birthValid && <FormErrorMessage errorText='생년월일은 (YYYY.MM.DD) 형식입니다.' />}
+            {isBlur && !birthValid && <FormErrorMessage errorTitle='생년월일' errorText='생년월일은 (YYYY.MM.DD) 형식입니다.' />}
     
           </div>
   );
