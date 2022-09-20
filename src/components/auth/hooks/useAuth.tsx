@@ -24,6 +24,8 @@ export const useAuth = ():UseAuth => {
   const { clearUser, updateUser } = useUser()
   const {fireToast} = useToast()
   const navigate = useNavigate()
+
+  /** 회원가입 함수 */
   const authSignUp = async (urlEndpoint: AuthEndpoint, userData: RegisterType): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
@@ -69,6 +71,7 @@ export const useAuth = ():UseAuth => {
     }
   }
 
+  /** 로그인 함수. localStorage에 토큰 전달 */
   const authSignin = async (urlEndpoint: AuthEndpoint, userData: SigninType): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
@@ -93,8 +96,9 @@ export const useAuth = ():UseAuth => {
       }
       if ('accessToken' in data) {
         // 토큰
-        setStoredUser(data);
+        
         updateUser(data)
+        setStoredUser(data);
         navigate('/')
       }
     } catch (errorResponse) {
