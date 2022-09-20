@@ -38,7 +38,7 @@ export const useUser = () : UseUser => {
 
   const updateUser = (newUser:UserDataType):void => {
     // get new token
-    queryclient.setQueryData(queryKeys.user, newUser)
+    queryClient.fetchQuery(queryKeys.user)
   }
 
   const clearUser = () => {

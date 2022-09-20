@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
+import { setStoredUser } from '../../local-storage/userStorage'
 
 import { RegisterType, SigninType, UserDataType } from '../types/userTypes'
 import {  useUser } from './useUser'
@@ -90,10 +91,11 @@ export const useAuth = ():UseAuth => {
         })
         return
       }
-      if ('token' in data) {
+      if ('accessToken' in data) {
         // 토큰
-        
+        setStoredUser(data);
         updateUser(data)
+        navigate('/')
       }
     } catch (errorResponse) {
       const title =

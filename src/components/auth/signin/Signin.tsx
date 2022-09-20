@@ -34,13 +34,7 @@ const Signin = () => {
   
   const submitSigninHandler = () => {
     signin({email:formValue.email,password:formValue.password})
-    // axios.post('http://43.200.50.49:8080/member/login',{
-    //   body: {
-    //     email:formValue.email,
-    //     password:formValue.password
-    //   },
-    //   withCredentials:false
-    // })
+ 
   }
 
   
