@@ -21,6 +21,7 @@ import MyProfile from '../components/mypage/tabs/MyProfile'
 import MyReview from '../components/mypage/tabs/MyReview'
 import MyGrade from '../components/mypage/tabs/MyGrade'
 import MyCoupon from '../components/mypage/tabs/MyCoupon'
+import MyClaims from '../components/mypage/tabs/aftertabs/MyClaims'
 
 const Router = () => {
   return (
@@ -41,7 +42,10 @@ const Router = () => {
         <Route path="/mypage" element={<MypagePage />}>
           <Route path='myorder'element={<MyOrder/>} />
           <Route path="mytracking"element={<MyTracking/>} />
-          <Route path="myafter"element={<MyAfter />} />
+          <Route path="myafter"element={<MyAfter />}>
+            <Route path="myclaims" element={<MyClaims/>}/>  
+            
+          </Route>
           <Route path="myprofile"element={<MyProfile />} />
           <Route path="myreview"element={<MyReview />} />
           <Route path="mygrade"element={<MyGrade />} />
