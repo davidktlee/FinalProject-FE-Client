@@ -1,4 +1,5 @@
 import React from 'react'
+import PageLayout from '../components/common/ui/PageLayout'
 import ReviewBanner from '../components/review/ReviewBanner'
 import ReviewContainer from '../components/review/ReviewContainer'
 

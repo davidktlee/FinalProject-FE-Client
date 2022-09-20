@@ -35,7 +35,7 @@ const ReviewBanner = () => {
 
   return (
     <div className="py-10 relative border-solid border-[#1B304A] border-b-2">
-      <button ref={prevRef} className="absolute top-[42%] left-[-36px] z-[9999999] hover:color-white">
+      <button ref={prevRef} className="absolute top-[42%] left-[-36px] z-[9] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle
             cx="17.5"
@@ -72,7 +72,7 @@ const ReviewBanner = () => {
           ))}
         </div>
       </Swiper>
-      <button ref={nextRef} className="absolute top-[42%] right-[-36px] z-[9999999] hover:color-white">
+      <button ref={nextRef} className="absolute top-[42%] right-[-36px] z-[9] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="17.5" cy="17.5" r="17.5" fill="white" fillOpacity="0.5" />
           <path

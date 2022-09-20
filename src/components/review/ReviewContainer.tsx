@@ -1,5 +1,4 @@
 import React from 'react'
-import ProductNameSelect from '../../constants/ProductNameSelect.json'
 import RevieItems from './RevieItems'
 
 const ReviewContainer = () => {
@@ -12,7 +11,7 @@ const ReviewContainer = () => {
         <p>60개의 리뷰</p>
       </div>
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto flex flex-wrap">
+        <div className="container px-5 mx-auto flex-wrap">
           <div className="-m-4">
             <RevieItems />
             <RevieItems />
