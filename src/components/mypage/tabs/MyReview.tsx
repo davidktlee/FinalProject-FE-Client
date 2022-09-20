@@ -1,10 +1,11 @@
 import React from 'react';
+import CardLayout from '../common/CardLayout';
 
 const MyReview = () => {
   return (
-    <div>
-      나는 리뷰
-    </div>
+    <CardLayout title='리뷰 관리'>
+
+    </CardLayout>
   );
 };
 

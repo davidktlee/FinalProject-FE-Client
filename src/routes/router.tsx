@@ -40,9 +40,11 @@ const Router = () => {
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
-          <Route path='myorder'element={<MyOrder/>} />
+          <Route element={<MyOrder/>} index />
           <Route path="mytracking"element={<MyTracking/>} />
           <Route path="myafter"element={<MyAfter />} />
+          
+          
           <Route path="myprofile"element={<MyProfile />} />
           <Route path="myreview"element={<MyReview />} />
           <Route path="mygrade"element={<MyGrade />} />

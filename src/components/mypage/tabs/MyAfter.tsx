@@ -56,8 +56,14 @@ interface ClaimsType {
 const MyAfter = () => {
   const {search} = useLocation();
   const [searchParams,setSearchParams] = useSearchParams('all');
+  
   const [claims,setClaims] = useState<ClaimsType[]>([]);
   
+
+  useEffect(() => {
+    searchParams.set('filter', 'all')
+  },[])
+
   useEffect(() => {
     const query = searchParams.get('filter');  
     setClaims(DUMMY_CLAIMS.filter((item) => item.process === query));
