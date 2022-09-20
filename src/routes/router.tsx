@@ -17,6 +17,7 @@ import Footer from '../components/footer/Footer'
 import AllFavoriteList from '../components/favorite/AllFavoriteList'
 import OneDayFavorite from '../components/favorite/OneDayFavorite'
 import MonthlyFavorite from '../components/favorite/MonthlyFavorite'
+import Review from '../pages/ReviewPage'
 
 const Router = () => {
   return (
@@ -40,6 +41,7 @@ const Router = () => {
         </Route>
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
