@@ -75,46 +75,59 @@ interface Item {
 interface Props {
   data: Data
 }
-type Data = 'new' | 'rank'
+type Data = 'product' | 'new'
 
 const CardContainer = ({ data }: Props) => {
   return (
-    <div className="">
-      <h2>(받아온 데이터리스트 종류 rank | new)</h2>
+    <>
       {data === 'new' ? (
-        <div className="grid grid-cols-2 xl:grid-cols-4">
-          {items.map((item: Item) => (
-            <Card
-              key={item.id}
-              title={item.title}
-              rank={item.rank}
-              id={item.id}
-              series={item.series}
-              price={item.price}
-              tag={item.tag}
-              salePrice={item.salePrice}
-              img={item.img}
-            />
-          ))}
-        </div>
-      ) : data === 'rank' ? (
-        <div className="grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 gap-2 mx-auto  ">
-          {items.map((item: Item) => (
-            <Card
-              key={item.id}
-              title={item.title}
-              rank={item.rank}
-              id={item.id}
-              series={item.series}
-              price={item.price}
-              tag={item.tag}
-              salePrice={item.salePrice}
-              img={item.img}
-            />
-          ))}
-        </div>
+        <>
+          <div className="flex justify-center">
+            <span className="text-center font-[600] text-[24px] my-10 border-b-[6px] border-solid border-[#1B304A]">
+              {data}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 xl:grid-cols-4">
+            {items.map((item: Item) => (
+              <Card
+                key={item.id}
+                title={item.title}
+                rank={item.rank}
+                id={item.id}
+                series={item.series}
+                price={item.price}
+                tag={item.tag}
+                salePrice={item.salePrice}
+                img={item.img}
+              />
+            ))}
+          </div>
+        </>
+      ) : data === 'product' ? (
+        <>
+          <div className="flex justify-center">
+            <span className="py-2 text-center font-[600] text-[24px] my-10 border-b-[6px] border-solid border-[#1B304A]">
+              {data}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 gap-2 mx-auto  ">
+            {items.map((item: Item) => (
+              <Card
+                key={item.id}
+                title={item.title}
+                rank={item.rank}
+                id={item.id}
+                series={item.series}
+                price={item.price}
+                tag={item.tag}
+                salePrice={item.salePrice}
+                img={item.img}
+              />
+            ))}
+          </div>
+        </>
       ) : null}
-    </div>
+    </>
   )
 }
 
