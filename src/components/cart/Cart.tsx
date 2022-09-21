@@ -9,7 +9,7 @@ import PageLayout from '../common/ui/PageLayout'
 
 
 const Cart = () => {
-  const product = useRecoilValue(productState)
+  
   return (
   <PageLayout layoutWidth='[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>

@@ -1,53 +1,55 @@
 import { AxiosResponse } from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
 import { axiosInstance, getJWTToken } from '../../axiosinstance';
-import { clearStoredUser, getStoredUser, setStoredUser } from '../../local-storage/userStorage';
+import { clearStoredToken, getStoredToken, setStoredToken } from '../../local-storage/userStorage';
 import { queryKeys } from '../../react-query/queryKeys';
-import { UserDataType } from '../types/userTypes';
-import {queryClient} from '../../react-query/queryClient'
+import { Token } from '../types/userTypes';
+// import {queryClient} from '../../react-query/queryClient'
+
+import { User, userState } from '../../../store/user';
 
 
-const getUser = async (user:UserDataType | null, signal:AbortSignal | undefined): Promise<UserDataType | null> => {
-    if(!user) return null;
-    const { data }: AxiosResponse<UserDataType> = await axiosInstance.get(
-      `/member/newaccess`,{
-        headers: getJWTToken(user),
-        signal,
+const getUser = async (token:Token | null): Promise<User | null> => {
+    if(!token) {
+      console.log('user없음')
+      return null
+    }
+    const { data }: AxiosResponse<User> = await axiosInstance.get(
+      '/member/info',{
+        headers: getJWTToken(token),
         withCredentials:false
       },
-      
     );
       return data
   }
 
 interface UseUser {
-  user: UserDataType | null;
-  updateUser: (user:UserDataType) => void;
+  user: User | null | undefined
+  updateUser: (user:Token) => void;
   clearUser: () => void;
 }
 
 export const useUser = () : UseUser => {
-
-  const queryclient = useQueryClient()
-  // @ts-ignored
-  const {data : user } = useQuery(queryKeys.user, ({signal}) => getUser(user,signal), {
-    initialData: getStoredUser(),
-    onSuccess: (received: UserDataType | null) => {
-      if(!received) {
-        clearStoredUser()
-      }else {
-        setStoredUser(received);
-      }
-    }
+  
+  const queryClient = useQueryClient()
+  const token = getStoredToken()
+  
+  const {data : user } = useQuery(queryKeys.user, () => getUser(token), {
+    onSuccess: (received: User | null) => {
+      return received
+    },
+    onError: () => console.log('queryError')
   })
 
-  const updateUser = (newUser:UserDataType):void => {
+  const updateUser = (newToken:Token):void => {
     // get new token
-    queryclient.setQueryData(queryKeys.user,newUser)
+    
+    queryClient.fetchQuery(queryKeys.token,() => getUser(newToken))
   }
 
   const clearUser = () => {
     queryClient.setQueryData(queryKeys.user, null);
+    queryClient.removeQueries([queryKeys.user,queryKeys.token])
   }
 
     return {

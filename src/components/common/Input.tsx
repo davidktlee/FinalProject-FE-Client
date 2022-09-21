@@ -40,8 +40,6 @@ const Input = ({label,placeholder,type,double, flexDirection,type2,placeholder2,
     const test2 = validate(value2,validators)
     setIsValidValue(test)
     setIsValidValue2(test2)
-  
-    
   } , [value,validators])
 
   

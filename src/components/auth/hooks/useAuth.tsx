@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
-import { setStoredUser } from '../../local-storage/userStorage'
+import { setStoredToken } from '../../local-storage/userStorage'
 
-import { RegisterType, SigninType, UserDataType } from '../types/userTypes'
+import { RegisterType, SigninType, Token } from '../types/userTypes'
 import {  useUser } from './useUser'
 
 
@@ -12,7 +12,7 @@ import {  useUser } from './useUser'
 type AuthEndpoint = 'member/login' | 'member/signup'
 
 type ErrorResponse = { message: string }
-type AuthResponseType = UserDataType | ErrorResponse
+type AuthResponseType = Token | ErrorResponse
 
 interface UseAuth {
   signin: (user: SigninType) => Promise<void>,
@@ -96,9 +96,8 @@ export const useAuth = ():UseAuth => {
       }
       if ('accessToken' in data) {
         // 토큰
-        
         updateUser(data)
-        
+        setStoredToken(data)
         navigate('/')
       }
     } catch (errorResponse) {

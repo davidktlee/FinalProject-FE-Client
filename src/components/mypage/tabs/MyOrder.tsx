@@ -13,7 +13,7 @@ const MyOrder = () => {
   if(!product) return (
     <div>loading...</div>
   )
-  console.log(product)
+  
   return (
     <CardLayout title='주문 내역'>
        <h4 className='py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold'>상품 정보</h4>
