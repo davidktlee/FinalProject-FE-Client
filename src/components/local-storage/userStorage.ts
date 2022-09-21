@@ -1,4 +1,5 @@
 import { UserDataType } from "../auth/types/userTypes";
+import { currentDate } from "../common/util/date";
 
 const LOCALSTORAGE_USER_KEY = 'lenssis_user';
 
@@ -9,7 +10,11 @@ export const getStoredUser = ():UserDataType | null => {
 }
 
 export const setStoredUser = (user:UserDataType) => {
-  localStorage.setItem(LOCALSTORAGE_USER_KEY, JSON.stringify(user))
+  const obj = {
+    ...user,
+    expiresIn: currentDate
+  }
+  localStorage.setItem(LOCALSTORAGE_USER_KEY, JSON.stringify(obj))
 }
 
 export const clearStoredUser = () => {

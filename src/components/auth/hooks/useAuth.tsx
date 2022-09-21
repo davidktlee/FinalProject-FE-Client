@@ -98,7 +98,7 @@ export const useAuth = ():UseAuth => {
         // 토큰
         
         updateUser(data)
-        setStoredUser(data);
+        
         navigate('/')
       }
     } catch (errorResponse) {

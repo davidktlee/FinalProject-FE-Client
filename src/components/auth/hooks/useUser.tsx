@@ -5,10 +5,12 @@ import { clearStoredUser, getStoredUser, setStoredUser } from '../../local-stora
 import { queryKeys } from '../../react-query/queryKeys';
 import { UserDataType } from '../types/userTypes';
 import {queryClient} from '../../react-query/queryClient'
+
+
 const getUser = async (user:UserDataType | null, signal:AbortSignal | undefined): Promise<UserDataType | null> => {
     if(!user) return null;
     const { data }: AxiosResponse<UserDataType> = await axiosInstance.get(
-      `/member/login`,{
+      `/member/newaccess`,{
         headers: getJWTToken(user),
         signal,
         withCredentials:false
@@ -28,7 +30,7 @@ export const useUser = () : UseUser => {
 
   const queryclient = useQueryClient()
   // @ts-ignored
-  const {data:user } = useQuery(queryKeys.user, ({signal}) => getUser(user,signal), {
+  const {data : user } = useQuery(queryKeys.user, ({signal}) => getUser(user,signal), {
     initialData: getStoredUser(),
     onSuccess: (received: UserDataType | null) => {
       if(!received) {
