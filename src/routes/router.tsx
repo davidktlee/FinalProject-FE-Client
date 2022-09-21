@@ -3,7 +3,7 @@ import Cart from '../pages/Cart'
 import Favorite from '../pages/Favorite'
 import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
-import MyPage from '../pages/MyPage'
+import MypagePage from '../pages/MypagePage'
 import Order from '../pages/Order'
 import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
@@ -11,6 +11,14 @@ import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
 import Header from '../components/header/Header'
 import Footer from '../components/footer/Footer'
+import MyOrder from '../components/mypage/tabs/MyOrder'
+import MyTracking from '../components/mypage/tabs/MyTracking'
+import MyAfter from '../components/mypage/tabs/MyAfter'
+import MyProfile from '../components/mypage/tabs/MyProfile'
+import MyReview from '../components/mypage/tabs/MyReview'
+import MyGrade from '../components/mypage/tabs/MyGrade'
+import MyCoupon from '../components/mypage/tabs/MyCoupon'
+import MyClaims from '../components/mypage/tabs/aftertabs/MyClaims'
 import AllFavoriteList from '../components/favorite/AllFavoriteList'
 import OneDayFavorite from '../components/favorite/OneDayFavorite'
 import MonthlyFavorite from '../components/favorite/MonthlyFavorite'
@@ -45,6 +53,16 @@ const Router = () => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/mypage" element={<MypagePage />}>
+          <Route element={<MyOrder />} index />
+          <Route path="mytracking" element={<MyTracking />} />
+          <Route path="myafter" element={<MyAfter />} />
+          <Route path="myprofile" element={<MyProfile />} />
+          <Route path="myreview" element={<MyReview />} />
+          <Route path="mygrade" element={<MyGrade />} />
+          <Route path="mycoupon" element={<MyCoupon />} />
+        </Route>
         <Route path="/favorite" element={<Favorite />}>
           <Route path="all" element={<AllFavoriteList />} />
           <Route path="oneday" element={<OneDayFavorite />} />
@@ -60,7 +78,6 @@ const Router = () => {
           <Route path="etc" element={<AboutEtc />} />
         </Route>
         <Route path="/notice/:id" element={<NoticeDetail />} />
-        <Route path="/mypage" element={<MyPage />} />
         <Route path="/event" element={<EventPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/review" element={<Review />} />
