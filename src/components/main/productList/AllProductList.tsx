@@ -10,7 +10,7 @@ function AllProductList() {
 
   return (
     <div className="">
-      <CardContainer data="rank" />
+      <CardContainer data="product" />
       <button>More</button>
     </div>
   )
