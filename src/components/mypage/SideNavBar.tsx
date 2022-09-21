@@ -38,7 +38,7 @@ const SideNavBar = () => {
   return (
     <ul className='flex flex-col items-start justify-start w-[20%] gap-y-1 text-[#7a7a7a] text-sm'>
       {navMenuArray.map((item) => (
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A] font-bold' : 'text-inherit')} to={item.path}>{item.title}</NavLink></li>
+        <li key={item.title}><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A] font-bold' : 'text-inherit')} to={item.path}>{item.title}</NavLink></li>
       ))}
         </ul>
   );

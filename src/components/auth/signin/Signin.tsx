@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { ChangeEvent, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { userState } from '../../../store/user'
 import Input from '../../common/Input'
 import useToast from '../../common/toast/hooks/useToast'
 import { useAuth } from '../hooks/useAuth'
@@ -19,7 +21,7 @@ interface formValueType {
 
 const Signin = () => {
   const { signin } = useAuth()
-  const { user } = useUser()
+  const user = useRecoilValue(userState)
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''

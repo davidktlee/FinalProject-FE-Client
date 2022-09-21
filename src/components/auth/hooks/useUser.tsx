@@ -1,49 +1,50 @@
 import { AxiosResponse } from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
 import { axiosInstance, getJWTToken } from '../../axiosinstance';
-import { clearStoredUser, getStoredUser, setStoredUser } from '../../local-storage/userStorage';
+import { clearStoredToken, getStoredToken, setStoredToken } from '../../local-storage/userStorage';
 import { queryKeys } from '../../react-query/queryKeys';
 import { UserDataType } from '../types/userTypes';
 import {queryClient} from '../../react-query/queryClient'
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { User, userState } from '../../../store/user';
 
 
 const getUser = async (user:UserDataType | null, signal:AbortSignal | undefined): Promise<UserDataType | null> => {
     if(!user) return null;
     const { data }: AxiosResponse<UserDataType> = await axiosInstance.get(
-      `/member/newaccess`,{
+      `/member/info`,{
         headers: getJWTToken(user),
         signal,
         withCredentials:false
       },
-      
     );
       return data
   }
 
 interface UseUser {
-  user: UserDataType | null;
+  
   updateUser: (user:UserDataType) => void;
   clearUser: () => void;
 }
 
 export const useUser = () : UseUser => {
-
+  const [currentUser,setCurrentUser] = useRecoilState(userState)
   const queryclient = useQueryClient()
   // @ts-ignored
   const {data : user } = useQuery(queryKeys.user, ({signal}) => getUser(user,signal), {
-    initialData: getStoredUser(),
-    onSuccess: (received: UserDataType | null) => {
+    initialData: getStoredToken(),
+    onSuccess: (received: User | null) => {
       if(!received) {
-        clearStoredUser()
+        clearStoredToken()
       }else {
-        setStoredUser(received);
+        setCurrentUser(received)
       }
     }
   })
 
   const updateUser = (newUser:UserDataType):void => {
     // get new token
-    queryclient.setQueryData(queryKeys.user,newUser)
+    queryclient.fetchQuery(queryKeys.user,({signal}) => getUser(newUser,signal))
   }
 
   const clearUser = () => {
@@ -51,7 +52,7 @@ export const useUser = () : UseUser => {
   }
 
     return {
-      user,
+      
       updateUser,
       clearUser
     }

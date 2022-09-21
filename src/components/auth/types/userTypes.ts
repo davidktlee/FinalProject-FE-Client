@@ -16,7 +16,10 @@ export interface SigninType {
 
 export interface UserDataType {
   refreshToken:string
-  token: string;
+  accessToken: string;
+  expiresIn:number;
+  accessTokenValidTime:number;
+  refreshTokenValidTime:number;
 }
 // "address": "string",
 //   "birthday": "string",
