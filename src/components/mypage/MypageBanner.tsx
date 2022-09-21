@@ -1,9 +1,13 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { userState } from '../../store/user';
 
-const MypageBanner = () => {
-  const user = useRecoilValue(userState);
+import { User, userState } from '../../store/user';
+
+interface MypageBannerProps {
+  user:User
+}
+
+const MypageBanner = ({user}:MypageBannerProps) => {
+  
   return (
     <div className='mx-auto flex items-center h-[160px] justify-between bg-[#92C8ED] text-white px-10 rounded-lg'>
         <div className='flex flex-col h-full justify-around w-[40%]'>

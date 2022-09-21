@@ -14,7 +14,7 @@ export interface SigninType {
   password:string;
 }
 
-export interface UserDataType {
+export interface Token {
   refreshToken:string
   accessToken: string;
   expiresIn:number;

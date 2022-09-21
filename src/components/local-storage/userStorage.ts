@@ -1,15 +1,15 @@
-import { UserDataType } from "../auth/types/userTypes";
+import { Token } from "../auth/types/userTypes";
 import { currentDate } from "../common/util/date";
 
 const LOCALSTORAGE_USER_KEY = 'lenssis_user';
 
-export const getStoredToken = ():UserDataType | null => {
+export const getStoredToken = ():Token => {
   const storedUser = localStorage.getItem(LOCALSTORAGE_USER_KEY);
   
   return storedUser ? JSON.parse(storedUser) : null;
 }
 
-export const setStoredToken = (user:UserDataType) => {
+export const setStoredToken = (user:Token) => {
   
   const obj = {
     ...user,
