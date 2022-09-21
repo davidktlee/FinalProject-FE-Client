@@ -12,8 +12,7 @@ import { getStoredToken,clearStoredToken } from './components/local-storage/user
 import Router from './routes/router'
 
 function App() {
-  const {user} = useUser()
-  console.log(user);
+  
   useEffect(() => {
     const token = getStoredToken()
     if(!token) return

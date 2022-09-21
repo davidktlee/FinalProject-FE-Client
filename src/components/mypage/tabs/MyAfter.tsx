@@ -78,11 +78,11 @@ const MyAfter = () => {
       <div className='relative'>
       <MyClaims searchParams={searchParams} setSearchParams={setSearchParams} />
       <div className='flex items-center justify-between py-2 border-b border-solid border-[#abc8df] px-1 text-sm'>
-      {afterMenuArray.map((item) => <p className='flex-1 text-center'>{item}</p>)}
+      {afterMenuArray.map((item) => <p key={item} className='flex-1 text-center'>{item}</p>)}
       </div>
       <div className='flex flex-col w-full'>
       {claims.map((item) => (
-        <div className='flex items-center px-1 text-center py-4'>
+        <div key={item.claimTitle} className='flex items-center px-1 text-center py-4'>
         <p className='flex-1 '>{item.process === 'cancel' && '주문취소'} {item.process ==='exchange' && '상품교환'} {item.process === 'return' && '반품'}</p>
         <p className='flex-1 text-center'>{item.claimNumber}</p>
         <p className='flex-1 truncate text-center'>{item.claimTitle}</p>

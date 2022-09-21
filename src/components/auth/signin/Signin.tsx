@@ -21,15 +21,14 @@ interface formValueType {
 
 const Signin = () => {
   const { signin } = useAuth()
-  const {user} = useUser()
-  const {fireToast} = useToast()
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
   })
-  const [totalValid, setTotalValid] = useState(false)
+  const {user} = useUser()
+  const {fireToast} = useToast()
   const navigate = useNavigate()
-
+  const [totalValid, setTotalValid] = useState(false)
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       currentTarget: { value, name }
@@ -65,18 +64,18 @@ const Signin = () => {
   }, [formValue])
 
     
-  // useEffect(() => {
-  //   if(user){
-  //     fireToast({
-  //       id:'로그인상태',
-  //       message:'로그인 상태이기에 회원페이지로 이동됩니다',
-  //       position: 'top',
-  //       timer:3000,
-  //       type:'complete'
-  //     })
-  //     navigate('/mypage')
-  //   }
-  // })
+  useEffect(() => {
+    if(user){
+      fireToast({
+        id:'로그인상태',
+        message:'로그인 상태이기에 회원페이지로 이동됩니다',
+        position: 'top',
+        timer:3000,
+        type:'complete'
+      })
+      navigate('/mypage')
+    }
+  },[])
 
   return (
     <div className="w-full h-screen bg-[#F4F6F8] relative">

@@ -53,8 +53,9 @@ export const useAuth = ():UseAuth => {
           timer:5000,
           type:'success'
         })
+        navigate('/signin')
       }
-      navigate('/signin')
+      
 
     } catch (errorResponse) {
       const title =
