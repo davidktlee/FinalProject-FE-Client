@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import PageLayout from '../../common/ui/PageLayout'
 
 import UserForm from '../../common/ui/UserForm'
+import CardTemplate from '../../common/ui/CardTemplate'
 
 export type SignupFormType = {
   lastname: string;
@@ -60,8 +61,10 @@ const submitFormHandler = () => {
 }
   
   return (
-    <PageLayout layoutWidth='3/5' title='회원가입' isTitleVisible={true} >
+    <PageLayout layoutWidth='3/5' >
+    <CardTemplate title='회원가입' isTitleVisible={true}>
     <UserForm formValue={formValue} setFormValue={setFormValue} submitFormHandler={submitFormHandler}/>
+    </CardTemplate>
     </PageLayout>
   )
 }
