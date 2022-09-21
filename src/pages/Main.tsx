@@ -8,6 +8,7 @@ import Toast from '../components/common/toast/ToastItem'
 import CardContainer from '../components/main/CardContainer'
 import AllProductList from '../components/main/productList/AllProductList'
 import NoticePage from './NoticePage'
+import MainReview from '../components/main/MainReview'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
@@ -25,7 +26,7 @@ const Main = () => {
         <Toast type="failed" message="실패하셨습니다!!!" position="top" timer={1500} />
       </div> */}
 
-      <div className="pt-44">
+      <div className="pt-44 relative">
         <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
@@ -49,7 +50,9 @@ const Main = () => {
         <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
           <Recommend />
         </div>
-        {/* <Review />  */}
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <MainReview />
+        </div>
         <div className="container my-[100px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
           <NoticePage />
         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
- 
+
 // 지울 것
 const events = [
   { id: 1, img: '/assets/KakaoTalk_20220714_125021628.jpg', content: '이벤트 내용' },
@@ -35,7 +35,9 @@ const MainEvent = () => {
         ))}
       </div>
       <div className="w-[100px] h-[40px] my-[20px] mx-auto border-2 border-solid rounded-full flex justify-center items-center">
-        <button onClick={() => navigate('/event')}>View More</button>
+        <button className="text-[#0B0954] font=[700]" onClick={() => navigate('/event')}>
+          View More
+        </button>
       </div>
     </div>
   )
