@@ -40,7 +40,7 @@ export const useUser = () : UseUser => {
   const token = getStoredToken()
   const isFetching = useIsFetching()
   const [userNumber,setUserNumber] = useState(0)
-  const {data : user } = useQuery([queryKeys.user,token.expiresIn], () => getUser(token), {
+  const {data : user } = useQuery([queryKeys.user,token], () => getUser(token), {
     onSuccess: (received: User | null) => {
       if(received){
         setCurrentUser(received)
