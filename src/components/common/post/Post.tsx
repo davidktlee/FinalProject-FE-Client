@@ -28,16 +28,17 @@ const Post = ({ formValue, setFormValue, changeFormHandler,addressPopupHandler }
   return (
     <>
       <div className="flex flex-col gap-4 w-full">
-        <label className="">우편번호</label>
+        <label className="font-semibold">우편번호</label>
         <div className="flex justify-start items-center gap-2">
           <input
             name="postCode"
             onChange={(e) => changeFormHandler(e, [VALIDATOR_REQUIRE()])}
             value={formValue.postCode}
             type="text"
-            className="grow h-10 border border-solid border-gray-200 rounded-md max-w-[400px]"
+            className="grow h-10 border border-solid border-gray-200 rounded-md max-w-[400px]  focus:outline-1 focus:outline-[#ABC8DF]"
             readOnly
             onBlur={onBlur}
+            
           />
           <div className="grow">
             <button

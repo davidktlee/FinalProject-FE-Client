@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Event from '../components/main/Event'
-import Notice from '../components/main/Notice'
+import Event from '../components/main/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Review from '../components/Review'
 import Banner from './../components/Banner'
 import ControlBar from './../components/ControlBar'
 import Toast from '../components/common/toast/ToastItem'
-import { NavLink, Outlet } from 'react-router-dom'
 import CardContainer from '../components/main/CardContainer'
+import AllProductList from '../components/main/productList/AllProductList'
+import NoticePage from './NoticePage'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
@@ -26,61 +26,33 @@ const Main = () => {
       </div> */}
 
       <div className="pt-44">
+        <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
           <div className="hidden lg:block xl:block w-[280px] mr-12">
             <ControlBar />
           </div>
           {/*메인에서 상품 리스트 */}
-          <div className="w-full border-2 border-solid border-[#9AD0F6] rounded-xl">
-            <div className="container px-4 border-b-2 border-solid flex justify-center items-end">
-              <NavLink
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? '3px solid #102B91' : 'none',
-                  fontWeight: isActive ? '800' : 'normal'
-                })}
-                className="w-[120px] md:w-[220px] h-[44px] rounded-t-md border-none box-border text-black text-[20px] no-underline text-center flex justify-center items-center"
-                to="/"
-                state="all"
-              >
-                All
-              </NavLink>
-              <NavLink
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? '3px solid #102B91' : 'none',
-                  fontWeight: isActive ? '800' : 'normal'
-                })}
-                className="w-[120px] md:w-[220px] h-[44px] rounded-t-md border-none box-border text-black  text-[20px] no-underline text-center flex justify-center items-center"
-                to="oneday"
-                state="oneday"
-              >
-                One day
-              </NavLink>
-              <NavLink
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? '3px solid #102B91' : 'none',
-                  fontWeight: isActive ? '800' : 'normal'
-                })}
-                className="w-[120px] md:w-[220px] h-[44px] rounded-t-md border-none box-border text-black  text-[20px] no-underline text-center flex justify-center items-center"
-                to="monthly"
-                state="monthly"
-              >
-                Monthly
-              </NavLink>
-            </div>
+          <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+            {/* <div className="container px-4  flex justify-center items-end"></div> */}
             <div className="md:flex md:justify-center w-full mx-auto">
-              <Outlet />
+              <AllProductList />
             </div>
           </div>
         </section>
-        <Banner />
-        <div className="container border-2 border-solid border-[#9AD0F6] rounded-xl">
-          <CardContainer data='new'/>
+        <div className="container border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <CardContainer data="new" />
         </div>
-        {/* <Event />
-        <Recommend />
-        <Review /> */}
-        <Notice />
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <Event />
+        </div>
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <Recommend />
+        </div>
+        {/* <Review />  */}
+        <div className="container my-[100px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <NoticePage />
+        </div>
       </div>
     </div>
   )

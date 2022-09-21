@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
+import { setStoredUser } from '../../local-storage/userStorage'
 
 import { RegisterType, SigninType, UserDataType } from '../types/userTypes'
 import {  useUser } from './useUser'
@@ -21,17 +23,20 @@ interface UseAuth {
 export const useAuth = ():UseAuth => {
   const { clearUser, updateUser } = useUser()
   const {fireToast} = useToast()
+  const navigate = useNavigate()
 
+  /** 회원가입 함수 */
   const authSignUp = async (urlEndpoint: AuthEndpoint, userData: RegisterType): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
         url: urlEndpoint,
         method: 'POST',
         data: userData,
-        headers: { ContentType: 'application/json' }
+        headers: { "Content-Type":"application/json" },
+        withCredentials:false
       })
-      if (status === 400) {
-        const title = 'message' in data ? data.message : '인증되지 않았습니다.'
+      if (status >= 400) {
+        const title = 'message' in data ? data.message : '회원가입에 실패하였습니다.'
         fireToast({
           id:'인증 실패',
           message:title,
@@ -40,7 +45,16 @@ export const useAuth = ():UseAuth => {
           type:'failed'
         })
         return
+      }else{
+        fireToast({
+          id:'회원가입 성공',
+          message:'가입하신 이메일로 로그인 해주세요!',
+          position: 'bottom',
+          timer:5000,
+          type:'success'
+        })
       }
+      navigate('/signin')
 
     } catch (errorResponse) {
       const title =
@@ -57,13 +71,17 @@ export const useAuth = ():UseAuth => {
     }
   }
 
+  /** 로그인 함수. localStorage에 토큰 전달 */
   const authSignin = async (urlEndpoint: AuthEndpoint, userData: SigninType): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
         url: urlEndpoint,
         method: 'POST',
         data: userData,
-        headers: { ContentType: 'application/json' }
+        headers: {
+          ContentType: 'application/json',
+         },
+        withCredentials:false
       })
       if (status === 400) {
         const title = 'message' in data ? data.message : '인증되지 않았습니다.'
@@ -76,9 +94,12 @@ export const useAuth = ():UseAuth => {
         })
         return
       }
-      if ('token' in data) {
+      if ('accessToken' in data) {
         // 토큰
+        
         updateUser(data)
+        setStoredUser(data);
+        navigate('/')
       }
     } catch (errorResponse) {
       const title =
