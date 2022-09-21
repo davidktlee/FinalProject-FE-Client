@@ -8,8 +8,9 @@ const items = [
     series: '샌드',
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    salePrice: '800円',
-    img: '/assets/logo.svg'
+    discount: '800円',
+    img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
+    isNew: true
   },
   {
     id: '2',
@@ -18,8 +19,9 @@ const items = [
     series: '샌드',
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    salePrice: '800円',
-    img: '/assets/logo.svg'
+    discount: '800円',
+    img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
+    isNew: true
   },
   {
     id: '3',
@@ -28,8 +30,9 @@ const items = [
     series: '샌드',
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    salePrice: '800円',
-    img: '/assets/logo.svg'
+    discount: '800円',
+    img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
+    isNew: true
   },
   {
     id: '4',
@@ -38,8 +41,9 @@ const items = [
     series: '샌드',
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    salePrice: '800円',
-    img: '/assets/logo.svg'
+    discount: '800円',
+    img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
+    isNew: true
   },
   {
     id: '5',
@@ -48,8 +52,9 @@ const items = [
     series: '샌드',
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    salePrice: '800円',
-    img: '/assets/logo.svg'
+    discount: '800円',
+    img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
+    isNew: true
   },
   {
     id: '6',
@@ -58,63 +63,81 @@ const items = [
     series: '샌드',
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    salePrice: '800円',
-    img: '/assets/logo.svg'
+    discount: '800円',
+    img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
+    isNew: true
   }
 ]
 interface Item {
-  id: string
-  title: string
-  rank: string
-  series: string
-  price: string
-  tag: string[]
-  salePrice: string
-  img: string
+  id: string // 상품 id
+  title: string // 상품 타이틀
+  rank?: string // 상품 순위
+  series: string // 상품 시리즈
+  price: string // 상품 가격
+  tag?: string[] // 상품 밑 태그
+  discount?: string // 할인률
+  img?: string // 상품 이미지
+  isNew?: boolean // 새로운 상품 여부
+  color?: string[] // 색상 코드
 }
 interface Props {
   data: Data
 }
-type Data = 'new' | 'rank'
+type Data = 'product' | 'new'
 
 const CardContainer = ({ data }: Props) => {
   return (
-    <div className="">
-      <h2>(받아온 데이터리스트 종류 rank | new)</h2>
+    <>
       {data === 'new' ? (
-        <div className="grid grid-cols-2 xl:grid-cols-4">
-          {items.map((item: Item) => (
-            <Card
-              key={item.id}
-              title={item.title}
-              rank={item.rank}
-              id={item.id}
-              series={item.series}
-              price={item.price}
-              tag={item.tag}
-              salePrice={item.salePrice}
-              img={item.img}
-            />
-          ))}
-        </div>
-      ) : data === 'rank' ? (
-        <div className="grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 gap-2 mx-auto  ">
-          {items.map((item: Item) => (
-            <Card
-              key={item.id}
-              title={item.title}
-              rank={item.rank}
-              id={item.id}
-              series={item.series}
-              price={item.price}
-              tag={item.tag}
-              salePrice={item.salePrice}
-              img={item.img}
-            />
-          ))}
-        </div>
-      ) : null}
-    </div>
+        <>
+          <div className="flex justify-center my-8">
+            <span className="text-center font-[600] text-[24px] my-10 border-b-[6px] border-solid border-[#1B304A]">
+              {data}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center xl:grid-cols-4">
+            {items.map((item: Item) => (
+              <Card
+                key={item.id}
+                title={item.title}
+                rank={item.rank}
+                id={item.id}
+                series={item.series}
+                price={item.price}
+                tag={item.tag}
+                discount={item.discount}
+                img={item.img}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        data === 'product' && (
+          <>
+            <div className="flex justify-center">
+              <span className="py-2 text-center font-[600] text-[24px] my-10 border-b-[6px] border-solid border-[#1B304A]">
+                {data}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 xl:grid-cols-3 sm:grid-cols-2 xl:gap-2 lg:gap-2  mx-auto ">
+              {items.map((item: Item) => (
+                <Card
+                  key={item.id}
+                  title={item.title}
+                  rank={item.rank}
+                  id={item.id}
+                  series={item.series}
+                  price={item.price}
+                  tag={item.tag}
+                  discount={item.discount}
+                  img={item.img}
+                />
+              ))}
+            </div>
+          </>
+        )
+      )}
+    </>
   )
 }
 

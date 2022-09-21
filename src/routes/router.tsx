@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Cart from '../pages/Cart'
+import CartPage from '../pages/CartPage'
 import Favorite from '../pages/Favorite'
 import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
@@ -9,9 +9,6 @@ import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
-import AllProductList from '../components/main/productList/AllProductList'
-import OneDayProductList from '../components/main/productList/OneDayProductList'
-import MonthlyProductList from '../components/main/productList/MonthlyProductList'
 import Header from '../components/header/Header'
 import Footer from '../components/footer/Footer'
 import MyOrder from '../components/mypage/tabs/MyOrder'
@@ -25,6 +22,16 @@ import MyClaims from '../components/mypage/tabs/aftertabs/MyClaims'
 import AllFavoriteList from '../components/favorite/AllFavoriteList'
 import OneDayFavorite from '../components/favorite/OneDayFavorite'
 import MonthlyFavorite from '../components/favorite/MonthlyFavorite'
+import AboutMustRead from '../components/main/notice/pages/AboutMustRead'
+import AboutShip from '../components/main/notice/pages/AboutShip'
+import AboutRefund from '../components/main/notice/pages/AboutRefund'
+import AboutCredit from '../components/main/notice/pages/AboutCredit'
+import AboutProduct from '../components/main/notice/pages/AboutProduct'
+import AboutPoint from '../components/main/notice/pages/AboutPoint'
+import AboutEtc from '../components/main/notice/pages/AboutEtc'
+import NoticePage from '../pages/NoticePage'
+import NoticeDetail from './../components/main/notice/NoticeDetail'
+import EventPage from '../pages/EventPage'
 import Review from '../pages/ReviewPage'
 
 const Router = () => {
@@ -33,26 +40,28 @@ const Router = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Main />}>
-          <Route index element={<AllProductList />} />
-          <Route path="/oneday" element={<OneDayProductList />} />
-          <Route path="/monthly" element={<MonthlyProductList />} />
+          <Route index element={<AboutMustRead />} />
+          <Route path="aboutship" element={<AboutShip />} />
+          <Route path="aboutrefund" element={<AboutRefund />} />
+          <Route path="aboutcredit" element={<AboutCredit />} />
+          <Route path="aboutproduct" element={<AboutProduct />} />
+          <Route path="aboutpoint" element={<AboutPoint />} />
+          <Route path="etc" element={<AboutEtc />} />
         </Route>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
-          <Route element={<MyOrder/>} index />
-          <Route path="mytracking"element={<MyTracking/>} />
-          <Route path="myafter"element={<MyAfter />} />
-          
-          
-          <Route path="myprofile"element={<MyProfile />} />
-          <Route path="myreview"element={<MyReview />} />
-          <Route path="mygrade"element={<MyGrade />} />
-          <Route path="mycoupon"element={<MyCoupon />} />
+          <Route path="myorder" element={<MyOrder />}/>
+          <Route path="mytracking" element={<MyTracking />} />
+          <Route path="myafter" element={<MyAfter />} />
+          <Route path="myprofile" element={<MyProfile />} />
+          <Route path="myreview" element={<MyReview />} />
+          <Route path="mygrade" element={<MyGrade />} />
+          <Route path="mycoupon" element={<MyCoupon />} />
         </Route>
 
         <Route path="/favorite" element={<Favorite />}>
@@ -60,7 +69,17 @@ const Router = () => {
           <Route path="oneday" element={<OneDayFavorite />} />
           <Route path="monthly" element={<MonthlyFavorite />} />
         </Route>
-        
+        <Route path="/notice" element={<NoticePage />}>
+          <Route path="mustread" element={<AboutMustRead />} />
+          <Route path="aboutship" element={<AboutShip />} />
+          <Route path="aboutrefund" element={<AboutRefund />} />
+          <Route path="aboutcredit" element={<AboutCredit />} />
+          <Route path="aboutproduct" element={<AboutProduct />} />
+          <Route path="aboutpoint" element={<AboutPoint />} />
+          <Route path="etc" element={<AboutEtc />} />
+        </Route>
+        <Route path="/notice/:id" element={<NoticeDetail />} />
+        <Route path="/event" element={<EventPage />} />
 
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/review" element={<Review />} />
