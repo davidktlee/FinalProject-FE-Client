@@ -11,7 +11,7 @@ module.exports = {
         transparent: 'transparent',
         current:'currentColor',
         lenssisSky: '#abc8df',
-        lenssisDeep: '#92c8ed',
+        lenssisDeepSky: '#92c8ed',
         lenssisDark: '#1B304A',
         lenssisGray: '#7a7a7a',
         lenssisDeepGray:'#5a5a5a'
