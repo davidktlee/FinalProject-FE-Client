@@ -6,7 +6,7 @@ import NoticeTitle from '../components/main/notice/NoticeTitle'
 
 function NoticePage() {
   const location = useLocation()
-  console.log(location)
+
   return (
     <>
       {location.pathname.includes('notice') === false ? (

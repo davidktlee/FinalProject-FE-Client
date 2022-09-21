@@ -1,6 +1,6 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react' // basic
-import SwiperCore, { Navigation, Pagination } from 'swiper'
+import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.scss'
@@ -14,11 +14,13 @@ const imgs = [
   '/assets/KakaoTalk_20220714_125021628.jpg'
 ]
 
+// 달라질 부분
+// absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
 const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
 
-  SwiperCore.use([Navigation, Pagination])
+  SwiperCore.use([Navigation, Pagination, Autoplay])
   const settings = {
     spaceBetween: 10,
     navigation: {
@@ -28,7 +30,7 @@ const Banner = () => {
     scrollbar: { draggable: true },
     pagination: { clickable: true },
     slidesPerView: 1,
-    loop: true,
+    loop: false,
     autoplay: { delay: 2000, disableOnInteraction: true },
     watchOverflow: true
   }

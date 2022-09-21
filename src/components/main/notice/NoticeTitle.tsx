@@ -11,8 +11,9 @@ function NoticeTitle() {
   return (
     <div className=" flex justify-center mx-auto border-b-2 border-solid border-gray-100">
       {location.pathname.includes('notice')
-        ? NoticePageTitle.map((title: Title) => (
+        ? NoticePageTitle.map((title: Title, index: number) => (
             <NavLink
+              key={index}
               style={({ isActive }) => ({
                 borderBottom: isActive ? '3px solid #9AD0F6' : 'none'
                 // padding: isActive ? '0 10px' : 'none'
@@ -23,8 +24,9 @@ function NoticeTitle() {
               {title.title}
             </NavLink>
           ))
-        : NoticeTitles.map((title: Title) => (
+        : NoticeTitles.map((title: Title, index: number) => (
             <NavLink
+              key={index}
               style={({ isActive }) => ({ borderBottom: isActive ? '3px solid #9AD0F6' : 'none' })}
               to={title.value}
               className="xl:w-[200px] md:w-[150px] sm:w[100px] sm:whitespace-nowrap text-center py-4"

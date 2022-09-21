@@ -1,5 +1,6 @@
 import React from 'react'
-import Banner from '../Banner'
+
+import RecommendBanner from './recommend/RecommendBanner'
 
 const Recommend = () => {
   return (
@@ -9,7 +10,7 @@ const Recommend = () => {
           Recommend
         </span>
       </div>
-      <Banner />
+      <RecommendBanner />
     </div>
   )
 }
