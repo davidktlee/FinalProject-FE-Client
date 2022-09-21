@@ -22,6 +22,10 @@ import MyReview from '../components/mypage/tabs/MyReview'
 import MyGrade from '../components/mypage/tabs/MyGrade'
 import MyCoupon from '../components/mypage/tabs/MyCoupon'
 import MyClaims from '../components/mypage/tabs/aftertabs/MyClaims'
+import AllFavoriteList from '../components/favorite/AllFavoriteList'
+import OneDayFavorite from '../components/favorite/OneDayFavorite'
+import MonthlyFavorite from '../components/favorite/MonthlyFavorite'
+import Review from '../pages/ReviewPage'
 
 const Router = () => {
   return (
@@ -50,7 +54,16 @@ const Router = () => {
           <Route path="mygrade"element={<MyGrade />} />
           <Route path="mycoupon"element={<MyCoupon />} />
         </Route>
+
+        <Route path="/favorite" element={<Favorite />}>
+          <Route path="all" element={<AllFavoriteList />} />
+          <Route path="oneday" element={<OneDayFavorite />} />
+          <Route path="monthly" element={<MonthlyFavorite />} />
+        </Route>
+        <Route path="/mypage" element={<MyPage />} />
+
         <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -1,41 +1,41 @@
-import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react' // basic
-import SwiperCore, { Navigation, Pagination } from 'swiper'
-
+import React, { useRef } from 'react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
-import { useRef } from 'react'
 
-const imgs = [
-  '/assets/KakaoTalk_20220714_125021628.jpg',
-  '/assets/KakaoTalk_20220714_125021628.jpg',
-  '/assets/KakaoTalk_20220714_125021628.jpg'
-]
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore, { Navigation } from 'swiper'
 
-const Banner = () => {
+const ReviewBanner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
 
-  SwiperCore.use([Navigation, Pagination])
+  SwiperCore.use([Navigation])
   const settings = {
-    spaceBetween: 10,
+    spaceBetween: 20,
     navigation: {
       prevEl: prevRef.current,
       nextEl: nextRef.current
     },
-    scrollbar: { draggable: true },
-    pagination: { clickable: true },
-    slidesPerView: 1,
+    slidesPerView: 6,
     loop: true,
     autoplay: { delay: 2000, disableOnInteraction: true },
     watchOverflow: true
   }
 
+  const reviewImgs = [
+    'https://dummyimage.com/177.5x175/000/fff',
+    'https://dummyimage.com/177.5x175/000/fff',
+    'https://dummyimage.com/177.5x175/000/fff',
+    'https://dummyimage.com/177.5x175/000/fff',
+    'https://dummyimage.com/177.5x175/000/fff',
+    'https://dummyimage.com/177.5x175/000/fff'
+  ]
+
   return (
-    <div className="container my-10 relative">
-      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[9999999] hover:color-white">
+    <div className="py-10 relative border-solid border-[#1B304A] border-b-2">
+      <button ref={prevRef} className="absolute top-[42%] left-[-36px] z-[9] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle
             cx="17.5"
@@ -61,17 +61,18 @@ const Banner = () => {
           />
         </svg>
       </button>
-      <Swiper {...settings} style={{ borderRadius: '25px', overflow: 'hidden' }}>
-        {imgs.map((img: string, index: number) => (
-          <div key={index}>
-            <SwiperSlide key={index}>
-              {/* key값 id 값 넣어주기 */}
-              <img src={img} alt="" className="w-full h-[400px] object-cover " />
-            </SwiperSlide>
-          </div>
-        ))}
+      <Swiper {...settings}>
+        <div className=" flex w-full justify-between ">
+          {reviewImgs.map((img: string, index: number) => (
+            <div key={index}>
+              <SwiperSlide key={index}>
+                <img src={img} />
+              </SwiperSlide>
+            </div>
+          ))}
+        </div>
       </Swiper>
-      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[9999999] hover:color-white">
+      <button ref={nextRef} className="absolute top-[42%] right-[-36px] z-[9] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="17.5" cy="17.5" r="17.5" fill="white" fillOpacity="0.5" />
           <path
@@ -94,10 +95,4 @@ const Banner = () => {
   )
 }
 
-export default Banner
-
-{
-  /* {imgs.map((img: string, index: number) => (
-      <SwiperSlide key={`${img}-${index}`}>{img}</SwiperSlide>
-    ))} */
-}
+export default ReviewBanner
