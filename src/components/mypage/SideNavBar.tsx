@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 const navMenuArray = [
   {
   title:'주문 내역',
-  path:'/mypage'
+  path:'myorder'
   },
   {
     title:'배송 조회',
