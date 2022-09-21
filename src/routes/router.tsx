@@ -55,7 +55,6 @@ const Router = () => {
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
-
           <Route path="myorder" element={<MyOrder />}/>
           <Route path="mytracking" element={<MyTracking />} />
           <Route path="myafter" element={<MyAfter />} />
