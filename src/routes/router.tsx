@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Cart from '../pages/Cart'
+import CartPage from '../pages/CartPage'
 import Favorite from '../pages/Favorite'
 import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
@@ -51,11 +51,11 @@ const Router = () => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/order" element={<Order />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
-          <Route element={<MyOrder />} index />
+          <Route path="myorder" element={<MyOrder />}/>
           <Route path="mytracking" element={<MyTracking />} />
           <Route path="myafter" element={<MyAfter />} />
           <Route path="myprofile" element={<MyProfile />} />
@@ -63,6 +63,7 @@ const Router = () => {
           <Route path="mygrade" element={<MyGrade />} />
           <Route path="mycoupon" element={<MyCoupon />} />
         </Route>
+
         <Route path="/favorite" element={<Favorite />}>
           <Route path="all" element={<AllFavoriteList />} />
           <Route path="oneday" element={<OneDayFavorite />} />
