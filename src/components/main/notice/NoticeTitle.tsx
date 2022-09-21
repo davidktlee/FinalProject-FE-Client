@@ -7,7 +7,6 @@ interface Title {
 }
 function NoticeTitle() {
   const location = useLocation()
-  console.log(location)
   return (
     <div className=" flex justify-center mx-auto border-b-2 border-solid border-gray-100">
       {location.pathname.includes('notice')
