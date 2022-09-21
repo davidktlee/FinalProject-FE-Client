@@ -60,7 +60,7 @@ const Router = () => {
           <Route path="oneday" element={<OneDayFavorite />} />
           <Route path="monthly" element={<MonthlyFavorite />} />
         </Route>
-        <Route path="/mypage" element={<MyPage />} />
+        
 
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/review" element={<Review />} />
