@@ -1,6 +1,6 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react' // basic
-import SwiperCore, { Navigation, Pagination } from 'swiper'
+import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.scss'
@@ -14,11 +14,13 @@ const imgs = [
   '/assets/KakaoTalk_20220714_125021628.jpg'
 ]
 
+// 달라질 부분
+// absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
 const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
 
-  SwiperCore.use([Navigation, Pagination])
+  SwiperCore.use([Navigation, Pagination, Autoplay])
   const settings = {
     spaceBetween: 10,
     navigation: {
@@ -28,14 +30,14 @@ const Banner = () => {
     scrollbar: { draggable: true },
     pagination: { clickable: true },
     slidesPerView: 1,
-    loop: true,
+    loop: false,
     autoplay: { delay: 2000, disableOnInteraction: true },
     watchOverflow: true
   }
 
   return (
     <div className="container my-10 relative">
-      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[9999999] hover:color-white">
+      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[2] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle
             cx="17.5"
@@ -71,7 +73,7 @@ const Banner = () => {
           </div>
         ))}
       </Swiper>
-      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[9999999] hover:color-white">
+      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[1] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="17.5" cy="17.5" r="17.5" fill="white" fillOpacity="0.5" />
           <path
