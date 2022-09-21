@@ -79,6 +79,7 @@ const Router = () => {
         </Route>
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/event" element={<EventPage />} />
+
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
