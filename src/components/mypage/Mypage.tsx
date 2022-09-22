@@ -40,7 +40,7 @@ const Mypage = () => {
   return (
     <PageLayout layoutWidth="[90%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
-        <div className="w-[90%] mx-auto">
+        <div className="w-full xs:w-[90%] mx-auto">
           <MypageBanner user={user} />
           <div className="flex mt-8">
             <SideNavBar />
