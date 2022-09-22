@@ -1,10 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+import { userState } from '../../store/user'
 import { useUser } from '../auth/hooks/useUser'
 
 const RightNavLinks = () => {
 
-  const { user } = useUser()
+ const {user} = useUser()
+  
+ console.log('navlink',user);
+
   return (
     <div className="flex items-center min-w-[200px] gap-4 justify-between">
       <div className="flex-1">

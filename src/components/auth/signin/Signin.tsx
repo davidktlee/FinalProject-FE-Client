@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { ChangeEvent, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
+import { userState } from '../../../store/user'
 import Input from '../../common/Input'
 import useToast from '../../common/toast/hooks/useToast'
 import { useAuth } from '../hooks/useAuth'
@@ -19,15 +21,14 @@ interface formValueType {
 
 const Signin = () => {
   const { signin } = useAuth()
-  const { user } = useUser()
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
   })
-  const [totalValid, setTotalValid] = useState(false)
+  const {user} = useUser()
+  const {fireToast} = useToast()
   const navigate = useNavigate()
-  const { fireToast } = useToast()
-
+  const [totalValid, setTotalValid] = useState(false)
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       currentTarget: { value, name }
@@ -41,8 +42,6 @@ const Signin = () => {
   const submitSigninHandler = () => {
     signin({ email: formValue.email, password: formValue.password })
   }
-
-  console.log(user)
 
   const totalvalidate = () => {
     let totalValidation = true
@@ -64,20 +63,19 @@ const Signin = () => {
     totalvalidate()
   }, [formValue])
 
+    
   useEffect(() => {
-    if (user) {
-      
+    if(user){
+      fireToast({
+        id:'로그인상태',
+        message:'로그인 상태이기에 회원페이지로 이동됩니다',
+        position: 'top',
+        timer:3000,
+        type:'complete'
+      })
       navigate('/mypage')
-      // fireToast({
-      //   id: '로그인 확인',
-      //   message: '로그인 상태이므로 이전 페이지로 이동합니다.',
-      //   position: 'top',
-      //   timer: 5000,
-      //   type: 'complete'
-      // })
-      
     }
-  }, [])
+  },[])
 
   return (
     <div className="w-full h-screen bg-[#F4F6F8] relative">
