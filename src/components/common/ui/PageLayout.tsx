@@ -6,7 +6,7 @@ interface PageLayoutProps {
 
   innerTop?: string
 }
-// shadow-[0_0_6px] bg-white rounded-lg p-10 mt-8  shadow-gray-400/80
+
 const PageLayout = ({ children, layoutWidth, innerTop }: PageLayoutProps) => {
   return (
     <div className="w-full h-[1846px] bg-[#F4F6F8] text-base ">
