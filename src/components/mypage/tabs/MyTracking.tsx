@@ -9,7 +9,7 @@ const MyTracking = () => {
     <CardLayout title='배송 조회'>
        <h4 className='relative py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold flex'>
         <span className='grow text-center'>상품 정보</span>
-        <span className='flex-1 text-center pl-32'>진행상태</span>
+        <span className='hidden xs:block flex-1 text-center pl-32'>진행상태</span>
         </h4>
 
 
@@ -28,7 +28,6 @@ const MyTracking = () => {
               <p className='xs:py-1 text-[#7a7a7a] font-semibold'>{item.price}</p>
             </div>
             </div>
-
 
             <div className='flex flex-col xs:flex-row items-center xs:justify-between mx-auto flex-1 w-full xs:w-fit'>
               <p className='font-bold xs:flex flex-row xs:flex-col text-[#1b304a] mx-auto text-left xs:text-center w-full xs:w-fit py-4 xs:py-0'>

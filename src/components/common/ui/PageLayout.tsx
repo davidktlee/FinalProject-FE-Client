@@ -9,7 +9,7 @@ interface PageLayoutProps {
 
 const PageLayout = ({ children, layoutWidth, innerTop }: PageLayoutProps) => {
   return (
-    <div className="w-full h-[1846px] bg-[#F4F6F8] text-base ">
+    <div className="w-full h-[2146px] bg-[#F4F6F8] text-base ">
       <div
         className={`absolute ${
           innerTop ? innerTop : 'top-1/2'
