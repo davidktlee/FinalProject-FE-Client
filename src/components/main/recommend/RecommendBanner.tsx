@@ -91,7 +91,8 @@ function RecommendBanner() {
         nextEl: nextRef.current
       },
       loop: true,
-      autoplay: { delay: 2000, disableOnInteraction: true }
+      autoplay: { delay: 2000, disableOnInteraction: true },
+      
     }
     return (
       <div className="w-[90%] mx-auto px-14 relative">

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import PageLayout from './../../common/ui/PageLayout'
 
 function NoticeDetail() {
+  const content = "<p><div style={{fontSize: '30px'}}>많으 ㄴ내용</div></p>"
   const navigate = useNavigate()
   return (
     <>
@@ -23,7 +24,10 @@ function NoticeDetail() {
             <span className="text-[#5a5a5a]">245{/* clickCount */}</span>
           </div>
           <div className="border-b-[1px] border-solid pb-12">
-            <div className="ml-4 border-2 border-solid w-[70%]">내용</div>
+            <div
+              className="ml-4 border-2 border-solid w-[70%]"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
           </div>
           <button
             className="w-[150px] h-[40px] my-4 font-[600] rounded-md border-none bg-[#1B304A] text-white"

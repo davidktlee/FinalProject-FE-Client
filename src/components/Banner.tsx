@@ -30,7 +30,7 @@ const Banner = () => {
     scrollbar: { draggable: true },
     pagination: { clickable: true },
     slidesPerView: 1,
-    loop: false,
+    loop: true,
     autoplay: { delay: 2000, disableOnInteraction: true },
     watchOverflow: true
   }
