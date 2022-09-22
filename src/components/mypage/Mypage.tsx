@@ -6,6 +6,7 @@ import { useUser } from '../auth/hooks/useUser'
 import useToast from '../common/toast/hooks/useToast'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
+import MobileNavBar from './MobileNavBar'
 import MypageBanner from './MypageBanner'
 import SideNavBar from './SideNavBar'
 
@@ -15,9 +16,6 @@ const Mypage = () => {
   const {fireToast} = useToast()
 
 
-  useEffect(() => {
-    navigate('/mypage/myorder')
-  }, [])
 
   useEffect(() => {
     if(!user){
@@ -42,8 +40,13 @@ const Mypage = () => {
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
           <MypageBanner user={user} />
-          <div className="flex mt-8">
+          <div className="flex flex-col xs:flex-row mt-8">
+            <div className='hidden xs:block'>
             <SideNavBar />
+            </div>
+            <div className='block xs:hidden'>
+            <MobileNavBar />
+            </div>
             <div className="grow">
               <Outlet />
             </div>

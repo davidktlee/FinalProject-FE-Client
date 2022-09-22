@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import CardLayout from '../common/CardLayout';
-import MyClaims from './aftertabs/MyClaims';
+import MyClaims from './aftertabs/MyClaimsNavBar';
 
 
 const afterMenuArray = ['CS처리구분','주문 번호','접수 제목','접수일자','진행상태','완료일자']
@@ -77,6 +77,8 @@ const MyAfter = () => {
     <CardLayout title='취소/교환/반품 내역'>
       <div className='relative'>
       <MyClaims searchParams={searchParams} setSearchParams={setSearchParams} />
+      
+      
       <div className='flex items-center justify-between py-2 border-b border-solid border-[#abc8df] px-1 text-sm'>
       {afterMenuArray.map((item) => <p key={item} className='flex-1 text-center'>{item}</p>)}
       </div>
