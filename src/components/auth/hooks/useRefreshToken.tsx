@@ -1,7 +1,7 @@
 
 import { AxiosResponse } from 'axios'
 import {  useMutation, useQuery, useQueryClient } from 'react-query'
-import { axiosInstance,  getJWTToken, getNewJWTToken } from '../../axiosinstance'
+import { axiosAuthInstance, axiosInstance,  getJWTToken, getNewJWTToken } from '../../axiosinstance'
 import {  setStoredToken } from '../../local-storage/userStorage'
 import { queryKeys } from '../../react-query/queryKeys'
 import { Token } from '../types/userTypes'
@@ -9,20 +9,25 @@ import { Token } from '../types/userTypes'
 import useToast from '../../common/toast/hooks/useToast'
 
 const getNewToken = async (token: Token | null): Promise<Token | null> => {
-  const currentTime = Date.now();
-  if (!token) return null
-  console.log('리프레시 이전 토큰',token?.accessToken);
-  
-  // const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token  
-    const { data }: AxiosResponse<any> = await axiosInstance.put('/member/newAccess',{},
-    {
-      headers: getNewJWTToken(token),
-    })
-    setStoredToken(data)
-    console.log(data);
-    return data
+  if(!token) return null
+    const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token
+    if (expiresIn + refreshTokenExpiredDate < Date.now()) {
+      return null;
+    }
+    if (expiresIn + accessTokenExpiredDate - 15000 < Date.now()) {
+      console.log('인터셉터 실행')
+      const { data }: AxiosResponse<Token> = await axiosInstance.put('/member/newAccess',{},{
+        headers: getNewJWTToken(token),
+        withCredentials: false
+      })
+      setStoredToken(data)
+      console.log('interceptors',data)
+      return data
+    }else{
+      return token
+    }
   }
-    
+ 
 
 
 
@@ -34,7 +39,7 @@ export const useRefreshToken = () => {
     onSuccess: (data) => {
       if(!data) return;
       setStoredToken(data)
-      console.log('onSuccess',data)
+      
       queryClient.invalidateQueries([queryKeys.token])
     }
   })

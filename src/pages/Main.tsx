@@ -9,12 +9,20 @@ import AllProductList from '../components/main/productList/AllProductList'
 import NoticePage from './NoticePage'
 import MainReview from '../components/main/MainReview'
 import FilterBar from '../components/main/filterbar/FilterBar'
+import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
+import { getStoredToken } from '../components/local-storage/userStorage'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
+  const refreshToken = useRefreshToken()
   const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelects(e.currentTarget.value)
   }
+  useEffect(() => {
+    const token = getStoredToken()
+    refreshToken(token)
+    console.log('main interceptor')
+  },[])
   // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
   useEffect(() => {
     // const {data: productLists} = useQuery([queryKey,selects], queryFn, options)
