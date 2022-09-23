@@ -18,9 +18,10 @@ export interface Token {
   refreshToken:string
   accessToken: string;
   expiresIn:number;
-  accessTokenValidTime:number;
-  refreshTokenValidTime:number;
+  accessTokenExpiredDate:number;
+  refreshTokenExpiredDate:number;
 }
+
 // "address": "string",
 //   "birthday": "string",
 //   "checkedPassWord": "string",

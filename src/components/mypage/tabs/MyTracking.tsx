@@ -14,7 +14,7 @@ const MyTracking = () => {
 
 
       {product.map((item) => (
-        <div className="flex flex-col xs:flex-row justify-between items-center py-4 border-b border-solid border-[#abc8df]" >
+        <div className="flex flex-col xs:flex-row justify-between items-center py-4 border-b border-solid border-[#abc8df]" key={item.id} >
             
             <div className='flex items-center gap-4'>
             <div className=''>

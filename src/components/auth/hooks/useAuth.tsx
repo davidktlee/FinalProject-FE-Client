@@ -57,10 +57,10 @@ export const useAuth = ():UseAuth => {
       }
       
 
-    } catch (errorResponse) {
+    } catch (error) {
       const title =
-        axios.isAxiosError(errorResponse) && errorResponse?.message
-          ? errorResponse.message
+        axios.isAxiosError(error) && error?.message
+          ? error.message
           : '서버에서 에러가 발생했습니다.'
       fireToast({
         id:'서버 에러',
@@ -103,7 +103,7 @@ export const useAuth = ():UseAuth => {
       }
     } catch (errorResponse) {
       const title =
-        axios.isAxiosError(errorResponse) && errorResponse?.message
+        axios.isAxiosError(errorResponse) && errorResponse.message
           ? errorResponse.message
           : '서버에서 에러가 발생했습니다.'
       fireToast({

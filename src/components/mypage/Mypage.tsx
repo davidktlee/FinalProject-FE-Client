@@ -1,33 +1,29 @@
-import React, { useEffect } from 'react'
-import { Link, NavLink, Outlet, Route, Router, Routes, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useRefreshToken } from '../auth/hooks/useRefreshToken'
+
 
 
 import { useUser } from '../auth/hooks/useUser'
 import useToast from '../common/toast/hooks/useToast'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
+
+import { getStoredToken } from '../local-storage/userStorage'
 import MobileNavBar from './MobileNavBar'
 import MypageBanner from './MypageBanner'
 import SideNavBar from './SideNavBar'
 
 const Mypage = () => {
   const navigate = useNavigate()
-  const {user} = useUser()
+  const {user,isFetching} = useUser()
   const {fireToast} = useToast()
-
-
+  const refreshToken = useRefreshToken() 
 
   useEffect(() => {
-    if(!user){
-      fireToast({
-        id:'로그인 기록 없음',
-        message:'로그인 해주세요!',
-        position: 'top',
-        timer:2000,
-        type:'warning'
-      })
-      navigate('/signin')
-    }
+    const token = getStoredToken()
+    refreshToken(token)
+    
   },[])
 
  

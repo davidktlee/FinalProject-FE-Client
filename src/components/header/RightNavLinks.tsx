@@ -8,8 +8,6 @@ const RightNavLinks = () => {
 
  const {user} = useUser()
   
- console.log('navlink',user);
-
   return (
     <div className="flex items-center min-w-[200px] gap-4 justify-between">
       <div className="flex-1">
