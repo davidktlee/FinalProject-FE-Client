@@ -42,7 +42,7 @@ const Post = ({ formValue, setFormValue, changeFormHandler,addressPopupHandler }
           />
           <div className="grow">
             <button
-              className="w-40 h-11 bg-[#3e6d87] rounded-md text-white font-bold border-none cursor-pointer"
+              className="w-28 xs:w-40 h-11 bg-[#3e6d87] rounded-md text-white font-bold border-none cursor-pointer"
               onClick={addressPopupHandler}
             >
               우편 번호 검색

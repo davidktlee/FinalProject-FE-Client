@@ -18,7 +18,7 @@ function NoticeTitle() {
                 // padding: isActive ? '0 10px' : 'none'
               })}
               to={title.value}
-              className="xl:w-[200px] md:w-[100px] text-center py-4"
+              className="xl:w-[200px] md:w-[150px] sm:w-[100px] text-center py-4"
             >
               {title.title}
             </NavLink>
@@ -28,7 +28,7 @@ function NoticeTitle() {
               key={index}
               style={({ isActive }) => ({ borderBottom: isActive ? '3px solid #9AD0F6' : 'none' })}
               to={title.value}
-              className="xl:w-[200px] md:w-[150px] sm:w[100px] sm:whitespace-nowrap text-center py-4"
+              className="xl:w-[200px] md:w-[150px] sm:w-[100px] sm:whitespace-nowrap text-center py-4"
             >
               {title.title}
             </NavLink>

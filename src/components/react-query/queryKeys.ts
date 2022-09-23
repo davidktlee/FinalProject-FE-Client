@@ -1,4 +1,6 @@
 export const queryKeys = {
   user: 'user',
-  product: 'product'
+  product: 'product',
+  token:'token',
+  newToken:'newToken'
 }
