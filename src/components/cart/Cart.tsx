@@ -1,15 +1,24 @@
-import React from 'react'
+import {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
+import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
+import { getStoredToken } from '../local-storage/userStorage'
 
 
 
 
 const Cart = () => {
-  
+  const refreshToken = useRefreshToken()
+
+  useEffect(() => {
+    const token = getStoredToken()
+    refreshToken(token)
+    console.log('cart interceptor')
+  },[])
+
   return (
   <PageLayout layoutWidth='[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>

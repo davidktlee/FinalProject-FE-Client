@@ -46,7 +46,8 @@ export const useUser = (): UseUser => {
         // clearUser()
       }
     },
-    onError: () => console.log('queryError')
+    onError: () => console.log('queryError'),
+    refetchOnWindowFocus:false
   })
 
   const updateUser = (newToken: Token): void => {
