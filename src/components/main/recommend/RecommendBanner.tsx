@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
+import SwiperCore, { Navigation, Pagination, Autoplay, Scrollbar } from 'swiper'
 import { SwiperSlide, Swiper } from 'swiper/react'
 
 import 'swiper/components/navigation/navigation.scss'
@@ -558,38 +558,15 @@ function RecommendBanner() {
       </div>
     )
   } else {
+    SwiperCore.use([Scrollbar])
     const swiperSetting = {
       spaceBetween: 10,
-      navigation: {
-        prevEl: prevRef.current,
-        nextEl: nextRef.current
-      },
+      scrollbar: { draggable: true },
       loop: true,
       autoplay: { delay: 2000, disableOnInteraction: true }
     }
     return (
-      <div className="w-[92%] mx-auto px-[50px] relative">
-        <button ref={prevRef} className="absolute top-[45%] left-[-30px] z-[2] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              cx="18"
-              cy="17.5"
-              r="17.1874"
-              transform="rotate(-180 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M22.5 25L13.5 17.5L22.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+      <div className="w-[92%] mx-auto px-4 relative">
         {swiperSetting && (
           <Swiper
             {...swiperSetting}
@@ -601,7 +578,7 @@ function RecommendBanner() {
                 <SwiperSlide
                   key={index}
                   style={{
-                    width: '260px',
+                    width: '180px',
                     borderRadius: '15px',
                     padding: '4px',
                     boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
@@ -613,9 +590,9 @@ function RecommendBanner() {
                       src={item.img}
                       alt=""
                       style={{
-                        width: '240px',
+                        width: '160px',
                         margin: '0 auto',
-                        height: '300px',
+                        height: '200px',
                         borderRadius: '15px'
                       }}
                     />
@@ -653,25 +630,6 @@ function RecommendBanner() {
             ))}
           </Swiper>
         )}
-        <button ref={nextRef} className="absolute top-[45%] right-[-30px] z-[1] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              r="17.1874"
-              transform="matrix(1 -8.74228e-08 -8.74228e-08 -1 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M13.5 25L22.5 17.5L13.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
       </div>
     )
   }
