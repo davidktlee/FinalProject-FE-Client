@@ -3,12 +3,12 @@ import Event from '../components/main/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Review from '../components/Review'
 import Banner from './../components/Banner'
-import ControlBar from './../components/ControlBar'
 import Toast from '../components/common/toast/ToastItem'
 import CardContainer from '../components/main/CardContainer'
 import AllProductList from '../components/main/productList/AllProductList'
 import NoticePage from './NoticePage'
 import MainReview from '../components/main/MainReview'
+import FilterBar from '../components/main/filterbar/FilterBar'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
@@ -26,7 +26,7 @@ const Main = () => {
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
           <div className="hidden lg:block xl:block w-[280px] mr-12">
-            <ControlBar />
+            <FilterBar />
           </div>
           {/*메인에서 상품 리스트 */}
           <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">

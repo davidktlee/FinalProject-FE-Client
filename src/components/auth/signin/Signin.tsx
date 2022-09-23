@@ -79,7 +79,7 @@ const Signin = () => {
 
   return (
     <div className="w-full h-screen bg-[#F4F6F8] relative">
-      <div className="absolute top-[36%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-fit mt-[120px] bg-white rounded-lg shadow-[-5px_0_30px_1px] shadow-indigo-100 pb-12 border border-solid border-gray-200">
+      <div className="absolute top-[36%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] xs:w-[500px] h-fit mt-[120px] bg-white rounded-lg shadow-[-5px_0_30px_1px] shadow-indigo-100 pb-12 border border-solid border-gray-200">
         <h3 className="mt-5 text-center">
           <span className='text-[#1B304A] text-2xl font-bold'>Login</span>
         </h3>
