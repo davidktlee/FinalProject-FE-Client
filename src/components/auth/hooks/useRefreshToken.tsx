@@ -14,7 +14,7 @@ const getNewToken = async (token: Token | null): Promise<Token | null> => {
     if (expiresIn + refreshTokenExpiredDate < Date.now()) {
       return null;
     }
-    if (expiresIn + accessTokenExpiredDate - 15000 < Date.now()) {
+    if (expiresIn + accessTokenExpiredDate - 600000 < Date.now()) {
       console.log('인터셉터 실행')
       const { data }: AxiosResponse<Token> = await axiosInstance.put('/member/newAccess',{},{
         headers: getNewJWTToken(token),

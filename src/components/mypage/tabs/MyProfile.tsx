@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { useUser } from '../../auth/hooks/useUser';
 import { SignupRecordType } from '../../auth/signup/Signup';
 import UserForm from '../../common/ui/UserForm';
 import CardLayout from '../common/CardLayout';
 
 const MyProfile = () => {
+
+  const {user} = useUser()
+
+  console.log(user);
   const [formValue, setFormValue] = useState<SignupRecordType>({
     lastname: '',
     firstname: '',
