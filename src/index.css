@@ -2,13 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-  html{
-    font-family: 'SUIT','SUIT Variable', sans-serif;
+  html {
+    font-family: 'SUIT', 'SUIT Variable', sans-serif;
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 }
-

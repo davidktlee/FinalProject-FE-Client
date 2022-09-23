@@ -7,18 +7,16 @@ module.exports = {
 
   theme: {
     extend: {
-      colors: {  
+      colors: {
         transparent: 'transparent',
-        current:'currentColor',
+        current: 'currentColor',
         lenssisSky: '#abc8df',
-        lenssisDeep: '#92c8ed',
+        lenssisDeepSky: '#92c8ed',
         lenssisDark: '#1B304A',
         lenssisGray: '#7a7a7a',
-        lenssisDeepGray:'#5a5a5a'
+        lenssisDeepGray: '#5a5a5a'
       },
-      fontFamily:{
-        
-      },
+      fontFamily: {},
       keyframes: {
         toast: {
           '0%': { transform: 'translateY(100%)' },
@@ -27,23 +25,26 @@ module.exports = {
         drop: {
           '0%': { transform: 'translateY(-100%)' },
           '100%': { transform: 'translateY(0%)' }
+        },
+        left: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' }
         }
       },
       animation: {
         toast: 'toast .6s ease-in-out',
-        drop: 'drop .6s ease-in-out'
+        drop: 'drop .6s ease-in-out',
+        left: 'left .2s ease'
       }
     },
     screens: {
-      xs: '440px',
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
+      'xs': '440px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
       '2xl': '1536px'
-    },
-
-    
+    }
   },
   plugins: []
 }

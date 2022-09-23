@@ -18,7 +18,7 @@ import MyProfile from '../components/mypage/tabs/MyProfile'
 import MyReview from '../components/mypage/tabs/MyReview'
 import MyGrade from '../components/mypage/tabs/MyGrade'
 import MyCoupon from '../components/mypage/tabs/MyCoupon'
-import MyClaims from '../components/mypage/tabs/aftertabs/MyClaims'
+import MyClaims from '../components/mypage/tabs/aftertabs/MyClaimsNavBar'
 import AllFavoriteList from '../components/favorite/AllFavoriteList'
 import OneDayFavorite from '../components/favorite/OneDayFavorite'
 import MonthlyFavorite from '../components/favorite/MonthlyFavorite'
@@ -33,6 +33,7 @@ import NoticePage from '../pages/NoticePage'
 import NoticeDetail from './../components/main/notice/NoticeDetail'
 import EventPage from '../pages/EventPage'
 import Review from '../pages/ReviewPage'
+import MobileBottomNav from '../components/footer/bottom-navigation/MobileBottomNav'
 
 const Router = () => {
   return (
@@ -85,6 +86,7 @@ const Router = () => {
         <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <MobileBottomNav />
       <Footer />
     </BrowserRouter>
   )

@@ -14,10 +14,14 @@ export interface SigninType {
   password:string;
 }
 
-export interface UserDataType {
+export interface Token {
   refreshToken:string
-  token: string;
+  accessToken: string;
+  expiresIn:number;
+  accessTokenExpiredDate:number;
+  refreshTokenExpiredDate:number;
 }
+
 // "address": "string",
 //   "birthday": "string",
 //   "checkedPassWord": "string",
