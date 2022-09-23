@@ -16,4 +16,4 @@ const CardTemplate = ({children,isTitleVisible,title}:CardTemplateProps) => {
   );
 };
 
-export default CardTemplate;
+export default CardTemplate; 
