@@ -33,6 +33,7 @@ import NoticePage from '../pages/NoticePage'
 import NoticeDetail from './../components/main/notice/NoticeDetail'
 import EventPage from '../pages/EventPage'
 import Review from '../pages/ReviewPage'
+import MobileBottomNav from '../components/footer/bottom-navigation/MobileBottomNav'
 
 const Router = () => {
   return (
@@ -85,6 +86,7 @@ const Router = () => {
         <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <MobileBottomNav />
       <Footer />
     </BrowserRouter>
   )

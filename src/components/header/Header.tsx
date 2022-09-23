@@ -17,8 +17,8 @@ const Header = () => {
         <RightSection />
         </div>
         <div className='flex items-center xs:hidden gap-4 pr-2'>
-          <button className='flex items-center'><TbSearch size={28} /></button>
-          <button className='flex items-center'><FiFilter size={28} /></button>
+          <button className='flex items-center'><TbSearch size={24} /></button>
+          <button className='flex items-center'><FiFilter size={24} /></button>
         </div>
       </div>
     </nav>
