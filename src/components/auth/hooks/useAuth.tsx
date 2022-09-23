@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
-import { setStoredUser } from '../../local-storage/userStorage'
+import { setStoredToken } from '../../local-storage/userStorage'
 
-import { RegisterType, SigninType, UserDataType } from '../types/userTypes'
+import { RegisterType, SigninType, Token } from '../types/userTypes'
 import {  useUser } from './useUser'
 
 
@@ -12,7 +12,7 @@ import {  useUser } from './useUser'
 type AuthEndpoint = 'member/login' | 'member/signup'
 
 type ErrorResponse = { message: string }
-type AuthResponseType = UserDataType | ErrorResponse
+type AuthResponseType = Token | ErrorResponse
 
 interface UseAuth {
   signin: (user: SigninType) => Promise<void>,
@@ -38,7 +38,7 @@ export const useAuth = ():UseAuth => {
       if (status >= 400) {
         const title = 'message' in data ? data.message : '회원가입에 실패하였습니다.'
         fireToast({
-          id:'인증 실패',
+          id:status + '',
           message:title,
           position:'bottom',
           timer:2000,
@@ -53,13 +53,14 @@ export const useAuth = ():UseAuth => {
           timer:5000,
           type:'success'
         })
+        navigate('/signin')
       }
-      navigate('/signin')
+      
 
-    } catch (errorResponse) {
+    } catch (error) {
       const title =
-        axios.isAxiosError(errorResponse) && errorResponse?.message
-          ? errorResponse.message
+        axios.isAxiosError(error) && error?.message
+          ? error.message
           : '서버에서 에러가 발생했습니다.'
       fireToast({
         id:'서버 에러',
@@ -96,14 +97,13 @@ export const useAuth = ():UseAuth => {
       }
       if ('accessToken' in data) {
         // 토큰
-        
         updateUser(data)
-        setStoredUser(data);
+        setStoredToken(data)
         navigate('/')
       }
     } catch (errorResponse) {
       const title =
-        axios.isAxiosError(errorResponse) && errorResponse?.message
+        axios.isAxiosError(errorResponse) && errorResponse.message
           ? errorResponse.message
           : '서버에서 에러가 발생했습니다.'
       fireToast({
