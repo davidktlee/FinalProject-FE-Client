@@ -22,8 +22,8 @@ function MobileNotice() {
             </span>
           </div>
           <div className="flex">
-            <div className="mr-4">작성자</div>
-            <div className="">조회수 245</div>
+            <div className="mr-4">◴ 08-09</div>
+            <div className="">👀 조회수</div>
           </div>
         </div>
         <div className="mt-16 flex justify-center items-center">
