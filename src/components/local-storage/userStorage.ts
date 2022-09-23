@@ -1,5 +1,5 @@
 import { Token } from "../auth/types/userTypes";
-import { currentDate } from "../common/util/date";
+
 
 const LOCALSTORAGE_USER_KEY = 'lenssis_user';
 
@@ -13,7 +13,7 @@ export const setStoredToken = (user:Token) => {
   
   const obj = {
     ...user,
-    expiresIn: currentDate
+    expiresIn:Date.now()
   }
   // currentDate는 토큰이 발급된 시간.
   // 토큰이 발급된 시간 + 30분보다 현재 시간이 더 크다면 (date.now > currentDate + 300,000)
