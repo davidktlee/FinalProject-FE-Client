@@ -9,19 +9,33 @@ import AllProductList from '../components/main/productList/AllProductList'
 import NoticePage from './NoticePage'
 import MainReview from '../components/main/MainReview'
 import FilterBar from '../components/main/filterbar/FilterBar'
+
+import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
+import { getStoredToken } from '../components/local-storage/userStorage'
+
 import axios from 'axios'
 import { queryKeys } from '../components/react-query/queryKeys'
 import { useQuery } from 'react-query'
 
+
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
+  const refreshToken = useRefreshToken()
   const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelects(e.currentTarget.value)
   }
+
+  useEffect(() => {
+    const token = getStoredToken()
+    refreshToken(token)
+    console.log('main interceptor')
+  },[])
+
   const getProduct = async () => {
     const res = await axios.get('http://43.200.50.49:8080/product/allProduct')
     return res.data.data
   }
+
   // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
   const { data: productLists } = useQuery([queryKeys.product], getProduct)
   useEffect(() => {}, [])

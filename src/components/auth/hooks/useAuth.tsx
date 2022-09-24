@@ -38,7 +38,7 @@ export const useAuth = ():UseAuth => {
       if (status >= 400) {
         const title = 'message' in data ? data.message : '회원가입에 실패하였습니다.'
         fireToast({
-          id:'인증 실패',
+          id:status + '',
           message:title,
           position:'bottom',
           timer:2000,

@@ -1,11 +1,8 @@
-import { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useEffect,useState } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
-
-
-
 import { useUser } from '../auth/hooks/useUser'
-import useToast from '../common/toast/hooks/useToast'
+
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
 
@@ -15,11 +12,11 @@ import MypageBanner from './MypageBanner'
 import SideNavBar from './SideNavBar'
 
 const Mypage = () => {
-  const navigate = useNavigate()
-  const {user,isFetching} = useUser()
-  const {fireToast} = useToast()
+  const [selectedOption,setSelectedOption] = useState<string | null>(null);
+  const {user} = useUser()
   const refreshToken = useRefreshToken() 
-
+  const {pathname} = useLocation()
+  
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -32,7 +29,7 @@ const Mypage = () => {
   }
 
   return (
-    <PageLayout layoutWidth="[90%]">
+    <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
           <MypageBanner user={user} />
@@ -41,13 +38,14 @@ const Mypage = () => {
             <SideNavBar />
             </div>
             <div className='block xs:hidden'>
-            <MobileNavBar />
+            <MobileNavBar selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             </div>
             <div className="grow">
               <Outlet />
             </div>
           </div>
         </div>
+        {pathname === '/mypage' && <div className='py-10 block xs:hidden'>찾으시는 메뉴를 선택해주세요</div>}
       </CardTemplate>
     </PageLayout>
   )

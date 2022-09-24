@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom'
 import LeftSection from './LeftSection'
 import RightSection from './RightSection'
 import TopInfomation from './TopInfomation'
+import {TbSearch} from 'react-icons/tb'
+import {FiFilter} from 'react-icons/fi'
 
 const Header = () => {
   
@@ -11,7 +13,13 @@ const Header = () => {
       <TopInfomation />
       <div className="flex items-center h-[50px] justify-between pb-[15px]">
         <LeftSection />
+        <div className='hidden xs:block'>
         <RightSection />
+        </div>
+        <div className='flex items-center xs:hidden gap-4 pr-2'>
+          <button className='flex items-center'><TbSearch size={24} /></button>
+          <button className='flex items-center'><FiFilter size={24} /></button>
+        </div>
       </div>
     </nav>
   )
