@@ -26,6 +26,7 @@ interface UserFormProps {
 
 const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFormProps) => {
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
+  
   const { pathname } = useLocation()
   const { fireToast } = useToast()
 
@@ -134,6 +135,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           changeFormHandler={changeFormHandler}
           formValue={formValue}
           setFormValue={setFormValue}
+          titleText="우편번호"
         />
         <Input
           name="phone"
