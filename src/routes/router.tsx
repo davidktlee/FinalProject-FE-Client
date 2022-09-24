@@ -4,7 +4,7 @@ import Favorite from '../pages/Favorite'
 import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
 import MypagePage from '../pages/MypagePage'
-import Order from '../pages/Order'
+import PaymentPage from '../pages/PaymentPage'
 import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
@@ -53,7 +53,7 @@ const Router = () => {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/order" element={<Order />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
           <Route path="myorder" element={<MyOrder />}/>

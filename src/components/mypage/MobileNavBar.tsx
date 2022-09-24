@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 
 
@@ -37,9 +37,15 @@ const navMenuArray = [
   ]
 
 
-const MobileNavBar = () => {
+  interface MobileNavBarProps {
+    selectedOption: string | null;
+    setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>
+  }
+
+const MobileNavBar = ({selectedOption,setSelectedOption}:MobileNavBarProps) => {
   const [isOpen,setIsOpen] = useState(false);
-  const [selectedOption,setSelectedOption] = useState<string | null>(null);
+  const {pathname} = useLocation();
+  
   
   const selectMenuHandler = () => {
     setIsOpen((prev) => !prev)
@@ -48,6 +54,17 @@ const MobileNavBar = () => {
     setIsOpen((prev) => !prev)
     setSelectedOption(item)
   }
+  useEffect(() => {
+    const currentPath = pathname.split('/').pop();
+    if(currentPath === 'mypage'){setSelectedOption('메뉴선택')}
+    if(currentPath === 'myorder'){setSelectedOption('주문 내역')}
+    if(currentPath === 'myafter'){setSelectedOption('취소/교환/반품 내역')}
+    if(currentPath === 'myreview'){setSelectedOption('리뷰 관리')}
+    if(currentPath === 'myprofile'){setSelectedOption('회원 정보 수정')}
+    if(currentPath === 'mygrade'){setSelectedOption('회원 등급')}
+    if(currentPath === 'mycoupon'){setSelectedOption('쿠폰함')}
+    
+  }, [])
   return (
     <>
     <div className="w-full pb-1 border-b border-solid border-lenssisDark" onClick={selectMenuHandler}>
