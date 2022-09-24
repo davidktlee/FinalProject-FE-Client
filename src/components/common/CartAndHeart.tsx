@@ -7,7 +7,7 @@ function CartAndHeart({ top, right }: PropsType) {
   return (
     <span className={`flex items-center absolute top-[${top}px] right-[${right}px]`}>
       <div
-        className="mr-2"
+        className="mr-2 hover:cursor-pointer"
         onClick={() => {
           console.log('나 카트')
         }}
@@ -51,7 +51,7 @@ function CartAndHeart({ top, right }: PropsType) {
         </svg>
       </div>
       <div
-        className="mr-2"
+        className="mr-2 cursor-pointer"
         onClick={() => {
           console.log('나 하트')
         }}

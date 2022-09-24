@@ -28,7 +28,7 @@ const Main = () => {
   console.log(productLists)
 
   return (
-    <div className="container mx-auto ">
+    <div className="w-[90%] mx-auto ">
       <div className="pt-44 relative">
         <Banner />
         <section className="flex justify-between">
@@ -37,14 +37,12 @@ const Main = () => {
             <FilterBar />
           </div>
           {/*메인에서 상품 리스트 */}
-          <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <div className="w-full mx-auto border-none rounded-md shadow-[0_0_6px] shadow-gray-400/80">
             {/* <div className="container px-4  flex justify-center items-end"></div> */}
-            <div className="md:flex md:justify-center w-full mx-auto">
-              <AllProductList />
-            </div>
+            <CardContainer data="product" />
           </div>
         </section>
-        <div className="container border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+        <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
           <CardContainer data="new" />
         </div>
         <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">

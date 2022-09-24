@@ -9,10 +9,10 @@ function AllProductList() {
   // useGetProductsList(state as string)
 
   return (
-    <div className="">
-      <CardContainer data="product" />
-      <button>More</button>
-    </div>
+    <>
+      
+      <div className="py-4">More</div>
+    </>
   )
 }
 
