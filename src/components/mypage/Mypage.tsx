@@ -15,9 +15,8 @@ import MypageBanner from './MypageBanner'
 import SideNavBar from './SideNavBar'
 
 const Mypage = () => {
-  const navigate = useNavigate()
-  const {user,isFetching} = useUser()
-  const {fireToast} = useToast()
+  
+  const {user} = useUser()
   const refreshToken = useRefreshToken() 
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const Mypage = () => {
   }
 
   return (
-    <PageLayout layoutWidth="[90%]">
+    <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
           <MypageBanner user={user} />

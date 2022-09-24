@@ -9,11 +9,11 @@ interface MypageBannerProps {
 const MypageBanner = ({user}:MypageBannerProps) => {
   
   return (
-    <div className='xs:mx-auto flex xs:flex-row flex-col xs:items-center h-[200px] xs:h-[150px] xs:justify-between bg-lenssisSky text-white xs:px-4 p-2 rounded-lg'>
-        <div className='flex flex-col h-full justify-around flex-1 '>
+    <div className='xs:mx-auto flex xs:flex-row flex-col xs:items-center h-[240px] xs:h-[150px] xs:justify-between bg-lenssisSky text-white xs:px-4 p-2 rounded-lg'>
+        <div className='flex flex-col h-full justify-around flex-1 gap-4 pt-4 mb-4'>
           {/* 유저네임 */}
           <p className='font-bold text-[30px]'>{user.name}</p>
-          <p className=''><span className='font-semibold'>{user.readname}</span>님, 안녕하세요</p>
+          <p className='pb-10'><span className='font-semibold'>{user.readname}</span>님, 안녕하세요</p>
         </div>
         <div className='flex items-center h-full grow justify-between relative flex-1 xs:border-y-0 border-y border-solid border-gray-100/80'>
         <div className='flex flex-col items-end justify-around h-full flex-1 xs:pr-8 pr-4 '>
