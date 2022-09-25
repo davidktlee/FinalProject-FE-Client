@@ -15,8 +15,8 @@ const MobileFilter = () => {
       <MobileBoxLayout title="사용기간" contents={duration} px={'17px'} py={'3px'} w={'80px'} />
       <MobileBoxLayout title="그래픽 직경" contents={graphicDiameter} px={'17px'} py={'3px'} w={'60px'} />
       <MobileBoxLayout title="시리즈" contents={series} px={'17px'} py={'3px'} w={'80px'} />
-      <MobileBoxLayout title="색상" contents={colors} w={'25px'} gapX={10} gapY={4} h={'25px'} />
-      <MobileBoxLayout title="특징" contents={features} w={'80px'} py={'3px'} />
+      <MobileBoxLayout title="색상" contents={colors} w={'25px'} h={'25px'} gapX={'40px'} gapY={'12px'} />
+      <MobileBoxLayout title="특징" contents={features} w={'80px'} py={'3px'} px={'17px'} />
       <div className="flex justify-around p-4">
         <button className="w-[290px] h-[40px] text-center bg-lenssisDark text-white rounded-[5px] font-semibold">
           적용하기
