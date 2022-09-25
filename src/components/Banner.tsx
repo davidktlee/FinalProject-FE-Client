@@ -33,7 +33,7 @@ const Banner = () => {
         pagination: { clickable: true },
         slidesPerView: 1,
         loop: true,
-        autoplay: { delay: 2000, disableOnInteraction: true },
+        autoplay: { delay: 200000, disableOnInteraction: true },
         watchOverflow: true,
         onBeforeInit: (swiper) => {
           if (typeof swiper.params.navigation !== 'boolean') {

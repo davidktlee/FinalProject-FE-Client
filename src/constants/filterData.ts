@@ -1,5 +1,7 @@
 import { rankColor } from './cardColors'
 
+export const duration = ['상품 전체', '원데이', '먼슬리']
+
 export const totalDiameter = [14.1, 14.2, 14.5, 14.6, 14.7]
 
 export const graphicDiameter = [11.9, 12.9, 13.0, 13.2, 13.5, 13.8, 14.0]
