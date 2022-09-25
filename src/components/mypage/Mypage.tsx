@@ -20,7 +20,6 @@ const Mypage = () => {
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
-    
   },[])
 
  
