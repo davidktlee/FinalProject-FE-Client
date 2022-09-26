@@ -10,7 +10,7 @@ import { useUser } from '../auth/hooks/useUser';
 interface OrderPaperProps {
   formValue: PaymentFormValueType
   setFormValue: React.Dispatch<React.SetStateAction<PaymentFormValueType>>
-  changeFormHandler: (e: ChangeEvent<HTMLInputElement>) => void
+  changeFormHandler: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   addressPopupHandler: () => void
   emailFormValue:{
     emailIdentity: string;
@@ -142,6 +142,16 @@ const OrderPaper = ({formValue,setFormValue,changeFormHandler,addressPopupHandle
         </div>
       </div>
     </div>
+    <div>
+    </div>
+
+    {/* 배송요청사항 컴포넌트로 만들기 */}
+    <div className='flex justify-start items-center my-4 max-w-[600px]'>
+       <label className='min-w-[140px] text-lenssisDark font-bold'><span>배송요청사항</span></label>
+       <div className={`flex items-start justify-start w-full`}>
+       <textarea className={`w-full h-40 align-middle border py-10 border-solid border-gray-200 rounded-md max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder:text-xs text-sm`} name="orderer" onChange={changeFormHandler} value={formValue.orderer}  placeholder="배송메세지는 배송 시, 택배사 참고용으로 출력되는 메세지입니다.&#13;&#10;기타 문의 사항은 1:1 문의를 이용해 주시기 바랍니다."/>
+       </div>
+      </div>
     </>
   );
 };

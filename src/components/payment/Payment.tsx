@@ -10,6 +10,7 @@ import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
 import { GoTriangleDown } from 'react-icons/go'
 import OrderPaper from './OrderPaper'
+import NewShippingPaper from './NewShippingPaper'
 
 export interface PaymentFormValueType {
   orderer: string
@@ -86,7 +87,7 @@ const Payment = () => {
     open({ onComplete: handleComplete })
   }
 
-  const changeFormHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeFormHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
       target: { name, value }
     } = e
@@ -267,8 +268,8 @@ const Payment = () => {
           />
         )}
         {/* 새로운 배송지는 고객 편의를 위해 따로 state를 만들어서 관리하는게 좋을 것 같다.. */}
-        {isNew && isFormShow && <div>안녕 난 새로운 배송지</div>}
-
+        {isNew && isFormShow && <NewShippingPaper domainArray={domainArray} isOpen={isOpen} domainSelectHandler={domainSelectHandler} addressPopupHandler={addressPopupHandler} />}
+ 
         {!isFormShow && <div className="mt-8">배송지를 선택해주세요</div>}
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
