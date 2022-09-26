@@ -67,7 +67,7 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
         })
         console.log(series)
         break
-      case 'features':
+      case 'feature':
         setFeatures((prev) => {
           if (prev.includes(content?.value)) {
             return prev.filter((item) => item !== content?.value)
@@ -94,14 +94,16 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
           {contents.map((content: string | number | any, index: number) => (
             <button
               key={index}
-              className={`font-medium border-solid border-lenssisStroke leading-6 border-[1px] rounded-[20px] text-center text-[14px] text-lenssisDeepGray 
+              className={`font-medium border-solid  leading-6 border-[1px] rounded-[20px] text-center text-[14px]  
               ${py ? `py-${py}` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
                 h ? `h-[${h}]` : 'h-[30px]'
-              } ${duration === content.value ? 'bg-lenssisDark text-white' : ''} ${
-                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : ''
-              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : ''} ${
-                color.includes(content.color) ? 'border-solid border-2 border-black' : ''
-              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : ''}`}
+              } ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
+              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+                color.includes(content.color)
+                  ? 'border-solid border-2 border-lenssisDark'
+                  : 'border-lenssisStroke'
+              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
               style={content.color && { backgroundColor: `${content.color}`, width: '25px' }}
               onClick={() => handleFilterValue(content)}
             >
