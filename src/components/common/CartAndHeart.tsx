@@ -6,8 +6,9 @@ function CartAndHeart() {
   const [onCartAnimation, setOnCartAnimation] = useState(false)
 
   const ClickHeart = () => {
+    setOnHeartAnimation((prev) => !prev)
     setTimeout(() => {
-      setOnHeartAnimation((prev) => !prev)
+      // post 보낼 로직
     }, 500)
   }
   const changeWindowWidth = () => {
@@ -17,7 +18,6 @@ function CartAndHeart() {
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
   }, [])
-  console.log(onHeartAnimation)
   const ClickCart = () => {
     setOnCartAnimation((prev) => !prev)
   }
