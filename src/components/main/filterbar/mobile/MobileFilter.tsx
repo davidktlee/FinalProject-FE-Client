@@ -1,13 +1,6 @@
 import React from 'react'
 import MobileBoxLayout from '../common/MobileBoxLayout'
-import {
-  totalDiameter,
-  graphicDiameter,
-  series,
-  features,
-  duration,
-  colors
-} from '../../../../constants/filterData'
+import { graphicDiameter, series, features, duration, colors } from '../../../../constants/filterData'
 
 const MobileFilter = () => {
   return (
