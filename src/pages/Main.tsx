@@ -13,10 +13,16 @@ import { getStoredToken } from '../components/local-storage/userStorage'
 import axios from 'axios'
 import { queryKeys } from '../components/react-query/queryKeys'
 import { useQuery } from 'react-query'
+import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout'
+import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
+import { useRecoilState } from 'recoil'
+import { filterState } from '../store/filterOpen'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
   const refreshToken = useRefreshToken()
+
+  const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
   useEffect(() => {
     const token = getStoredToken()
@@ -39,9 +45,14 @@ const Main = () => {
         <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
-          <div className="hidden lg:block xl:block w-[280px] mr-12">
+          <div className="xs-max:hidden hidden lg:block xl:block w-[280px] mr-12">
             <FilterBar />
           </div>
+          {filterOpen && (
+            <div className="xs:hidden mobile-filter fixed top-[106px] z-10 w-full animate-drop">
+              <MobileFilter />
+            </div>
+          )}
           {/*메인에서 상품 리스트 */}
           <div className="w-full mx-auto border-none rounded-md shadow-[0_0_6px] shadow-gray-400/80">
             {/* <div className="container px-4  flex justify-center items-end"></div> */}

@@ -4,7 +4,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-
   theme: {
     extend: {
       boxShadow: {
@@ -21,7 +20,8 @@ module.exports = {
         lenssisDark: '#1B304A',
         lenssisGray: '#7a7a7a',
         lenssisDeepGray: '#5a5a5a',
-        lenssisLightGray: '#f4f4f4'
+        lenssisLightGray: '#f4f4f4',
+        lenssisStroke: '#d3d3d3'
       },
       fontFamily: {},
       keyframes: {
@@ -45,6 +45,7 @@ module.exports = {
       }
     },
     screens: {
+      'xs-max': { max: '440px' },
       'xs': '440px',
       'sm': '640px',
       'md': '768px',
