@@ -34,6 +34,8 @@ import NoticeDetail from './../components/main/notice/NoticeDetail'
 import EventPage from '../pages/EventPage'
 import Review from '../pages/ReviewPage'
 import MobileBottomNav from '../components/footer/bottom-navigation/MobileBottomNav'
+import EditProfile from '../components/mypage/myprofile/EditProfile'
+import EditSecret from '../components/mypage/myprofile/EditSecret'
 
 const Router = () => {
   return (
@@ -59,7 +61,10 @@ const Router = () => {
           <Route path="myorder" element={<MyOrder />}/>
           <Route path="mytracking" element={<MyTracking />} />
           <Route path="myafter" element={<MyAfter />} />
-          <Route path="myprofile" element={<MyProfile />} />
+          <Route path="myprofile" element={<MyProfile />}>
+            <Route path="editprofile" element={<EditProfile />} />
+            <Route path="editsecret" element={<EditSecret />} />
+          </Route>
           <Route path="myreview" element={<MyReview />} />
           <Route path="mygrade" element={<MyGrade />} />
           <Route path="mycoupon" element={<MyCoupon />} />

@@ -27,24 +27,25 @@ const Mypage = () => {
     return <div>Loading...</div>
   }
 
+
   return (
     <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
           <MypageBanner user={user} />
           <div className="flex flex-col xs:flex-row mt-8">
-            <div className='hidden xs:block'>
+            <div className='hidden xs:block mx-auto'>
             <SideNavBar />
             </div>
             <div className='block xs:hidden'>
             <MobileNavBar selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             </div>
-            <div className="grow">
+            <div className={`${pathname === '/mypage' || pathname === '/mypage/' ? 'hidden' : 'grow'}`}>
               <Outlet />
             </div>
           </div>
         </div>
-        {pathname === '/mypage' && <div className='py-10 block xs:hidden'>찾으시는 메뉴를 선택해주세요</div>}
+        {pathname === '/mypage' && <div className='py-10 block xs:hidden'>메뉴를 선택해주세요</div>}
       </CardTemplate>
     </PageLayout>
   )
