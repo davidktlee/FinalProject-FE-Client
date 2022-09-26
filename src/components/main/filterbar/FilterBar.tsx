@@ -1,5 +1,5 @@
 import React from 'react'
-import { totalDiameter, graphicDiameter, colors, series, features } from '../../../constants/filterData'
+import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
 import BoxLayout from './common/BoxLayout'
 
 const FilterBar = () => {
@@ -36,25 +36,12 @@ const FilterBar = () => {
         </BoxLayout>
       </div>
       <div>
-        <BoxLayout title="전체 직경">
-          <div className="flex flex-wrap py-3 gap-2">
-            {totalDiameter.map((diameter, i) => (
-              <div className="flex" key={i}>
-                <button className="border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] ">
-                  {diameter}
-                </button>
-              </div>
-            ))}
-          </div>
-        </BoxLayout>
-      </div>
-      <div>
         <BoxLayout title="그래픽 직경">
           <div className="flex flex-wrap py-3 gap-2">
             {graphicDiameter.map((diameter, i) => (
               <div className="flex" key={i}>
                 <div className="border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] ">
-                  {diameter}
+                  {diameter.name}
                 </div>
               </div>
             ))}
@@ -83,7 +70,7 @@ const FilterBar = () => {
                 className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[110px] h-[35px] "
                 key={i}
               >
-                <span className="align-middle">{item}</span>
+                <span className="align-middle">{item.name}</span>
               </div>
             ))}
           </div>
@@ -97,7 +84,7 @@ const FilterBar = () => {
                 className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[110px] h-[35px] "
                 key={i}
               >
-                <span className="align-middle">{item}</span>
+                <span className="align-middle">{item.name}</span>
               </div>
             ))}
           </div>
