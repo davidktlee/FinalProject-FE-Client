@@ -1,34 +1,62 @@
 import React, { ReactNode, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
-import { colors } from './../../constants/filterData'
+import { CardPropsType } from '../auth/types/productTypes'
 
-interface PropTypes {
-  id: string // 상품 id
+interface BeforeProps {
+  id?: string // 상품 id
   idx: number
-  title: string // 상품 타이틀
-  rank?: string // 상품 순위
-  series: string // 상품 시리즈
-  price: string // 상품 가격
-  tag?: string[] // 상품 밑 태그
-  discount?: string // 할인률
-  img?: string // 상품 이미지
-  color?: string[] // 색상 코드
-  colorImg: string[]
+  key: string
+  name: string // 상품 타이틀
+  diameter: number
+  graphicDiameter: string[]
+  series: string[] // 상품 시리즈
+  price: number // 상품 가격
+  feature: string[]
+  discount: number // 할인률
+  productImg: string[] // 상품 이미지
+  isNew?: boolean // 새로운 상품 여부
+  colorCode?: string[] // 색상 코드
 }
 
-const Card = ({ title, idx, id, rank, series, price, tag, discount, img, color, colorImg }: PropTypes) => {
-  /* recommend에 대한 Card 디자인 */
-  const [viewImg, setViewImg] = useState<string | undefined>(colorImg[0])
+const Card = ({
+  key,
+  name,
+  idx,
+  id,
+  price,
+  discount,
+  colorCode,
+  productImg,
+  graphicDiameter,
+  feature
+}: BeforeProps) => {
+  const [viewImg, setViewImg] = useState<string | undefined>(productImg[0])
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+
+  const [commaPrice, setCommaPrice] = useState({
+    price: '',
+    discount: ''
+  })
+
+  const toComma = () => {
+    const addCommaPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
+    addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
+  }
+
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
   }
-  const mouseEnterHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
-    setViewImg(colorImg?.find((_, imgIdx: number) => idx === imgIdx))
+
+  const changeImageHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
+    setViewImg(productImg?.find((_, imgIdx: number) => idx === imgIdx))
   }
+  useEffect(() => {
+    toComma()
+  }, [])
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
@@ -55,7 +83,7 @@ const Card = ({ title, idx, id, rank, series, price, tag, discount, img, color, 
               ) : (
                 <>
                   <span className="absolute top-[4px] left-[13px] text-white text-[10px] md:text-[17px] lg:font-bold  xl:font-bold ">
-                    {rank}
+                    {idx + 1}
                   </span>
                   {idx === 0 ? (
                     <SubtractIcon width={39} height={49} color="#1B304A" />
@@ -65,30 +93,45 @@ const Card = ({ title, idx, id, rank, series, price, tag, discount, img, color, 
                 </>
               )}
             </span>
-            <CartAndHeart top="200" right="2" />
           </>
         ) : (
           <></>
         )}
 
         <img src={viewImg} className="rounded-x w-full h-[115px] mx-auto md:h-[185px]" />
-        <div className="flex flex-col ml-[20px] md:ml-[10px]">
+        <div className="flex flex-col ml-[6px] md:ml-[10px]">
           <div className="mt-[10px] mb-[4px] flex ">
-            {color?.map((eachColor: string, idx: number) => (
+            {colorCode?.map((eachColor: string, idx: number) => (
               <div
-                className={`md:w-[30px] md:h-[30px] md:mx-[2px] border-2 border-solid rounded-xl bg-[${eachColor}]`}
+                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] border-2 border-solid rounded-full`}
+                style={{ backgroundColor: `${eachColor}` }}
                 onMouseEnter={(e) => {
-                  mouseEnterHandler(e, idx)
+                  changeImageHandler(e, idx)
                 }}
               ></div>
             ))}
           </div>
-          <div className=" text-[12px] md:text-[14px]">{title}</div>
-          <div className="flex justify-start items-center mt-[10px] mb-[18px]">
-            <div className="mr-2 md:mr-4 font-[700]">{price}</div>
-            <div className="text-[#7A7A7A] line-through text-[12px]">{discount}</div>
+
+          <span className="hidden xs:block absolute top-[200px] right-0 ">
+            <CartAndHeart />
+          </span>
+          <span className="xs:hidden absolute top-[124px] right-0">
+            <CartAndHeart />
+          </span>
+          <div className=" text-[12px] md:text-[14px]">{name}</div>
+          <div className="flex justify-start items-center my-[5px]">
+            <div className="mr-2 md:mr-4 font-[700] md:text-[14px]">{commaPrice.price}</div>
+            <div className="text-[#7A7A7A] line-through text-[10px] md:text-[12px]">
+              {commaPrice.discount}
+            </div>
           </div>
-          <div className="flex justify-start">{/* tag 들어 갈 부분   */}</div>
+          <div className="flex justify-start w-full overflow-hidden flex-wrap">
+            {graphicDiameter.map((item: string) => (
+              <div className="text-[14px] border-[1px] border-solid border-lenssisGray rounded-md py-[2px] px-[6px] my-1 mr-1">
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
