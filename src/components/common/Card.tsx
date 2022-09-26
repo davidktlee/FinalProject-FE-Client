@@ -4,23 +4,24 @@ import { SubtractIcon } from './util/Icon'
 import { CardPropsType } from '../auth/types/productTypes'
 
 interface BeforeProps {
-  id?: string // 상품 id
+  productId?: string // 상품 id
   idx: number
-  key: string
-  name: string // 상품 타이틀
-  diameter: number
+  name?: string // 상품 타이틀
+  diameter?: number
+  series?: string[] // 상품 시리즈
+  feature?: string[]
+  id: string
   graphicDiameter: string[]
-  series: string[] // 상품 시리즈
   price: number // 상품 가격
-  feature: string[]
   discount: number // 할인률
   productImg: string[] // 상품 이미지
-  isNew?: boolean // 새로운 상품 여부
+  duration: string
   colorCode?: string[] // 색상 코드
+
+  isNew?: boolean // 새로운 상품 여부
 }
 
 const Card = ({
-  key,
   name,
   idx,
   id,
@@ -29,7 +30,8 @@ const Card = ({
   colorCode,
   productImg,
   graphicDiameter,
-  feature
+  feature,
+  duration
 }: BeforeProps) => {
   const [viewImg, setViewImg] = useState<string | undefined>(productImg[0])
 
@@ -99,11 +101,11 @@ const Card = ({
         )}
 
         <img src={viewImg} className="rounded-x w-full h-[115px] mx-auto md:h-[185px]" />
-        <div className="flex flex-col ml-[6px] md:ml-[10px]">
+        <div className="flex flex-col ">
           <div className="mt-[5px] mb-[4px] flex ">
             {colorCode?.map((eachColor: string, idx: number) => (
               <div
-                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] border-2 border-solid rounded-full`}
+                className={`w-[15px] h-[15px] mr-[6px] md:w-[25px] md:h-[25px] md:mr-[10px] border-2 border-solid rounded-full`}
                 style={{ backgroundColor: `${eachColor}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
@@ -127,7 +129,7 @@ const Card = ({
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
             {graphicDiameter.map((item: string) => (
-              <div className="text-[14px] border-[1px] border-solid border-lenssisGray rounded-md py-[2px] px-[12px] my-1 mr-1">
+              <div className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-1">
                 {item}
               </div>
             ))}

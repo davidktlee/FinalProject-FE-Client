@@ -38,7 +38,7 @@ const Main = () => {
   const { data: productLists } = useQuery([queryKeys.product], getProduct, {
     refetchOnWindowFocus: false
   })
-
+  console.log(productLists)
   return (
     <div className="w-[90%] mx-auto ">
       <div className="pt-44 relative">
