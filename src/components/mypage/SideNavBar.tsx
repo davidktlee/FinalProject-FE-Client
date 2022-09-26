@@ -38,12 +38,12 @@ const SideNavBar = () => {
   const {pathname} = useLocation();
   console.log(pathname);
   return (
-    <ul className='flex flex-col items-start justify-start gap-y-1 text-[#565656] font-bold text-sm mr-0 xs:mr-4'>
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myorder">주문 내역</NavLink></li>
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="mytracking">배송 조회</NavLink></li>
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myafter">취소/교환/반품 내역</NavLink></li>
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myreview">리뷰관리</NavLink></li>
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myprofile">회원 정보 수정</NavLink></li>
+    <ul className={`${pathname === '/mypage' && 'text-center gap-y-4'} flex flex-col items-start gap-y-1 text-[#565656] font-bold text-sm mr-0 xs:mr-4 min-w-[116px]`}>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myorder">주문 내역</NavLink></li>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="mytracking">배송 조회</NavLink></li>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myafter">취소/교환/반품 내역</NavLink></li>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myreview">리뷰관리</NavLink></li>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="myprofile">회원 정보 수정</NavLink></li>
 
         {pathname.includes('/mypage/myprofile') &&
         <>
@@ -52,8 +52,8 @@ const SideNavBar = () => {
         </>
         }
         
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="mygrade">회원등급</NavLink></li>
-        <li><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="mycoupon">쿠폰함</NavLink></li>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="mygrade">회원등급</NavLink></li>
+        <li className='w-full'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A]' : 'text-inherit')} to="mycoupon">쿠폰함</NavLink></li>
       
         </ul>
   );

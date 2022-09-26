@@ -26,6 +26,7 @@ const Mypage = () => {
   if(!user) {
     return <div>Loading...</div>
   }
+  console.log(pathname);
 
   return (
     <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
@@ -33,13 +34,13 @@ const Mypage = () => {
         <div className="w-full xs:w-[90%] mx-auto">
           <MypageBanner user={user} />
           <div className="flex flex-col xs:flex-row mt-8">
-            <div className='hidden xs:block'>
+            <div className='hidden xs:block mx-auto'>
             <SideNavBar />
             </div>
             <div className='block xs:hidden'>
             <MobileNavBar selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             </div>
-            <div className="grow">
+            <div className={`${pathname === '/mypage' || pathname === '/mypage/' ? 'hidden' : 'grow'}`}>
               <Outlet />
             </div>
           </div>
