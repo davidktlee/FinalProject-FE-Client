@@ -100,7 +100,7 @@ const Card = ({
 
         <img src={viewImg} className="rounded-x w-full h-[115px] mx-auto md:h-[185px]" />
         <div className="flex flex-col ml-[6px] md:ml-[10px]">
-          <div className="mt-[10px] mb-[4px] flex ">
+          <div className="mt-[5px] mb-[4px] flex ">
             {colorCode?.map((eachColor: string, idx: number) => (
               <div
                 className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] border-2 border-solid rounded-full`}
@@ -112,10 +112,10 @@ const Card = ({
             ))}
           </div>
 
-          <span className="hidden xs:block absolute top-[200px] right-0 ">
+          <span className="hidden xs:block absolute top-[190px] right-0 ">
             <CartAndHeart />
           </span>
-          <span className="xs:hidden absolute top-[124px] right-0">
+          <span className="xs:hidden block absolute top-[120px] right-0">
             <CartAndHeart />
           </span>
           <div className=" text-[12px] md:text-[14px]">{name}</div>
@@ -127,7 +127,7 @@ const Card = ({
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
             {graphicDiameter.map((item: string) => (
-              <div className="text-[14px] border-[1px] border-solid border-lenssisGray rounded-md py-[2px] px-[6px] my-1 mr-1">
+              <div className="text-[14px] border-[1px] border-solid border-lenssisGray rounded-md py-[2px] px-[12px] my-1 mr-1">
                 {item}
               </div>
             ))}
