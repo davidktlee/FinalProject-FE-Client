@@ -36,12 +36,17 @@ module.exports = {
         left: {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(0%)' }
+        },
+        click: {
+          '0%': { transform: 'scale(1.5)' },
+          '100%': { transform: 'scale(1)' }
         }
       },
       animation: {
         toast: 'toast .6s ease-in-out',
         drop: 'drop .6s ease-in-out',
-        left: 'left .2s ease'
+        left: 'left .2s ease',
+        click: 'click 1s ease-in-out'
       }
     },
     screens: {
