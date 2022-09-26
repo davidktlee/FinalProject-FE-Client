@@ -9,6 +9,7 @@ import { Token } from '../types/userTypes'
 import useToast from '../../common/toast/hooks/useToast'
 
 const getNewToken = async (token: Token | null): Promise<Token | null> => {
+  console.log('getNewToken');
   if(!token) return null
   
     const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token
