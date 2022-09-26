@@ -1,28 +1,37 @@
 
 import { AxiosResponse } from 'axios'
 import {  useMutation, useQuery, useQueryClient } from 'react-query'
-import { axiosInstance,  getJWTToken, getNewJWTToken } from '../../axiosinstance'
-import {  setStoredToken } from '../../local-storage/userStorage'
+import { axiosAuthInstance, axiosInstance,  getJWTToken, getNewJWTToken } from '../../axiosinstance'
+import {  clearStoredToken, setStoredToken } from '../../local-storage/userStorage'
 import { queryKeys } from '../../react-query/queryKeys'
 import { Token } from '../types/userTypes'
 
 import useToast from '../../common/toast/hooks/useToast'
 
 const getNewToken = async (token: Token | null): Promise<Token | null> => {
-  const currentTime = Date.now();
-  if (!token) return null
-  console.log('리프레시 이전 토큰',token?.accessToken);
+  if(!token) return null
   
-  // const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token  
-    const { data }: AxiosResponse<any> = await axiosInstance.put('/member/newAccess',{},
-    {
-      headers: getNewJWTToken(token),
-    })
-    setStoredToken(data)
-    console.log(data);
-    return data
+    const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token
+    if (expiresIn + refreshTokenExpiredDate < Date.now()) {
+      clearStoredToken()
+      return null;
+    }
+    if (expiresIn + accessTokenExpiredDate - 600000 < Date.now()) {
+      
+      const { data }: AxiosResponse<Token> = await axiosInstance.put('/member/newAccess',{},{
+        headers: getNewJWTToken(token),
+        withCredentials: false
+      })
+      setStoredToken(data)
+      console.log('AT의 잔여 기간이 10분 남았기에 AT를 새것으로 교체합니다!')
+      console.log('바뀌기 전 토큰',token.accessToken)
+      console.log('바뀐 토큰',data.accessToken)
+      return data
+    }else{
+      return token
+    }
   }
-    
+ 
 
 
 
@@ -34,7 +43,7 @@ export const useRefreshToken = () => {
     onSuccess: (data) => {
       if(!data) return;
       setStoredToken(data)
-      console.log('onSuccess',data)
+      
       queryClient.invalidateQueries([queryKeys.token])
     }
   })

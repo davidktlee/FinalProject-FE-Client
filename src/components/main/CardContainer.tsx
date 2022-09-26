@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../common/Card'
+import { Item, CardContainerPropsType } from '../auth/types/productTypes'
+import Pagination from './common/Pagination'
 const items = [
   {
     id: '1',
@@ -9,6 +11,12 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
+    color: ['#fff', '#000', '#5a5a'],
+    colorImg: [
+      '/assets/eyes.png',
+      '/assets/Vector.jpg',
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    ],
     img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
     isNew: true
   },
@@ -20,6 +28,12 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
+    color: ['#fff', '#000', '#5a5a'],
+    colorImg: [
+      '/assets/eyes.png',
+      '/assets/Vector.jpg',
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    ],
     img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
     isNew: true
   },
@@ -31,6 +45,12 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
+    color: ['#fff', '#000', '#5a5a'],
+    colorImg: [
+      '/assets/eyes.png',
+      '/assets/Vector.jpg',
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    ],
     img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
     isNew: true
   },
@@ -42,6 +62,12 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
+    color: ['#fff', '#000', '#5a5a'],
+    colorImg: [
+      '/assets/eyes.png',
+      '/assets/Vector.jpg',
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    ],
     img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
     isNew: true
   },
@@ -53,6 +79,12 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
+    color: ['#fff', '#000', '#5a5a'],
+    colorImg: [
+      '/assets/eyes.png',
+      '/assets/Vector.jpg',
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    ],
     img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
     isNew: true
   },
@@ -64,28 +96,34 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
+    color: ['#fff', '#000', '#5a5a'],
+    colorImg: [
+      '/assets/eyes.png',
+      '/assets/Vector.jpg',
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    ],
     img: '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp',
     isNew: true
   }
 ]
-interface Item {
-  id: string // 상품 id
-  title: string // 상품 타이틀
-  rank?: string // 상품 순위
-  series: string // 상품 시리즈
-  price: string // 상품 가격
-  tag?: string[] // 상품 밑 태그
-  discount?: string // 할인률
-  img?: string // 상품 이미지
+interface BeforeItem {
+  productId?: string // 상품 id
+  idx: number
+  name: string // 상품 타이틀
+  diameter: number
+  graphicDiameter: string[]
+  series: string[] // 상품 시리즈
+  price: number // 상품 가격
+  feature: string[]
+  discount: number // 할인률
+  product_details_image_url: string[] // 상품 이미지
   isNew?: boolean // 새로운 상품 여부
-  color?: string[] // 색상 코드
+  color_code?: string[] // 색상 코드
 }
-interface Props {
-  data: Data
-}
-type Data = 'product' | 'new'
 
-const CardContainer = ({ data }: Props) => {
+const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
+  const [allData, setAllData] = useState(productLists?.length)
+  console.log(allData)
   return (
     <>
       {data === 'new' ? (
@@ -95,21 +133,8 @@ const CardContainer = ({ data }: Props) => {
               {data}
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center xl:grid-cols-4">
-            {items.map((item: Item) => (
-              <Card
-                key={item.id}
-                title={item.title}
-                rank={item.rank}
-                id={item.id}
-                series={item.series}
-                price={item.price}
-                tag={item.tag}
-                discount={item.discount}
-                img={item.img}
-              />
-            ))}
-          </div>
+          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[95%] mx-auto"></div>
+          <Pagination />
         </>
       ) : (
         data === 'product' && (
@@ -119,21 +144,26 @@ const CardContainer = ({ data }: Props) => {
                 {data}
               </span>
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-3 sm:grid-cols-2 xl:gap-2 lg:gap-2  mx-auto ">
-              {items.map((item: Item) => (
-                <Card
-                  key={item.id}
-                  title={item.title}
-                  rank={item.rank}
-                  id={item.id}
-                  series={item.series}
-                  price={item.price}
-                  tag={item.tag}
-                  discount={item.discount}
-                  img={item.img}
-                />
-              ))}
+            <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 xl:gap-2 lg:gap-2 w-[95%] mx-auto">
+              {productLists &&
+                productLists.map((item: BeforeItem, idx: number) => (
+                  <Card
+                    key={`${idx}-${item.name}`}
+                    idx={idx}
+                    id={item.productId}
+                    name={item.name}
+                    series={item.series}
+                    price={item.price}
+                    feature={item.feature}
+                    discount={item.discount}
+                    diameter={item.diameter}
+                    colorCode={item.color_code}
+                    productImg={item.product_details_image_url}
+                    graphicDiameter={item.graphicDiameter}
+                  />
+                ))}
             </div>
+            <Pagination />
           </>
         )
       )}

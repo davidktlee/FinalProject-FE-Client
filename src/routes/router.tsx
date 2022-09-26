@@ -4,7 +4,7 @@ import Favorite from '../pages/Favorite'
 import SigninPage from '../pages/SigninPage'
 import Main from '../pages/Main'
 import MypagePage from '../pages/MypagePage'
-import Order from '../pages/Order'
+import PaymentPage from '../pages/PaymentPage'
 import ProductDetail from '../pages/ProductDetail'
 import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
@@ -33,6 +33,7 @@ import NoticePage from '../pages/NoticePage'
 import NoticeDetail from './../components/main/notice/NoticeDetail'
 import EventPage from '../pages/EventPage'
 import Review from '../pages/ReviewPage'
+import MobileBottomNav from '../components/footer/bottom-navigation/MobileBottomNav'
 
 const Router = () => {
   return (
@@ -52,7 +53,7 @@ const Router = () => {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/order" element={<Order />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
           <Route path="myorder" element={<MyOrder />}/>
@@ -85,6 +86,7 @@ const Router = () => {
         <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <MobileBottomNav />
       <Footer />
     </BrowserRouter>
   )

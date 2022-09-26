@@ -23,27 +23,29 @@ export const getNewJWTToken = (token:Token): Record<string,any> => {
 const config: AxiosRequestConfig = { baseURL: baseUrl,withCredentials:false }
 
 export const axiosInstance = axios.create(config)
+export const axiosAuthInstance = axios.create(config)
 
-
-// axiosRefreshInstance.interceptors.response.use( async (res) => {
-//   const token = getStoredToken()
-//   if(!token) return res;
-//   console.log('getNewToken 실행')
-//   console.log(res);
-//   if('accessToken' in res.data){
-//     const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token
-//     if (expiresIn + refreshTokenExpiredDate < Date.now()) {
-//       // clearStoredToken()
-//       return res;
-//     }
-//     if (expiresIn + accessTokenExpiredDate < Date.now()) {
-//       const { data }: AxiosResponse<Token> = await axiosInstance.put('/member/newAccess', {
-//         headers: getNewJWTToken(token),
-//         withCredentials: false
-//       })
-//       // setStoredToken(data)
-//       console.log('interceptors',data)
-//     }
-//   }
-//   return res;
-//   },(err) => {return err})
+axiosAuthInstance.interceptors.response.use( async (res) => {
+  const token = getStoredToken()
+  if(!token) return res;
+  
+  
+  if('accessToken' in res.data){
+    
+    const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token
+    if (expiresIn + refreshTokenExpiredDate < Date.now()) {
+      
+      return res;
+    }
+    if (expiresIn + accessTokenExpiredDate - 600000 < Date.now()) {
+      console.log('인터셉터 실행')
+      const { data }: AxiosResponse<Token> = await axiosInstance.put('/member/newAccess',{},{
+        headers: getNewJWTToken(token),
+        withCredentials: false
+      })
+      setStoredToken(data)
+      console.log('interceptors',data)
+    }
+  }
+  return res;
+  },(err) => {return err})

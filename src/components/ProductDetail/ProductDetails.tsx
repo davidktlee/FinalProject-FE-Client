@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProductBanner from './ProductBanner'
 import ProductRecommend from './ProductRecommend'
 import ProductTabs from './ProductTabs'
+import { useQuery } from 'react-query'
+import axios from 'axios'
+
+import { axiosInstance } from '../axiosinstance'
 
 const ProductDetails = () => {
+  const getProducts = async () => {
+    const { data } = await axios.get(`http://43.200.50.49:8080/product/allProduct`)
+    console.log(data)
+    return data
+  }
+
+  const { data } = useQuery('products', getProducts)
+  console.log(data)
+
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">

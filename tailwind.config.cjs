@@ -7,6 +7,12 @@ module.exports = {
 
   theme: {
     extend: {
+      boxShadow: {
+        basic: '0 0 8px 0 rgba(0, 0, 0, 0.18)'
+      },
+      dropShadow: {
+        basic: '0 0 8px 0 rgba(0, 0, 0, 0.18)'
+      },
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
@@ -14,7 +20,8 @@ module.exports = {
         lenssisDeepSky: '#92c8ed',
         lenssisDark: '#1B304A',
         lenssisGray: '#7a7a7a',
-        lenssisDeepGray: '#5a5a5a'
+        lenssisDeepGray: '#5a5a5a',
+        lenssisLightGray: '#f4f4f4'
       },
       fontFamily: {},
       keyframes: {
