@@ -25,17 +25,16 @@ const config: AxiosRequestConfig = { baseURL: baseUrl,withCredentials:false }
 export const axiosInstance = axios.create(config)
 export const axiosAuthInstance = axios.create(config)
 
-axiosAuthInstance.interceptors.response.use( async (res) => {
+axiosInstance.interceptors.request.use( async (req) => {
   const token = getStoredToken()
-  if(!token) return res;
-  
-  
-  if('accessToken' in res.data){
+  console.log('token validation...')
+  if(!token) return req;
+  if('accessToken' in req.data){
     
     const { expiresIn, accessTokenExpiredDate, refreshTokenExpiredDate } = token
     if (expiresIn + refreshTokenExpiredDate < Date.now()) {
       
-      return res;
+      return req;
     }
     if (expiresIn + accessTokenExpiredDate - 600000 < Date.now()) {
       console.log('인터셉터 실행')
@@ -47,5 +46,24 @@ axiosAuthInstance.interceptors.response.use( async (res) => {
       console.log('interceptors',data)
     }
   }
-  return res;
+  return req;
   },(err) => {return err})
+
+
+axiosInstance.interceptors.response.use((res) => {
+  return res;
+},
+  async(err) => {
+    const { config, response: {status},} = err;
+    if(status === 500) {      
+        const originalRequest = config;
+        
+        const token:Token = JSON.parse(localStorage.getItem('lenssis_user') || '');
+        const {data} = await axiosInstance.put('/member/newAccess',{
+          'X-REFRESH-TOKEN': token.refreshToken,
+          'X-ACCESS-TOKEN': token.accessToken
+        });
+        setStoredToken(data);
+        return axios(originalRequest);
+    }
+  })

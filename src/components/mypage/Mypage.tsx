@@ -26,7 +26,7 @@ const Mypage = () => {
   if(!user) {
     return <div>Loading...</div>
   }
-  console.log(pathname);
+
 
   return (
     <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
