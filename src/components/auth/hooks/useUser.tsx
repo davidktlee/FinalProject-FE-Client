@@ -1,53 +1,69 @@
-import { AxiosResponse } from 'axios';
-import React from 'react';
-import { useQuery, useQueryClient } from 'react-query';
-import { axiosInstance, getJWTToken } from '../../axiosinstance';
-import { clearStoredUser, getStoredUser, setStoredUser } from '../../local-storage/userStorage';
-import { queryKeys } from '../../react-query/queryKeys';
-import { UserDataType } from '../types/userTypes';
+import { AxiosResponse } from 'axios'
+import { useIsFetching, useQuery, useQueryClient } from 'react-query'
+import { axiosInstance, getJWTToken } from '../../axiosinstance'
+import { clearStoredToken, getStoredToken, setStoredToken } from '../../local-storage/userStorage'
+import { queryKeys } from '../../react-query/queryKeys'
+import { Token } from '../types/userTypes'
 
+import { User, userState } from '../../../store/user'
+import { useRecoilState } from 'recoil'
+import { useState } from 'react'
 
-
-
-
-
-//유저 정보를 보내서 토큰을 추출한 뒤에 보내고 유저 정보를 가져오기 <GET 요청>
-const fetchUser = async (user:UserDataType | null) => {
-    if(!user) return;
-    const { data }: AxiosResponse<{user: UserDataType}> = await axiosInstance.get(
-      `/signin`,{
-        headers: getJWTToken(user)
-      }
-    );
-    
-      return data.user
+// 토큰을 통해 유저 정보를 받아오는 getUser가 signIn보다 빠르게 진행되면서 생기는 문제같음..
+const getUser = async (token: Token | null): Promise<User | null> => {
+  if (!token) {
+    console.log('user없음')
+    return null
+  }
+  const { data }: AxiosResponse<User> = await axiosInstance.get('/member/info', {
+    headers: getJWTToken(token),
+  })
+  console.log('user있음')
+  console.log('getUser - data',data)
+  return data
 }
 
 interface UseUser {
-  // user: UserDataType | null;
-  updateUser: (user:UserDataType) => void;
-  clearUser: () => void;
+  user: User | null | undefined
+  updateUser: (user: Token) => void
+  clearUser: () => void
+  isFetching: number
 }
 
-export const useUser = () : UseUser => {
-const queryClient = useQueryClient();
-// const {data: user} = useQuery(queryKeys.user, () => fetchUser(user),
-//   {
-//     initialData:getStoredUser()
-//   })
+export const useUser = (): UseUser => {
+  const [currentUser, setCurrentUser] = useRecoilState(userState)
+  const queryClient = useQueryClient()
+  const token = getStoredToken()
+  const isFetching = useIsFetching()
 
-const updateUser = (newUser:UserDataType):void => {
-  queryClient.setQueriesData(queryKeys.user, newUser)
-}
+  const { data: user } = useQuery([queryKeys.user], () => getUser(token), {
+    onSuccess: (received: User | null) => {
+      if (received) {
+        setCurrentUser(received)
+        return received
+      }else{
+        // clearStoredToken();
+        // clearUser()
+      }
+    },
+    onError: () => console.log('queryError'),
+    refetchOnWindowFocus:false
+  })
 
-const clearUser = () => {
-  queryClient.setQueriesData(queryKeys.user, null);
-}
+  const updateUser = (newToken: Token): void => {
+    // queryClient.invalidateQueries([queryKeys.user,queryKeys.token])
+    queryClient.fetchQuery([queryKeys.user], () => getUser(newToken))
+  }
+
+  const clearUser = () => {
+    // queryClient.setQueryData(queryKeys.user, null)
+    queryClient.removeQueries([queryKeys.user, queryKeys.token])
+  }
 
   return {
-    // user,
+    user,
     updateUser,
-    clearUser
+    clearUser,
+    isFetching
   }
-};
-
+}

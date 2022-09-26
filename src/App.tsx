@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import Footer from './components/common/Footer'
-import Header from './components/common/Header'
+
+
+import ToastList from './components/common/toast/ToastList'
+
+
 import Router from './routes/router'
 
 function App() {
+
+
   return (
     <div className="App">
-      <Header />
+      <ToastList />
       <Router />
-      <Footer />
     </div>
   )
 }

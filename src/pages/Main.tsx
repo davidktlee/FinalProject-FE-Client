@@ -1,107 +1,80 @@
-import React, { useEffect, useReducer, useState } from 'react'
-import Event from '../components/main/Event'
-import Notice from '../components/main/Notice'
+import { useEffect, useState } from 'react'
+import Event from '../components/main/MainEvent'
 import Recommend from '../components/main/Recommend'
-import Review from '../components/Review'
 import Banner from './../components/Banner'
-import ControlBar from './../components/ControlBar'
-import CardContainer from './../components/main/CardContainer'
-import Toast from '../components/common/Toast'
+import CardContainer from '../components/main/CardContainer'
+import NoticePage from './NoticePage'
+import MainReview from '../components/main/MainReview'
+import FilterBar from '../components/main/filterbar/FilterBar'
 
-interface InitialState {
-  all: string
-  oneDay: string
-  monthly: string
-}
-const initialState: InitialState = {
-  all: '#1B304A',
-  oneDay: '#A4C8E1',
-  monthly: '#A4C8E1'
-}
-interface ActionType {
-  type: string
-}
-const reducer = (state: InitialState, action: ActionType) => {
-  switch (action.type) {
-    case 'all':
-      return { ...state, all: '#1B304A', oneDay: '#A4C8E1', monthly: '#A4C8E1' }
-    case 'oneDay':
-      return { ...state, all: '#A4C8E1', oneDay: '#1B304A', monthly: '#A4C8E1' }
-    case 'monthly':
-      return { ...state, all: '#A4C8E1', oneDay: '#A4C8E1', monthly: '#1B304A' }
-    default:
-      return state
-  }
-}
+import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
+import { getStoredToken } from '../components/local-storage/userStorage'
+
+import axios from 'axios'
+import { queryKeys } from '../components/react-query/queryKeys'
+import { useQuery } from 'react-query'
+import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout'
+import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
+import { useRecoilState } from 'recoil'
+import { filterState } from '../store/filterOpen'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSelects(e.currentTarget.value)
+  const refreshToken = useRefreshToken()
+
+  const [filterOpen, setFilterOpen] = useRecoilState(filterState)
+
+  useEffect(() => {
+    const token = getStoredToken()
+    refreshToken(token)
+    console.log('main interceptor')
+  }, [])
+
+  const getProduct = async () => {
+    const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products')
+    return res.data
   }
 
-  // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
-  useEffect(() => {
-    // const {data: productLists} = useQuery(queryKey, queryFn, options)
-  }, [selects])
+  const { data: productLists } = useQuery([queryKeys.product], getProduct, {
+    refetchOnWindowFocus: false
+  })
+
   return (
-
-    <div>
-
-    <div className="flex flex-col items-center sm:w-[355px] md:w-[1180px] mx-auto">
-
-      <Banner />
-      <div className="md:grid md:grid-cols-3 sm:grid sm:grid-cols-1">
-        {/* 메인의 왼쪽 검색 필터 */}
-        <span className="hidden md:block w-[280px]">
-          <ControlBar />
-        </span>
-        {/*메인에서 상품 리스트 */}
-        <div className="sm:col-span-3 md:col-span-2">
-          <div className="border-b-2 border-solid border-[#A4C8E1] text-white">
-            <button
-              onClick={(e) => {
-                dispatch({ type: 'all' })
-                changeSelects(e)
-              }}
-              style={{ backgroundColor: state.all }}
-              className="w-32 h-6 rounded-t-md border-none bg-cyan-100 mx-2  text-white"
-              value="all"
-            >
-              All
-            </button>
-            <button
-              onClick={(e) => {
-                dispatch({ type: 'oneDay' })
-                changeSelects(e)
-              }}
-              style={{ backgroundColor: state.oneDay }}
-              className="w-32 h-6 rounded-t-md border-none bg-cyan-100 mx-2 text-white"
-              value="oneDay"
-            >
-              One Day
-            </button>
-            <button
-              onClick={(e) => {
-                dispatch({ type: 'monthly' })
-                changeSelects(e)
-              }}
-              style={{ backgroundColor: state.monthly }}
-              className="w-32 h-6 rounded-t-md border-none bg-cyan-100 mx-2 text-white"
-              value="monthly"
-            >
-              Monthly
-            </button>
+    <div className="w-[90%] mx-auto ">
+      <div className="pt-44 relative">
+        <Banner />
+        <section className="flex justify-between">
+          {/* 메인의 왼쪽 검색 필터 */}
+          <div className="xs-max:hidden hidden lg:block xl:block w-[280px] mr-12">
+            <FilterBar />
           </div>
-          <CardContainer />
+          {filterOpen && (
+            <div className="xs:hidden mobile-filter fixed top-[106px] z-10 w-full animate-drop">
+              <MobileFilter />
+            </div>
+          )}
+          {/*메인에서 상품 리스트 */}
+          <div className="w-full mx-auto border-none rounded-md shadow-[0_0_6px] shadow-gray-400/80">
+            {/* <div className="container px-4  flex justify-center items-end"></div> */}
+            <CardContainer data="product" productLists={productLists} />
+          </div>
+        </section>
+        <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <CardContainer data="new" />
+        </div>
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <Event />
+        </div>
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <Recommend />
+        </div>
+        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <MainReview />
+        </div>
+        <div className="container my-[100px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+          <NoticePage />
         </div>
       </div>
-      <Event />
-      <Recommend />
-      <Review />
-      <Notice />
-    </div>
     </div>
   )
 }

@@ -1,72 +1,139 @@
 import axios, { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../axiosinstance'
-import useToast from '../../common/hooks/useToast'
-import { RegisterType, UserDataType } from '../types/userTypes'
+import useToast from '../../common/toast/hooks/useToast'
+import { setStoredToken } from '../../local-storage/userStorage'
+
+import { RegisterType, SigninType, Token } from '../types/userTypes'
 import {  useUser } from './useUser'
 
-enum RequestType {
-  signUp = 'signup',
-  signIn = 'signIn'
+
+
+type AuthEndpoint = 'member/login' | 'member/signup'
+
+type ErrorResponse = { message: string }
+type AuthResponseType = Token | ErrorResponse
+
+interface UseAuth {
+  signin: (user: SigninType) => Promise<void>,
+  signup: (newUser: RegisterType) => Promise<void>
+  signout:() => void
 }
 
-type UserResponse = { user: UserDataType }
-type ErrorResponse = { message: string }
-type AuthResponseType = UserResponse | ErrorResponse
-
-
-export const useAuth = () => {
+export const useAuth = ():UseAuth => {
   const { clearUser, updateUser } = useUser()
-  
-  const authServerCall = async (urlEndpoint: RequestType, userData: Partial<RegisterType>): Promise<void> => {
+  const {fireToast} = useToast()
+  const navigate = useNavigate()
+
+  /** 회원가입 함수 */
+  const authSignUp = async (urlEndpoint: AuthEndpoint, userData: RegisterType): Promise<void> => {
     try {
       const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
         url: urlEndpoint,
         method: 'POST',
         data: userData,
-        headers: { ContentType: 'application/json' }
+        headers: { "Content-Type":"application/json" },
+        withCredentials:false
+      })
+      if (status >= 400) {
+        const title = 'message' in data ? data.message : '회원가입에 실패하였습니다.'
+        fireToast({
+          id:status + '',
+          message:title,
+          position:'bottom',
+          timer:2000,
+          type:'failed'
+        })
+        return
+      }else{
+        fireToast({
+          id:'회원가입 성공',
+          message:'가입하신 이메일로 로그인 해주세요!',
+          position: 'bottom',
+          timer:5000,
+          type:'success'
+        })
+        navigate('/signin')
+      }
+      
+
+    } catch (error) {
+      const title =
+        axios.isAxiosError(error) && error?.message
+          ? error.message
+          : '서버에서 에러가 발생했습니다.'
+      fireToast({
+        id:'서버 에러',
+        message: title,
+        position: 'top',
+        timer:2000,
+        type:'failed'
+      })
+    }
+  }
+
+  /** 로그인 함수. localStorage에 토큰 전달 */
+  const authSignin = async (urlEndpoint: AuthEndpoint, userData: SigninType): Promise<void> => {
+    try {
+      const { data, status }: AxiosResponse<AuthResponseType> = await axiosInstance({
+        url: urlEndpoint,
+        method: 'POST',
+        data: userData,
+        headers: {
+          ContentType: 'application/json',
+         },
+        withCredentials:false
       })
       if (status === 400) {
         const title = 'message' in data ? data.message : '인증되지 않았습니다.'
-        useToast({
-          type:'failed',
-          message: title,
-          position: 'bottom',
-          timer: 1500
+        fireToast({
+          id:'인증 실패',
+          message:title,
+          position:'bottom',
+          timer:2000,
+          type:'failed'
         })
         return
       }
-      if ('user' in data && 'token' in data.user) {
-        // userdata 사용 로직 작성
-        updateUser(data.user)
+      if ('accessToken' in data) {
+        // 토큰
+        updateUser(data)
+        setStoredToken(data)
+        navigate('/')
       }
     } catch (errorResponse) {
       const title =
-        axios.isAxiosError(errorResponse) && errorResponse?.message
+        axios.isAxiosError(errorResponse) && errorResponse.message
           ? errorResponse.message
           : '서버에서 에러가 발생했습니다.'
-          useToast({
-            type:'failed',
-            message: title,
-            position: 'bottom',
-            timer: 1500
-          })
-      return
+      fireToast({
+        id:'서버 에러',
+        message: title,
+        position: 'top',
+        timer:2000,
+        type:'failed'
+      })
     }
-  }
-  const signin = async (email: string, password: string) => {
-    const userObj = {
-      email,
-      password
-    }
-    authServerCall(RequestType.signIn, userObj)
   }
 
+
   const signup = async (newUser: RegisterType) => {
-    authServerCall(RequestType.signUp, newUser)
+    authSignUp('member/signup', newUser)
+  }
+
+  const signin = async (user:SigninType) => {  
+    authSignin('member/login', user)
   }
 
   const signout = () => {
     clearUser()
+    fireToast({
+      id:'logged out',
+      message:'로그아웃 되었습니다!',
+      position: 'bottom',
+      timer: 2000,
+      type: 'complete'
+    })
   }
 
   return {
