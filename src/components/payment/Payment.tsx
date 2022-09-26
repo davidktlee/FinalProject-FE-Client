@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useEffect } from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
@@ -34,6 +34,9 @@ const Payment = () => {
     middleNumber:'',
     lastNumber:'',
   })
+
+
+  
   const [formValue, setFormValue] = useState<PaymentFormValueType>({
     orderer: user?.name || '',
     postCode: user?.postCode || 0,
@@ -42,6 +45,25 @@ const Payment = () => {
     email: user?.email || '',
     detailAddress: ''
   })
+  
+  useEffect(() => {
+    if(!user) return;
+    const splitUserEmail = user.email.split('@')
+    
+    setEmailFormValue({
+      emailIdentity:splitUserEmail[0],
+      emailDomain:splitUserEmail[1]
+    })
+    setFormValue({
+      orderer:user.name,
+      postCode:user.postCode,
+      address:user.address,
+      phone:user.phone,
+      email:emailFormValue.emailIdentity + emailFormValue.emailDomain,
+      detailAddress:''
+    })
+  }, [])
+
   const [isNew,setIsNew] = useState(false);
   const [isFormShow,setIsFormShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
@@ -118,7 +140,7 @@ const Payment = () => {
       setIsNew(false);
     }
   }
-
+  
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight='h-[3000px]'>
       <CardTemplate title="주문/결제" isTitleVisible={true}>

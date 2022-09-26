@@ -19,7 +19,7 @@ const getUser = async (token: Token | null): Promise<User | null> => {
     headers: getJWTToken(token),
   })
   console.log('user있음')
-  console.log(data)
+  console.log('getUser - data',data)
   return data
 }
 
