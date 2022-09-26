@@ -24,24 +24,20 @@ function NoticePageTab() {
     if (!location.pathname.includes('notice') && location.pathname !== optionName) {
       navigate('/')
     }
-    // if (!location.pathname.includes('notice') && location.pathname !== optionName) {
-    //   navigate('/notice/mustread')
-    // }
   }, [])
 
   return (
     <>
-      {' '}
       <div className="hidden xs:flex xs:justify-center xs:border-b-2 xs:border-solid xs:border-gray-100 ">
         {NoticePageTitle.map((title: Title, index: number) => (
           <NavLink
             key={index}
             style={({ isActive }) => ({
-              borderBottom: isActive ? '3px solid #9AD0F6' : 'none'
-              // padding: isActive ? '0 10px' : 'none'
+              borderBottom: isActive ? '5px solid #1B304A' : 'none',
+              fontWeight: isActive ? 600 : 500
             })}
             to={title.value}
-            className="xl:w-[200px] md:w-[150px] sm:w-[100px] text-center py-4"
+            className="xl:w-[200px] md:w-[150px] sm:w-[100px] text-center "
           >
             {title.title}
           </NavLink>

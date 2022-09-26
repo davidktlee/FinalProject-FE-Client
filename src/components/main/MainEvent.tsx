@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
+import ViewMoreBtn from './common/ViewMoreBtn'
 
 // 지울 것
 const events = [
@@ -34,11 +35,7 @@ const MainEvent = () => {
           </div>
         ))}
       </div>
-      <div className="w-[100px] h-[40px] my-[20px] mx-auto border-2 border-solid rounded-full flex justify-center items-center">
-        <button className="text-[#0B0954] font=[700]" onClick={() => navigate('/event')}>
-          View More
-        </button>
-      </div>
+      <ViewMoreBtn moveTo="/event" />
     </div>
   )
 }
