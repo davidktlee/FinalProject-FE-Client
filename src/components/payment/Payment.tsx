@@ -210,6 +210,7 @@ const Payment = () => {
         {
           isNew && isFormShow && <div>안녕 난 새로운 배송지</div>
         }
+        
         {!isFormShow && <div className='mt-8'>배송지를 선택해주세요</div>}
         
       </CardTemplate>

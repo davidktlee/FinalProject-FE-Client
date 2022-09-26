@@ -44,7 +44,7 @@ const Mypage = () => {
             </div>
           </div>
         </div>
-        {pathname === '/mypage' && <div className='py-10 block xs:hidden'>찾으시는 메뉴를 선택해주세요</div>}
+        {pathname === '/mypage' && <div className='py-10 block xs:hidden'>메뉴를 선택해주세요</div>}
       </CardTemplate>
     </PageLayout>
   )
