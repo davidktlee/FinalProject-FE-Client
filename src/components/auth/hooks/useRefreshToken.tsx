@@ -1,6 +1,6 @@
 
 import { AxiosResponse } from 'axios'
-import {  useMutation, useQuery, useQueryClient } from 'react-query'
+import {  UseMutateFunction, useMutation, useQuery, useQueryClient } from 'react-query'
 import { axiosAuthInstance, axiosInstance,  getJWTToken, getNewJWTToken } from '../../axiosinstance'
 import {  clearStoredToken, setStoredToken } from '../../local-storage/userStorage'
 import { queryKeys } from '../../react-query/queryKeys'
@@ -37,14 +37,13 @@ const getNewToken = async (token: Token | null): Promise<Token | null> => {
 
 
 
-export const useRefreshToken = () => {
+export const useRefreshToken = ():UseMutateFunction<Token|null,unknown,Token,unknown> => {
   const queryClient = useQueryClient()
   const { fireToast } = useToast()
   const { mutate } = useMutation((token: Token) => getNewToken(token), {
     onSuccess: (data) => {
       if(!data) return;
       setStoredToken(data)
-      
       queryClient.invalidateQueries([queryKeys.token])
     }
   })

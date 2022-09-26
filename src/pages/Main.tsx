@@ -23,19 +23,14 @@ import { filterState } from '../store/filterOpen'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
-  const refreshToken = useRefreshToken()
+  
   const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelects(e.currentTarget.value)
   }
 
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
-  useEffect(() => {
-    const token = getStoredToken()
-    refreshToken(token)
-    console.log('main interceptor')
-  }, [])
-
+  
   // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
   // const { data: productLists } = useQuery([queryKeys.product], getProduct)
   // useEffect(() => {}, [])
