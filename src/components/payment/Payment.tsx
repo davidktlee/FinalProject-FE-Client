@@ -12,6 +12,7 @@ import ConfirmModal from '../common/ui/ConfirmModal'
 import Coupon from './coupon/Coupon'
 import NonMembersTerms from './terms/NonMembersTerms'
 import MembersTerms from './terms/MembersTerms'
+import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
 
 export interface PaymentFormValueType {
   orderer: string
@@ -173,7 +174,7 @@ const Payment = () => {
   
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight="h-fit">
-     <CardTemplate title="주문/결제" isTitleVisible={true}>
+     <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
             주문 상품
@@ -214,7 +215,7 @@ const Payment = () => {
       </CardTemplate>
 
 
-      <CardTemplate title="주문/결제" isTitleVisible={false}>
+      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
       <ConfirmModal title="주문자 정보와 배송시 정보가 일치하시나요?" isModalOpen={isModalOpen} onClose={() => {setIsNew(true),setIsModalOpen(false)}} onConfirm={() => setIsNew(false)}>새로운 배송지에 입력된 정보는 사라집니다. 계속 하시겠습니까?</ConfirmModal>
         <h3 className="w-full pb-1 font-bold border-b border-solid border-lenssisDark text-xl">
           주문서 작성
@@ -236,7 +237,7 @@ const Payment = () => {
       </CardTemplate>
 
 
-      <CardTemplate title="주문/결제" isTitleVisible={false}>
+      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
         <h3 className="w-full pb-1 text-xl font-bold border-b border-solid border-lenssisDark">배송지 정보</h3>
         <ShippingAreaSelector selectChangeHandler={selectChangeHandler} isNew={isNew} />
         {!isNew  && (
@@ -260,28 +261,30 @@ const Payment = () => {
  
        
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false}>
-        <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
+      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
+        <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark ">
           쿠폰/적립금
         </h3>
         <Coupon />
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false}>
-      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
-          쇼핑몰 이용 약관
+      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
+      <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
+          <div className='w-2 h-2 bg-lenssisDeepGray rounded-full'></div> 쇼핑몰 이용 약관
         </h3>
         <MembersTerms />
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false}>
-      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
-      비회원 구매시 개인정보 수집 이용동의
+      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
+      <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
+      <div className='w-2 h-2 bg-lenssisDeepGray rounded-full'></div> 비회원 구매시 개인정보 수집 이용동의
         </h3>
+        
         <NonMembersTerms />
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false}>
+      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
           결제수단 선택
         </h3>
+        <PaymentMethodSelector />
       </CardTemplate>
     </PageLayout>
   )

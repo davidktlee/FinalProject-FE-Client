@@ -12,7 +12,7 @@ const Dialog = ({onClose,children,isModalOpen}:DialogProps) => {
   if(!isModalOpen) return <></>;
 
   return (
-    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 translate-y-3/4 z-50 overflow-auto bg-gray-400 flex">
+    <div className="fixed top-[25%] left-1/3 xs:top-[30%] xs:left-1/2 -translate-x-1/2 translate-y-1/2 z-50 overflow-auto bg-gray-400 flex xs:w-[400px] border border-solid border-gray-400">
     <div className="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg">
     <div>{children}</div>
     <span className="absolute top-0 right-0 p-4">     
