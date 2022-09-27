@@ -1,6 +1,12 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import { filterValueState } from '../../../../store/filterVallue'
+import {
+  durationState,
+  graphicDiameterState,
+  colorState,
+  seriesState,
+  featuresState
+} from '../../../../store/filterVallue'
 
 type MobileBoxLayoutProps = {
   title: string
@@ -13,11 +19,68 @@ type MobileBoxLayoutProps = {
   gapY?: number | string
 }
 
+type contentTypes = {
+  type: string
+  value: string
+  color: string
+}
+
 const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBoxLayoutProps) => {
-  const [filterValue, setFilterValue] = useRecoilState(filterValueState)
+  const [duration, setDuration] = useRecoilState(durationState)
+  const [graphicDiameter, setGraphicDiameter] = useRecoilState(graphicDiameterState)
+  const [color, setColor] = useRecoilState(colorState)
+  const [series, setSeries] = useRecoilState(seriesState)
+  const [features, setFeatures] = useRecoilState(featuresState)
 
-  const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {}
-
+  const handleFilterValue = (content: contentTypes) => {
+    switch (content.type) {
+      case 'duration':
+        setDuration(content?.value)
+        break
+      case 'graphicDiameter':
+        setGraphicDiameter((prev) => {
+          if (prev.includes(content?.value)) {
+            return prev.filter((item) => item !== content?.value)
+          } else {
+            return [...prev, content?.value]
+          }
+        })
+        console.log(graphicDiameter)
+        break
+      case 'color':
+        setColor((prev) => {
+          if (prev.includes(content?.color)) {
+            return prev.filter((item) => item !== content?.color)
+          } else {
+            return [...prev, content?.color]
+          }
+        })
+        console.log(color)
+        break
+      case 'series':
+        setSeries((prev) => {
+          if (prev.includes(content?.value)) {
+            return prev.filter((item) => item !== content?.value)
+          } else {
+            return [...prev, content?.value]
+          }
+        })
+        console.log(series)
+        break
+      case 'feature':
+        setFeatures((prev) => {
+          if (prev.includes(content?.value)) {
+            return prev.filter((item) => item !== content?.value)
+          } else {
+            return [...prev, content?.value]
+          }
+        })
+        console.log(features)
+        break
+      default:
+        break
+    }
+  }
   return (
     <div>
       <div className="flex justify-between py-[12px] px-[15px]">
@@ -31,15 +94,20 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
           {contents.map((content: string | number | any, index: number) => (
             <button
               key={index}
-              className={`font-medium border-solid border-lenssisStroke leading-6 border-[1px] rounded-[20px] text-center text-[14px] text-lenssisDeepGray 
+              className={`font-medium border-solid  leading-6 border-[1px] rounded-[20px] text-center text-[14px]  
               ${py ? `py-${py}` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
                 h ? `h-[${h}]` : 'h-[30px]'
-              }`}
+              } ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
+              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+                color.includes(content.color)
+                  ? 'border-solid border-2 border-lenssisDark'
+                  : 'border-lenssisStroke'
+              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
               style={content.color && { backgroundColor: `${content.color}`, width: '25px' }}
-              value={content}
-              onClick={handleFilterValue}
+              onClick={() => handleFilterValue(content)}
             >
-              {content.color ? '' : content}
+              {content.color ? '' : content.name}
             </button>
           ))}
         </div>
