@@ -1,11 +1,6 @@
 import {ChangeEvent,useEffect} from 'react';
-import Input from '../common/Input';
-import CardTemplate from '../common/ui/CardTemplate';
 import { GoTriangleDown } from 'react-icons/go'
-import { VALIDATOR_REQUIRE } from '../auth/hooks/validator';
-import Post from '../common/post/Post';
-import { PaymentFormValueType } from './Payment';
-import { useUser } from '../auth/hooks/useUser';
+import { PaymentFormValueType } from '../Payment';
 import DeliveryRequest from './DeliveryRequest';
 
 interface OrderPaperProps {
@@ -26,10 +21,7 @@ interface OrderPaperProps {
   phoneFormValue: Record<string,string|number>
 }
 
-const OrderPaper = ({formValue,setFormValue,changeFormHandler,addressPopupHandler,emailFormValue,emailChangeHandler,domainSelectHandler,isOpen,emailDomainSelectHandler,domainArray,phoneFormValueChangeHandler,phoneFormValue}:OrderPaperProps) => {
-  const {user,isLoading} = useUser()
-
-  if(isLoading) return <div>Loading...</div>
+const OrderPaper = ({formValue,changeFormHandler,addressPopupHandler,emailFormValue,emailChangeHandler,domainSelectHandler,isOpen,emailDomainSelectHandler,domainArray,phoneFormValueChangeHandler,phoneFormValue}:OrderPaperProps) => {
   
   return (
     <>

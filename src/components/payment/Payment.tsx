@@ -1,18 +1,17 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
 import { useUser } from '../auth/hooks/useUser'
-import { VALIDATOR_REQUIRE } from '../auth/hooks/validator'
-import Input from '../common/Input'
-import Post from '../common/post/Post'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
-import { GoTriangleDown } from 'react-icons/go'
-import OrderPaper from './OrderPaper'
-import NewShippingPaper from './NewShippingPaper'
-import ShippingAreaSelector from './ShippingAreaSelector'
-import ConfirmModal from './ConfirmModal'
+import OrderPaper from './shipping/OrderPaper'
+import NewShippingPaper from './shipping/NewShippingPaper'
+import ShippingAreaSelector from './shipping/ShippingAreaSelector'
+import ConfirmModal from '../common/ui/ConfirmModal'
+import Coupon from './coupon/Coupon'
+import NonMembersTerms from './terms/NonMembersTerms'
+import MembersTerms from './terms/MembersTerms'
 
 export interface PaymentFormValueType {
   orderer: string
@@ -173,7 +172,7 @@ const Payment = () => {
   },[user])
   
   return (
-    <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight="h-[3000px]">
+    <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight="h-fit">
      <CardTemplate title="주문/결제" isTitleVisible={true}>
         <div className="pb-12">
           <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
@@ -265,12 +264,19 @@ const Payment = () => {
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
           쿠폰/적립금
         </h3>
+        <Coupon />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
-        쇼핑몰 이용 약관
+      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
+          쇼핑몰 이용 약관
+        </h3>
+        <MembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
-        비회원 구매시 개인정보 수집 이용동의
+      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
+      비회원 구매시 개인정보 수집 이용동의
+        </h3>
+        <NonMembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
