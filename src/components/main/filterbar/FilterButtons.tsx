@@ -93,27 +93,29 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
     }
   }
   return (
-    <div className={`${contents[0].color && 'gap-x-10 gap-y-4'} flex flex-wrap py-3 gap-2 text-[14px]`}>
+    <div
+      className={`${contents[0].color && 'gap-x-8 gap-y-4'} border-box flex flex-wrap py-3 gap-2 text-[14px]`}
+    >
       {contents.map((content: string | number | any, i: number) => (
         <button
           key={i}
           className={`
-          ${py ? `py-[${py}]` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
-            h ? `h-[${h}]` : 'h-[30px]'
-          }
+          ${w} ${h} ${px} ${py} ${gapX} ${gapY}
+          justify-center
           flex font-medium border-solid box-border leading-7 border-[1px] rounded-[20px] text-center text-[14px]  
               ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
             graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
           } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
             color.includes(content.color)
-              ? 'border-solid border-[2px] border-lenssisDark'
-              : 'border-lenssisStroke'
+              ? 'border-solid box-border border-[2px] border-lenssisDark'
+              : 'border-lenssisStroke border-[2px]'
           } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
           style={
             content.color && {
               backgroundColor: `${content.color}`,
               width: '30px',
-              height: '30px'
+              height: '32px',
+              boxSizing: 'border-box'
             }
           }
           onClick={() => handleFilterValue(content)}
