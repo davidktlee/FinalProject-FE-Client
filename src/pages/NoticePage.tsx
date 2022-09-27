@@ -27,7 +27,7 @@ function NoticePage() {
           <ViewMoreBtn moveTo="/notice" />
         </div>
       ) : (
-        <PageLayout layoutWidth="[90%]" innerTop="top-[200px]">
+        <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
           <CardTemplate title="공지사항" isTitleVisible={true}>
             <NoticeTitle />
             <Outlet />

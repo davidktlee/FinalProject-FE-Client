@@ -53,7 +53,7 @@ function NoticePageTab() {
           </div>
 
           {isOpen && (
-            <ul className="absolute top-[36px] right-[2px] py-4 flex flex-col items-start w-[160px] rounded-md shadow-[0_0_6px] shadow-gray-400/80 bg-[#fff]  z-[9]">
+            <ul className="absolute top-[36px] right-[2px] py-4 flex flex-col items-start w-[160px] rounded-md shadow-basic bg-[#fff]  z-[9]">
               {NoticePageTitle.map((title: Title, index: number) => (
                 <li
                   className="w-[90%] mx-auto border-b-[1px] border-solid border-lenssisGray py-2"
