@@ -21,13 +21,10 @@ import { filterState } from '../store/filterOpen'
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
 
-  
   const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelects(e.currentTarget.value)
   }
 
-  
-  
   // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
   // const { data: productLists } = useQuery([queryKeys.product], getProduct)
   // useEffect(() => {}, [])
@@ -48,7 +45,6 @@ const Main = () => {
     return res.data
   }
 
-
   const { data: productLists } = useQuery([queryKeys.product], getProduct, {
     refetchOnWindowFocus: false
   })
@@ -63,7 +59,7 @@ const Main = () => {
             <FilterBar />
           </div>
           {filterOpen && (
-            <div className="xs:hidden mobile-filter fixed top-[106px] z-10 w-full animate-drop">
+            <div className="xs:hidden mobile-filter fixed left-0 top-[106px] z-10 w-full animate-drop">
               <MobileFilter />
             </div>
           )}
