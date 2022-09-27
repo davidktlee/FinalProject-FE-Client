@@ -19,6 +19,7 @@ export interface PaymentFormValueType {
   phone: string
   email: string
   detailAddress: string
+  userRequestMessage:string;
 }
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -48,7 +49,8 @@ const Payment = () => {
     address:  '',
     phone:  '',
     email: emailFormValue.emailIdentity + emailFormValue.emailDomain || '',
-    detailAddress: ''
+    detailAddress: '',
+    userRequestMessage:'',
   })
   const [isNew, setIsNew] = useState(false)
   const [isFormShow, setIsFormShow] = useState(false)
@@ -147,7 +149,8 @@ const Payment = () => {
       address:  user.address,
       phone:  user.phone,
       email: emailFormValue.emailIdentity + emailFormValue.emailDomain || '',
-      detailAddress: ''
+      detailAddress: '',
+      userRequestMessage:''
     })
     setPhoneFormValue({
       firstNumber:splitUserPhoneFirst,
