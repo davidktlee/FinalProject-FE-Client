@@ -1,10 +1,19 @@
 import React from 'react'
+import { useRecoilState } from 'recoil'
 import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
+import { durationState } from '../../../store/filterVallue'
 import BoxLayout from './common/BoxLayout'
+import FilterButtons from './FilterButtons'
 
 const FilterBar = () => {
+  const [duration, setDuration] = useRecoilState(durationState)
+  const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setDuration(e.currentTarget.value)
+    console.log(duration)
+  }
+
   return (
-    <div className="bg-[#fff] rounded-[10px] shadow-lg h-[1180px] w-[280px] px-[18px] py-[20px] drop-shadow-lg">
+    <div className="bg-[#fff] rounded-[10px] h-[1180px] w-[280px] px-[18px] py-[20px] shadow-basic">
       <div className="filter-title">
         <div className="flex justify-between px-[15px] py-[20px]">
           <div className="font-extrabold text-[20px]">Filter</div>
@@ -21,73 +30,57 @@ const FilterBar = () => {
       <div>
         <BoxLayout title="사용기간">
           <div className="flex flex-col py-3 gap-2 text-[#5A5A5A]">
-            <button className="border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
+            <button
+              onClick={handleFilterValue}
+              value="all"
+              className={`${
+                duration === 'all' ? 'bg-lenssisDark text-white' : ''
+              }border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
+            >
               상품 전체
             </button>
-            <div className="flex justify-between gap-2 ">
-              <span className="cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
+            <div className="flex justify-between gap-2">
+              <button
+                onClick={handleFilterValue}
+                value="monthly"
+                className={`${
+                  duration === 'monthly' ? 'bg-lenssisDark text-white' : ''
+                } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
+              >
                 먼슬리
-              </span>
-              <span className="cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
+              </button>
+              <button
+                onClick={handleFilterValue}
+                value="oneDay"
+                className={`${
+                  duration === 'oneDay' ? 'bg-lenssisDark text-white' : ''
+                } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
+              >
                 원데이
-              </span>
+              </button>
             </div>
           </div>
         </BoxLayout>
       </div>
       <div>
         <BoxLayout title="그래픽 직경">
-          <div className="flex flex-wrap py-3 gap-2">
-            {graphicDiameter.map((diameter, i) => (
-              <div className="flex" key={i}>
-                <div className="border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] ">
-                  {diameter.name}
-                </div>
-              </div>
-            ))}
-          </div>
+          <FilterButtons contents={graphicDiameter} w={'55px'} h={'30px'} py={'1px'} px={'14px'} />
         </BoxLayout>
       </div>
       <div>
         <BoxLayout title="색상">
-          <div className="flex flex-wrap py-3 gap-6 justify-between">
-            {colors.map((item, i) => (
-              <div key={i}>
-                <div
-                  className="w-[30px] h-[30px] rounded-full"
-                  style={{ backgroundColor: `${item.color}` }}
-                ></div>
-              </div>
-            ))}
-          </div>
+          {/* w-[55px] h-[30px] py-[3px] px-[14px] */}
+          <FilterButtons contents={colors} w={'55px'} h={'30px'} py={'3px'} px={'14px'} />
         </BoxLayout>
       </div>
       <div>
         <BoxLayout title="시리즈">
-          <div className="flex py-3 gap-2 text-[#5A5A5A] flex-wrap">
-            {series.map((item, i) => (
-              <div
-                className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[110px] h-[35px] "
-                key={i}
-              >
-                <span className="align-middle">{item.name}</span>
-              </div>
-            ))}
-          </div>
+          <FilterButtons contents={series} w={'110px'} h={'35px'} py={'3px'} px={'17px'} />
         </BoxLayout>
       </div>
       <div>
         <BoxLayout title="특징">
-          <div className="flex py-3 gap-2 text-[#5A5A5A] flex-wrap">
-            {features.map((item, i) => (
-              <div
-                className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[110px] h-[35px] "
-                key={i}
-              >
-                <span className="align-middle">{item.name}</span>
-              </div>
-            ))}
-          </div>
+          <FilterButtons contents={features} w={'110px'} h={'35px'} py={'3px'} px={'17px'} />
         </BoxLayout>
       </div>
     </div>

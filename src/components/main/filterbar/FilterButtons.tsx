@@ -6,7 +6,7 @@ import {
   colorState,
   seriesState,
   featuresState
-} from '../../../../store/filterVallue'
+} from '../../../store/filterVallue'
 
 type MobileBoxLayoutProps = {
   title: string
@@ -19,13 +19,23 @@ type MobileBoxLayoutProps = {
   gapY?: number | string
 }
 
-type contentTypes = {
+export type contentTypes = {
   type: string
   value: string
   color: string
 }
 
-const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBoxLayoutProps) => {
+type filterButtonTypes = {
+  contents: string[] | number[] | any[]
+  px?: string
+  py?: string
+  w?: string
+  h?: string
+  gapX?: number | string
+  gapY?: number | string
+}
+
+const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes) => {
   const [duration, setDuration] = useRecoilState(durationState)
   const [graphicDiameter, setGraphicDiameter] = useRecoilState(graphicDiameterState)
   const [color, setColor] = useRecoilState(colorState)
@@ -83,39 +93,36 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
     }
   }
   return (
-    <div>
-      <div className="flex justify-between py-[12px] px-[15px]">
-        <div className="font-bold text-[16px] text-lenssisDark">{title}</div>
-        <div
-          className={`flex ${gapX ? `gap-x-${gapX}` : 'gap-x-2'} ${
-            gapY ? `gap-y-${gapY}` : 'gap-y-4'
-          } w-[264px] flex-wrap`}
-          style={{ columnGap: `${gapX ? `${gapX}` : '8px'}`, rowGap: `${gapY ? `${gapY}` : '8px'}` }}
+    <div className={`${contents[0].color && 'gap-x-10 gap-y-4'} flex flex-wrap py-3 gap-2 text-[14px]`}>
+      {contents.map((content: string | number | any, i: number) => (
+        <button
+          key={i}
+          className={`
+          ${py ? `py-[${py}]` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
+            h ? `h-[${h}]` : 'h-[30px]'
+          }
+          flex font-medium border-solid box-border leading-7 border-[1px] rounded-[20px] text-center text-[14px]  
+              ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+            graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
+          } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+            color.includes(content.color)
+              ? 'border-solid border-[2px] border-lenssisDark'
+              : 'border-lenssisStroke'
+          } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
+          style={
+            content.color && {
+              backgroundColor: `${content.color}`,
+              width: '30px',
+              height: '30px'
+            }
+          }
+          onClick={() => handleFilterValue(content)}
         >
-          {contents.map((content: string | number | any, index: number) => (
-            <button
-              key={index}
-              className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]  
-              ${py ? `py-[${py}]` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
-                h ? `h-[${h}]` : 'h-[30px]'
-              } ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
-                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
-              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
-                color.includes(content.color)
-                  ? 'border-solid border-2 border-lenssisDark'
-                  : 'border-lenssisStroke'
-              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
-              style={content.color && { backgroundColor: `${content.color}`, width: '25px' }}
-              onClick={() => handleFilterValue(content)}
-            >
-              {content.color ? '' : content.name}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="divider h-[1px] bg-lenssisStroke xs-max:mb-0 w-[92%] mx-auto"></div>
+          {content.color ? '' : content.name}
+        </button>
+      ))}
     </div>
   )
 }
 
-export default MobileBoxLayout
+export default FilterButtons
