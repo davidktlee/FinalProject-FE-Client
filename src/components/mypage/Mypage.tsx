@@ -29,10 +29,10 @@ const Mypage = () => {
 
 
   return (
-    <PageLayout layoutWidth="[90%]" innerTop="top-[30%]" layoutHeight='h-fit'>
+    <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
-          <MypageBanner user={user} />
+          {pathname === '/mypage' && <MypageBanner user={user} />}
           <div className="flex flex-col xs:flex-row mt-8">
             <div className='hidden xs:block mx-auto'>
             <SideNavBar />
