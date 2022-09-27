@@ -20,6 +20,19 @@ import { filterState } from '../store/filterOpen'
 
 const Main = () => {
   const [selects, setSelects] = useState<string>('')
+
+  
+  const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setSelects(e.currentTarget.value)
+  }
+
+  
+  
+  // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
+  // const { data: productLists } = useQuery([queryKeys.product], getProduct)
+  // useEffect(() => {}, [])
+  // console.log(productLists)
+
   const refreshToken = useRefreshToken()
 
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
@@ -34,6 +47,7 @@ const Main = () => {
     const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products')
     return res.data
   }
+
 
   const { data: productLists } = useQuery([queryKeys.product], getProduct, {
     refetchOnWindowFocus: false

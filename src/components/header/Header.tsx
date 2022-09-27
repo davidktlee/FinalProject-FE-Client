@@ -7,10 +7,11 @@ import { TbSearch } from 'react-icons/tb'
 import { FiFilter } from 'react-icons/fi'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../../store/filterOpen'
+import { useUser } from '../auth/hooks/useUser'
 
 const Header = () => {
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
-
+  const {user} = useUser()
   const handleFilter = () => {
     setFilterOpen(!filterOpen)
   }

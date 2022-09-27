@@ -69,9 +69,9 @@ axiosInstance.interceptors.response.use((res) => {
 },
   async(err) => {
     
-    const { config, response: {data:{status}}} = err;
+    const { config, response:{status}} = err;
     
-    if(status === 500) {      
+    if(status === 403) {      
         const originalRequest = config;
         if(!isTokenRefreshing){
 
