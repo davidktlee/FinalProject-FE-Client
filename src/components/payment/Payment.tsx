@@ -1,16 +1,17 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
 import { useUser } from '../auth/hooks/useUser'
-import { VALIDATOR_REQUIRE } from '../auth/hooks/validator'
-import Input from '../common/Input'
-import Post from '../common/post/Post'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
-import { GoTriangleDown } from 'react-icons/go'
-import OrderPaper from './OrderPaper'
-import NewShippingPaper from './NewShippingPaper'
+import OrderPaper from './shipping/OrderPaper'
+import NewShippingPaper from './shipping/NewShippingPaper'
+import ShippingAreaSelector from './shipping/ShippingAreaSelector'
+import ConfirmModal from '../common/ui/ConfirmModal'
+import Coupon from './coupon/Coupon'
+import NonMembersTerms from './terms/NonMembersTerms'
+import MembersTerms from './terms/MembersTerms'
 
 export interface PaymentFormValueType {
   orderer: string
@@ -27,12 +28,8 @@ const Payment = () => {
   const { user, isLoading } = useUser()
   const product = useRecoilValue(productState)
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
-  // const splitUserEmail = user.email.split('@')
-      // emailIdentity: splitUserEmail[0],
-    // emailDomain: splitUserEmail[1]
+
   const [emailFormValue, setEmailFormValue] = useState({
-    // emailIdentity: splitUserEmail[0],
-    // emailDomain: splitUserEmail[1]
     emailIdentity: '',
     emailDomain: ''
   })
@@ -52,10 +49,13 @@ const Payment = () => {
     detailAddress: '',
     userRequestMessage:'',
   })
-  const [isNew, setIsNew] = useState(false)
-  const [isFormShow, setIsFormShow] = useState(false)
+  const [isNew, setIsNew] = useState(true)
+
+ 
+  // 도메인 select(google.com / daum.net / naver.com) handler
   const [isOpen, setIsOpen] = useState(false)
 
+  const [isModalOpen,setIsModalOpen] = useState(false);
   const phoneFormValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
@@ -118,18 +118,27 @@ const Payment = () => {
     setIsOpen((prev) => !prev)
   }
 
-  const formChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const selectChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
     const {
       target: { value }
     } = e
     console.log(value)
-    if (value === 'new') {
-      setIsFormShow(true)
-      setIsNew(true)
-    } else {
-      setIsFormShow(true)
-      setIsNew(false)
+
+    if(value === 'same'){
+      setIsModalOpen(true)
     }
+    if(value === 'new'){
+      setIsNew(true)
+      setIsModalOpen(false)
+    }
+    // if (value === 'new') {
+    
+    // } else {
+    //   setIsModalOpen(true)
+    //   setIsFormShow(true)
+    //   setIsNew(false)
+    // }
   }
   
 
@@ -163,7 +172,7 @@ const Payment = () => {
   },[user])
   
   return (
-    <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight="h-[3000px]">
+    <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight="h-fit">
      <CardTemplate title="주문/결제" isTitleVisible={true}>
         <div className="pb-12">
           <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
@@ -203,7 +212,10 @@ const Payment = () => {
           </div>
         </div>
       </CardTemplate>
+
+
       <CardTemplate title="주문/결제" isTitleVisible={false}>
+      <ConfirmModal title="주문자 정보와 배송시 정보가 일치하시나요?" isModalOpen={isModalOpen} onClose={() => {setIsNew(true),setIsModalOpen(false)}} onConfirm={() => setIsNew(false)}>새로운 배송지에 입력된 정보는 사라집니다. 계속 하시겠습니까?</ConfirmModal>
         <h3 className="w-full pb-1 font-bold border-b border-solid border-lenssisDark text-xl">
           주문서 작성
         </h3>
@@ -222,39 +234,12 @@ const Payment = () => {
           phoneFormValue={phoneFormValue}
         />
       </CardTemplate>
+
+
       <CardTemplate title="주문/결제" isTitleVisible={false}>
-        <h3 className="w-full pb-1 text-xl font-bold border-b border-solid border-lenssisDark">
-          배송지 정보
-        </h3>
-        <div className="flex items-center justify-start mt-4">
-          <label className="font-bold min-w-[140px] text-lenssisDark my-2">
-            배송지 선택 <span className="text-rose-400">*</span>
-          </label>
-          <div className="flex items-center justify-start gap-8">
-            <div className="flex items-center gap-1">
-              <input
-                type="radio"
-                name="selectAddress"
-                value="same"
-                className="appearance-none w-4 h-4 border border-gray-400 checked:border-gray-100 checked:bg-lenssisDark checked:border-[4px] rounded-full ring-0 checked:ring-1 checked:ring-lenssisDark"
-                onChange={formChangeHandler}
-              />
-              <label className="text-lenssisGray font-semibold">주문자 정보와 동일</label>
-            </div>
-            <div className="flex items-center gap-1">
-              <input
-                type="radio"
-                name="selectAddress"
-                value="new"
-                className="appearance-none w-4 h-4 border border-gray-400 checked:border-gray-100 checked:bg-lenssisDark checked:border-[4px] rounded-full ring-0 checked:ring-1 checked:ring-lenssisDark"
-                defaultChecked
-                onChange={formChangeHandler}
-              />
-              <label className="text-lenssisGray font-semibold">새로운 배송지</label>
-            </div>
-          </div>
-        </div>
-        {!isNew && isFormShow && (
+        <h3 className="w-full pb-1 text-xl font-bold border-b border-solid border-lenssisDark">배송지 정보</h3>
+        <ShippingAreaSelector selectChangeHandler={selectChangeHandler} isNew={isNew} />
+        {!isNew  && (
           <OrderPaper
             formValue={formValue}
             setFormValue={setFormValue}
@@ -270,21 +255,28 @@ const Payment = () => {
             phoneFormValue={phoneFormValue}
           />
         )}
-        {/* 새로운 배송지는 고객 편의를 위해 따로 state를 만들어서 관리하는게 좋을 것 같다.. */}
-        {isNew && isFormShow && <NewShippingPaper domainArray={domainArray} isOpen={isOpen} domainSelectHandler={domainSelectHandler} addressPopupHandler={addressPopupHandler} />}
+        
+        {isNew && <NewShippingPaper domainArray={domainArray} isOpen={isOpen} domainSelectHandler={domainSelectHandler} setIsOpen={setIsOpen} open={open} />}
  
-        {!isFormShow && <div className="mt-8">배송지를 선택해주세요</div>}
+       
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
           쿠폰/적립금
         </h3>
+        <Coupon />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
-        쇼핑몰 이용 약관
+      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
+          쇼핑몰 이용 약관
+        </h3>
+        <MembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
-        비회원 구매시 개인정보 수집 이용동의
+      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
+      비회원 구매시 개인정보 수집 이용동의
+        </h3>
+        <NonMembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false}>
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">

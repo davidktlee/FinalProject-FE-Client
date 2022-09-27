@@ -1,35 +1,102 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { DaumPostcodePopupParams } from 'react-daum-postcode';
 import { GoTriangleDown } from 'react-icons/go';
+import ConfirmModal from '../../common/ui/ConfirmModal';
+import DeliveryRequest from './DeliveryRequest';
+import { PaymentFormValueType } from '../Payment';
 
 
 interface NewShippingPaperProps {
   domainArray: string[]
   isOpen:boolean
   domainSelectHandler: () => void
-  addressPopupHandler: () => void
+  
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  open:(options?: DaumPostcodePopupParams | undefined) => Promise<void>
 }
 
-const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,addressPopupHandler}:NewShippingPaperProps) => {
+const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open}:NewShippingPaperProps) => {
 
-  const [newFormValue,setNewFormValue] = useState<Record<string,string>>({
-
+  const [newFormValue,setNewFormValue] = useState<PaymentFormValueType>({
+    orderer:'',
+    postCode:'',
+    address:'',
+    phone:'',
+    email:'',
+    detailAddress:'',
+    userRequestMessage:'',
   })
-  const [newPhoneFormValue,setNewPhoneFormValue] = useState<Record<string,number>>({
-
+  const [newPhoneFormValue,setNewPhoneFormValue] = useState<Record<string,string|number>>({
+    firstNumber:'',
+    middleNumber:'',
+    lastNumber:'',
   })
   const [newEmailFormValue,setNewEmailFormValue] = useState<Record<string,string>>({
-
+    emailIdentity:'',
+    emailDomain:'',
   })
-  const newEmailChangeHandler = () => {}
-  const newPhoneFormValueChangeHandler = () => {}
-  const newEmailDomainSelectHandler = (domain:string) => {}
+  const newEmailChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value }
+    } = e
+    setNewEmailFormValue((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+  const newPhoneFormValueChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value }
+    } = e
+    setNewPhoneFormValue((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+  const newEmailDomainSelectHandler = (domain:string) => {
+    setNewEmailFormValue((prev) => ({
+      ...prev,
+      emailDomain: domain
+    }))
+    setIsOpen((prev) => !prev)
+  }
+  const newFormChangeHandler = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {target:{name,value}} = e;
+    setNewFormValue((prev) => ({
+      ...prev,
+      [name]:value
+    }))
+  }
+  const handleComplete = (data: any) => {
+    let fullAddress = data.address
+    let extraAddress = ''
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress = data.bname
+      }
+      if (data.buildingName) {
+        extraAddress += extraAddress !== '' ? `,${data.buildingName} ` : `${data.buildingName}`
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
+    }
+    setNewFormValue((prev) => ({
+      ...prev,
+      postCode: data.zonecode,
+      address: fullAddress
+    }))
+  }
+
+  const addressPopupHandler = () => {
+    open({ onComplete: handleComplete })
+  }
   return (
     <>
     
     <div className='flex justify-start items-center my-4 max-w-[600px]'>
      <label className='min-w-[140px] text-lenssisDark font-bold'><span>주문자</span>{' '}<span className='text-rose-400'>&nbsp;*</span></label>
      <div className={`flex items-start justify-start w-full`}>
-     <input name="orderer" onChange={() => {}} value={newFormValue.orderer} className={`w-full h-10 border border-solid border-gray-200 rounded-md max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`} type="text"/>
+     <input name="orderer" onChange={newFormChangeHandler} value={newFormValue.orderer} className={`w-full h-10 border border-solid border-gray-200 rounded-md max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`} type="text"/>
      </div>
     </div>
 
@@ -42,15 +109,15 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,addressPopupHa
      
       <div className='flex items-center justify-start gap-x-4 w-[450px] mb-1'>
         <input
-          type="text" name="postCode" onChange={() => {}} value={newFormValue.postCode}
+          type="text" name="postCode" onChange={newFormChangeHandler} value={newFormValue.postCode}
           className="h-10 border border-solid border-gray-200 rounded-md max-w-[400px]  focus:outline-1 focus:outline-[#ABC8DF] pl-1"
           readOnly
         />
         <button className=" w-28 h-10 bg-lenssisDark rounded-md text-white font-bold border-none cursor-pointer" onClick={addressPopupHandler}>우편 번호 검색</button>
       </div>
       <div className='flex flex-col w-full gap-y-1'>
-        <input name="address" onChange={() => {}} value={newFormValue.address} className={`grow w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" readOnly  />
-        <input name="detailAddress" onChange={() => {}}value={newFormValue.detailAddress} className={`grow w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" />
+        <input name="address" onChange={newFormChangeHandler} value={newFormValue.address} className={`grow w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" readOnly  />
+        <input name="detailAddress" onChange={newFormChangeHandler}value={newFormValue.detailAddress} className={`grow w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" />
      </div>
      </div>
     </div>
@@ -139,12 +206,7 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,addressPopupHa
   </div>
 
   {/* 배송요청사항 컴포넌트로 만들기 */}
-  <div className='flex justify-start items-center my-4 max-w-[600px]'>
-     <label className='min-w-[140px] text-lenssisDark font-bold'><span>배송요청사항</span></label>
-     <div className={`flex items-start justify-start w-full`}>
-     <textarea className={`w-full h-40 align-middle border py-10 border-solid border-gray-200 rounded-md max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder:text-xs text-sm`} name="orderer" onChange={() => {}} value={newFormValue.orderer}  placeholder="배송메세지는 배송 시, 택배사 참고용으로 출력되는 메세지입니다.&#13;&#10;기타 문의 사항은 1:1 문의를 이용해 주시기 바랍니다."/>
-     </div>
-    </div>
+  <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.userRequestMessage} />
   </>
   );
 };

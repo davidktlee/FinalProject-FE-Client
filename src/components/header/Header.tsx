@@ -17,7 +17,7 @@ const Header = () => {
   }
 
   return (
-    <nav className="fixed flex flex-col bg-[#ABC8DF] text-white z-50 w-full">
+    <nav className="fixed flex flex-col bg-[#ABC8DF] text-white z-50 w-full top-0">
       <TopInfomation />
       <div className="flex items-center h-[50px] justify-between pb-[15px]">
         <LeftSection />

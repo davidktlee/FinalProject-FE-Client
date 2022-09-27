@@ -71,13 +71,13 @@ axiosInstance.interceptors.response.use((res) => {
     
     const { config, response:{status}} = err;
     
-    if(status === 403) {      
+    if(status === 403 ||  status === 500) {      
         const originalRequest = config;
         if(!isTokenRefreshing){
 
           isTokenRefreshing = true;
           const token = getStoredToken()
-          const {data} = await axiosAuthInstance.put('/member/newAccess',{},
+          const {data} = await axiosInstance.put('/member/newAccess',{},
           {
             headers:getNewJWTToken(token)
           });
@@ -91,8 +91,9 @@ axiosInstance.interceptors.response.use((res) => {
         
         const retryOriginalRequest = new Promise((resolve) => {
           
-          addRefreshSubscriber((accessToken:string) => {
+          addRefreshSubscriber((accessToken:string,refreshToken:string) => {
             originalRequest.headers["X-ACCESS-TOKEN"] = accessToken
+            originalRequest.headers["X-REFRESH--TOKEN"] = refreshToken
             resolve(axios(originalRequest))
           })
         })
