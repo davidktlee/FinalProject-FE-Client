@@ -26,7 +26,7 @@ interface UserFormProps {
 
 const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFormProps) => {
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
-  
+
   const { pathname } = useLocation()
   const { fireToast } = useToast()
 
@@ -136,6 +136,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           formValue={formValue}
           setFormValue={setFormValue}
           titleText="우편번호"
+          isRequired={true}
         />
         <Input
           name="phone"
@@ -202,7 +203,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           errorText="비밀번호는 10글자 이상 20글자 미만으로 작성해주세요."
         />
       </div>
-      
+
       <div className="flex w-full items-center mt-8 h-[45px] gap-4">
         <Link
           to="/"
@@ -218,7 +219,6 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           <span>{isEdit ? '수정하기' : '회원 가입'}</span>
         </button>
       </div>
-      
     </>
   )
 }
