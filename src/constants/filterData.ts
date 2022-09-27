@@ -19,13 +19,13 @@ export const duration = [
 ]
 
 export const graphicDiameter = [
-  { type: 'graphicDiameter', name: '11.9', value: '11.9' },
-  { type: 'graphicDiameter', name: '12.9', value: '12.9' },
-  { type: 'graphicDiameter', name: '13.0', value: '13.0' },
-  { type: 'graphicDiameter', name: '13.2', value: '13.2' },
-  { type: 'graphicDiameter', name: '13.5', value: '13.5' },
-  { type: 'graphicDiameter', name: '13.8', value: '13.8' },
-  { type: 'graphicDiameter', name: '14.0', value: '14.0' }
+  { type: 'graphicDiameter', name: '11.9', value: 11.9 },
+  { type: 'graphicDiameter', name: '12.9', value: 12.9 },
+  { type: 'graphicDiameter', name: '13.0', value: 13.0 },
+  { type: 'graphicDiameter', name: '13.2', value: 13.2 },
+  { type: 'graphicDiameter', name: '13.5', value: 13.5 },
+  { type: 'graphicDiameter', name: '13.8', value: 13.8 },
+  { type: 'graphicDiameter', name: '14.0', value: 14.0 }
 ]
 // export const graphicDiameter = [11.9, 12.9, 13.0, 13.2, 13.5, 13.8, 14.0]
 

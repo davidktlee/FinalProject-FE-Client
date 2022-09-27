@@ -25,10 +25,10 @@ const FilterBar = () => {
               상품 전체
             </button>
             <div className="flex justify-between gap-2 ">
-              <span className="flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
+              <span className="cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
                 먼슬리
               </span>
-              <span className="flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
+              <span className="cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1">
                 원데이
               </span>
             </div>
