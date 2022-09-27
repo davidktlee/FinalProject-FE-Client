@@ -93,16 +93,16 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open
   return (
     <>
     
-    <div className='flex justify-start items-center my-4 max-w-[600px]'>
-     <label className='min-w-[140px] text-lenssisDark font-bold'><span>주문자</span>{' '}<span className='text-rose-400'>&nbsp;*</span></label>
+    <div className='flex flex-col xs:flex-row justify-start items-start xs:items-center gap-y-2 xs:gap-y-0 pl-2 my-4 max-w-[600px]'>
+     <label className='min-w-[80px] xs:min-w-[140px] text-lenssisDark font-bold'><span>주문자</span>{' '}<span className='text-rose-400'>&nbsp;*</span></label>
      <div className={`flex items-start justify-start w-full`}>
      <input name="orderer" onChange={newFormChangeHandler} value={newFormValue.orderer} className={`w-full h-10 border border-solid border-gray-200 rounded-md max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`} type="text"/>
      </div>
     </div>
 
 
-    <div className='flex justify-start items-start my-4 w-full '>
-     <label className='min-w-[140px] text-lenssisDark font-bold mt-4'><span>주소</span>{' '}<span className='text-rose-400'>&nbsp;*</span></label>
+    <div className='flex flex-col xs:flex-row justify-start items-start xs:items-center gap-y-2 xs:gap-y-0 pl-2 my-4 w-full '>
+     <label className='min-w-[80px] xs:min-w-[140px] text-lenssisDark font-bold mt-4'><span>주소</span>{' '}<span className='text-rose-400'>&nbsp;*</span></label>
      
      <div className='flex flex-col justify-center my-4'>
      
@@ -116,13 +116,13 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open
         <button className=" w-28 h-10 bg-lenssisDark rounded-md text-white font-bold border-none cursor-pointer" onClick={addressPopupHandler}>우편 번호 검색</button>
       </div>
       <div className='flex flex-col w-full gap-y-1'>
-        <input name="address" onChange={newFormChangeHandler} value={newFormValue.address} className={`grow w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" readOnly  />
-        <input name="detailAddress" onChange={newFormChangeHandler}value={newFormValue.detailAddress} className={`grow w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" />
+        <input name="address" onChange={newFormChangeHandler} value={newFormValue.address} className={`grow w-[320px] xs:w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" readOnly  />
+        <input name="detailAddress" onChange={newFormChangeHandler}value={newFormValue.detailAddress} className={`grow w-[320px] xs:w-[410px] text-sm h-10 border border-solid border-gray-200 rounded-md pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" />
      </div>
      </div>
     </div>
 
-  <div className="flex w-full justify-start items-start my-4">
+  <div className="flex flex-col xs:flex-row justify-start items-start xs:items-center gap-y-2 xs:gap-y-0 pl-2 my-4">
     <label className="font-semibold block pb-1 text-[#1B304A] w-[140px]">
       휴대폰 <span className="text-rose-400">&nbsp;*</span>
     </label>
@@ -155,8 +155,8 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open
 
 
 
-  <div className="flex my-2 items-center w-[550px]">
-  <label className="font-semibold block pb-1 text-[#1B304A] min-w-[140px]">이메일 주소</label>
+  <div className="flex flex-col xs:flex-row justify-start items-start xs:items-center gap-y-2 xs:gap-y-0 pl-2 w-[550px]">
+  <label className="font-semibold block pb-1 text-[#1B304A] min-w-[80px] xs:min-w-[140px]">이메일 주소</label>
     <div className="flex items-center w-[550px] ">
       <div className="w-full flex items-center justify-start relative">
         <div className='flex items-center'>
@@ -164,7 +164,7 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open
             name="emailIdentity"
             value={newEmailFormValue.emailIdentity}
             type="text"
-            className="flex-1 border border-solid border-gray-200 h-10 rounded-md max-w-[140px] xs:max-w-[160px] text-xs xs:text-sm pl-1"
+            className="flex-1 border border-solid border-gray-200 h-10 rounded-md max-w-[100px] xs:max-w-[160px] text-xs xs:text-sm pl-1"
             onChange={newEmailChangeHandler}
           />
           <span className="text-gray-400">&nbsp;@&nbsp;</span>
@@ -177,7 +177,7 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open
           onChange={newEmailChangeHandler}
         />
         <div
-          className="flex items-center justify-center w-[100px] border border-solid border-gray-200 h-10 rounded-md ml-6 cursor-pointer"
+          className="flex items-center justify-center w-[80px] xs:w-[100px] border border-solid border-gray-200 h-10 rounded-md ml-2 xs:ml-6 cursor-pointer"
           onClick={domainSelectHandler}
         >
           <span className="text-xs xs:text-sm">
@@ -187,11 +187,11 @@ const NewShippingPaper = ({domainArray,isOpen,domainSelectHandler,setIsOpen,open
         </div>
 
         {isOpen && (
-          <ul className="absolute right-2 top-10 xs:-right-4 xs:top-10 bg-white border border-solid border-gray-400 rounded-md min-w-[140px]">
+          <ul className="absolute right-[41%] top-10 xs:right-0 xs:top-10 bg-white border border-solid border-gray-400 rounded-md min-w-[80px] xs:min-w-[100px] z-40">
             {domainArray.map((item) => (
               <li
                 key={item}
-                className="p-1 border-b border-solid border-gray-400 w-full cursor-pointer hover:bg-slate-200 bg-opacity-30 text-center"
+                className="p-1 border-b border-solid border-gray-400 w-full cursor-pointer hover:bg-slate-200 bg-opacity-30 text-left"
                 onClick={() => newEmailDomainSelectHandler(item)}
               >
                 {item}

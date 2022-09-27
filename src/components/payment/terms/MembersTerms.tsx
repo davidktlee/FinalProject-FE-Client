@@ -1,9 +1,10 @@
 import React from 'react';
+import TermsDropdownButton from './TermsDropdownButton';
 
 const MembersTerms = () => {
   return (
-    <div>
-      회원 이용약관
+    <div className='relative'>
+      <TermsDropdownButton />
     </div>
   );
 };

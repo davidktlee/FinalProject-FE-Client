@@ -12,6 +12,7 @@ import ConfirmModal from '../common/ui/ConfirmModal'
 import Coupon from './coupon/Coupon'
 import NonMembersTerms from './terms/NonMembersTerms'
 import MembersTerms from './terms/MembersTerms'
+import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
 
 export interface PaymentFormValueType {
   orderer: string
@@ -261,27 +262,29 @@ const Payment = () => {
        
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-        <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
+        <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark ">
           쿠폰/적립금
         </h3>
         <Coupon />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
-          쇼핑몰 이용 약관
+      <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
+          <div className='w-2 h-2 bg-lenssisDeepGray rounded-full'></div> 쇼핑몰 이용 약관
         </h3>
         <MembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-      <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
-      비회원 구매시 개인정보 수집 이용동의
+      <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
+      <div className='w-2 h-2 bg-lenssisDeepGray rounded-full'></div> 비회원 구매시 개인정보 수집 이용동의
         </h3>
+        
         <NonMembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
           결제수단 선택
         </h3>
+        <PaymentMethodSelector />
       </CardTemplate>
     </PageLayout>
   )
