@@ -23,4 +23,4 @@ const PageLayout = ({ children, layoutWidth, layoutHeight }: PageLayoutProps) =>
   )
 }
 
-export default PageLayout
+export default React.memo(PageLayout);

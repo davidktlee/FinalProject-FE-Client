@@ -12,4 +12,4 @@ const SubmitButton = ({onClick}:SubmitButtonProps) => {
   </div>)
 };
 
-export default SubmitButton;
+export default React.memo(SubmitButton);

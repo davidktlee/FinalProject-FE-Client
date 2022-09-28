@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react'
+import { useState, ChangeEvent, useEffect, useCallback } from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode'
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
@@ -29,18 +29,15 @@ const Payment = () => {
   const { user, isLoading } = useUser()
   const product = useRecoilValue(productState)
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
-
   const [emailFormValue, setEmailFormValue] = useState({
     emailIdentity: '',
     emailDomain: ''
   })
-
   const [phoneFormValue, setPhoneFormValue] = useState<Record<string, string | number>>({
     firstNumber: '010',
     middleNumber: '',
     lastNumber: ''
   })
-
   const [formValue, setFormValue] = useState<PaymentFormValueType>({
     orderer:  '',
     postCode: '',
@@ -51,13 +48,10 @@ const Payment = () => {
     userRequestMessage:'',
   })
   const [isNew, setIsNew] = useState(true)
-
- 
-  // 도메인 select(google.com / daum.net / naver.com) handler
   const [isOpen, setIsOpen] = useState(false)
-
   const [isModalOpen,setIsModalOpen] = useState(false);
-  const phoneFormValueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
+  const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
     } = e
@@ -65,8 +59,8 @@ const Payment = () => {
       ...prev,
       [name]: value
     }))
-  }
-  const handleComplete = (data: any) => {
+  },[])
+  const handleComplete = useCallback((data: any) => {
     let fullAddress = data.address
     let extraAddress = ''
 
@@ -84,13 +78,13 @@ const Payment = () => {
       postCode: data.zonecode,
       address: fullAddress
     }))
-  }
+  },[])
 
-  const addressPopupHandler = () => {
+  const addressPopupHandler = useCallback(() => {
     open({ onComplete: handleComplete })
-  }
+  },[])
 
-  const changeFormHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const changeFormHandler = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
       target: { name, value }
     } = e
@@ -98,11 +92,13 @@ const Payment = () => {
       ...prev,
       [name]: value
     }))
-  }
-  const domainSelectHandler = () => {
+  },[])
+
+  const domainSelectHandler = useCallback(() => {
     setIsOpen((prev) => !prev)
-  }
-  const emailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  },[])
+
+  const emailChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
     } = e
@@ -110,16 +106,17 @@ const Payment = () => {
       ...prev,
       [name]: value
     }))
-  }
-  const emailDomainSelectHandler = (domain: string) => {
+  },[])
+
+  const emailDomainSelectHandler = useCallback((domain: string) => {
     setEmailFormValue((prev) => ({
       ...prev,
       emailDomain: domain
     }))
     setIsOpen((prev) => !prev)
-  }
+  },[])
 
-  const selectChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const selectChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 
     const {
       target: { value }
@@ -133,14 +130,7 @@ const Payment = () => {
       setIsNew(true)
       setIsModalOpen(false)
     }
-    // if (value === 'new') {
-    
-    // } else {
-    //   setIsModalOpen(true)
-    //   setIsFormShow(true)
-    //   setIsNew(false)
-    // }
-  }
+  },[])
   
 
   useEffect(() => {
@@ -166,10 +156,8 @@ const Payment = () => {
       firstNumber:splitUserPhoneFirst,
       middleNumber:splitUserPhoneMiddle,
       lastNumber:splitUserPhoneLast,
-
     })
     }
-    
   },[user])
   
   return (
@@ -269,13 +257,13 @@ const Payment = () => {
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
       <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
-          <div className='w-2 h-2 bg-lenssisDeepGray rounded-full'></div> 쇼핑몰 이용 약관
+          <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 쇼핑몰 이용 약관
         </h3>
         <MembersTerms />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
       <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
-      <div className='w-2 h-2 bg-lenssisDeepGray rounded-full'></div> 비회원 구매시 개인정보 수집 이용동의
+      <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 비회원 구매시 개인정보 수집 이용동의
         </h3>
         
         <NonMembersTerms />

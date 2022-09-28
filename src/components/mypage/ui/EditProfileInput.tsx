@@ -6,9 +6,10 @@ interface EditProfileInputProps {
   value: string;
   name:string;
   placeholder?:string
+  type?:string;
 }
 
-const EditProfileInput = ({onChange,value,name,placeholder}:EditProfileInputProps) => {
+const EditProfileInput = ({onChange,value,name,placeholder,type}:EditProfileInputProps) => {
   return (
     <div className={`flex items-start justify-start w-full`}>
     <input
@@ -16,11 +17,11 @@ const EditProfileInput = ({onChange,value,name,placeholder}:EditProfileInputProp
       onChange={onChange}
       value={value}
       className={`w-full h-10 border border-solid border-gray-200 rounded-md max-w-[310px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`}
-      type="text"
+      type={type || 'text'}
       placeholder={placeholder}
     />
   </div>
   );
 };
 
-export default EditProfileInput;
+export default React.memo(EditProfileInput);

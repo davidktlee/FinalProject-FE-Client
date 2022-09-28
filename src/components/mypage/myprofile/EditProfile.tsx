@@ -1,4 +1,4 @@
-import React, { ChangeEvent, HTMLInputTypeAttribute, useState } from 'react';
+import React, { ChangeEvent, HTMLInputTypeAttribute, useCallback, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import ShippingAddress from '../../payment/shipping/ui/ShippingAddress';
 import ShippingCard from '../../payment/shipping/ui/ShippingCard';
@@ -30,15 +30,15 @@ const EditProfile = () => {
     birth:'',
     passwordConfirm:''
   })
-  const editFormValueChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+  const editFormValueChangeHandler = useCallback((e:ChangeEvent<HTMLInputElement>) => {
     const {target:{value,name}} = e;
     setEditFormValue(prev => ({
       ...prev,
       [name]:value
     }))
-  }
+  },[])
 
-  const handleComplete = (data: any) => {
+  const handleComplete = useCallback((data: any) => {
     let fullAddress = data.address
     let extraAddress = ''
 
@@ -56,11 +56,12 @@ const EditProfile = () => {
       postCode: data.zonecode,
       address: fullAddress
     }))
-  }
+  },[])
 
-  const addressPopupHandler = () => {
+  const addressPopupHandler = useCallback(() => {
     open({ onComplete: handleComplete })
-  }
+  },[])
+  
   return (
     <div>
       <ShippingCard title="이름" >
@@ -80,13 +81,13 @@ const EditProfile = () => {
       />
       </ShippingCard>
       <ShippingCard title="전화번호" >
-        <EditProfileInput name="phone" onChange={editFormValueChangeHandler} value={editFormValue.name} />
+        <EditProfileInput name="phone" onChange={editFormValueChangeHandler} value={editFormValue.phone} />
       </ShippingCard>
       <ShippingCard title="생년월일" >
-        <EditProfileInput name="birth" onChange={editFormValueChangeHandler} value={editFormValue.name} />
+        <EditProfileInput name="birth" onChange={editFormValueChangeHandler} value={editFormValue.birth} />
       </ShippingCard>
       <ShippingCard title="최종비밀번호 확인" isRequired >
-        <EditProfileInput name="passwordConfirm" onChange={editFormValueChangeHandler} value={editFormValue.name} />
+        <EditProfileInput type="password" name="passwordConfirm" onChange={editFormValueChangeHandler} value={editFormValue.passwordConfirm} />
       </ShippingCard>
       
       <SubmitButton onClick={() => {}} />
