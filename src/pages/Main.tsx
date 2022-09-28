@@ -24,7 +24,6 @@ const Main = () => {
 
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
-  
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -70,7 +69,7 @@ const Main = () => {
           />
         </div>
         <div className="w-full border-none rounded-md  shadow-basic">
-          <CardContainer data="New" />
+          <CardContainer data="New" productLists={productLists} />
         </div>
         <div className="w-full my-12 border-none rounded-md  shadow-basic">
           <Event />

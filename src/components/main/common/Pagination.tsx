@@ -28,7 +28,9 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
         </svg>
       </span>
       {pagesCount.map((page: number) => (
-        <span className={`${currentPage === page ? 'font-bold' : 'font-normal'} mx-2`}>{page}</span>
+        <span key={page} className={`${currentPage === page ? 'font-bold' : 'font-normal'} mx-2`}>
+          {page}
+        </span>
       ))}
       <span
         className="hover:cursor-pointer mx-4"
