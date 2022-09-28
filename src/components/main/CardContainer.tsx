@@ -94,7 +94,7 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
             <Pagination
               currentPage={allProductCurrentPage}
               setCurrentPage={setAllProductCurrentPage}
-              allCount={30}
+              allCount={40}
             />
           </>
         )
