@@ -87,7 +87,7 @@ axiosInstance.interceptors.response.use((res) => {
         setStoredToken(data);
         axiosInstance.defaults.headers.common["X-ACCESS-TOKEN"] = data.accessToken;
         
-        onTokenRefreshed(data.accessToken)
+        
         
         const retryOriginalRequest = new Promise((resolve) => {
           
@@ -97,6 +97,7 @@ axiosInstance.interceptors.response.use((res) => {
             resolve(axios(originalRequest))
           })
         })
+        onTokenRefreshed(data.accessToken)
         return retryOriginalRequest;
         }
         return Promise.reject(err);
