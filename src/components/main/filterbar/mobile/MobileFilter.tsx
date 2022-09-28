@@ -1,7 +1,7 @@
 import React from 'react'
 import MobileBoxLayout from '../common/MobileBoxLayout'
 import { graphicDiameter, series, features, duration, colors } from '../../../../constants/filterData'
-import Refresh from '../../../../../public/assets/Refresh.svg'
+import Refresh from '/public/assets/Refresh.svg'
 import {
   durationState,
   graphicDiameterState,
