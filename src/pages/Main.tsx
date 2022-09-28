@@ -17,23 +17,14 @@ import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
+import { axiosInstance } from './../components/axiosinstance/index'
 
 const Main = () => {
-  const [selects, setSelects] = useState<string>('')
-
-  const changeSelects = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSelects(e.currentTarget.value)
-  }
-
-  // selects가 바뀔 때 마다 새로운 상품 리스트 불러오기
-  // const { data: productLists } = useQuery([queryKeys.product], getProduct)
-  // useEffect(() => {}, [])
-  // console.log(productLists)
-
   const refreshToken = useRefreshToken()
 
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
+  
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -41,7 +32,9 @@ const Main = () => {
   }, [])
 
   const getProduct = async () => {
-    const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products')
+    const res = await axiosInstance({
+      url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
+    })
     return res.data
   }
 
@@ -64,24 +57,31 @@ const Main = () => {
             </div>
           )}
           {/*메인에서 상품 리스트 */}
-          <div className="w-full mx-auto border-none rounded-md shadow-[0_0_6px] shadow-gray-400/80">
+          <div className="w-full mx-auto border-none rounded-md shadow-basic">
             {/* <div className="container px-4  flex justify-center items-end"></div> */}
-            <CardContainer data="product" productLists={productLists} />
+            <CardContainer data="Best" productLists={productLists} />
           </div>
         </section>
-        <div className="w-full border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
-          <CardContainer data="new" />
+        <div className="w-full h-[200px] mx-auto border-none rounded-md shadow-basic my-12 object-cover overflow-hidden">
+          <img
+            src="https://lenssis.jp/data/editor/2203/44422109c17730933970139952b48d7a_1647854567_1883.jpg"
+            alt=""
+            className="w-full mx-auto mb-12"
+          />
         </div>
-        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+        <div className="w-full border-none rounded-md  shadow-basic">
+          <CardContainer data="New" />
+        </div>
+        <div className="w-full my-12 border-none rounded-md  shadow-basic">
           <Event />
         </div>
-        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic">
           <Recommend />
         </div>
-        <div className="container my-[35px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic">
           <MainReview />
         </div>
-        <div className="container my-[100px] border-none rounded-md  shadow-[0_0_6px] shadow-gray-400/80">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic">
           <NoticePage />
         </div>
       </div>

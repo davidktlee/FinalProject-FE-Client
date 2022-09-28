@@ -33,5 +33,9 @@ export interface CardContainerPropsType {
   data: Data
   productLists?: []
   newProductLists?: []
+  allProductCurrentPage?: number
+  newProductCurrentPage?: number
+  allProductCount?: number
+  newProductCount?: number
 }
-type Data = 'product' | 'new'
+type Data = 'Best' | 'New'

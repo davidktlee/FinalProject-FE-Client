@@ -21,7 +21,7 @@ const RevieItems = () => {
                 </div>
                 <div>2022.09.16</div>
               </div>
-              <div className="mobile flex justify-between leading-5">
+              <div className="xs:hidden mobile flex justify-between leading-5">
                 <div className="flex flex-col gap-[5px]">
                   <div className="text-[16px]">★★★★★</div>
                   <div className="text-[12px]">아이디</div>

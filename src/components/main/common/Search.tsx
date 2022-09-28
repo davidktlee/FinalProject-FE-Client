@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 function Search() {
   const [isOpenSearch, setIsOpenSearch] = useState(false)
