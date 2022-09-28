@@ -10,7 +10,7 @@ module.exports = {
         basic: '0 0 8px 0 rgba(0, 0, 0, 0.18)'
       },
       dropShadow: {
-        basic: '0 0 8px 0 rgba(0, 0, 0, 0.18)'
+        basic: '0 0 8px rgba(0, 0, 0, 0.18)'
       },
       colors: {
         transparent: 'transparent',
@@ -21,7 +21,8 @@ module.exports = {
         lenssisGray: '#7a7a7a',
         lenssisDeepGray: '#5a5a5a',
         lenssisLightGray: '#f4f4f4',
-        lenssisStroke: '#d3d3d3'
+        lenssisStroke: '#d3d3d3',
+        lenssisEmphasis: '#FF7B02'
       },
       fontFamily: {},
       keyframes: {

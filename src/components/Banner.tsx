@@ -6,12 +6,13 @@ import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
+import axios, { AxiosResponse } from 'axios'
 
-const imgs = [
-  '/assets/KakaoTalk_20220714_125021628.jpg',
-  '/assets/KakaoTalk_20220714_125021628.jpg',
-  '/assets/KakaoTalk_20220714_125021628.jpg'
-]
+interface Banner {
+  title: string
+  bannerImg: string
+  id: string
+}
 
 // 달라질 부분
 // absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
@@ -19,6 +20,14 @@ const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
+  const [imgs, setImgs] = useState([])
+  const getBanner = async () => {
+    const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/banner')
+    setImgs(res.data)
+  }
+  useEffect(() => {
+    getBanner()
+  }, [])
 
   SwiperCore.use([Navigation, Pagination, Autoplay])
   useEffect(() => {
@@ -77,14 +86,15 @@ const Banner = () => {
       </button>
       {swiperSetting && (
         <Swiper {...swiperSetting} style={{ borderRadius: '25px', overflow: 'hidden' }}>
-          {imgs.map((img: string, index: number) => (
-            <div key={index}>
-              <SwiperSlide key={index}>
-                {/* key값 id 값 넣어주기 */}
-                <img src={img} alt="" className="w-full h-[400px] object-cover " />
-              </SwiperSlide>
-            </div>
-          ))}
+          {imgs &&
+            imgs.map((img: Banner, index: number) => (
+              <div key={index}>
+                <SwiperSlide key={index}>
+                  {/* key값 id 값 넣어주기 */}
+                  <img src={img.bannerImg} alt="" className="w-full h-[400px] object-cover " />
+                </SwiperSlide>
+              </div>
+            ))}
         </Swiper>
       )}
       <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[1] hover:color-white">

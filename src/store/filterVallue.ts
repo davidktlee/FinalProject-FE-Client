@@ -1,12 +1,6 @@
 import { atom } from 'recoil'
 import { graphicDiameter } from '../constants/filterData'
 
-interface stateTypes {
-  type: string
-  value: string
-  isClicked?: boolean
-}
-
 export const durationState = atom<string>({
   key: 'durationState',
   default: 'all'

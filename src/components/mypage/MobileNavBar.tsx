@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef } from 'react';
+import React, { useState,useEffect, useRef, useCallback } from 'react';
 import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 
@@ -52,10 +52,10 @@ const MobileNavBar = ({selectedOption,setSelectedOption}:MobileNavBarProps) => {
     setIsOpen((prev) => !prev)
     
   }
-  const selectOptionHandler = (item:string) => {
+  const selectOptionHandler = useCallback((item:string) => {
     // setIsOpen((prev) => !prev)
     setSelectedOption(item)
-  }
+  },[])
   useEffect(() => {
     const currentPath = pathname.split('/').pop();
     if(currentPath === 'mypage'){setSelectedOption('메뉴선택')}
@@ -63,20 +63,20 @@ const MobileNavBar = ({selectedOption,setSelectedOption}:MobileNavBarProps) => {
     if(currentPath === 'myafter'){setSelectedOption('취소/교환/반품 내역')}
     if(currentPath === 'myreview'){setSelectedOption('리뷰 관리')}
     if(currentPath === 'myprofile'){setSelectedOption('회원 정보 수정')}
+    if(currentPath === 'editprofile'){setSelectedOption('프로필 수정')}
+    if(currentPath === 'editsecret'){setSelectedOption('비밀번호 수정')}
     if(currentPath === 'mygrade'){setSelectedOption('회원 등급')}
     if(currentPath === 'mycoupon'){setSelectedOption('쿠폰함')}
-    
-  }, [])
+  }, [pathname])
 
  
   const handleCloseModal = ({target}:MouseEvent) => {
-    
-    
       if(isOpen && (!modalRef.current?.contains(target as Node)) && !menuRef.current?.contains(target as Node)){
         setIsOpen(false)
-        console.log('worked')
+        
       }
   }
+
   useEffect(() => {
     document.addEventListener('click', handleCloseModal)
     return () => document.removeEventListener('click', handleCloseModal)
@@ -92,7 +92,7 @@ const MobileNavBar = ({selectedOption,setSelectedOption}:MobileNavBarProps) => {
     </div>
     <div className='relative mt-6'>
     {isOpen && (
-          <ul ref={modalRef} className='absolute flex flex-col items-start justify-start text-base text-lenssisGray bg-white z-50 px-2 pb-2 w-[65%] shadow-[0_0_6px] shadow-gray-400 font-semibold'>
+      <ul ref={modalRef} className='absolute flex flex-col items-start justify-start text-base text-lenssisGray bg-white z-50 px-2 pb-2 w-[65%] shadow-[0_0_6px] shadow-gray-400 font-semibold'>
           
           <li className='p-1 py-[8px] border-b border-solid border-lenssisGray w-[90%]'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A] font-bold' : 'text-inherit')} onClick={() => selectOptionHandler('주문 내역')} to="myorder">주문 내역</NavLink></li>
         <li className='p-1 py-[8px] border-b border-solid border-lenssisGray w-[90%]'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A] font-bold' : 'text-inherit')} onClick={() => selectOptionHandler('배송 조회')} to="mytracking">배송 조회</NavLink></li>
@@ -109,14 +109,11 @@ const MobileNavBar = ({selectedOption,setSelectedOption}:MobileNavBarProps) => {
         
         <li className='p-1 py-[8px] border-b border-solid border-lenssisGray w-[90%]'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A] font-bold' : 'text-inherit')} onClick={() => selectOptionHandler('회원등급')} to="mygrade">회원등급</NavLink></li>
         <li className='p-1 py-[8px] border-b border-solid border-lenssisGray w-[90%]'><NavLink className={({isActive}) => (isActive ? 'text-[#1B304A] font-bold' : 'text-inherit')} onClick={() => selectOptionHandler('쿠폰함')} to="mycoupon">쿠폰함</NavLink></li>
-      
-           
-          
-            </ul>
+      </ul>
     )}
     </div>
     </>
   );
 };
 
-export default MobileNavBar;
+export default React.memo(MobileNavBar);

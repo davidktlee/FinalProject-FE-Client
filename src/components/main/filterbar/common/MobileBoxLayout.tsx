@@ -10,7 +10,7 @@ import {
 
 type MobileBoxLayoutProps = {
   title: string
-  contents: string[] | number[] | any
+  contents: string[] | number[] | any[]
   px?: string
   py?: string
   w?: string
@@ -36,6 +36,7 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
     switch (content.type) {
       case 'duration':
         setDuration(content?.value)
+        console.log(duration)
         break
       case 'graphicDiameter':
         setGraphicDiameter((prev) => {
@@ -94,8 +95,8 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
           {contents.map((content: string | number | any, index: number) => (
             <button
               key={index}
-              className={`font-medium border-solid  leading-6 border-[1px] rounded-[20px] text-center text-[14px]  
-              ${py ? `py-${py}` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
+              className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]  
+              ${py ? `py-[${py}]` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
                 h ? `h-[${h}]` : 'h-[30px]'
               } ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
                 graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'

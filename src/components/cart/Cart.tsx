@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
+import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
@@ -12,7 +13,7 @@ import { getStoredToken } from '../local-storage/userStorage'
 
 const Cart = () => {
   const refreshToken = useRefreshToken()
-
+  const {user} = useUser()
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -20,7 +21,7 @@ const Cart = () => {
   },[])
 
   return (
-  <PageLayout layoutWidth='[90%]' innerTop="top-[30%]" >
+  <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
     <div className='flex items-center justify-between w-full'>
       <div className='w-3/5'>
