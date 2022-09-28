@@ -105,6 +105,7 @@ const Card = ({
           <div className="mt-[5px] mb-[4px] flex ">
             {colorCode?.map((eachColor: string, idx: number) => (
               <div
+                key={idx}
                 className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] border-2 border-solid rounded-full`}
                 style={{ backgroundColor: `${eachColor}` }}
                 onMouseEnter={(e) => {
@@ -128,8 +129,11 @@ const Card = ({
             </div>
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
-            {graphicDiameter.map((item: string) => (
-              <div className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]">
+            {graphicDiameter.map((item: string, idx: number) => (
+              <div
+                key={`${item}-${idx}`}
+                className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]"
+              >
                 {item}
               </div>
             ))}

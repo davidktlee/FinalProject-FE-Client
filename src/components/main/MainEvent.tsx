@@ -6,7 +6,7 @@ import ViewMoreBtn from './common/ViewMoreBtn'
 const events = [
   {
     id: 1,
-    img: 'https://lenssis.jp/data/editor/2203/e3817c7f5762e0e9529ed6b00c90f2b2_1648004784_1526.jpg',
+    img: 'https://lenssis.jp/data/editor/2203/e3817c7f5762e0e9529ed6b00c90f2b2_1648004793_108.jpg',
     content: '이벤트 내용'
   },
   {
@@ -16,12 +16,12 @@ const events = [
   },
   {
     id: 3,
-    img: 'https://lenssis.jp/data/editor/2203/e3817c7f5762e0e9529ed6b00c90f2b2_1648004808_0861.jpg',
+    img: 'https://lenssis.jp/data/editor/2203/e3817c7f5762e0e9529ed6b00c90f2b2_1648004793_108.jpg',
     content: '이벤트 내용'
   },
   {
     id: 4,
-    img: 'https://lenssis.jp/data/editor/2203/44422109c17730933970139952b48d7a_1647854561_93.jpg',
+    img: 'https://lenssis.jp/data/editor/2203/e3817c7f5762e0e9529ed6b00c90f2b2_1648004793_108.jpg',
     content: '이벤트 내용'
   }
 ]
@@ -43,7 +43,11 @@ const MainEvent = () => {
             className="w-full rounded-xl flex flex-col items-center my-2 shadow-basic hover:cursor-pointer"
             onClick={() => navigate('/event')}
           >
-            <img className="w-full h-[226px] rounded-t-xl object-cover" src={event.img} alt="" />
+            <img
+              className="w-full h-[226px] rounded-t-xl object-fit md:object-cover"
+              src={event.img}
+              alt=""
+            />
             <div className=" h-[95px]  rounded-b-xl">
               {/* 이벤트 내용 */}
               {event.content}

@@ -37,11 +37,30 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
               {data}
             </span>
           </div>
-          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[95%] mx-auto"></div>
+          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[95%] mx-auto">
+            {productLists &&
+              productLists.map((item: BeforeItem, idx: number) => (
+                <Card
+                  key={`${item.productId}-${idx}`}
+                  idx={idx}
+                  id={item.productId}
+                  name={item.name}
+                  series={item.series}
+                  price={item.details.price}
+                  feature={item.feature}
+                  discount={item.details.discount}
+                  diameter={item.diameter}
+                  colorCode={item.details.color_code}
+                  productImg={item.details.product_details_image_url}
+                  graphicDiameter={item.details.graphicDiameter}
+                  duration={item.details.duration}
+                />
+              ))}
+          </div>
           <Pagination
             currentPage={newProductCurrentPage}
             setCurrentPage={setNewProductCurrentPage}
-            allCount={12}
+            allCount={30}
           />
         </>
       ) : (
@@ -56,7 +75,7 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
               {productLists &&
                 productLists.map((item: BeforeItem, idx: number) => (
                   <Card
-                    key={item.productId}
+                    key={`${item.productId}-${idx}`}
                     idx={idx}
                     id={item.productId}
                     name={item.name}
@@ -75,7 +94,7 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
             <Pagination
               currentPage={allProductCurrentPage}
               setCurrentPage={setAllProductCurrentPage}
-              allCount={10}
+              allCount={30}
             />
           </>
         )

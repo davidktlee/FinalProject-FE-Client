@@ -13,7 +13,7 @@ interface Banner {
   bannerImg: string
   id: string
 }
-
+// const imgs = ['/assets/MobileBanner.png', '/assets/MobileBanner.png', '/assets/MobileBanner.png']
 // 달라질 부분
 // absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
 const Banner = () => {
@@ -91,7 +91,11 @@ const Banner = () => {
               <div key={index}>
                 <SwiperSlide key={index}>
                   {/* key값 id 값 넣어주기 */}
-                  <img src={img.bannerImg} alt="" className="w-full h-[400px] object-cover " />
+                  <img
+                    src={img.bannerImg}
+                    alt="banner-image"
+                    className=" mx-auto w-full object-fit md:object-cover "
+                  />
                 </SwiperSlide>
               </div>
             ))}
