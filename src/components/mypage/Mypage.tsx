@@ -29,7 +29,7 @@ const Mypage = () => {
 
 
   return (
-    <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
+    <PageLayout layoutWidth="w-[90%]" innerTop="top-[30%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
           {pathname === '/mypage' && <MypageBanner user={user} />}

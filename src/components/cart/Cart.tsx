@@ -21,7 +21,7 @@ const Cart = () => {
   },[])
 
   return (
-  <PageLayout layoutWidth='[90%]' innerTop="top-[30%]" >
+  <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
     <div className='flex items-center justify-between w-full'>
       <div className='w-3/5'>

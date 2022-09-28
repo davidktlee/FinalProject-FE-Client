@@ -173,7 +173,7 @@ const Payment = () => {
   },[user])
   
   return (
-    <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="[90%]" layoutHeight="h-fit">
+    <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
      <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
