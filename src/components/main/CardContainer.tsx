@@ -11,7 +11,7 @@ interface BeforeItem {
   series: string[] // 상품 시리즈
   feature: string[]
   details: {
-    graphicDiameter: string[]
+    graphicDiameter: number[]
     price: number // 상품 가격
     discount: number // 할인률
     product_details_image_url: string[] // 상품 이미지

@@ -3,25 +3,25 @@ import { useQuery } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from './../../react-query/queryKeys'
 
-interface ResponseType {
-  productId: 'number'
-  name: 'string'
-  series: 'string'
-  feature: 'string[]'
-  diamter: 'string'
+export interface ProductResponseType {
+  productId: number
+  name: string
+  series: string
+  feature: string[]
+  diamter: string
   details: {
-    color_code: 'string[]'
-    price: 'number'
-    discount: 'number'
-    product_details_image_url: 'string[]'
-    graphicDiameter: 'string[]'
-    duration: 'string'
+    color_code: string[]
+    price: number
+    discount: number
+    product_details_image_url: string[]
+    graphicDiameter: string[]
+    duration: string
   }
 }
 
 const getProductsList = async () => {
   const { data }: AxiosResponse<ResponseType[]> = await axiosInstance({
-    url: `/product/allProduct`,
+    url: `/main/product`,
     headers: {
       ContentType: 'application/json'
     }

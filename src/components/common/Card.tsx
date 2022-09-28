@@ -13,7 +13,7 @@ interface BeforeProps {
   series?: string[] // 상품 시리즈
   feature?: string[]
   id: string
-  graphicDiameter: string[]
+  graphicDiameter: number[]
   price: number // 상품 가격
   discount: number // 할인률
   productImg: string[] // 상품 이미지
@@ -129,12 +129,12 @@ const Card = ({
             </div>
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
-            {graphicDiameter.map((item: string, idx: number) => (
+            {graphicDiameter.map((item: number, idx: number) => (
               <div
                 key={`${item}-${idx}`}
                 className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]"
               >
-                {item}
+                {item.toFixed(1)}
               </div>
             ))}
           </div>
