@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
 import { CardPropsType } from '../auth/types/productTypes'
+import { useNavigate } from 'react-router-dom'
 
 interface BeforeProps {
   productId?: string // 상품 id
@@ -34,6 +35,8 @@ const Card = ({
   feature,
   duration
 }: BeforeProps) => {
+  const navigate = useNavigate()
+
   const [viewImg, setViewImg] = useState<string | undefined>(productImg[0])
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
@@ -93,7 +96,11 @@ const Card = ({
           <></>
         )}
 
-        <img src={viewImg} className="rounded-md w-full h-[115px] mx-auto md:h-[185px]" />
+        <img
+          onClick={() => navigate('/product/1')}
+          src={viewImg}
+          className="cursor-pointer rounded-md w-full h-[115px] mx-auto md:h-[185px]"
+        />
         <div className="flex flex-col ">
           <div className="mt-[5px] mb-[4px] flex ">
             {colorCode?.map((eachColor: string, idx: number) => (
