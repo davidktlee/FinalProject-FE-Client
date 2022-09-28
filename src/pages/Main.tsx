@@ -51,7 +51,7 @@ const Main = () => {
             <FilterBar />
           </div>
           {filterOpen && (
-            <div className="xs:hidden mobile-filter fixed top-[106px] z-10 w-full animate-drop">
+            <div className="xs:hidden mobile-filter fixed left-0 top-[106px] z-10 w-full animate-drop">
               <MobileFilter />
             </div>
           )}

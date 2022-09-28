@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
+import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
@@ -12,7 +13,7 @@ import { getStoredToken } from '../local-storage/userStorage'
 
 const Cart = () => {
   const refreshToken = useRefreshToken()
-
+  const {user} = useUser()
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)

@@ -1,5 +1,3 @@
-import { rankColor } from './cardColors'
-
 export const duration = [
   {
     type: 'duration',
@@ -19,13 +17,13 @@ export const duration = [
 ]
 
 export const graphicDiameter = [
-  { type: 'graphicDiameter', name: '11.9', value: '11.9' },
-  { type: 'graphicDiameter', name: '12.9', value: '12.9' },
-  { type: 'graphicDiameter', name: '13.0', value: '13.0' },
-  { type: 'graphicDiameter', name: '13.2', value: '13.2' },
-  { type: 'graphicDiameter', name: '13.5', value: '13.5' },
-  { type: 'graphicDiameter', name: '13.8', value: '13.8' },
-  { type: 'graphicDiameter', name: '14.0', value: '14.0' }
+  { type: 'graphicDiameter', name: '11.9', value: 11.9 },
+  { type: 'graphicDiameter', name: '12.9', value: 12.9 },
+  { type: 'graphicDiameter', name: '13.0', value: 13.0 },
+  { type: 'graphicDiameter', name: '13.2', value: 13.2 },
+  { type: 'graphicDiameter', name: '13.5', value: 13.5 },
+  { type: 'graphicDiameter', name: '13.8', value: 13.8 },
+  { type: 'graphicDiameter', name: '14.0', value: 14.0 }
 ]
 // export const graphicDiameter = [11.9, 12.9, 13.0, 13.2, 13.5, 13.8, 14.0]
 
@@ -50,9 +48,9 @@ export const series = [
 // export const series = ['에이린', '마리나', '샌드', '베티', '루나']
 
 export const features = [
-  { type: 'feature', name: 'UV 차단', value: 'uv' },
+  { type: 'feature', name: 'UV차단', value: 'uv' },
   { type: 'feature', name: '수분', value: 'moisture' },
-  { type: 'feature', name: '블루 라이트', value: 'blueLight' },
+  { type: 'feature', name: '블루라이트', value: 'blueLight' },
   { type: 'feature', name: '실리콘', value: 'silicon' },
   { type: 'feature', name: '학생용', value: 'student' }
 ]

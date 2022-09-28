@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+import Footer from '../../footer/Footer'
 
 interface PageLayoutProps {
   children: React.ReactNode
@@ -7,16 +8,15 @@ interface PageLayoutProps {
   innerTop?: string
 }
 
-const PageLayout = ({ children, layoutWidth, innerTop,layoutHeight }: PageLayoutProps) => {
+const PageLayout = ({ children, layoutWidth, layoutHeight }: PageLayoutProps) => {
   return (
-    <div className={`w-full ${layoutHeight ? layoutHeight : 'h-[2146px]'} bg-[#F4F6F8] text-base `}>
-      <div
-        className={`absolute ${
-          innerTop ? innerTop : 'top-1/2'
-        } left-1/2 -translate-x-1/2 -translate-y-[15%] w-${layoutWidth || 'full'} h-fit `}
-      >
-        {children}
-      </div>
+    <div
+      className={`w-full ${
+        layoutHeight ? layoutHeight : 'h-max'
+      } bg-[#F4F6F8] text-base min-h-screen xs:mt-40`}
+    >
+      <div className={` mx-auto w-${layoutWidth || 'full'} `}>{children}</div>
+      <Footer />
     </div>
   )
 }

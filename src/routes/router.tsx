@@ -10,7 +10,7 @@ import SignupPage from '../pages/SignupPage'
 import NotFound from '../components/NotFound'
 import EventDetail from '../components/EventDetail'
 import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
+
 import MyOrder from '../components/mypage/tabs/MyOrder'
 import MyTracking from '../components/mypage/tabs/MyTracking'
 import MyAfter from '../components/mypage/tabs/MyAfter'
@@ -91,7 +91,7 @@ const Router = () => {
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <MobileBottomNav />
-      <Footer />
+      
     </BrowserRouter>
   )
 }
