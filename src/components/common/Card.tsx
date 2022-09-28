@@ -1,40 +1,24 @@
 import React, { ReactNode, useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
-import { CardPropsType } from '../auth/types/productTypes'
 import { useNavigate } from 'react-router-dom'
 
-interface BeforeProps {
+interface PropsType {
   productId?: string // 상품 id
   idx: number
-
   name?: string // 상품 타이틀
   diameter?: number
   series?: string[] // 상품 시리즈
-  feature?: string[]
   id: string
   graphicDiameter: number[]
   price: number // 상품 가격
   discount: number // 할인률
   productImg: string[] // 상품 이미지
-  duration: string
   colorCode?: string[] // 색상 코드
-
   isNew?: boolean // 새로운 상품 여부
 }
 
-const Card = ({
-  name,
-  idx,
-  id,
-  price,
-  discount,
-  colorCode,
-  productImg,
-  graphicDiameter,
-  feature,
-  duration
-}: BeforeProps) => {
+const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDiameter }: PropsType) => {
   const navigate = useNavigate()
 
   const [viewImg, setViewImg] = useState<string | undefined>(productImg[0])
@@ -123,9 +107,9 @@ const Card = ({
           </span>
           <div className=" text-[12px] md:text-[14px]">{name}</div>
           <div className="flex justify-start items-center my-[5px]">
-            <div className="mr-2 md:mr-4 font-[700] md:text-[14px]">{commaPrice.price}</div>
+            <div className="mr-2 md:mr-4 font-[700] md:text-[14px]">{commaPrice.price}円</div>
             <div className="text-[#7A7A7A] line-through text-[10px] md:text-[12px]">
-              {commaPrice.discount}
+              {commaPrice.discount}円
             </div>
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">

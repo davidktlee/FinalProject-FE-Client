@@ -19,10 +19,11 @@ import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
 import { axiosInstance } from './../components/axiosinstance/index'
 import { ProductResponseType, useGetProductsList } from '../components/main/hooks/useProductLists'
+import { useNavigate } from 'react-router-dom'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
-
+  const navigate = useNavigate()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
   useEffect(() => {
@@ -37,16 +38,16 @@ const Main = () => {
     })
     return res.data
   }
-  // const productLists = useGetProductsList()
+  // const productLists = useGetProductsList(15)
   // console.log(productLists)
 
   const { data: productLists } = useQuery([queryKeys.product], getProduct, {
     refetchOnWindowFocus: false
   })
-  // console.log(productLists)
+  console.log(productLists)
   return (
     <div className="w-[90%] mx-auto ">
-      <div className="pt-44 relative">
+      <div className="pt-[100px] relative">
         <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
@@ -64,7 +65,10 @@ const Main = () => {
             <CardContainer data="Best" productLists={productLists} />
           </div>
         </section>
-        <div className="w-full h-[200px] mx-auto border-none rounded-md shadow-basic my-12 object-cover overflow-hidden">
+        <div
+          onClick={() => navigate('/')} /* 퍼스널 컬러 테스트로 이동 */
+          className="w-full h-[200px] mx-auto border-none rounded-md shadow-basic my-12 object-cover overflow-hidden"
+        >
           <img
             src="https://lenssis.jp/data/editor/2203/44422109c17730933970139952b48d7a_1647854567_1883.jpg"
             alt=""
