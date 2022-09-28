@@ -63,10 +63,13 @@ const MobileNavBar = ({selectedOption,setSelectedOption}:MobileNavBarProps) => {
     if(currentPath === 'myafter'){setSelectedOption('취소/교환/반품 내역')}
     if(currentPath === 'myreview'){setSelectedOption('리뷰 관리')}
     if(currentPath === 'myprofile'){setSelectedOption('회원 정보 수정')}
+    if(currentPath === 'editprofile'){setSelectedOption('프로필 수정')}
+    if(currentPath === 'editsecret'){setSelectedOption('비밀번호 수정')}
     if(currentPath === 'mygrade'){setSelectedOption('회원 등급')}
     if(currentPath === 'mycoupon'){setSelectedOption('쿠폰함')}
     
-  }, [])
+    
+  }, [pathname])
 
  
   const handleCloseModal = ({target}:MouseEvent) => {
