@@ -10,7 +10,7 @@ import FilterBar from '../components/main/filterbar/FilterBar'
 import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
 
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { queryKeys } from '../components/react-query/queryKeys'
 import { useQuery } from 'react-query'
 import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout'
@@ -18,6 +18,7 @@ import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
 import { axiosInstance } from './../components/axiosinstance/index'
+import { ProductResponseType, useGetProductsList } from '../components/main/hooks/useProductLists'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
@@ -36,11 +37,13 @@ const Main = () => {
     })
     return res.data
   }
+  // const productLists = useGetProductsList()
+  // console.log(productLists)
 
   const { data: productLists } = useQuery([queryKeys.product], getProduct, {
     refetchOnWindowFocus: false
   })
-  console.log(productLists)
+  // console.log(productLists)
   return (
     <div className="w-[90%] mx-auto ">
       <div className="pt-44 relative">
