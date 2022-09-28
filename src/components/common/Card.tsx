@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 interface BeforeProps {
   productId?: string // 상품 id
   idx: number
+
   name?: string // 상품 타이틀
   diameter?: number
   series?: string[] // 상품 시리즈
@@ -69,32 +70,24 @@ const Card = ({
   // 첫 번째 인덱스
   return (
     <>
-      <div key={id} className={`relative w-[160px] md:w-[260px] mx-auto my-[40px]`}>
+      <div className={`relative w-[160px] md:w-[260px] my-[10px] mx-auto`}>
         {/* 순위 라벨/ 순위 라벨 값이 1일 때 ? 3일 때 ? : 아닐 때 */}
         {idx < 3 ? (
           <>
             <span className="absolute top-[4px] left-[4px] md:left-2 xl:w-4 xl:h-4">
               {windowWidth < 1020 ? (
                 <>
-                  <span className="absolute top-[4px] left-[8px] md:top-[3px]  text-white text-[10px] md:text-[17px] font-bold  xl:font-bold ">
+                  <span className="absolute top-[4px] left-[6px] md:top-[3px] text-white text-[10px] font-bold  xl:font-bold ">
                     {idx + 1}
                   </span>
-                  {idx === 0 ? (
-                    <SubtractIcon width={24} height={34} color="#1B304A" />
-                  ) : (
-                    <SubtractIcon width={24} height={34} color="#FFDF5D" />
-                  )}
+                  <SubtractIcon width={20} height={30} color="#1B304A" />
                 </>
               ) : (
                 <>
-                  <span className="absolute top-[4px] left-[13px] text-white text-[10px] md:text-[17px] lg:font-bold  xl:font-bold ">
+                  <span className="absolute top-[4px] left-[10px] text-white text-[14px] lg:font-bold  xl:font-bold ">
                     {idx + 1}
                   </span>
-                  {idx === 0 ? (
-                    <SubtractIcon width={39} height={49} color="#1B304A" />
-                  ) : (
-                    <SubtractIcon width={39} height={49} color="#FFDF5D" />
-                  )}
+                  <SubtractIcon width={32} height={42} color="#1B304A" />
                 </>
               )}
             </span>
@@ -106,13 +99,13 @@ const Card = ({
         <img
           onClick={() => navigate('/product/1')}
           src={viewImg}
-          className="cursor-pointer rounded-x w-full h-[115px] mx-auto md:h-[185px]"
+          className="cursor-pointer rounded-md w-full h-[115px] mx-auto md:h-[185px]"
         />
         <div className="flex flex-col ">
           <div className="mt-[5px] mb-[4px] flex ">
             {colorCode?.map((eachColor: string, idx: number) => (
               <div
-                className={`w-[15px] h-[15px] mr-[6px] md:w-[25px] md:h-[25px] md:mr-[10px] border-2 border-solid rounded-full`}
+                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] border-2 border-solid rounded-full`}
                 style={{ backgroundColor: `${eachColor}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
@@ -136,7 +129,7 @@ const Card = ({
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
             {graphicDiameter.map((item: string) => (
-              <div className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-1">
+              <div className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]">
                 {item}
               </div>
             ))}

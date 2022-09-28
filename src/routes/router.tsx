@@ -58,7 +58,7 @@ const Router = () => {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/mypage" element={<MypagePage />}>
-          <Route path="myorder" element={<MyOrder />}/>
+          <Route path="myorder" element={<MyOrder />} />
           <Route path="mytracking" element={<MyTracking />} />
           <Route path="myafter" element={<MyAfter />} />
           <Route path="myprofile" element={<MyProfile />}>
@@ -86,7 +86,6 @@ const Router = () => {
         </Route>
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/event" element={<EventPage />} />
-
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/review" element={<Review />} />
         <Route path="/*" element={<NotFound />} />

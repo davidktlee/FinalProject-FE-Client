@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router'
 import PageLayout from '../components/common/ui/PageLayout'
 import Pagination from '../components/main/common/Pagination'
@@ -11,6 +11,7 @@ import CardTemplate from './../components/common/ui/CardTemplate'
 function NoticePage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     if (location.pathname.includes('notice')) {
@@ -27,12 +28,12 @@ function NoticePage() {
           <ViewMoreBtn moveTo="/notice" />
         </div>
       ) : (
-        <PageLayout layoutWidth="w-[90%]" innerTop="top-[200px]">
+        <PageLayout layoutWidth="[90%]" innerTop="top-[30%]">
           <CardTemplate title="공지사항" isTitleVisible={true}>
             <NoticeTitle />
             <Outlet />
             <div className="flex justify-center items-center relative">
-              <Pagination />
+              <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} allCount={10} />
               <Search />
             </div>
           </CardTemplate>
