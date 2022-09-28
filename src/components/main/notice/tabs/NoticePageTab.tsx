@@ -34,7 +34,8 @@ function NoticePageTab() {
             key={index}
             style={({ isActive }) => ({
               borderBottom: isActive ? '5px solid #1B304A' : 'none',
-              fontWeight: isActive ? 600 : 500
+              fontWeight: isActive ? 600 : 500,
+              color: isActive ? '#1B304A' : '#d3d3d3'
             })}
             to={title.value}
             className="xl:w-[200px] md:w-[150px] sm:w-[100px] text-center "
@@ -47,7 +48,7 @@ function NoticePageTab() {
         <div className="block xs:hidden relative">
           <div className=" h-6 flex justify-end">
             <button className="w-32 flex items-center " onClick={changeViewOption}>
-              <div className="mr-4 font-[800] text-[16px] grow">{optionName}</div>
+              <div className="mr-4 font-[800] text-[#1b304a] text-[16px] grow">{optionName}</div>
               <img width={8} src="/assets/arrowtobottom.png" alt="" />
             </button>
           </div>
@@ -63,7 +64,7 @@ function NoticePageTab() {
                     key={index}
                     style={({ isActive }) => ({
                       fontWeight: isActive ? 'bold' : 'normal',
-                      color: isActive ? 'black' : '#5a5a5a'
+                      color: isActive ? '#1b304a' : '#5a5a5a'
                     })}
                     to={title.value}
                     className="ml-4 text-lenssisGray"

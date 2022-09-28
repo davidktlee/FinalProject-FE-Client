@@ -24,6 +24,7 @@ const Main = () => {
 
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
+  
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -58,7 +59,7 @@ const Main = () => {
           {/*메인에서 상품 리스트 */}
           <div className="w-full mx-auto border-none rounded-md shadow-basic">
             {/* <div className="container px-4  flex justify-center items-end"></div> */}
-            <CardContainer data="product" productLists={productLists} />
+            <CardContainer data="Best" productLists={productLists} />
           </div>
         </section>
         <div className="w-full h-[200px] mx-auto border-none rounded-md shadow-basic my-12 object-cover overflow-hidden">
@@ -69,7 +70,7 @@ const Main = () => {
           />
         </div>
         <div className="w-full border-none rounded-md  shadow-basic">
-          <CardContainer data="new" />
+          <CardContainer data="New" />
         </div>
         <div className="w-full my-12 border-none rounded-md  shadow-basic">
           <Event />

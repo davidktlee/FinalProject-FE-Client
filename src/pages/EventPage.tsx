@@ -61,7 +61,9 @@ function EventPage() {
   const eventList = useGetEvent(currentPage)
   console.log(eventList)
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    setEventId('')
+  }, [])
   return (
     <>
       <PageLayout layoutWidth="[90%]" innerTop="top-[40%]">
@@ -83,7 +85,7 @@ function EventPage() {
             ))}
           </div>
           <div className="relative flex justify-center items-center">
-            <Pagination />
+            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} allCount={50} />
             <Search />
           </div>
         </CardTemplate>
