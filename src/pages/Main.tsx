@@ -29,7 +29,7 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="w-[90%] mx-auto pb-10 ">
+    <div className="max-w-[1180px] mx-auto pb-10 ">
       <div className="pt-[100px] relative">
         <Banner />
         <section className="flex justify-between">

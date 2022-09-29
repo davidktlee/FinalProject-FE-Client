@@ -115,7 +115,7 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
             {graphicDiameter.map((item: number, idx: number) => (
               <div
                 key={`${item}-${idx}`}
-                className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisGray rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]"
+                className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisBadge text-lenssisBadge rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]"
               >
                 {item.toFixed(1)}
               </div>

@@ -22,7 +22,8 @@ module.exports = {
         lenssisDeepGray: '#5a5a5a',
         lenssisLightGray: '#f4f4f4',
         lenssisStroke: '#d3d3d3',
-        lenssisEmphasis: '#FF7B02'
+        lenssisEmphasis: '#FF7B02',
+        lenssisBadge: '#949494'
       },
       fontFamily: {},
       keyframes: {
