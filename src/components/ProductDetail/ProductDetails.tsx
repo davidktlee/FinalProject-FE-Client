@@ -4,6 +4,7 @@ import ProductRecommend from './ProductRecommend'
 import ProductTabs from './ProductTabs'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { graphicDiameter } from '../../constants/filterData'
 
 import { axiosInstance } from '../axiosinstance'
 
@@ -27,26 +28,26 @@ const ProductDetails = () => {
               <img
                 alt="ecommerce"
                 className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px]"
-                src="https://dummyimage.com/465x460"
+                src="https://user-images.githubusercontent.com/90392240/193039552-7fc9d4c3-a60b-4491-a4df-1f86bd7a54bc.png"
                 width="465"
                 height="460"
               />
               <div className="flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
                 <img
                   className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                  src="https://dummyimage.com/105x105"
+                  src="https://user-images.githubusercontent.com/90392240/193039539-7085fbca-757e-47d3-b80c-372381cfb410.png"
                 />
                 <img
                   className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                  src="https://dummyimage.com/105x105"
+                  src="https://user-images.githubusercontent.com/90392240/193039540-03fe9fd8-53c8-4853-b1a3-5393e57536b3.png"
                 />
                 <img
                   className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                  src="https://dummyimage.com/105x105"
+                  src="https://user-images.githubusercontent.com/90392240/193039546-d561bfa7-30ab-4337-8a91-16824fe588e5.png"
                 />
                 <img
                   className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                  src="https://dummyimage.com/105x105"
+                  src="https://user-images.githubusercontent.com/90392240/193039549-32de8393-f93b-4246-ad3f-a9b117d7e6be.png"
                 />
               </div>
             </div>
@@ -78,11 +79,12 @@ const ProductDetails = () => {
                   <div className="text-xl font-bold">1,800円</div>
                   <p className="ml-4 leading-7">2,000円</p>
                 </div>
-                <div className="badge flex gap-4 my-4">
-                  <span className="ring-2 rounded px-2 text-sm">원데이</span>
-                  <span className="ring-2 rounded px-2 text-sm"> 13.5mm</span>
-                  <span className="ring-2 rounded px-2 text-sm"> 수분70%</span>
-                  <span className="ring-2 rounded px-2 text-sm"> 실리콘</span>
+                <div className="badge flex gap-2 my-4">
+                  {graphicDiameter.map((item, index) => (
+                    <span className="border-solid border-2 border-[#949494] rounded-[5px] px-2 text-sm">
+                      {item.name}
+                    </span>
+                  ))}
                 </div>
                 <div className="point flex flex-initial my-2 ">
                   <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">포인트</p>
