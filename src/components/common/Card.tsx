@@ -53,11 +53,11 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
   // 첫 번째 인덱스
   return (
     <>
-      <div className={`relative w-[160px] md:w-[260px] my-[10px] mx-auto`}>
+      <div className={`relative w-[160px] md:w-[260px] my-[10px] mx-auto px-1`}>
         {/* 순위 라벨/ 순위 라벨 값이 1일 때 ? 3일 때 ? : 아닐 때 */}
         {idx < 3 ? (
           <>
-            <span className="absolute top-[4px] left-[4px] md:left-2 xl:w-4 xl:h-4">
+            <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4">
               {windowWidth < 1020 ? (
                 <>
                   <span className="absolute top-[4px] left-[6px] md:top-[3px] text-white text-[10px] font-bold  xl:font-bold ">
@@ -82,7 +82,7 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
         <img
           onClick={() => navigate('/product/1')}
           src={viewImg}
-          className="cursor-pointer rounded-md w-full h-[115px] mx-auto md:h-[185px]"
+          className="cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
         />
         <div className="flex flex-col ">
           <div className="mt-[5px] mb-[4px] flex ">
@@ -98,10 +98,10 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
             ))}
           </div>
 
-          <span className="hidden xs:block absolute top-[190px] right-0 ">
+          <span className="hidden xs:block absolute top-[190px] right-1 ">
             <CartAndHeart />
           </span>
-          <span className="xs:hidden block absolute top-[120px] right-0">
+          <span className="xs:hidden block absolute top-[120px] right-1">
             <CartAndHeart />
           </span>
           <div className=" text-[12px] md:text-[14px]">{name}</div>
