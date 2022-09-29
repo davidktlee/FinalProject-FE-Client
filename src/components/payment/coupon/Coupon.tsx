@@ -2,6 +2,7 @@ import React from 'react';
 import ShippingCard from '../shipping/ui/ShippingCard';
 
 const Coupon = () => {
+  
   return (
     <>
     <ShippingCard title='할인코드 적용'>

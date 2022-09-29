@@ -1,20 +1,23 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useUser } from '../../auth/hooks/useUser';
 import ShippingCard from '../../payment/shipping/ui/ShippingCard';
+import useEditSecret from '../hooks/useEditSecret';
 import EditProfileInput from '../ui/EditProfileInput';
 import SubmitButton from '../ui/SubmitButton';
 
-interface EditPasswordFormType {
+export interface EditPasswordFormType {
   newPassword:string,
   newPasswordConfirm:string,
-  oldPassword:string
+  password:string
 }
 
 const EditSecret = () => {
-  
+  const {user} = useUser()
+  const updateSecret = useEditSecret()
   const [editFormValue,setEditFormValue] = useState<EditPasswordFormType>({
     newPassword:'',
     newPasswordConfirm:'',
-    oldPassword:''
+    password:''
   })
   const editFormValueChangeHandler = useCallback((e:ChangeEvent<HTMLInputElement>) => {
     const {target:{value,name}} = e;
@@ -24,7 +27,15 @@ const EditSecret = () => {
     }))
   },[editFormValue])
 
-  console.log(editFormValue);
+  const updateSecretHandler = () => {
+    const obj:EditPasswordFormType = {
+      newPassword:editFormValue.newPassword,
+      newPasswordConfirm:editFormValue.newPasswordConfirm,
+      password:editFormValue.password
+    }
+    updateSecret(obj);
+  }
+  
   return (
     <div>
       <ShippingCard title="비밀번호 변경">
@@ -34,9 +45,9 @@ const EditSecret = () => {
         </div>
       </ShippingCard>
       <ShippingCard title="최종비밀번호 확인" isRequired >
-        <EditProfileInput type="password" name="oldPassword" onChange={editFormValueChangeHandler} value={editFormValue.oldPassword} placeholder="기존 비밀번호" />
+        <EditProfileInput type="password" name="password" onChange={editFormValueChangeHandler} value={editFormValue.password} placeholder="기존 비밀번호" />
       </ShippingCard>
-      <SubmitButton onClick={() => {}} />
+      <SubmitButton onClick={updateSecretHandler} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { RegisterType } from "../components/auth/types/userTypes";
 
 export interface User {
   address: string
+  detailAddress:string;
   birthday: string
   createdAt: string
   email: string
@@ -22,6 +23,7 @@ export const userState = atom<User>({
     birthday: '',
     createdAt: '',
     email: '',
+    detailAddress:'',
     memberId: 0,
     name: '',
     phone: '',

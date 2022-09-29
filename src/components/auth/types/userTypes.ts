@@ -5,6 +5,7 @@ export interface RegisterType {
   password: string;
   passwordConfirm:string;
   address: string;
+  detailAddress:string;
   phone: string;
   email: string;
   birthday: string;
