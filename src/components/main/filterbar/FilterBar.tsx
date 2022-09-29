@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect } from 'react'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
 import {
@@ -8,9 +9,11 @@ import {
   seriesState,
   featuresState
 } from '../../../store/filterVallue'
+import { axiosInstance } from '../../axiosinstance'
+import { useGetProductsList } from '../hooks/useProductLists'
 import BoxLayout from './common/BoxLayout'
 import FilterButtons from './FilterButtons'
-import Refresh from '/public/assets/Refresh.svg'
+import Refresh from '/assets/Refresh.svg'
 
 const FilterBar = () => {
   const resetDuration = useResetRecoilState(durationState)
@@ -32,6 +35,35 @@ const FilterBar = () => {
     resetSeries()
     resetfeatures()
   }
+
+  const requestFilter = async () => {
+    const res = await axiosInstance({
+      method: 'POST',
+      url: '/main/productOption',
+      data: {
+        colorCode: ['#00FF00'],
+        feature: [],
+        graphicDiameter: [],
+        series: ['마마무'],
+        period: []
+      }
+    })
+    console.log(res)
+    return res
+  }
+  const getProduct = async () => {
+    const res = await axiosInstance({
+      method: 'GET',
+      url: '/main/product?page=2'
+    })
+    console.log(res)
+    return res
+  }
+
+  useEffect(() => {
+    // requestFilter()
+    getProduct()
+  }, [])
 
   return (
     <div className="bg-[#fff] rounded-[10px] h-[1180px] w-[280px] px-[18px] py-[20px] shadow-basic">
