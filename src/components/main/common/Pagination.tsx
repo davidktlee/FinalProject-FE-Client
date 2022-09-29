@@ -21,12 +21,12 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
     setPagesCount(arr)
   }, [])
   // prefetch 로직
-  useEffect(() => {
-    if (maxPage > currentPage) {
-      const nextPage = currentPage + 1
-      client.prefetchQuery([queryKeys.product, nextPage], () => useGetProductsList(nextPage))
-    }
-  }, [currentPage])
+  // useEffect(() => {
+  //   if (maxPage > currentPage) {
+  //     const nextPage = currentPage + 1
+  //     client.prefetchQuery([queryKeys.product, nextPage], () => useGetProductsList(nextPage))
+  //   }
+  // }, [currentPage])
   return (
     <div className={`my-[51px] flex grow justify-center items-center `}>
       <span

@@ -13,7 +13,7 @@ const ProductRecommend = () => {
     return res.data
   }
 
-  const { data: productLists } = useQuery([queryKeys.product], getProduct, {
+  const { data: productLists } = useQuery(['productRecommend'], getProduct, {
     refetchOnWindowFocus: false
   })
   return (
