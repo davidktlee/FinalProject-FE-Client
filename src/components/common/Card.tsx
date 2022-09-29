@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
 import { useNavigate } from 'react-router-dom'
@@ -22,9 +22,7 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
   const navigate = useNavigate()
 
   const [viewImg, setViewImg] = useState<string | undefined>(productImg[0])
-
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
-
   const [commaPrice, setCommaPrice] = useState({
     price: '',
     discount: ''
@@ -41,9 +39,10 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
     setWindowWidth(window.innerWidth)
   }
 
-  const changeImageHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
-    setViewImg(productImg?.find((_, imgIdx: number) => idx === imgIdx))
+  const changeImageHandler = (_: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
+    setViewImg(productImg[idx])
   }
+
   useEffect(() => {
     toComma()
   }, [])
@@ -90,7 +89,7 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
             {colorCode?.map((eachColor: string, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] border-2 border-solid rounded-full`}
+                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] rounded-full`}
                 style={{ backgroundColor: `${eachColor}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)

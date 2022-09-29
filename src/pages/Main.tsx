@@ -46,7 +46,7 @@ const Main = () => {
   })
   console.log(productLists)
   return (
-    <div className="w-[90%] mx-auto ">
+    <div className="w-[90%] mx-auto pb-10 ">
       <div className="pt-[100px] relative">
         <Banner />
         <section className="flex justify-between">
