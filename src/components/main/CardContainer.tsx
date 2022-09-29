@@ -53,21 +53,23 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
             </div>
             <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[95%] mx-auto gap-x-[20px]">
               {productLists &&
-                productLists.map((item: Item, idx: number) => (
-                  <Card
-                    key={`${item.productId}-${idx}`}
-                    idx={idx}
-                    id={item.productId}
-                    name={item.name}
-                    series={item.series}
-                    price={item.details.price}
-                    discount={item.details.discount}
-                    diameter={item.diameter}
-                    colorCode={item.details.color_code}
-                    productImg={item.details.product_details_image_url}
-                    graphicDiameter={item.details.graphicDiameter}
-                  />
-                ))}
+                productLists
+                  .splice(0, 2)
+                  .map((item: Item, idx: number) => (
+                    <Card
+                      key={`${item.productId}-${idx}`}
+                      idx={idx}
+                      id={item.productId}
+                      name={item.name}
+                      series={item.series}
+                      price={item.details.price}
+                      discount={item.details.discount}
+                      diameter={item.diameter}
+                      colorCode={item.details.color_code}
+                      productImg={item.details.product_details_image_url}
+                      graphicDiameter={item.details.graphicDiameter}
+                    />
+                  ))}
             </div>
             <Pagination
               currentPage={allProductCurrentPage}
