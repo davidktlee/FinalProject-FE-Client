@@ -38,7 +38,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
               {data}
             </span>
           </div>
-          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[95%] mx-auto">
+          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
             {productLists &&
               productLists.map((item: Item, idx: number) => (
                 <Card
@@ -70,7 +70,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                 {data}
               </span>
             </div>
-            <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[95%] mx-auto gap-x-[20px]">
+            <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
               {productLists &&
                 productLists.map((item: Item, idx: number) => (
                   <Card

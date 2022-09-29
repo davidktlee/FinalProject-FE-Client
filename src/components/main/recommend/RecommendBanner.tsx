@@ -31,7 +31,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077394-f10340da-3e4e-4916-afc5-254bc67a9651.png',
     isNew: true
   },
   {
@@ -42,7 +42,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077400-8490f905-1c93-44f7-8c5c-0b2f10984dce.png',
     isNew: true
   },
   {
@@ -53,7 +53,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077405-ba005884-bcb4-41b6-8e5c-8c679b0ad032.png',
     isNew: true
   },
   {
@@ -64,7 +64,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077407-0d53a3a2-5c6e-41f2-b7a3-27c346b96f16.png',
     isNew: true
   }
 ]
@@ -502,7 +502,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[106px] right-[26px]">
+                    <span className="absolute bottom-[106px] right-[48px]">
                       <svg
                         width="50"
                         height="50"
@@ -594,8 +594,8 @@ function RecommendBanner() {
                     />
                     <span className="absolute bottom-[70px] right-[4px]">
                       <svg
-                        width="50"
-                        height="50"
+                        width="40"
+                        height="40"
                         viewBox="0 0 50 50"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
