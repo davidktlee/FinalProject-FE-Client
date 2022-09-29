@@ -1,21 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../common/Card'
 import { Item, CardContainerPropsType } from './types/productTypes'
 import Pagination from './common/Pagination'
+import { useQuery } from 'react-query'
+import { axiosInstance } from '../axiosinstance'
+import { queryKeys } from '../react-query/queryKeys'
 
 // Pagination 부분 수정해야 함
 
-const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
-  const [allData, setAllData] = useState(productLists?.length)
+const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
-  console.log(allData)
+
+  const getProduct = async (pageNo: number) => {
+    const res = await axiosInstance({
+      url: `https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products?page=${pageNo}&limit=9`
+    })
+    return res.data
+  }
+  // const productLists = useGetProductsList(allProductCurrentPage)
+  // console.log(productLists)
+  useEffect(() => {}, [])
+  const { data: productLists } = useQuery(
+    [queryKeys.product, allProductCurrentPage],
+    () => getProduct(allProductCurrentPage),
+    {
+      refetchOnWindowFocus: false
+    }
+  )
+
   return (
     <>
       {data === 'New' ? (
         <>
           <div className="flex justify-center">
-            <span className="text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+            <span className=" text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
               {data}
             </span>
           </div>
@@ -47,7 +66,7 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
         data === 'Best' && (
           <>
             <div className="flex justify-center">
-              <span className="py-2 text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+              <span className="text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
                 {data}
               </span>
             </div>
