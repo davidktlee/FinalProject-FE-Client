@@ -87,24 +87,21 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
       <div className="flex justify-between py-[12px] px-[15px]">
         <div className="font-bold text-[16px] text-lenssisDark">{title}</div>
         <div
-          className={`flex ${gapX ? `gap-x-${gapX}` : 'gap-x-2'} ${
-            gapY ? `gap-y-${gapY}` : 'gap-y-4'
-          } w-[264px] flex-wrap`}
+          className={`flex ${gapX} ${gapY} w-[264px] flex-wrap text-lenssisDeepGray`}
           style={{ columnGap: `${gapX ? `${gapX}` : '8px'}`, rowGap: `${gapY ? `${gapY}` : '8px'}` }}
         >
           {contents.map((content: string | number | any, index: number) => (
             <button
               key={index}
-              className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]  
-              ${py ? `py-[${py}]` : 'py-[3px]'} ${px ? `px-[${px}]` : ''} ${w ? `w-[${w}]` : 'w-[60px]'} ${
-                h ? `h-[${h}]` : 'h-[30px]'
-              } ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
-                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
-              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
+              className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]
+              ${w} ${h} ${px} ${py}
+              ${duration === content.value ? 'bg-lenssisDark text-white' : ''} ${
+                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : ''
+              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : ''} ${
                 color.includes(content.color)
                   ? 'border-solid border-2 border-lenssisDark'
                   : 'border-lenssisStroke'
-              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
+              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : ''}`}
               style={content.color && { backgroundColor: `${content.color}`, width: '25px' }}
               onClick={() => handleFilterValue(content)}
             >
