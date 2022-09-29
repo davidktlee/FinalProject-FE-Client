@@ -36,7 +36,7 @@ const MainEvent = () => {
           Event
         </span>
       </div>
-      <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 justify-items-stretch gap-8 px-12">
+      <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 px-12">
         {events.map((event: any) => (
           <div
             key={event.id}

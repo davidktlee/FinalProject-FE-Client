@@ -4,32 +4,32 @@ import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from './../../react-query/queryKeys'
 
 export interface ProductResponseType {
-  productId: number
-  name: string
-  series: string
-  feature: string[]
-  diamter: string
+  productId: string // 상품 id
+  idx: number
+  name: string // 상품 타이틀
+  diameter: number
+  series?: string[] // 상품 시리즈
   details: {
-    color_code: string[]
-    price: number
-    discount: number
-    product_details_image_url: string[]
-    graphicDiameter: string[]
-    duration: string
+    graphicDiameter: number[]
+    price: number // 상품 가격
+    discount: number // 할인률
+    product_details_image_url: string[] // 상품 이미지
+    color_code?: string[] // 색상 코드
   }
+  isNew?: boolean // 새로운 상품 여부
 }
 
-const getProductsList = async () => {
-  const { data }: AxiosResponse<ResponseType[]> = await axiosInstance({
-    url: `/main/product`,
+const getProductsList = async (pageNo: number) => {
+  const { data }: AxiosResponse<ProductResponseType[]> = await axiosInstance({
+    url: `/main/product?page=${pageNo}`,
     headers: {
       ContentType: 'application/json'
     }
   })
   return data
 }
-export const useGetProductsList = (): ResponseType[] => {
+export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
   const fallback: [] = []
-  const { data = fallback } = useQuery(queryKeys.product /* 키 바꿔야함 */, getProductsList)
+  const { data = fallback } = useQuery(queryKeys.product /* 키 바꿔야함 */, () => getProductsList(pageNo))
   return data
 }

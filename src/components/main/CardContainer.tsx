@@ -1,25 +1,7 @@
 import React, { useState } from 'react'
 import Card from '../common/Card'
-import { Item, CardContainerPropsType } from '../auth/types/productTypes'
+import { Item, CardContainerPropsType } from './types/productTypes'
 import Pagination from './common/Pagination'
-
-interface BeforeItem {
-  productId: string // 상품 id
-  idx: number
-  name: string // 상품 타이틀
-  diameter: number
-  series: string[] // 상품 시리즈
-  feature: string[]
-  details: {
-    graphicDiameter: number[]
-    price: number // 상품 가격
-    discount: number // 할인률
-    product_details_image_url: string[] // 상품 이미지
-    duration: string
-    color_code?: string[] // 색상 코드
-  }
-  isNew?: boolean // 새로운 상품 여부
-}
 
 // Pagination 부분 수정해야 함
 
@@ -39,7 +21,7 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
           </div>
           <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[95%] mx-auto">
             {productLists &&
-              productLists.map((item: BeforeItem, idx: number) => (
+              productLists.map((item: Item, idx: number) => (
                 <Card
                   key={`${item.productId}-${idx}`}
                   idx={idx}
@@ -47,13 +29,11 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
                   name={item.name}
                   series={item.series}
                   price={item.details.price}
-                  feature={item.feature}
                   discount={item.details.discount}
                   diameter={item.diameter}
                   colorCode={item.details.color_code}
                   productImg={item.details.product_details_image_url}
                   graphicDiameter={item.details.graphicDiameter}
-                  duration={item.details.duration}
                 />
               ))}
           </div>
@@ -73,7 +53,7 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
             </div>
             <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[95%] mx-auto gap-x-[20px]">
               {productLists &&
-                productLists.map((item: BeforeItem, idx: number) => (
+                productLists.map((item: Item, idx: number) => (
                   <Card
                     key={`${item.productId}-${idx}`}
                     idx={idx}
@@ -81,13 +61,11 @@ const CardContainer = ({ data, productLists }: CardContainerPropsType) => {
                     name={item.name}
                     series={item.series}
                     price={item.details.price}
-                    feature={item.feature}
                     discount={item.details.discount}
                     diameter={item.diameter}
                     colorCode={item.details.color_code}
                     productImg={item.details.product_details_image_url}
                     graphicDiameter={item.details.graphicDiameter}
-                    duration={item.details.duration}
                   />
                 ))}
             </div>
