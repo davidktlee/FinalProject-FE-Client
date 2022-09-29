@@ -21,7 +21,7 @@ const ProductDetails = () => {
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container pt-44 pb-10 mx-auto ">
-          <div className="lg:w-full mx-auto flex flex-wrap ring-2 ring-[#DADADA] rounded-2xl p-8 shadow-lg xs-max:w-[95%] xs-max:px-[18px] ">
+          <div className="lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white ">
             <div className="md:flex-row lg:flex-col lg:w-1/2 w-full lg:h-auto flex flex-col gap-4">
               <h2 className="xs:hidden text-center text-[20px] text-lenssisDark font-bold">상품상세</h2>
               <img
