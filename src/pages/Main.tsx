@@ -58,7 +58,7 @@ const Main = () => {
           />
         </div>
 
-        <div className="w-full border-none rounded-md  shadow-basic bg-white">
+        <div className="w-full border-none rounded-md pb-1 shadow-basic bg-white">
           <CardContainer data="New" />
         </div>
         <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">

@@ -66,7 +66,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
         data === 'Best' && (
           <>
             <div className="flex justify-center">
-              <span className=" text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+              <span className="text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
                 {data}
               </span>
             </div>

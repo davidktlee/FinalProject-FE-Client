@@ -28,7 +28,7 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
     }
   }, [currentPage])
   return (
-    <div className={`my-[51px] pb-1 flex grow justify-center items-center `}>
+    <div className={`my-[51px] flex grow justify-center items-center `}>
       <span
         className="hover:cursor-pointer mx-4"
         onClick={() => (currentPage <= 1 ? null : setCurrentPage(currentPage - 1))}
