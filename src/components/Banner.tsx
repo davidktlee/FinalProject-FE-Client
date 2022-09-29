@@ -8,23 +8,31 @@ import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
 import axios, { AxiosResponse } from 'axios'
 
-interface Banner {
+interface BannerType {
   title: string
   bannerImg: string
   id: string
 }
-
 // 달라질 부분
 // absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
 const Banner = () => {
+  const mobileImgs = ['/assets/MobileBanner.png', '/assets/MobileBanner.png', '/assets/MobileBanner.png']
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
   const [imgs, setImgs] = useState([])
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+  const changeWindowWidth = () => {
+    setWindowWidth(window.innerWidth)
+  }
   const getBanner = async () => {
     const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/banner')
     setImgs(res.data)
   }
+  useEffect(() => {
+    window.addEventListener('resize', changeWindowWidth)
+  }, [])
+
   useEffect(() => {
     getBanner()
   }, [])
@@ -58,7 +66,7 @@ const Banner = () => {
 
   return (
     <div className="w-full mx-auto my-10 relative">
-      <button ref={prevRef} className="absolute top-[45%] left-[30px] z-[2] hover:color-white">
+      <button ref={prevRef} className="absolute top-[45%] left-[15px] md:left-[30px] z-[2] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle
             cx="17.5"
@@ -85,19 +93,40 @@ const Banner = () => {
         </svg>
       </button>
       {swiperSetting && (
-        <Swiper {...swiperSetting} style={{ borderRadius: '25px', overflow: 'hidden' }}>
-          {imgs &&
-            imgs.map((img: Banner, index: number) => (
-              <div key={index}>
-                <SwiperSlide key={index}>
-                  {/* key값 id 값 넣어주기 */}
-                  <img src={img.bannerImg} alt="" className="w-full h-[400px] object-cover " />
-                </SwiperSlide>
-              </div>
-            ))}
+        <Swiper {...swiperSetting} style={{ borderRadius: '15px', overflow: 'hidden' }}>
+          {windowWidth > 440
+            ? imgs &&
+              imgs.map((img: BannerType, index: number) => (
+                <div key={index}>
+                  <SwiperSlide key={index}>
+                    {/* key값 id 값 넣어주기 */}
+                    <img
+                      src={img.bannerImg}
+                      alt="banner-image"
+                      className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
+                    />
+                  </SwiperSlide>
+                </div>
+              ))
+            : mobileImgs &&
+              mobileImgs.map((img: string, index: number) => (
+                <div key={index}>
+                  <SwiperSlide key={index}>
+                    {/* key값 id 값 넣어주기 */}
+                    <img
+                      src={img}
+                      alt="banner-image"
+                      className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
+                    />
+                  </SwiperSlide>
+                </div>
+              ))}
         </Swiper>
       )}
-      <button ref={nextRef} className="absolute top-[45%] right-[30px] z-[1] hover:color-white">
+      <button
+        ref={nextRef}
+        className="absolute top-[45%] right-[15px] md:right-[30px] z-[1] hover:color-white"
+      >
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="17.5" cy="17.5" r="17.5" fill="white" fillOpacity="0.5" />
           <path

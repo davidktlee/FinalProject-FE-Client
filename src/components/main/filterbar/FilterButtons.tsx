@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import {
   durationState,
@@ -7,6 +7,7 @@ import {
   seriesState,
   featuresState
 } from '../../../store/filterVallue'
+import ReactTooltip from 'react-tooltip'
 
 type MobileBoxLayoutProps = {
   title: string
@@ -92,36 +93,52 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         break
     }
   }
+
+  useEffect(() => {
+    ReactTooltip.rebuild()
+  }, [])
+
   return (
     <div
-      className={`${contents[0].color && 'gap-x-8 gap-y-4'} border-box flex flex-wrap py-3 gap-2 text-[14px]`}
+      className={`${
+        contents[0].color && 'gap-x-8 gap-y-4'
+      } border-box flex flex-wrap py-3 gap-2 text-[14px] text-lenssisDeepGray`}
     >
       {contents.map((content: string | number | any, i: number) => (
-        <button
-          key={i}
-          className={`
+        <div key={i}>
+          <button
+            className={`
           ${w} ${h} ${px} ${py} ${gapX} ${gapY}
           justify-center
-          flex font-medium border-solid box-border leading-7 border-[1px] rounded-[20px] text-center text-[14px]  
-              ${duration === content.value ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
-            graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'
-          } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'} ${
-            color.includes(content.color)
-              ? 'border-solid box-border border-[2px] border-lenssisDark'
-              : 'border-lenssisStroke border-[2px]'
-          } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : 'text-lenssisDeepGray'}`}
-          style={
-            content.color && {
-              backgroundColor: `${content.color}`,
-              width: '30px',
-              height: '32px',
-              boxSizing: 'border-box'
+          flex font-medium border-solid box-border leading-6 border-[1px] rounded-[20px] text-center text-[14px]  
+              ${duration === content.value ? 'bg-lenssisDark text-white' : ''} ${
+              graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : ''
+            } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : ''} ${
+              color.includes(content.color)
+                ? 'border-solid box-border border-[2px] border-lenssisDark'
+                : 'border-lenssisStroke border-[2px]'
+            } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : ''}`}
+            style={
+              content.color && {
+                backgroundColor: `${content.color}`,
+                width: '30px',
+                height: '32px',
+                boxSizing: 'border-box'
+              }
             }
-          }
-          onClick={() => handleFilterValue(content)}
-        >
-          {content.color ? '' : content.name}
-        </button>
+            data-tip={content.color && content.name}
+            data-for={content.color && content.color}
+            onClick={() => handleFilterValue(content)}
+          >
+            {content.color ? '' : content.name}
+          </button>
+          <ReactTooltip
+            className="font-bold"
+            id={content.color && content.color}
+            backgroundColor={content.color && content.color}
+            textColor="#fff"
+          />
+        </div>
       ))}
     </div>
   )

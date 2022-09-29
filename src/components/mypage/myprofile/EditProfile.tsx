@@ -1,34 +1,40 @@
-import React, { ChangeEvent, HTMLInputTypeAttribute, useCallback, useState } from 'react';
+import React, { ChangeEvent, HTMLInputTypeAttribute, useCallback, useEffect, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useUser } from '../../auth/hooks/useUser';
 import ShippingAddress from '../../payment/shipping/ui/ShippingAddress';
 import ShippingCard from '../../payment/shipping/ui/ShippingCard';
 import ShippingOrderer from '../../payment/shipping/ui/ShippingOrderer';
+import useEditProfile from '../hooks/useEditProfile';
 import EditProfileInput from '../ui/EditProfileInput';
 import SubmitButton from '../ui/SubmitButton';
 
 
-interface EditFormValueType {
+export interface EditFormValueType {
     name:string
     readname:string
     address:string
     detailAddress:string
     phone:string
-    birth:string
-    passwordConfirm:string
+    birthday:string
+    password:string
     postCode: string | number;
+    memberId:number | null
   }
 
 const EditProfile = () => {
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
+  const {user} = useUser()
+  const {editProfile} = useEditProfile()
   const [editFormValue,setEditFormValue] = useState<EditFormValueType>({
+    memberId:null,
     name:'',
     readname:'',
     address:'',
     postCode:'',
     detailAddress:'',
     phone:'',
-    birth:'',
-    passwordConfirm:''
+    birthday:'',
+    password:''
   })
   const editFormValueChangeHandler = useCallback((e:ChangeEvent<HTMLInputElement>) => {
     const {target:{value,name}} = e;
@@ -61,7 +67,38 @@ const EditProfile = () => {
   const addressPopupHandler = useCallback(() => {
     open({ onComplete: handleComplete })
   },[])
-  
+
+
+  const editProfileHandler = () => {
+    const obj:EditFormValueType = {
+      memberId:editFormValue.memberId,
+      address:editFormValue.address,
+      birthday:editFormValue.birthday,
+      detailAddress:editFormValue.detailAddress,
+      name:editFormValue.name,
+      password:editFormValue.password,
+      phone:editFormValue.phone,
+      postCode:editFormValue.postCode,
+      readname:editFormValue.readname,
+    }
+    editProfile(obj);
+  }
+
+  useEffect(() => {
+    if(!user) return;
+    setEditFormValue(prev => ({
+      ...prev,
+    memberId:user.memberId,
+    name:user.name,
+    readname:user.readname,
+    address:user.address,
+    postCode:user.postCode,
+    detailAddress:user.detailAddress,
+    phone:user.phone,
+    birthday:user.birthday,
+    }))
+  }, [user])
+
   return (
     <div>
       <ShippingCard title="이름" >
@@ -81,16 +118,16 @@ const EditProfile = () => {
       />
       </ShippingCard>
       <ShippingCard title="전화번호" >
-        <EditProfileInput name="phone" onChange={editFormValueChangeHandler} value={editFormValue.phone} />
+        <EditProfileInput type="number" name="phone" onChange={editFormValueChangeHandler} value={editFormValue.phone} />
       </ShippingCard>
       <ShippingCard title="생년월일" >
-        <EditProfileInput name="birth" onChange={editFormValueChangeHandler} value={editFormValue.birth} />
+        <EditProfileInput type="number" name="birthday" onChange={editFormValueChangeHandler} value={editFormValue.birthday} />
       </ShippingCard>
       <ShippingCard title="최종비밀번호 확인" isRequired >
-        <EditProfileInput type="password" name="passwordConfirm" onChange={editFormValueChangeHandler} value={editFormValue.passwordConfirm} />
+        <EditProfileInput type="password" name="password" onChange={editFormValueChangeHandler} value={editFormValue.password} />
       </ShippingCard>
       
-      <SubmitButton onClick={() => {}} />
+      <SubmitButton onClick={editProfileHandler} />
       
     </div>
   );

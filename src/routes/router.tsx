@@ -36,10 +36,15 @@ import Review from '../pages/ReviewPage'
 import MobileBottomNav from '../components/footer/bottom-navigation/MobileBottomNav'
 import EditProfile from '../components/mypage/myprofile/EditProfile'
 import EditSecret from '../components/mypage/myprofile/EditSecret'
+import { useRecoilState } from 'recoil'
+import { sideBarState } from '../store/sideBarToggle'
+import MobileSideBar from '../mobile-sidebar/MobileSideBar'
 
 const Router = () => {
+  const [isShowSideBar,setIsShowSideBar] = useRecoilState(sideBarState)
   return (
     <BrowserRouter>
+    {isShowSideBar && <MobileSideBar />}
       <Header />
       <Routes>
         <Route path="/" element={<Main />}>

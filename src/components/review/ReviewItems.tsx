@@ -6,7 +6,7 @@ const RevieItems = () => {
   return (
     <section className="text-gray-600 body-font ">
       <div className="container py-4 mt-2 mx-auto ">
-        <p
+        <div
           className={`${
             isToggle ? 'bg-lenssisLightGray ' : ''
           } "lg:w-full flex-col flex-wrap p-8 cursor-pointer shadow-basic drop-shadow-basic" xs-max:p-4 rounded-[5px]`}
@@ -69,8 +69,8 @@ const RevieItems = () => {
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path d="M8 0V16" stroke="white" stroke-width="2" />
-                          <path d="M16 8L2.5332e-07 8" stroke="white" stroke-width="2" />
+                          <path d="M8 0V16" stroke="white" strokeWidth="2" />
+                          <path d="M16 8L2.5332e-07 8" stroke="white" strokeWidth="2" />
                         </svg>
                       </div>
                     </div>
@@ -84,7 +84,7 @@ const RevieItems = () => {
             </div>
           </div>
           <div></div>
-        </p>
+        </div>
       </div>
     </section>
   )

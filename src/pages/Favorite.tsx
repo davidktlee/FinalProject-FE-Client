@@ -11,7 +11,7 @@ const Favorite = () => {
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container pt-44 pb-10 mx-auto ">
           <div className="lg:w-full mx-auto flex flex-wrap ring-2 ring-[#DADADA] rounded-2xl p-8 shadow-lg xs-max:w-[90%] ">
-            <div className="bg-white w-full">
+            <div className="bg-white w-full dorp-shadow-basic rounded-[5px] px-[40px] py-[20px]">
               <div className="text-center mt-2 mb-6 font-bold">즐겨찾기</div>
               <nav className="flex justify-between">
                 <button

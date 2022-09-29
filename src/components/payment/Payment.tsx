@@ -43,7 +43,7 @@ const Payment = () => {
     postCode: '',
     address:  '',
     phone:  '',
-    email: emailFormValue.emailIdentity + emailFormValue.emailDomain || '',
+    email: '',
     detailAddress: '',
     userRequestMessage:'',
   })
@@ -149,7 +149,7 @@ const Payment = () => {
       address:  user.address,
       phone:  user.phone,
       email: emailFormValue.emailIdentity + emailFormValue.emailDomain || '',
-      detailAddress: '',
+      detailAddress: user.detailAddress,
       userRequestMessage:''
     })
     setPhoneFormValue({

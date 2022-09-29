@@ -33,7 +33,7 @@ const RightNavLinks = () => {
         </Link>
       </div>
       <div className="flex-1">
-        <Link to="/info">
+        <Link to="/notice">
           <svg className="mx-auto" width={40} height={28} xmlns="http://www.w3.org/2000/svg">
             <image href="/assets/info.svg" />
           </svg>
