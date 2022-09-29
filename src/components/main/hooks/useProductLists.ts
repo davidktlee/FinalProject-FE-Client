@@ -30,6 +30,8 @@ const getProductsList = async (pageNo: number) => {
 }
 export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
   const fallback: [] = []
-  const { data = fallback } = useQuery(queryKeys.product /* 키 바꿔야함 */, () => getProductsList(pageNo))
+  const { data = fallback } = useQuery([queryKeys.product, pageNo], () => getProductsList(pageNo), {
+    keepPreviousData: true
+  })
   return data
 }

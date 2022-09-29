@@ -33,7 +33,6 @@ export interface Item {
 
 export interface CardContainerPropsType {
   data: Data
-  productLists: [] | ProductResponseType[]
   allProductCurrentPage?: number
   newProductCurrentPage?: number
   allProductCount?: number

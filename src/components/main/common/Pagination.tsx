@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useQueryClient } from 'react-query'
+import { queryKeys } from '../../react-query/queryKeys'
+import { useGetProductsList } from '../hooks/useProductLists'
 
 interface PropsType {
   currentPage: number
@@ -7,6 +10,7 @@ interface PropsType {
 }
 
 function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
+  const client = useQueryClient()
   const [pagesCount, setPagesCount] = useState<number[] | []>([])
   const maxPage = Math.floor(allCount / 10)
   useEffect(() => {
@@ -16,9 +20,15 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
     }
     setPagesCount(arr)
   }, [])
-
+  // prefetch 로직
+  useEffect(() => {
+    if (maxPage > currentPage) {
+      const nextPage = currentPage + 1
+      client.prefetchQuery([queryKeys.product, nextPage], () => useGetProductsList(nextPage))
+    }
+  }, [currentPage])
   return (
-    <div className={`my-[51px] flex grow justify-center items-center `}>
+    <div className={`my-[51px] pb-1 flex grow justify-center items-center `}>
       <span
         className="hover:cursor-pointer mx-4"
         onClick={() => (currentPage <= 1 ? null : setCurrentPage(currentPage - 1))}

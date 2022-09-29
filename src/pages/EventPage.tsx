@@ -54,12 +54,12 @@ function EventPage() {
     setEventId(id)
     navigate(`/event/${id}`)
   }
-  console.log(eventId)
-  if (eventId) {
-    const event = useGetDetailEvent(eventId)
-  }
-  const eventList = useGetEvent(currentPage)
-  console.log(eventList)
+  // console.log(eventId)
+  // if (eventId) {
+  //   const event = useGetDetailEvent(eventId)
+  // }
+  // const eventList = useGetEvent(currentPage)
+  // console.log(eventList)
 
   useEffect(() => {
     setEventId('')
