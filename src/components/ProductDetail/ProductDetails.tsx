@@ -81,7 +81,10 @@ const ProductDetails = () => {
                 </div>
                 <div className="badge flex gap-2 my-4">
                   {graphicDiameter.map((item, index) => (
-                    <span className="border-solid border-2 border-[#949494] rounded-[5px] px-2 text-sm">
+                    <span
+                      key={index}
+                      className="border-solid border-[1px] border-lenssisBadge text-lenssisBadge rounded-[5px] px-2 text-sm"
+                    >
                       {item.name}
                     </span>
                   ))}

@@ -116,13 +116,13 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : ''} ${
               color.includes(content.color)
                 ? 'border-solid box-border border-[2px] border-lenssisDark'
-                : 'border-lenssisStroke border-[2px]'
+                : 'border-lenssisStroke border-[1px]'
             } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : ''}`}
             style={
               content.color && {
                 backgroundColor: `${content.color}`,
-                width: '30px',
-                height: '32px',
+                width: '32px',
+                height: '31px',
                 boxSizing: 'border-box'
               }
             }
