@@ -35,26 +35,31 @@ const MobileSideBar = () => {
       <div className='flex items-center justify-between pl-2'>
         {user
         ? <button className='border-2 border-solid border-white rounded-md py-1 font-semibold' onClick={signoutHandler}>ログアウト</button>
-        : <button className='border-2 border-solid border-white rounded-md py-1 font-semibold'><Link to="signin">ログイン</Link></button>
+        : <button className='border-2 border-solid border-white rounded-md py-1 font-semibold'><Link onClick={pageChangeHandler} to="signin">ログイン</Link></button>
         }
         <button onClick={sideBarToggleHandler}><BsX size={48} color="#ffffff" /></button>
       </div>
       <div className='mt-8 pl-2 h-[66px] flex flex-col items-start justify-end'>
       {!user && <Link onClick={pageChangeHandler} to="">非会員 注文照会 {'>'}</Link>}
-      <p className='mt-[10px]'><span className='font-bold text-2xl'>{user?.name}&nbsp;</span>さん、こんにちは。</p>
+      {!user && <p className='mt-[10px]'><span className='font-bold text-2xl'>Lenssisへ ようこそ。</span></p>}
+      {user && <p className='mt-[10px]'><span className='font-bold text-2xl'>{user?.name}&nbsp;</span>さん、こんにちは。</p>}
       </div>
       <div className='flex items-center justify-around mt-4 border-y border-solid border-white h-20 font-bold'>
         <div className='flex flex-col items-center justify-center w-full border-r border-solid border-white h-full gap-y-2'>
           <p className='w-full text-center'>ポイント</p>
-          <p><span>350</span>&nbsp;<span>P</span></p>
+          {user && <p><span>350</span>&nbsp;<span>P</span></p>}
+          {!user && <p>-</p>}
         </div>
         <div className='flex flex-col items-center justify-center w-full border-r border-solid border-white h-full gap-y-2'>
           <p className='w-full text-center'>配送照会</p>
-          <p><span>1</span></p>
+          {user && <p><span>1</span></p>}
+          {!user && <p><span>-</span></p>}
         </div>
         <div className='flex flex-col items-center justify-center w-full h-full gap-y-2'>
           <p className='w-full text-center'>クーポン</p>
-          <p>2</p>
+          {user &&<p>2</p>}
+          {!user &&<p>-</p>}
+
         </div>
       </div>
         <ul className='flex items-center justify-between mt-4 font-bold'>
