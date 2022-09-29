@@ -27,7 +27,7 @@ const coupon = [
 const MyCoupon = () => {
   return (
     <CardLayout title="쿠폰함">
-      <div className='flex xs:flex-wrap xs:flex-row flex-col gap-4 mx-auto xs:justify-between px-2'>
+      <div className='flex xs:flex-wrap xs:flex-row flex-col gap-4 mx-auto xs:justify-end'>
       {coupon.map((item) => (
         
         <div className='text-xs  xs:text-sm flex flex-col gap-2 border border-solid border-gray-400 p-2 mt-4 w-full xs:w-[45%]' key={item.couponDiscount + item.createdAt + item.couponTitle}>
