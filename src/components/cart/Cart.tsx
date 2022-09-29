@@ -64,6 +64,7 @@ const Cart = () => {
       </div>
     </div>
     </CardTemplate>
+
     <div className='hidden xs:block'>
     <CardTemplate title='2번'>
     <h3 className='font-bold text-lenssisDark pb-2 border-b border-solid border-lenssisGray'>이런 상품도 있어요!</h3>
@@ -74,6 +75,7 @@ const Cart = () => {
     </div>
     </CardTemplate>
     </div>
+    
   </PageLayout>
   )
 }
