@@ -7,7 +7,7 @@ const MobileBottomNav = () => {
       <Link to="/mypage"><BsPerson size={28} color="#D3D3D3" /></Link>
       <Link to="/favorite"><BsHeart size={28} color="#D3D3D3" /></Link>
       <Link to="/cart"><BsCart size={28} color="#D3D3D3" /></Link>
-      <Link to="/info"><BsBell size={28} color="#D3D3D3" /></Link>
+      <Link to="/notice"><BsBell size={28} color="#D3D3D3" /></Link>
       <Link to="/review"><BsChatDots size={28} color="#D3D3D3" /></Link>
     </div>
   );

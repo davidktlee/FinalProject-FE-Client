@@ -6,7 +6,7 @@ const RevieItems = () => {
   return (
     <section className="text-gray-600 body-font ">
       <div className="container py-4 mt-2 mx-auto ">
-        <p
+        <div
           className={`${
             isToggle ? 'bg-lenssisLightGray ' : ''
           } "lg:w-full flex-col flex-wrap p-8 cursor-pointer shadow-basic drop-shadow-basic" xs-max:p-4 rounded-[5px]`}
@@ -84,7 +84,7 @@ const RevieItems = () => {
             </div>
           </div>
           <div></div>
-        </p>
+        </div>
       </div>
     </section>
   )

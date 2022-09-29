@@ -4,21 +4,17 @@ import Recommend from '../components/main/Recommend'
 import Banner from './../components/Banner'
 import CardContainer from '../components/main/CardContainer'
 import NoticePage from './NoticePage'
-import MainReview from '../components/main/MainReview'
+import MainReview from '../components/review/MainReview'
 import FilterBar from '../components/main/filterbar/FilterBar'
 
 import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
 
-import axios, { AxiosResponse } from 'axios'
-import { queryKeys } from '../components/react-query/queryKeys'
-import { useQuery } from 'react-query'
 import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout'
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
 import { axiosInstance } from './../components/axiosinstance/index'
-import { ProductResponseType, useGetProductsList } from '../components/main/hooks/useProductLists'
 import { useNavigate } from 'react-router-dom'
 
 const Main = () => {
@@ -47,7 +43,7 @@ const Main = () => {
             </div>
           )}
           {/*메인에서 상품 리스트 */}
-          <div className="w-full mx-auto border-none rounded-md shadow-basic">
+          <div className="w-full mx-auto border-none rounded-md shadow-basic bg-white">
             <CardContainer data="Best" />
           </div>
         </section>
@@ -61,19 +57,20 @@ const Main = () => {
             className="w-full mx-auto mb-12"
           />
         </div>
-        <div className="w-full mx-auto border-none rounded-md py-[1px] shadow-basic">
+
+        <div className="w-full border-none rounded-md  shadow-basic bg-white">
           <CardContainer data="New" />
         </div>
-        <div className="w-full my-12 border-none rounded-md shadow-basic">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
           <Event />
         </div>
-        <div className="w-full my-12 border-none rounded-md shadow-basic">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
           <Recommend />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic">
+        <div className="w-full my-12 border-none drop-shadow-basic">
           <MainReview />
         </div>
-        <div className="w-full my-12 border-none rounded-md shadow-basic">
+        <div className="w-full my-12 border-none rounded-md shadow-basic bg-white">
           <NoticePage />
         </div>
       </div>

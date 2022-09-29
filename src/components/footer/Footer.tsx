@@ -16,9 +16,9 @@ const Footer = () => {
       <li className='text-sm border-b xs:border-b-0 border-solid w-fit'><Link to="/">개인 정보 보호 방침</Link></li>
     </ul>
     <ul className='absolute flex flex-col gap-y-4 right-8 top-8'>
-      <li><a href="https://www.youtube.com"> <svg className='mx-auto' width={40} height={40} xmlns="http://www.w3.org/2000/svg"><image href="/assets/youtube.svg" /></svg></a></li>
-      <li><a href="https://www.line.me/ko"> <svg className='mx-auto' width={40} height={40} xmlns="http://www.w3.org/2000/svg"><image href="/assets/line.svg" /></svg></a></li>
-      <li><a href="https://www.instagram.com"> <svg className='mx-auto' width={40} height={40} xmlns="http://www.w3.org/2000/svg"><image href="/assets/instagram.svg" /></svg></a></li>
+      <li><a href="https://www.youtube.com"><img className='mx-auto' width={40} height={40} src="/assets/tiktok.png" /></a></li>
+      <li><a href="https://www.line.me/ko"><img className='mx-auto' width={40} height={40} src="/assets/line.png" /></a></li>
+      <li><a href="https://www.instagram.com"><img className='mx-auto' width={40} height={40} src="/assets/insta.png" /></a></li>
       
     </ul>
     </div>

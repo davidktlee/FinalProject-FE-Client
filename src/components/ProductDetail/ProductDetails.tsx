@@ -65,17 +65,17 @@ const ProductDetails = () => {
                     <path
                       d="M19.612 5.41452C19.1722 4.96607 18.65 4.61034 18.0752 4.36763C17.5005 4.12492 16.8844 4 16.2623 4C15.6401 4 15.0241 4.12492 14.4493 4.36763C13.8746 4.61034 13.3524 4.96607 12.9126 5.41452L11.9998 6.34476L11.087 5.41452C10.1986 4.50912 8.99364 4.00047 7.73725 4.00047C6.48085 4.00047 5.27591 4.50912 4.38751 5.41452C3.4991 6.31992 3 7.5479 3 8.82833C3 10.1088 3.4991 11.3367 4.38751 12.2421L5.30029 13.1724L11.9998 20L18.6992 13.1724L19.612 12.2421C20.0521 11.7939 20.4011 11.2617 20.6393 10.676C20.8774 10.0902 21 9.46237 21 8.82833C21 8.19428 20.8774 7.56645 20.6393 6.9807C20.4011 6.39494 20.0521 5.86275 19.612 5.41452V5.41452Z"
                       stroke="#14181F"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </button>
               </div>
               <div className="divider h-[1px] bg-[#BCBCBC] my-2 xs-max:hidden"></div>
-              <p className="leading-relaxed text-[14px]">
+              <div className="leading-relaxed text-[14px]">
                 <div className="price flex">
-                  <p className="text-xl font-bold">1,800円</p>
+                  <div className="text-xl font-bold">1,800円</div>
                   <p className="ml-4 leading-7">2,000円</p>
                 </div>
                 <div className="badge flex gap-4 my-4">
@@ -142,7 +142,7 @@ const ProductDetails = () => {
                     ></div>
                   </div>
                 </div>
-              </p>
+              </div>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5 justify-between">
                 <div className="flex">
                   <span className="mr-3 text-black w-[130px] xs-max:w-[70px] lg:w-[160px] text-[14px]">
