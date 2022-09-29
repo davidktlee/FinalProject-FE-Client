@@ -7,9 +7,9 @@ import { Token } from '../types/userTypes'
 
 import { User, userState } from '../../../store/user'
 import { useRecoilState } from 'recoil'
-import { useState } from 'react'
 
-// 토큰을 통해 유저 정보를 받아오는 getUser가 signIn보다 빠르게 진행되면서 생기는 문제같음..
+
+
 const getUser = async (token: Token | null): Promise<User | null> => {
   if (!token) return null
   
