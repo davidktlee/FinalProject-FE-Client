@@ -10,7 +10,8 @@ module.exports = {
         basic: '0 0 8px 0 rgba(0, 0, 0, 0.18)'
       },
       dropShadow: {
-        basic: '0 0 8px rgba(0, 0, 0, 0.18)'
+        basic: '0 0 8px rgba(0, 0, 0, 0.18)',
+        light: '0 0 8px rgba(172, 172, 172, 0.18)'
       },
       colors: {
         transparent: 'transparent',

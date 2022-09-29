@@ -34,7 +34,7 @@ const Main = () => {
         <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
-          <div className="xs-max:hidden hidden lg:block xl:block w-[280px]">
+          <div className="xs-max:hidden hidden lg:block xl:block w-[280px] mr-[20px]">
             <FilterBar />
           </div>
           {filterOpen && (
