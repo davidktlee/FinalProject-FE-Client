@@ -8,7 +8,7 @@
     margin: 0;
   }
   html {
-    font-family: 'SUIT', 'SUIT Variable', sans-serif;
+    font-family: 'Noto Sans JP','SUIT', 'SUIT Variable', sans-serif;
     background-color: #F4F6F8;
   }
   ::-webkit-scrollbar {

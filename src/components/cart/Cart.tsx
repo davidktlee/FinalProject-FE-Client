@@ -38,7 +38,6 @@ const Cart = () => {
         </div>
         <p ><span className='font-semibold'>TIP! 1200円</span> 더 구매하면, <span className='font-semibold'>500円 추가 할인</span> 받을 수 있어요.</p>
         </div>
-
       <ul>
         
       <CartItem isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} />
@@ -66,7 +65,7 @@ const Cart = () => {
     </CardTemplate>
 
     <div className='hidden xs:block'>
-    <CardTemplate title='2번'>
+    <CardTemplate title='2번' marginTop='mt-12'>
     <h3 className='font-bold text-lenssisDark pb-2 border-b border-solid border-lenssisGray'>이런 상품도 있어요!</h3>
     <div className='flex items-center gap-4 mt-12'>
     {Array(4).fill(0).map((item,index) => (
@@ -75,7 +74,7 @@ const Cart = () => {
     </div>
     </CardTemplate>
     </div>
-    
+
   </PageLayout>
   )
 }
