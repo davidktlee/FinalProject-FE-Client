@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {ChangeEvent, useCallback, useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
@@ -7,6 +7,7 @@ import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
+import CartItem from './CartItem'
 import Counter from './Counter'
 
 
@@ -14,14 +15,18 @@ import Counter from './Counter'
 
 const Cart = () => {
   const refreshToken = useRefreshToken()
-  const product = useRecoilValue(productState);
+  const [isTotalChecked,setIsTotalChecked] = useState(false)
   const {user} = useUser()
+  
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
-    console.log('cart interceptor')
+    
   },[])
-
+  
+  const totalCheckedHandler = useCallback(() => {
+    setIsTotalChecked(prev => !prev)
+  },[])
   return (
   <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
@@ -29,61 +34,16 @@ const Cart = () => {
       <div className='grow flex flex-col px-0 xs:px-2'>
         <div className='flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 xs:gap-0 w-full py-4 border-y border-solid border-lenssisStroke text-xs xs:text-base '>
           <div className='flex items-center'>
-        <input className='w-4 h-4 mr-2 accent-lenssisDark' type="checkbox" /><label>전체해제(2/2)</label>
+        <input className='w-4 h-4 mr-2 accent-lenssisDark' value="selectAll" checked={isTotalChecked} onChange={totalCheckedHandler} type="checkbox" /><label>전체해제(2/2)</label>
         </div>
         <p ><span className='font-semibold'>TIP! 1200円</span> 더 구매하면, <span className='font-semibold'>500円 추가 할인</span> 받을 수 있어요.</p>
         </div>
 
       <ul>
-        <li className='flex my-4 text-sm xs:text-base items-center'>
-          <input type="checkbox" className='mr-2 w-4 h-4 accent-lenssisDark' />
-          <img className='xs:w-[100px] h-[100px]' src="assets/eyes.png" alt="" />
-          <div className='ml-4 grow flex flex-col'>
-          <div>에이 링+ 그레이</div>
-        <p className='line-through'>2,200円</p>
-        <p className='font-bold text-lg text-black'>1,800円</p>
-        <div>
-          <Counter />
-        </div>
-          </div>
-          <div className=' min-w-[30px] xs:min-w-[40px]'>
-            <button className='underline text-lenssisStroke'>삭제</button>
-          </div>
-          </li>
-
-
-          <li className='flex my-4 text-sm xs:text-base items-center'>
-          <input type="checkbox" className='mr-2 w-4 h-4 accent-lenssisDark' />
-          <img className='xs:w-[100px] h-[100px]' src="assets/eyes.png" alt="" />
-          <div className='ml-4 grow flex flex-col'>
-          <div>에이 링+ 그레이</div>
-        <p className='line-through'>2,200円</p>
-        <p className='font-bold text-lg text-black'>1,800円</p>
-        <div>
-          <Counter />
-        </div>
-          </div>
-          <div className=' min-w-[30px] xs:min-w-[40px]'>
-            <button className='underline text-lenssisStroke'>삭제</button>
-          </div>
-          </li>
-
-
-          <li className='flex my-4 text-sm xs:text-base items-center'>
-          <input type="checkbox" className='mr-2 w-4 h-4 accent-lenssisDark' />
-          <img className='xs:w-[100px] h-[100px]' src="assets/eyes.png" alt="" />
-          <div className='ml-4 grow flex flex-col'>
-          <div>에이 링+ 그레이</div>
-        <p className='line-through'>2,200円</p>
-        <p className='font-bold text-lg text-black'>1,800円</p>
-        <div>
-          <Counter />
-        </div>
-          </div>
-          <div className=' min-w-[30px] xs:min-w-[40px]'>
-            <button className='underline text-lenssisStroke'>삭제</button>
-          </div>
-          </li>
+        
+      <CartItem isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} />
+      <CartItem isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} />
+      <CartItem isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked}/>
       </ul>
       </div>
       <div className='w-full xs:w-2/5 xs:max-w-[440px] text-base '>

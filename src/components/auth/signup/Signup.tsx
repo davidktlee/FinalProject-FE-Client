@@ -25,7 +25,7 @@ export type SignupFormType = {
 export type SignupRecordType = Record<keyof SignupFormType, string>
 
 const Signup = () => {
-  const { signin, signup } = useAuth()
+  const { signup } = useAuth()
   const [formValue, setFormValue] = useState<SignupRecordType>({
     lastname: '',
     firstname: '',
@@ -48,7 +48,8 @@ const Signup = () => {
       name: `${formValue.lastname}${formValue.firstname}`,
       readname: `${formValue.lastReadname}${formValue.firstReadname}`,
       postCode: +formValue.postCode,
-      address: `${formValue.address} ${formValue.detailAddress}`,
+      address: formValue.address,
+      detailAddress: formValue.detailAddress,
       phone: formValue.phone,
       email: formValue.email,
       birthday: `${formValue.birthYear}${formValue.birthMonth}${formValue.birthDay}`,

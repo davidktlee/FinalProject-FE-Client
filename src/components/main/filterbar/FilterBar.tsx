@@ -10,7 +10,7 @@ import {
 } from '../../../store/filterVallue'
 import BoxLayout from './common/BoxLayout'
 import FilterButtons from './FilterButtons'
-import Refresh from '../../../../public/assets/Refresh.svg'
+import Refresh from '/public/assets/Refresh.svg'
 
 const FilterBar = () => {
   const resetDuration = useResetRecoilState(durationState)
