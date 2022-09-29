@@ -502,7 +502,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[106px] right-[26px]">
+                    <span className="absolute bottom-[106px] right-[48px]">
                       <svg
                         width="50"
                         height="50"
@@ -592,7 +592,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[70px] right-[4px]">
+                    <span className="absolute bottom-[70px] right-[12px]">
                       <svg
                         width="50"
                         height="50"

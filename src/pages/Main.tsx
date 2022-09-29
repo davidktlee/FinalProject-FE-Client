@@ -49,12 +49,12 @@ const Main = () => {
         </section>
         <div
           onClick={() => navigate('/')} /* 퍼스널 컬러 테스트로 이동 */
-          className="w-full h-auto md:h-[200px] mx-auto border-none rounded-md shadow-basic my-12 object-fit md:object-cover overflow-hidden"
+          className="w-full h-auto mx-auto border-none rounded-md shadow-basic my-[20px] md:my-12 object-fit md:object-cover overflow-hidden"
         >
           <img
-            src="https://lenssis.jp/data/editor/2203/44422109c17730933970139952b48d7a_1647854567_1883.jpg"
+            src="https://user-images.githubusercontent.com/90392240/193073587-58b90f5a-e06c-4f2c-baec-87351fbf4b96.png"
             alt=""
-            className="w-full mx-auto md:mb-12"
+            className="w-full h-auto object-contain"
           />
         </div>
 
