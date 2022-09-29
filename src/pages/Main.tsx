@@ -34,7 +34,7 @@ const Main = () => {
         <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
-          <div className="xs-max:hidden hidden lg:block xl:block w-[280px] mr-12">
+          <div className="xs-max:hidden hidden lg:block xl:block w-[280px]">
             <FilterBar />
           </div>
           {filterOpen && (
@@ -43,7 +43,7 @@ const Main = () => {
             </div>
           )}
           {/*메인에서 상품 리스트 */}
-          <div className="w-full mx-auto border-none rounded-md shadow-basic bg-white">
+          <div className="w-[880px] border-none rounded-md shadow-basic bg-white">
             <CardContainer data="Best" />
           </div>
         </section>

@@ -10,9 +10,9 @@ import { axiosInstance } from '../axiosinstance'
 
 const ProductDetails = () => {
   const getProducts = async () => {
-    const { data } = await axios.get(`http://43.200.50.49:8080/product/allProduct`)
-    console.log(data)
-    return data
+    const res = await axios.get(`http://43.200.50.49:8080/main/product?page=1`)
+    console.log(res)
+    return res
   }
 
   const { data } = useQuery('products', getProducts)

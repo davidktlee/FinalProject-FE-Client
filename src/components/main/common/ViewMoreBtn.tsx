@@ -8,9 +8,9 @@ interface PropsType {
 function ViewMoreBtn({ moveTo }: PropsType) {
   const navigate = useNavigate()
   return (
-    <div className="flex justify-center items-center py-8 ">
+    <div className="flex justify-center items-center w-[100px] h-[40px] mx-auto py-8 xs-max:w-[80px] xs-max:h-[25px]">
       <button
-        className="border-[1px] border-solid border-lenssisDark py-1 xs:py-2 px-[12px] rounded-full"
+        className="border-[1px] border-solid text-lenssisDark border-lenssisDark py-1 xs:py-2 px-[10px] rounded-full text-[16px] xs-max:text-[12px]"
         onClick={() => navigate(`${moveTo}`)}
       >
         View More
