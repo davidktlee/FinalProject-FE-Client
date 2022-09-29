@@ -4,7 +4,7 @@ import Recommend from '../components/main/Recommend'
 import Banner from './../components/Banner'
 import CardContainer from '../components/main/CardContainer'
 import NoticePage from './NoticePage'
-import MainReview from '../components/main/MainReview'
+import MainReview from '../components/review/MainReview'
 import FilterBar from '../components/main/filterbar/FilterBar'
 
 import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
@@ -60,7 +60,7 @@ const Main = () => {
             </div>
           )}
           {/*메인에서 상품 리스트 */}
-          <div className="w-full mx-auto border-none rounded-md shadow-basic">
+          <div className="w-full mx-auto border-none rounded-md shadow-basic bg-white">
             {/* <div className="container px-4  flex justify-center items-end"></div> */}
             <CardContainer data="Best" productLists={productLists} />
           </div>
@@ -75,19 +75,19 @@ const Main = () => {
             className="w-full mx-auto mb-12"
           />
         </div>
-        <div className="w-full border-none rounded-md  shadow-basic">
+        <div className="w-full border-none rounded-md  shadow-basic bg-white">
           <CardContainer data="New" productLists={productLists} />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
           <Event />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic">
+        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
           <Recommend />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic">
+        <div className="w-full my-12 border-none drop-shadow-basic">
           <MainReview />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic">
+        <div className="w-full my-12 border-none rounded-md shadow-basic bg-white">
           <NoticePage />
         </div>
       </div>
