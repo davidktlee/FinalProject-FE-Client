@@ -105,9 +105,8 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
       } border-box flex flex-wrap py-3 gap-2 text-[14px] text-lenssisDeepGray`}
     >
       {contents.map((content: string | number | any, i: number) => (
-        <div>
+        <div key={i}>
           <button
-            key={i}
             className={`
           ${w} ${h} ${px} ${py} ${gapX} ${gapY}
           justify-center
