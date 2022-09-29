@@ -22,6 +22,10 @@ const MobileSideBar = () => {
     setIsShow(false);
   },[])
 
+  const signoutHandler = useCallback(() => {
+    setIsShow(false);
+  },[])
+
   useEffect(() => {
     window.scrollTo(0,0)
   },[pathname])
@@ -30,8 +34,8 @@ const MobileSideBar = () => {
       <div className='bg-lenssisSky h-fit pt-4 pb-2 text-white'>
       <div className='flex items-center justify-between pl-2'>
         {user
-        ? <button className='border-2 border-solid border-white rounded-md py-1 font-semibold'>ログアウト</button>
-        : <button className='border-2 border-solid border-white rounded-md py-1 font-semibold'>ログイン</button>
+        ? <button className='border-2 border-solid border-white rounded-md py-1 font-semibold' onClick={signoutHandler}>ログアウト</button>
+        : <button className='border-2 border-solid border-white rounded-md py-1 font-semibold'><Link to="signin">ログイン</Link></button>
         }
         <button onClick={sideBarToggleHandler}><BsX size={48} color="#ffffff" /></button>
       </div>

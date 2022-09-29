@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import LeftSection from './LeftSection'
 import RightSection from './RightSection'
 import TopInfomation from './TopInfomation'
@@ -15,7 +15,8 @@ const Header = () => {
   const handleFilter = () => {
     setFilterOpen(!filterOpen)
   }
-
+  const {pathname} = useLocation();
+  console.log(pathname);
   return (
     <nav className="fixed flex flex-col bg-[#ABC8DF] text-white z-50 w-full top-0">
       <TopInfomation />
@@ -24,14 +25,19 @@ const Header = () => {
         <div className="hidden xs:block">
           <RightSection />
         </div>
+
+        {/* 모바일 navigation */}
         <div className="flex items-center xs:hidden gap-4 pr-2">
-          <button className="flex items-center">
+        <button className="flex items-center">
             <TbSearch size={24} />
           </button>
-          <button className="flex items-center" onClick={handleFilter}>
+          {pathname === "/" &&
+           <button className="flex items-center" onClick={handleFilter}>
             <FiFilter size={24} />
           </button>
+          }
         </div>
+
       </div>
     </nav>
   )
