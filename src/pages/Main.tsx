@@ -10,15 +10,11 @@ import FilterBar from '../components/main/filterbar/FilterBar'
 import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
 
-import axios, { AxiosResponse } from 'axios'
-import { queryKeys } from '../components/react-query/queryKeys'
-import { useQuery } from 'react-query'
 import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout'
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
 import { axiosInstance } from './../components/axiosinstance/index'
-import { ProductResponseType, useGetProductsList } from '../components/main/hooks/useProductLists'
 import { useNavigate } from 'react-router-dom'
 
 const Main = () => {
@@ -32,19 +28,6 @@ const Main = () => {
     console.log('main interceptor')
   }, [])
 
-  const getProduct = async () => {
-    const res = await axiosInstance({
-      url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
-    })
-    return res.data
-  }
-  // const productLists = useGetProductsList(15)
-  // console.log(productLists)
-
-  const { data: productLists } = useQuery([queryKeys.product], getProduct, {
-    refetchOnWindowFocus: false
-  })
-  console.log(productLists)
   return (
     <div className="w-[90%] mx-auto pb-10 ">
       <div className="pt-[100px] relative">
@@ -61,8 +44,7 @@ const Main = () => {
           )}
           {/*메인에서 상품 리스트 */}
           <div className="w-full mx-auto border-none rounded-md shadow-basic bg-white">
-            {/* <div className="container px-4  flex justify-center items-end"></div> */}
-            <CardContainer data="Best" productLists={productLists} />
+            <CardContainer data="Best" />
           </div>
         </section>
         <div
@@ -75,8 +57,9 @@ const Main = () => {
             className="w-full mx-auto mb-12"
           />
         </div>
-        <div className="w-full border-none rounded-md  shadow-basic bg-white">
-          <CardContainer data="New" productLists={productLists} />
+
+        <div className="w-full border-none rounded-md pb-1 shadow-basic bg-white">
+          <CardContainer data="New" />
         </div>
         <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
           <Event />

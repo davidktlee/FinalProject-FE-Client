@@ -275,7 +275,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[112px] right-[12px]">
+                    <span className="absolute bottom-[112px] right-[6px]">
                       <svg
                         width="50"
                         height="50"
@@ -388,7 +388,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[110px] right-[22px]">
+                    <span className="absolute bottom-[110px] right-[12px]">
                       <svg
                         width="50"
                         height="50"
@@ -566,13 +566,9 @@ function RecommendBanner() {
       autoplay: { delay: 2000, disableOnInteraction: true }
     }
     return (
-      <div className="w-[92%] mx-auto px-4 relative">
+      <div className="w-[96%] mx-auto  relative">
         {swiperSetting && (
-          <Swiper
-            {...swiperSetting}
-            slidesPerView={'auto'}
-            style={{ borderRadius: '15px', padding: '20px 0' }}
-          >
+          <Swiper {...swiperSetting} slidesPerView={2} style={{ borderRadius: '15px', padding: '20px 0' }}>
             {items.map((item: Item, index: number) => (
               <div key={index}>
                 <SwiperSlide
@@ -596,7 +592,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[106px] right-[10px]">
+                    <span className="absolute bottom-[70px] right-[4px]">
                       <svg
                         width="50"
                         height="50"
@@ -614,13 +610,10 @@ function RecommendBanner() {
                         />
                       </svg>
                     </span>
-                    <div className=" flex flex-col ml-2 relative">
-                      <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px] flex">
-                        <div className="">{item.series}</div>
-                      </div>
-                      <div className=" text-[12px] xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[10px] mb-[18px] font-semibold">
-                        <div className="xl:mr-4 font-bold">{item.price}</div>
+                    <div className=" flex flex-col ml-2 relative mt-[10px]">
+                      <div className=" text-[14px] font-[600] md:text-[16px]">{item.title}</div>
+                      <div className="flex justify-start items-center mt-[5px] mb-[5px] font-semibold">
+                        <div className="mr-2 md:mr-4 font-bold">{item.price}</div>
                         <div className="text-[#7A7A7A] line-through text-[12px] ">{item.discount}</div>
                       </div>
                     </div>
