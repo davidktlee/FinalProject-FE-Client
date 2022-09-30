@@ -78,7 +78,7 @@ const Signin = () => {
 
   return (
     <div className="w-full h-screen bg-[#F4F6F8] relative">
-      <div className="absolute top-[36%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] xs:w-[500px] h-fit mt-[120px] bg-white rounded-lg pb-12 border border-solid border-gray-200 drop-shadow-light">
+      <div className="absolute top-[300px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] xs:w-[500px] h-fit mt-[120px] bg-white rounded-lg pb-12 border border-solid border-gray-200 drop-shadow-light">
         <h3 className="mt-5 text-center">
           <span className="text-lenssisDark text-2xl font-bold">Login</span>
         </h3>
