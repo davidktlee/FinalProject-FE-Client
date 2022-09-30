@@ -30,7 +30,7 @@ const Main = () => {
 
   return (
     <div className="max-w-[1180px] mx-auto pb-10 ">
-      <div className="pt-[100px] relative">
+      <div className="pt-[100px] relative ">
         <Banner />
         <section className="flex justify-between">
           {/* 메인의 왼쪽 검색 필터 */}
