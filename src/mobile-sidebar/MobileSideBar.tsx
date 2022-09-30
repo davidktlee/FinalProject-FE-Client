@@ -72,8 +72,8 @@ const MobileSideBar = () => {
       <div className='bg-[#F4F6F8] h-full pt-8 text-lenssisDark text-lg font-["SUIT"] font-semibold relative'>
         <ul className='flex flex-col gap-y-2'>
           <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(568)}><span>Best</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
-          <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(2709)}><span>New</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
-          <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(6228)}><span>Recommend</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
+          <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(2242)}><span>New</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
+          <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(5218)}><span>Recommend</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
           <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full '><Link onClick={pageChangeHandler} className='flex justify-between' to="/event"><span>Event</span><span><img src="/assets/rightarrow.png" alt="" /></span></Link></li>
           <li className='pl-2 pr-4 pb-2 w-full '><Link onClick={pageChangeHandler} className='flex justify-between' to="review"><span>Review</span><span><img src="/assets/rightarrow.png" alt="" /></span></Link></li>
         </ul>
