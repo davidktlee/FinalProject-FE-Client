@@ -13,7 +13,7 @@ const LeftSection = () => {
   }
   return (
     <div className="flex items-center justify-center">
-      <div className='pl-4 block xs:hidden w-[120px]'>
+      <div className='pl-4 xs:pl-0 block xs:hidden w-[120px]'>
         <button className='flex items-center' onClick={sideBarToggleHandler}><GiHamburgerMenu size={28} /></button>
       </div>
       <Logo />
