@@ -22,13 +22,13 @@ function NoticePage() {
   return (
     <>
       {location.pathname.includes('notice') === false ? (
-        <div className="w-[90%] mx-auto">
+        <div className="max-w-[1180px] mx-auto">
           <MainNotice />
           <Outlet />
           <ViewMoreBtn moveTo="/notice" />
         </div>
       ) : (
-        <PageLayout layoutWidth="w-[90%]" innerTop="top-[30%]">
+        <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[30%]">
           <CardTemplate title="공지사항" isTitleVisible={true}>
             <NoticeTitle />
             <Outlet />
