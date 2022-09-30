@@ -106,8 +106,10 @@ const Card = ({ name, idx, id, price, discount, colorCode, productImg, graphicDi
           </span>
           <div className=" text-[12px] md:text-[14px]">{name}</div>
           <div className="flex justify-start items-center my-[5px]">
-            <div className="mr-2 md:mr-4 font-[700] md:text-[14px]">{commaPrice.price}円</div>
-            <div className="text-[#7A7A7A] line-through text-[10px] md:text-[12px]">
+            <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
+              {commaPrice.price}円
+            </div>
+            <div className="text-lenssisGray line-through font-[700] text-[12px] md:text-[14px]">
               {commaPrice.discount}円
             </div>
           </div>
