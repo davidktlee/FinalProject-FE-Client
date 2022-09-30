@@ -10,7 +10,7 @@ interface ButtonProps {
 const Button = ({children,type,onClick}:ButtonProps) => {
   return (
     <button
-      className={`bg-lenssisDark hover:bg-primary-light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+      className={`bg-lenssisDark hover:bg-primary-light text-white font-bold h-10 rounded focus:outline-none focus:shadow-outline min-w-[120px]`}
       type={type}
       onClick={onClick}
     >
