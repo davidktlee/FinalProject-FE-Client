@@ -1,8 +1,6 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import { productState } from '../../store/product'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
 import { axiosInstance } from '../axiosinstance'
@@ -12,7 +10,7 @@ import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
 import { queryKeys } from '../react-query/queryKeys'
 import CartItem from './CartItem'
-import Counter from './Counter'
+
 
 const Cart = () => {
   const refreshToken = useRefreshToken()

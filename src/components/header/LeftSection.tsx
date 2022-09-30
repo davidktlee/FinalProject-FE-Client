@@ -1,5 +1,3 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import LeftNavLinks from './LeftNavLinks'
 import Logo from './Logo'
 import {GiHamburgerMenu} from 'react-icons/gi'

@@ -1,7 +1,4 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-
-import { userState } from '../../store/user'
 import { useUser } from '../auth/hooks/useUser'
 import { getStoredToken } from '../local-storage/userStorage'
 
