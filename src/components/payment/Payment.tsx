@@ -204,7 +204,9 @@ const Payment = () => {
 
 
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-      <ConfirmModal title="주문자 정보와 배송시 정보가 일치하시나요?" isModalOpen={isModalOpen} onClose={() => {setIsNew(true),setIsModalOpen(false)}} onConfirm={() => setIsNew(false)}>새로운 배송지에 입력된 정보는 사라집니다. 계속 하시겠습니까?</ConfirmModal>
+        <div className='relative'>
+      <ConfirmModal title="배송지 정보" isModalOpen={isModalOpen} onClose={() => {setIsNew(true),setIsModalOpen(false)}} onConfirm={() => setIsNew(false)}><span className=' text-lenssisDark text-lg font-semibold '>주문자 정보와 배송지 정보가 일치하십니까? </span></ConfirmModal>
+      </div>
         <h3 className="w-full pb-1 font-bold border-b border-solid border-lenssisDark text-xl">
           주문서 작성
         </h3>
@@ -249,6 +251,7 @@ const Payment = () => {
  
        
       </CardTemplate>
+
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark ">
           쿠폰/적립금

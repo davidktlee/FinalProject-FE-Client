@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <nav className="fixed flex flex-col justify-center bg-[#ABC8DF] text-white z-50 w-full top-0">
       <TopInfomation />
-      <div className="flex items-center h-[50px] justify-between pb-[15px]">
+      <div className="flex items-center h-[50px] justify-between pb-[15px] w-full xs:w-[1180px] mx-auto">
         <LeftSection />
         <div className="hidden xs:block">
           <RightSection />
