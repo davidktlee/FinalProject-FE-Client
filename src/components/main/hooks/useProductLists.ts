@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from './../../react-query/queryKeys'
 
@@ -34,4 +34,14 @@ export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
     keepPreviousData: true
   })
   return data
+}
+
+export const usePrefetchProductLists = (currentPage: number, count: number): void => {
+  const queryClient = useQueryClient()
+  const maxPage = Math.floor(count / 10)
+  console.log(maxPage)
+  if (maxPage > currentPage) {
+    const nextPage = currentPage + 1
+    queryClient.prefetchQuery([queryKeys.product, nextPage], () => getProductsList(nextPage))
+  }
 }
