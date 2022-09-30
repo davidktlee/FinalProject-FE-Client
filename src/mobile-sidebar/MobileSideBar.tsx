@@ -79,7 +79,7 @@ const MobileSideBar = () => {
         </ul>
 
 {/* footer */}
-        <div className='text-lenssisGray pl-6 pt-4'>
+        {/* <div className='text-lenssisGray pl-6 pt-4'>
         <ul className='w-full mx-auto flex flex-col items-start xs:items-center xs:justify-center gap-y-1 '>
       <li className='font-[900] pb-2 text-xl tracking-tight'>LENSSIS</li>
       <li className='text-sm'>주식회사 <span className='font-bold'>LENSSIS</span></li>
@@ -96,7 +96,7 @@ const MobileSideBar = () => {
       <li><a href="https://www.line.me/ko"><img className='mx-auto' width={40} height={40} src="/assets/line.png" /></a></li>
       <li><a href="https://www.instagram.com"><img className='mx-auto' width={40} height={40} src="/assets/insta.png" /></a></li>
     </ul>
-    </div>
+    </div> */}
       </div>
 
     

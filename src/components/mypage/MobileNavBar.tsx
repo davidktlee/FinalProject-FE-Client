@@ -1,42 +1,6 @@
 import React, { useState,useEffect, useRef, useCallback } from 'react';
 import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-
-
-
-
-const navMenuArray = [
-  {
-  title:'주문 내역',
-  path:'myorder'
-  },
-  {
-    title:'배송 조회',
-    path:'mytracking'
-  },
-  {
-    title:'취소/교환/반품 내역',
-    path:'myafter'
-  },
-  {
-    title:'리뷰 관리',
-    path:'myreview'
-  },
-  {
-    title:'회원 정보 수정',
-    path:'myprofile'
-  },
-  {
-    title:'회원 등급',
-    path:'mygrade'
-  },
-  {
-    title:'쿠폰함',
-    path:'mycoupon'
-  },
-  ]
-
-
   interface MobileNavBarProps {
     selectedOption: string | null;
     setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>

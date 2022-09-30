@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { productState } from '../../../store/product';
 import CardLayout from '../common/CardLayout';
