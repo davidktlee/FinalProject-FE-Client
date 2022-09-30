@@ -28,11 +28,11 @@ export const graphicDiameter = [
 // export const graphicDiameter = [11.9, 12.9, 13.0, 13.2, 13.5, 13.8, 14.0]
 
 export const colors = [
-  { type: 'color', color: '#a76c27', name: '베이지' },
+  { type: 'color', color: '#a76c27', name: '브라운' },
   { type: 'color', color: '#e5d0d0', name: '피치' },
-  { type: 'color', color: '#6e3b3b', name: '브라운' },
+  { type: 'color', color: '#6e3b3b', name: '모카' },
   { type: 'color', color: '#3a3a3a', name: '블랙' },
-  { type: 'color', color: '#f2ead1', name: '모카' },
+  { type: 'color', color: '#f2ead1', name: '베이지' },
   { type: 'color', color: '#b9b9b9', name: '그레이' },
   { type: 'color', color: '#7ea7cd', name: '블루' },
   { type: 'color', color: '#8ca171', name: '그린' }

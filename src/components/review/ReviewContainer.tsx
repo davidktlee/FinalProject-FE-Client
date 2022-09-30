@@ -1,5 +1,5 @@
 import React from 'react'
-import RevieItems from './RevieItems'
+import RevieItems from './ReviewItems'
 
 const ReviewContainer = () => {
   return (

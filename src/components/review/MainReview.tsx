@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from '../common/Card'
+import ViewMoreBtn from '../main/common/ViewMoreBtn'
 import MainReviewCard from './MainReviewCard'
 import MobileReviewCard from './mobile/MobileReviewCard'
 
@@ -27,9 +28,7 @@ const MainReview = () => {
         <MobileReviewCard />
         <MobileReviewCard />
       </div>
-      <div className="w-[100px] h-[40px] my-[20px] mx-auto border-[1px] border-solid rounded-full flex justify-center items-center">
-        <span className="text-[#0B0954] font=[700]">View More</span>
-      </div>
+      <ViewMoreBtn moveTo="/review" />
     </div>
   )
 }

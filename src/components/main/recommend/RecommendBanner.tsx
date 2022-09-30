@@ -31,7 +31,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077394-f10340da-3e4e-4916-afc5-254bc67a9651.png',
     isNew: true
   },
   {
@@ -42,7 +42,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077400-8490f905-1c93-44f7-8c5c-0b2f10984dce.png',
     isNew: true
   },
   {
@@ -53,7 +53,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077405-ba005884-bcb4-41b6-8e5c-8c679b0ad032.png',
     isNew: true
   },
   {
@@ -64,7 +64,7 @@ const items = [
     price: '1000円',
     tag: ['uv차단', '13.5', '인기상품', '추천상품'],
     discount: '800円',
-    img: 'https://lenssis.jp/data/item/6970799150/66Oo7Iuc7JWE6re466CI7J20_66qo64247Lu3.jpg',
+    img: 'https://user-images.githubusercontent.com/90392240/193077407-0d53a3a2-5c6e-41f2-b7a3-27c346b96f16.png',
     isNew: true
   }
 ]
@@ -275,7 +275,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[112px] right-[12px]">
+                    <span className="absolute bottom-[112px] right-[6px]">
                       <svg
                         width="50"
                         height="50"
@@ -388,7 +388,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[110px] right-[22px]">
+                    <span className="absolute bottom-[110px] right-[12px]">
                       <svg
                         width="50"
                         height="50"
@@ -502,7 +502,7 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[106px] right-[26px]">
+                    <span className="absolute bottom-[106px] right-[48px]">
                       <svg
                         width="50"
                         height="50"
@@ -566,13 +566,9 @@ function RecommendBanner() {
       autoplay: { delay: 2000, disableOnInteraction: true }
     }
     return (
-      <div className="w-[92%] mx-auto px-4 relative">
+      <div className="w-[96%] mx-auto  relative">
         {swiperSetting && (
-          <Swiper
-            {...swiperSetting}
-            slidesPerView={'auto'}
-            style={{ borderRadius: '15px', padding: '20px 0' }}
-          >
+          <Swiper {...swiperSetting} slidesPerView={2} style={{ borderRadius: '15px', padding: '20px 0' }}>
             {items.map((item: Item, index: number) => (
               <div key={index}>
                 <SwiperSlide
@@ -596,10 +592,10 @@ function RecommendBanner() {
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[106px] right-[10px]">
+                    <span className="absolute bottom-[70px] right-[4px]">
                       <svg
-                        width="50"
-                        height="50"
+                        width="40"
+                        height="40"
                         viewBox="0 0 50 50"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -614,13 +610,10 @@ function RecommendBanner() {
                         />
                       </svg>
                     </span>
-                    <div className=" flex flex-col ml-2 relative">
-                      <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px] flex">
-                        <div className="">{item.series}</div>
-                      </div>
-                      <div className=" text-[12px] xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[10px] mb-[18px] font-semibold">
-                        <div className="xl:mr-4 font-bold">{item.price}</div>
+                    <div className=" flex flex-col ml-2 relative mt-[10px]">
+                      <div className=" text-[14px] font-[600] md:text-[16px]">{item.title}</div>
+                      <div className="flex justify-start items-center mt-[5px] mb-[5px] font-semibold">
+                        <div className="mr-2 md:mr-4 font-bold">{item.price}</div>
                         <div className="text-[#7A7A7A] line-through text-[12px] ">{item.discount}</div>
                       </div>
                     </div>
