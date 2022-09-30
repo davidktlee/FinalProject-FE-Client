@@ -71,7 +71,7 @@ function EventPage() {
   }, [])
   return (
     <>
-      <PageLayout layoutWidth="w-[90%]" innerTop="top-[40%]">
+      <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
         <CardTemplate title="이벤트" isTitleVisible={true}>
           <div className=" grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 justify-items-stretch  md:gap-8 md:px-12">
             {/* eventList.map */}
