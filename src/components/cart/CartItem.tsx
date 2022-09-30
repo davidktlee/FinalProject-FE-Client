@@ -16,19 +16,22 @@ const CartItem = ({isTotalChecked,setIsTotalChecked}:CartItemProps) => {
     setIsChecked(prev => !prev)
   }
   return (
-    <li className='flex my-4 text-sm xs:text-base items-center'>
+    <li className='flex my-6 text-sm xs:text-base items-center h-[90px] xs:h-[110px] '>
       <div
       onClick={onClick}
-      className={`flex items-center justify-center h-4 w-4 border border-solid border-lenssisGray rounded-[5px] bg-white ${(isChecked || isTotalChecked) && 'bg-lenssisDark'}   transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer`}
+      className={`flex items-center justify-center h-4 w-4 border border-solid border-lenssisStroke rounded-[5px] ${(isChecked || isTotalChecked) && 'bg-lenssisDark'}   transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer`}
       >
       <HiCheck size={14} color="#ffffff" />
       </div>
-          
-          <img className='xs:w-[100px] h-[100px]' src="assets/eyes.png" alt="" />
-          <div className='ml-4 grow flex flex-col'>
-          <div>에이 링+ 그레이</div>
-        <p className='line-through'>2,200円</p>
-        <p className='font-bold text-lg text-black'>1,800円</p>
+          <img className='w-[90px] xs:w-[120px] h-[100px] xs:h-[120px]' src="assets/eyes.png" alt="" />
+          <div className='ml-[6px] xs:ml-4 grow flex flex-col'>
+        <div className='mb-2'>에이 링+ 그레이</div>
+      
+ <div className='mb-3 xs:mb-0'>
+          <p className='line-through text-[10px] xs:text-sm'>2,200円</p>
+          <p className='font-bold text-xs xs:text-lg text-black pb-1 xs:pb-4'>1,800円</p>
+   
+ </div>       
         <div>
           <Counter />
         </div>
