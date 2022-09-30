@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { HiCheck } from 'react-icons/hi'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
@@ -45,7 +46,13 @@ const Cart = () => {
       <div className='grow flex flex-col px-0 xs:px-2'>
         <div className='flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 xs:gap-0 w-full py-4 border-y border-solid border-lenssisStroke text-xs xs:text-base '>
           <div className='flex items-center'>
-        <input className='w-4 h-4 mr-2 accent-lenssisDark' value="selectAll" checked={isTotalChecked} onChange={totalCheckedHandler} type="checkbox" /><label>전체해제(2/2)</label>
+          <div
+      onClick={totalCheckedHandler}
+      className={`flex items-center justify-center h-4 w-4 border border-solid border-lenssisGray rounded-[5px] bg-white ${isTotalChecked && 'bg-lenssisDark'} checked:border-lenssis focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer`}
+      >
+      <HiCheck size={14} color="#ffffff" />
+      </div>
+      <label>전체선택(2/2)</label>
         </div>
         <p ><span className='font-semibold'>TIP! 1200円</span> 더 구매하면, <span className='font-semibold'>500円 추가 할인</span> 받을 수 있어요.</p>
         </div>
