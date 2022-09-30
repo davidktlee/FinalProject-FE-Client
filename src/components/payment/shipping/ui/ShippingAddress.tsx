@@ -15,7 +15,7 @@ const ShippingAddress = ({onChange,onClick,value1,value2,value3}:ShippingAddress
           <div className='flex items-center justify-start gap-x-4 w-[450px] mb-1'>
             <input
               type="text" name="postCode" onChange={onChange} value={value1}
-              className="h-10 border border-solid border-gray-200 rounded-md max-w-[400px]  focus:outline-1 focus:outline-[#ABC8DF] pl-1"
+              className="h-10 border border-solid border-gray-200 rounded-md w-[150px] max-w-[350px]  focus:outline-1 focus:outline-[#ABC8DF] pl-1"
               readOnly
             />
             <button className=" w-28 h-10 bg-lenssisDark rounded-md text-white font-semibold border-none cursor-pointer" onClick={onClick}>우편 번호 검색</button>
