@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from './../../react-query/queryKeys'
@@ -20,13 +20,16 @@ export interface ProductResponseType {
 }
 
 const getProductsList = async (pageNo: number) => {
-  const { data }: AxiosResponse<ProductResponseType[]> = await axiosInstance({
-    url: `/main/product?page=${pageNo}`,
-    headers: {
-      ContentType: 'application/json'
-    }
+  const res = await axiosInstance({
+    url: `https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products?page=${pageNo}&limit=9`
   })
-  return data
+  // const { data }: AxiosResponse<ProductResponseType[]> = await axiosInstance({
+  //   url: `/main/product?page=${pageNo}`,
+  //   headers: {
+  //     ContentType: 'application/json'
+  //   }
+  // })
+  return res.data
 }
 export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
   const fallback: [] = []

@@ -5,7 +5,7 @@ import Pagination from './common/Pagination'
 import { useQuery } from 'react-query'
 import { axiosInstance } from '../axiosinstance'
 import { queryKeys } from '../react-query/queryKeys'
-import { usePrefetchProductLists } from './hooks/useProductLists'
+import { useGetProductsList, usePrefetchProductLists } from './hooks/useProductLists'
 
 // Pagination 부분 수정해야 함
 
@@ -13,23 +13,23 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
 
-  const getProduct = async (pageNo: number) => {
-    const res = await axiosInstance({
-      url: `https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products?page=${pageNo}&limit=9`
-    })
+  // const getProduct = async (pageNo: number) => {
+  //   const res = await axiosInstance({
+  //     url: `https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products?page=${pageNo}&limit=9`
+  //   })
 
-    return res.data
-  }
-  // const productLists = useGetProductsList(allProductCurrentPage)
-  // console.log(productLists)
-  useEffect(() => {}, [])
-  const { data: productLists } = useQuery(
-    [queryKeys.product, allProductCurrentPage],
-    () => getProduct(allProductCurrentPage),
-    {
-      refetchOnWindowFocus: false
-    }
-  )
+  //   return res.data
+  // }
+  const productLists = useGetProductsList(allProductCurrentPage)
+  console.log(productLists)
+  // useEffect(() => {}, [])
+  // const { data: productLists } = useQuery(
+  //   [queryKeys.product, allProductCurrentPage],
+  //   () => getProduct(allProductCurrentPage),
+  //   {
+  //     refetchOnWindowFocus: false
+  //   }
+  // )
 
   return (
     <>
