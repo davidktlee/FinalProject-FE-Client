@@ -94,7 +94,7 @@ function RecommendBanner() {
         pagination: { clickable: true },
         slidesPerView: 1,
         loop: true,
-        autoplay: { delay: 2000, disableOnInteraction: true },
+        autoplay: { delay: 20000, disableOnInteraction: true },
         watchOverflow: true,
         onBeforeInit: (swiper) => {
           if (typeof swiper.params.navigation !== 'boolean') {
@@ -108,115 +108,8 @@ function RecommendBanner() {
       })
     }
   }, [swiperSetting])
-  if (windowWidth >= 1536) {
-    return (
-      <div className="w-[90%] mx-auto px-14 relative">
-        <button ref={prevRef} className="absolute top-[45%] left-[-30px] z-[2] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              cx="18"
-              cy="17.5"
-              r="17.1874"
-              transform="rotate(-180 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M22.5 25L13.5 17.5L22.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        {swiperSetting && (
-          <Swiper
-            {...swiperSetting}
-            slidesPerView={'auto'}
-            style={{ borderRadius: '15px', padding: '20px 0' }}
-          >
-            {items.map((item: Item, index: number) => (
-              <div key={index}>
-                <SwiperSlide
-                  key={index}
-                  style={{
-                    width: '260px',
-                    borderRadius: '15px',
-                    padding: '6px',
-                    border: '1px solid',
-                    margin: '0 auto 50px'// 수치 변경 
-                  }}
-                >
-                  <>
-                    <img
-                      src={item.img}
-                      alt=""
-                      style={{
-                        width: '230px',
-                        margin: '0 auto',
-                        height: '300px',
-                        borderRadius: '15px'
-                      }}
-                    />
-                    <span className="absolute bottom-[112px] right-[14px]">
-                      <svg
-                        width="50"
-                        height="50"
-                        viewBox="0 0 50 50"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M25 0L29.8658 6.8406L37.5 3.34937L38.2936 11.7064L46.6506 12.5L43.1594 20.1342L50 25L43.1594 29.8658L46.6506 37.5L38.2936 38.2936L37.5 46.6506L29.8658 43.1594L25 50L20.1342 43.1594L12.5 46.6506L11.7064 38.2936L3.34937 37.5L6.8406 29.8658L0 25L6.8406 20.1342L3.34937 12.5L11.7064 11.7064L12.5 3.34937L20.1342 6.8406L25 0Z"
-                          fill="#FFDF5D"
-                        />
-                        <path
-                          d="M18.6213 20.2727V29H16.8315L13.3585 23.9631H13.3031V29H11.1937V20.2727H13.0091L16.4437 25.3011H16.5162V20.2727H18.6213ZM19.9476 29V20.2727H26.0328V21.9858H22.057V23.7756H25.7218V25.4929H22.057V27.2869H26.0328V29H19.9476ZM29.4462 29L26.9064 20.2727H29.2374L30.5542 25.9915H30.6266L32.1309 20.2727H34.0314L35.5357 26.0043H35.6081L36.9292 20.2727H39.2559L36.7203 29H34.6877L33.1152 23.7074H33.0471L31.4746 29H29.4462Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </span>
-                    <div className=" flex flex-col ml-2 relative">
-                      <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px] flex">
-                        <div className="">{item.series}</div>
-                      </div>
-                      <div className=" text-[12px] xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[10px] mb-[18px] font-semibold">
-                        <div className="xl:mr-4 font-bold">{item.price}</div>
-                        <div className="text-[#7A7A7A] line-through text-[12px]">{item.discount}</div>
-                      </div>
-                    </div>
-                  </>
-                </SwiperSlide>
-              </div>
-            ))}
-          </Swiper>
-        )}
-        <button ref={nextRef} className="absolute top-[45%] right-[-30px] z-[1] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              r="17.1874"
-              transform="matrix(1 -8.74228e-08 -8.74228e-08 -1 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M13.5 25L22.5 17.5L13.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-    )
-  } else if (windowWidth >= 1280) {
+
+  if (windowWidth >= 1280) {
     const swiperSetting = {
       spaceBetween: 10,
       navigation: {
@@ -225,7 +118,7 @@ function RecommendBanner() {
       },
       slidesPerView: 4,
       loop: true,
-      autoplay: { delay: 2000, disableOnInteraction: true }
+      autoplay: { delay: 20000, disableOnInteraction: true }
     }
     return (
       <div className="w-[90%] mx-auto px-14 relative">
@@ -257,11 +150,12 @@ function RecommendBanner() {
                 <SwiperSlide
                   key={index}
                   style={{
-                    width: '240px',
+                    width: '250px',
+                    height: '355px',
                     borderRadius: '15px',
-                    padding: '6px',
-                    border: '1px solid',
-                    margin: '0 auto 50px'// 수치 변경 
+                    padding: '10px',
+                    border: '1px solid #efefef',
+                    margin: '0 auto 50px' // 수치 변경
                   }}
                 >
                   <>
@@ -270,12 +164,12 @@ function RecommendBanner() {
                       alt=""
                       style={{
                         width: '230px',
+                        height: '280px',
                         margin: '0 auto',
-                        height: '300px',
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[112px] right-[6px]">
+                    <span className="absolute bottom-[70px] right-[6px]">
                       <svg
                         width="50"
                         height="50"
@@ -293,13 +187,10 @@ function RecommendBanner() {
                         />
                       </svg>
                     </span>
-                    <div className=" flex flex-col ml-2 relative">
-                      <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px] flex">
-                        <div className="">{item.series}</div>
-                      </div>
-                      <div className=" text-[12px] xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[10px] mb-[18px] font-semibold">
-                        <div className="xl:mr-4 font-bold">{item.price}</div>
+                    <div className="w-[150px] h-[40px] flex flex-col ml-2 relative mt-[10px]">
+                      <div className=" text-[12px] font-semibold xl:text-[14px]">{item.title}</div>
+                      <div className="flex justify-start items-center">
+                        <div className="md:mr-2 font-bold">{item.price}</div>
                         <div className="text-[#7A7A7A] line-through text-[12px]">{item.discount}</div>
                       </div>
                     </div>
@@ -337,7 +228,7 @@ function RecommendBanner() {
         prevEl: prevRef.current,
         nextEl: nextRef.current
       },
-      slidesPerView: 3,
+
       loop: true
     }
     return (
@@ -364,7 +255,7 @@ function RecommendBanner() {
           </svg>
         </button>
         {swiperSetting && (
-          <Swiper {...swiperSetting} style={{ borderRadius: '15px', padding: '20px 0' }}>
+          <Swiper {...swiperSetting} slidesPerView="auto" style={{ borderRadius: '15px', padding: '20px 0' }}>
             {items.map((item: Item, index: number) => (
               <div key={index}>
                 <SwiperSlide
@@ -374,7 +265,7 @@ function RecommendBanner() {
                     borderRadius: '15px',
                     padding: '4px',
                     border: '1px solid',
-                    margin: '0 auto 50px'// 수치 변경 
+                    margin: '0 auto 50px' // 수치 변경
                   }}
                 >
                   <>
@@ -450,7 +341,7 @@ function RecommendBanner() {
         prevEl: prevRef.current,
         nextEl: nextRef.current
       },
-      slidesPerView: 2,
+
       loop: true,
       autoplay: { delay: 2000, disableOnInteraction: true }
     }
@@ -478,7 +369,7 @@ function RecommendBanner() {
           </svg>
         </button>
         {swiperSetting && (
-          <Swiper {...swiperSetting} style={{ borderRadius: '15px', padding: '20px 0' }}>
+          <Swiper {...swiperSetting} slidesPerView="auto" style={{ borderRadius: '15px', padding: '20px 0' }}>
             {items.map((item: Item, index: number) => (
               <div key={index}>
                 <SwiperSlide
@@ -488,7 +379,7 @@ function RecommendBanner() {
                     borderRadius: '15px',
                     padding: '4px',
                     border: '1px solid',
-                    margin: '0 auto 50px'// 수치 변경 
+                    margin: '0 auto 50px' // 수치 변경
                   }}
                 >
                   <>
@@ -574,11 +465,12 @@ function RecommendBanner() {
                 <SwiperSlide
                   key={index}
                   style={{
-                    width: '180px',
+                    width: '160px',
+                    height: '260px',
                     borderRadius: '15px',
-                    padding: '4px',
-                    border: '1px solid',
-                    margin: '0 auto 50px'// 수치 변경 
+                    padding: '5px',
+                    border: '1px solid #efefef',
+                    margin: '0 auto 50px' // 수치 변경
                   }}
                 >
                   <>
@@ -587,12 +479,12 @@ function RecommendBanner() {
                       alt=""
                       style={{
                         width: '160px',
-                        margin: '0 auto',
                         height: '200px',
+                        margin: '0 auto',
                         borderRadius: '15px'
                       }}
                     />
-                    <span className="absolute bottom-[70px] right-[4px]">
+                    <span className="absolute bottom-[56px] right-[20px]">
                       <svg
                         width="40"
                         height="40"
@@ -610,9 +502,9 @@ function RecommendBanner() {
                         />
                       </svg>
                     </span>
-                    <div className=" flex flex-col ml-2 relative mt-[10px]">
+                    <div className="w-[150px] h-[45px] flex flex-col ml-2 relative">
                       <div className=" text-[14px] font-[600] md:text-[16px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[5px] mb-[5px] font-semibold">
+                      <div className="flex justify-start items-center  font-semibold">
                         <div className="mr-2 md:mr-4 font-bold">{item.price}</div>
                         <div className="text-[#7A7A7A] line-through text-[12px] ">{item.discount}</div>
                       </div>
