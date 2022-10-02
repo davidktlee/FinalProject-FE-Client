@@ -25,6 +25,33 @@ export interface PaymentFormValueType {
 }
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
+
+/* {
+  data: {
+    order:{
+      orderer:'주문자',
+      ordererPhone:'주문자휴대폰',
+      ordererEmail:'주문자이메일주소',
+    }
+    shipping:{
+      reciever:'받는사람',
+      address:'기본주소',
+      detailAddress:'상세주소',
+      recieverPhone:'받는사람휴대폰',
+      recieverEmail:'받는사람이메일'
+      shippingMessage:'배송요청사항'
+    }
+    product:{
+      ...product
+    },
+    coupon:'쿠폰id',
+    paymentMethod:'결제방법',
+    totalPrice:'총결제금액',
+    point:'총결제금액의 1%',
+  }
+} */
+
+
 const Payment = () => {
   const { user, isLoading } = useUser()
   const product = useRecoilValue(productState)
@@ -223,6 +250,8 @@ const Payment = () => {
           domainArray={domainArray}
           phoneFormValueChangeHandler={phoneFormValueChangeHandler}
           phoneFormValue={phoneFormValue}
+          visibleAddress={false}
+          visibleEmail
         />
       </CardTemplate>
 
@@ -244,6 +273,8 @@ const Payment = () => {
             domainArray={domainArray}
             phoneFormValueChangeHandler={phoneFormValueChangeHandler}
             phoneFormValue={phoneFormValue}
+            visibleAddress={true}
+            
           />
         )}
         
@@ -254,30 +285,7 @@ const Payment = () => {
 
 
 
-{/* {
-  data: {
-    order:{
-      orderer:'주문자',
-      ordererPhone:'주문자휴대폰',
-      ordererEmail:'주문자이메일주소',
-    }
-    shipping:{
-      reciever:'받는사람',
-      address:'기본주소',
-      detailAddress:'상세주소',
-      recieverPhone:'받는사람휴대폰',
-      recieverEmail:'받는사람이메일'
-      shippingMessage:'배송요청사항'
-    }
-    product:{
-      ...product
-    },
-    coupon:'쿠폰id',
-    paymentMethod:'결제방법',
-    totalPrice:'총결제금액',
-    point:'총결제금액의 1%',
-  }
-} */}
+
 {/* 할인코드 'lenssis'로 총 결제금액의 10% 차감될 수 있게끔 처리 */}
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark ">

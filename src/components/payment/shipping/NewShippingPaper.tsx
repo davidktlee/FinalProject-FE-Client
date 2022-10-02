@@ -14,9 +14,9 @@ interface NewShippingPaperProps {
   domainArray: string[]
   isOpen: boolean
   domainSelectHandler: () => void
-
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   open: (options?: DaumPostcodePopupParams | undefined) => Promise<void>
+  visibleEmail?:boolean
 }
 
 const NewShippingPaper = ({
@@ -24,7 +24,8 @@ const NewShippingPaper = ({
   isOpen,
   domainSelectHandler,
   setIsOpen,
-  open
+  open,
+  visibleEmail
 }: NewShippingPaperProps) => {
   const [newFormValue, setNewFormValue] = useState<PaymentFormValueType>({
     orderer: '',
@@ -126,7 +127,7 @@ const NewShippingPaper = ({
         />
       </ShippingCard>
 
-      <ShippingCard title="이메일">
+      {visibleEmail && <ShippingCard title="이메일">
         <ShippingEmail
           domainArray={domainArray}
           emailDomainSelectHandler={newEmailDomainSelectHandler}
@@ -136,7 +137,8 @@ const NewShippingPaper = ({
           value1={newEmailFormValue.emailIdentity}
           value2={newEmailFormValue.emailDomain}
         />
-      </ShippingCard>
+      </ShippingCard>}
+      
       <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.userRequestMessage} />
     </>
   )
