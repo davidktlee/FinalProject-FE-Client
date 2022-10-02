@@ -36,7 +36,7 @@ const MainEvent = () => {
 
   return (
     <div className="py-2">
-      <div className="flex justify-center items-center text-[24px] mt-[25px] mb-[30px] md:mb-[50px] ">
+      <div className="flex justify-center items-center text-[24px] mt-[25px] mb-[50px] md:mb-[50px] ">
         <span className="border-b-[6px] border-solid border-[#1B304A] text-[18px] md:text-[24px] font-[600] hover:cursor-pointer">
           Event
         </span>
