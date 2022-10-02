@@ -30,7 +30,7 @@ const MobileSideBar = () => {
     window.scrollTo(0,0)
   },[pathname])
   return (
-    <div className='z-[9999] text-black fixed bg-white w-full h-screen top-0'>
+    <div className='z-[9999] text-black sticky bg-white w-full h-screen top-0 xs:hidden'>
       <div className='bg-lenssisSky h-fit pt-4 pb-2 text-white'>
       <div className='flex items-center justify-between pl-2'>
         {user
@@ -73,7 +73,7 @@ const MobileSideBar = () => {
         <ul className='flex flex-col gap-y-2'>
           <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(568)}><span>Best</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
           <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(2242)}><span>New</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
-          <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(5218)}><span>Recommend</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
+          <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between' onClick={()=>scrollHandler(5018)}><span>Recommend</span><span><img src="/assets/rightarrow.png" alt="" /></span></li>
           <li className='pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full '><Link onClick={pageChangeHandler} className='flex justify-between' to="/event"><span>Event</span><span><img src="/assets/rightarrow.png" alt="" /></span></Link></li>
           <li className='pl-2 pr-4 pb-2 w-full '><Link onClick={pageChangeHandler} className='flex justify-between' to="review"><span>Review</span><span><img src="/assets/rightarrow.png" alt="" /></span></Link></li>
         </ul>
