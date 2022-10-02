@@ -252,6 +252,7 @@ const Payment = () => {
           phoneFormValue={phoneFormValue}
           visibleAddress={false}
           visibleEmail
+          
         />
       </CardTemplate>
 
@@ -274,7 +275,7 @@ const Payment = () => {
             phoneFormValueChangeHandler={phoneFormValueChangeHandler}
             phoneFormValue={phoneFormValue}
             visibleAddress={true}
-            
+            visibleRequest
           />
         )}
         

@@ -26,6 +26,7 @@ interface OrderPaperProps {
   phoneFormValue: Record<string, string | number>
   visibleAddress?:boolean
   visibleEmail?:boolean
+  visibleRequest?:boolean
 }
 
 const OrderPaper = ({
@@ -41,7 +42,8 @@ const OrderPaper = ({
   phoneFormValueChangeHandler,
   phoneFormValue,
   visibleAddress,
-  visibleEmail
+  visibleEmail,
+  visibleRequest
 }: OrderPaperProps) => {
   return (
     <>
@@ -81,7 +83,7 @@ const OrderPaper = ({
       </ShippingCard>}
       
 
-      <DeliveryRequest onChange={changeFormHandler} value={formValue.userRequestMessage} />
+      {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.userRequestMessage} />}
     </>
   )
 }
