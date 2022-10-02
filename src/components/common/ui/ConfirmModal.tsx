@@ -16,26 +16,26 @@ const ConfirmModal = ({isModalOpen,title,onClose,onConfirm,children}:ConfirmModa
   if( !isModalOpen) return <></>
 
   return (
+    
     <Dialog isModalOpen={isModalOpen} onClose={onClose}>
-      <h2 className="text-lg">{title}</h2>
-      <div className="py-5">{children}</div>
-      <div className="flex justify-end">
+      <h2 className="text-lg text-white py-1 pl-2">{title}</h2>
+      <div className='bg-white w-full h-[200px] flex items-center flex-col justify-center'>
+      <div className="py-5 text-center">{children}</div>
+      <div className="flex justify-center gap-2">
         <div className="p-1">
-          <Button
-            onClick={() => {onClose(),onConfirm()}}
-          >
-            네, 바꿀게요
-          </Button>
-        </div>
-        <div className="p-1">
-          <Button
-            onClick={() => onClose()}
-          >
+          <Button onClick={() => onClose()} bgColor='white'>
           아니요
           </Button>
         </div>
+        <div className="p-1">
+          <Button onClick={() => {onClose(),onConfirm()}} bgColor='dark'>
+            네
+          </Button>
+        </div>
+      </div>
       </div>
     </Dialog>
+    
   );
 };
 

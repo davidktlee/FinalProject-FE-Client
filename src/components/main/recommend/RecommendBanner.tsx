@@ -146,8 +146,8 @@ function RecommendBanner() {
                     width: '260px',
                     borderRadius: '15px',
                     padding: '6px',
-                    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                    margin: '0 auto'
+                    border: '1px solid',
+                    margin: '0 auto 50px'// 수치 변경 
                   }}
                 >
                   <>
@@ -260,8 +260,8 @@ function RecommendBanner() {
                     width: '240px',
                     borderRadius: '15px',
                     padding: '6px',
-                    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                    margin: '0 auto'
+                    border: '1px solid',
+                    margin: '0 auto 50px'// 수치 변경 
                   }}
                 >
                   <>
@@ -373,8 +373,8 @@ function RecommendBanner() {
                     width: '240px',
                     borderRadius: '15px',
                     padding: '4px',
-                    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                    margin: '0 auto'
+                    border: '1px solid',
+                    margin: '0 auto 50px'// 수치 변경 
                   }}
                 >
                   <>
@@ -487,8 +487,8 @@ function RecommendBanner() {
                     width: '240px',
                     borderRadius: '15px',
                     padding: '4px',
-                    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                    margin: '0 auto'
+                    border: '1px solid',
+                    margin: '0 auto 50px'// 수치 변경 
                   }}
                 >
                   <>
@@ -577,8 +577,8 @@ function RecommendBanner() {
                     width: '180px',
                     borderRadius: '15px',
                     padding: '4px',
-                    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                    margin: '0 auto'
+                    border: '1px solid',
+                    margin: '0 auto 50px'// 수치 변경 
                   }}
                 >
                   <>

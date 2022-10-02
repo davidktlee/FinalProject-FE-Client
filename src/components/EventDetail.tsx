@@ -10,11 +10,9 @@ function EventDetail() {
   // const detailEvent = useGetDetailEvent()
   const navigate = useNavigate()
 
-  const clickEventBtn = () => {
-    
-  }
+  const clickEventBtn = () => {}
   return (
-    <PageLayout layoutWidth="w-[90%]" innerTop="top-[40%]">
+    <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
       <CardTemplate title="이벤트" isTitleVisible={true}>
         <div className="w-[100%]">
           <div className="flex items-center py-4 border-t-[1px] border-solid">
@@ -33,7 +31,10 @@ function EventDetail() {
           </div>
           <div className=" flex flex-col items-center my-8">
             <img src={img} alt="event-image" />
-            <button className="my-8 w-[300px] h-[80px] text-[20px] text-[#fff] font-bold bg-lenssisSky rounded-md drop-shadow-basic" onClick={clickEventBtn}>
+            <button
+              className="my-8 w-[300px] h-[80px] text-[20px] text-[#fff] font-bold bg-lenssisSky rounded-md drop-shadow-basic"
+              onClick={clickEventBtn}
+            >
               쿠폰 발급받기
             </button>
           </div>

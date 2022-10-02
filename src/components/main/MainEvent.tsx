@@ -23,11 +23,6 @@ const events = [
     id: '4',
     img: 'https://user-images.githubusercontent.com/90392240/193076592-d71a3a5c-ab7d-4908-b2a8-2c3e497d5e07.png',
     description: '이벤트 내용'
-  },
-  {
-    id: '5',
-    img: 'https://user-images.githubusercontent.com/90392240/193076592-d71a3a5c-ab7d-4908-b2a8-2c3e497d5e07.png',
-    description: '이벤트 내용'
   }
 ]
 
@@ -36,7 +31,7 @@ const MainEvent = () => {
 
   return (
     <div className="py-2">
-      <div className="flex justify-center items-center text-[24px] mt-[25px] mb-[30px] md:mb-[50px] ">
+      <div className="flex justify-center items-center text-[24px] mt-[25px] mb-[50px] md:mb-[50px] ">
         <span className="border-b-[6px] border-solid border-[#1B304A] text-[18px] md:text-[24px] font-[600] hover:cursor-pointer">
           Event
         </span>
@@ -53,7 +48,7 @@ const MainEvent = () => {
               src={event.img}
               alt=""
             />
-            <div className=" h-[95px]  rounded-b-xl">
+            <div className=" h-[95px] rounded-b-xl">
               {/* 이벤트 내용 */}
               {event.description}
             </div>

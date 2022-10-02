@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { queryKeys } from '../../react-query/queryKeys'
-import { useGetProductsList } from '../hooks/useProductLists'
+import { useGetProductsList, usePrefetchProductLists } from '../hooks/useProductLists'
 
 interface PropsType {
   currentPage: number
@@ -20,13 +20,8 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
     }
     setPagesCount(arr)
   }, [])
-  // prefetch 로직
-  // useEffect(() => {
-  //   if (maxPage > currentPage) {
-  //     const nextPage = currentPage + 1
-  //     client.prefetchQuery([queryKeys.product, nextPage], () => useGetProductsList(nextPage))
-  //   }
-  // }, [currentPage])
+  // usePrefetchProductLists(currentPage, allCount)
+
   return (
     <div className={`my-[51px] flex grow justify-center items-center `}>
       <span

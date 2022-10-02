@@ -5,6 +5,7 @@ import Pagination from './common/Pagination'
 import { useQuery } from 'react-query'
 import { axiosInstance } from '../axiosinstance'
 import { queryKeys } from '../react-query/queryKeys'
+import { usePrefetchProductLists } from './hooks/useProductLists'
 
 // Pagination 부분 수정해야 함
 
@@ -16,6 +17,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
     const res = await axiosInstance({
       url: `https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products?page=${pageNo}&limit=9`
     })
+
     return res.data
   }
   // const productLists = useGetProductsList(allProductCurrentPage)
@@ -34,7 +36,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
       {data === 'New' ? (
         <>
           <div className="flex justify-center">
-            <span className=" text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+            <span className=" text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[50px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
               {data}
             </span>
           </div>
@@ -66,7 +68,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
         data === 'Best' && (
           <>
             <div className="flex justify-center">
-              <span className="text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[30px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+              <span className="text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[50px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
                 {data}
               </span>
             </div>

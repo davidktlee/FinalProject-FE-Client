@@ -8,10 +8,10 @@ const Counter = () => {
     setCount(prev => prev += cnt)
   }
   return (
-    <div className='flex '>
-      <button className='border border-solid border-lenssisStroke px-1' onClick={() => countHandler(-1)}>&nbsp;-&nbsp;</button>
-      <div className='w-8 text-center border-y border-solid border-lenssisStroke text-sm flex items-center justify-center'>{count}</div>
-      <button className='border border-solid border-lenssisStroke px-1'onClick={() => countHandler(1)}>&nbsp;+&nbsp;</button>
+    <div className='flex h-[15px] xs:h-[26px] w-[50px] xs:w-[88px] items-center'>
+      <button className='w-[15px] xs:w-[20px] border border-solid border-lenssisStroke ' onClick={() => countHandler(-1)}>&nbsp;-&nbsp;</button>
+      <div className='w-[20px] xs:w-[30px] xs:h-[26px] text-center border-y border-solid border-lenssisStroke text-sm flex items-center justify-center text-[7px]'>{count}</div>
+      <button className='w-[15px] xs:w-[20px] border border-solid border-lenssisStroke 'onClick={() => countHandler(1)}>&nbsp;+&nbsp;</button>
     </div>
   );
 };
