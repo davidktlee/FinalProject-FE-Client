@@ -10,7 +10,7 @@ interface CardTemplateProps {
 const CardTemplate = ({ children, isTitleVisible, title, marginTop }: CardTemplateProps) => {
   return (
     <div
-      className={` shadow-[0_0_6px] bg-white rounded-lg p-4 xs:p-10 shadow-gray-400/80 ${
+      className={` shadow-[0_0_6px] bg-white rounded-lg p-4 xs:p-10 shadow-gray-400/80 xs:max-w-[1180px] mx-auto ${
         marginTop ? marginTop : 'mt-40'
       }`}
     >
@@ -25,3 +25,4 @@ const CardTemplate = ({ children, isTitleVisible, title, marginTop }: CardTempla
 }
 
 export default CardTemplate
+
