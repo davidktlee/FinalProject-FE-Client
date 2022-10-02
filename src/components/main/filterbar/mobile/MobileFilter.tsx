@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { RefObject } from 'react'
 import MobileBoxLayout from '../common/MobileBoxLayout'
 import { graphicDiameter, series, features, duration, colors } from '../../../../constants/filterData'
 import Refresh from '/assets/Refresh.svg'
