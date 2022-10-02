@@ -30,7 +30,7 @@ const MobileSideBar = () => {
     window.scrollTo(0,0)
   },[pathname])
   return (
-    <div className='z-[9999] text-black fixed bg-white w-full h-screen top-0'>
+    <div className='z-[9999] text-black sticky bg-white w-full h-screen top-0 xs:hidden'>
       <div className='bg-lenssisSky h-fit pt-4 pb-2 text-white'>
       <div className='flex items-center justify-between pl-2'>
         {user
