@@ -24,6 +24,9 @@ interface OrderPaperProps {
   domainArray: string[]
   phoneFormValueChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
   phoneFormValue: Record<string, string | number>
+  visibleAddress?:boolean
+  visibleEmail?:boolean
+  visibleRequest?:boolean
 }
 
 const OrderPaper = ({
@@ -37,7 +40,10 @@ const OrderPaper = ({
   emailDomainSelectHandler,
   domainArray,
   phoneFormValueChangeHandler,
-  phoneFormValue
+  phoneFormValue,
+  visibleAddress,
+  visibleEmail,
+  visibleRequest
 }: OrderPaperProps) => {
   return (
     <>
@@ -45,7 +51,7 @@ const OrderPaper = ({
         <ShippingOrderer onChange={changeFormHandler} value={formValue.orderer} />
       </ShippingCard>
 
-      <ShippingCard title="주소" isRequired>
+      {visibleAddress && <ShippingCard title="주소" isRequired>
         <ShippingAddress
           onChange={changeFormHandler}
           value1={formValue.postCode}
@@ -53,7 +59,7 @@ const OrderPaper = ({
           value3={formValue.detailAddress}
           onClick={addressPopupHandler}
         />
-      </ShippingCard>
+      </ShippingCard>}
 
       <ShippingCard title="휴대폰" isRequired>
         <ShippingPhone
@@ -64,7 +70,7 @@ const OrderPaper = ({
         />
       </ShippingCard>
 
-      <ShippingCard title="이메일 주소">
+       {visibleEmail && <ShippingCard title="이메일 주소">
         <ShippingEmail
           domainArray={domainArray}
           emailDomainSelectHandler={emailDomainSelectHandler}
@@ -74,9 +80,10 @@ const OrderPaper = ({
           value1={emailFormValue.emailIdentity}
           value2={emailFormValue.emailDomain}
         />
-      </ShippingCard>
+      </ShippingCard>}
+      
 
-      <DeliveryRequest onChange={changeFormHandler} value={formValue.userRequestMessage} />
+      {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.userRequestMessage} />}
     </>
   )
 }

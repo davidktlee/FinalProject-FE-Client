@@ -4,13 +4,13 @@ interface ButtonProps {
   children: React.ReactNode;
   type?:'submit' | 'button' | 'reset';
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  
+  bgColor:'dark' | 'white'
 }
 
-const Button = ({children,type,onClick}:ButtonProps) => {
+const Button = ({children,type,onClick,bgColor}:ButtonProps) => {
   return (
     <button
-      className={`bg-lenssisDark hover:bg-primary-light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+      className={`${bgColor === 'dark' ? 'bg-lenssisDark text-white ' : 'bg-white text-lenssisDark '} border border-solid border-lenssisDark hover:bg-primary-light font-semibold h-10 rounded focus:outline-none focus:shadow-outline min-w-[120px]`}
       type={type}
       onClick={onClick}
     >

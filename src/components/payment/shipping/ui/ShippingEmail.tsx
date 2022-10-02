@@ -43,7 +43,7 @@ const ShippingEmail = ({domainArray,emailDomainSelectHandler,onChange,onClick,va
             </div>
   
             {isOpen && (
-              <ul className="absolute right-2 top-10 xs:-right-4 xs:top-10 bg-white border border-solid border-gray-400 rounded-md min-w-[80px] xs:min-w-[140px]">
+              <ul className="absolute left-[38%] xs:left-[68%] top-10 bg-white border border-solid border-gray-400 rounded-md min-w-[80px] xs:max-w-[100px]">
                 {domainArray.map((item) => (
                   <li
                     key={item}

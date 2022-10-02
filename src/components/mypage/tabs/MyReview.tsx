@@ -14,24 +14,24 @@ const MyReview = () => {
       {review.map((item) =>(
       <div className='flex flex-col' key={item.createdAt + item.orderNumber}>
         <div>
-          <p><span>작성일자</span><span>{item.createdAt}</span><span>주문번호</span><span>{item.orderNumber}</span></p>
+          <p className='flex gap-[2px] items-center font-semibold text-sm py-2'><span className='text-black '>작성일자</span><span className='text-lenssisGray text-xs'>{item.createdAt}</span><span className='text-black '>주문번호</span><span className='text-lenssisGray text-xs'>{item.orderNumber}</span></p>
         </div>
-        <div className='flex'>
+        <div className='flex gap-1 xs:gap-4'>
           <img src={item.imageURL} alt="" />
-          <div>
-            <p>{item.lensTitle}</p>
-            <p>{item.lensColor}</p>
-            <p>{item.lensOption}</p>
-            <p>{item.lensPrice}</p>
+          <div className='text-lenssisGray flex flex-col items-start justify-between gap-y-1 grow'>
+            <p className='font-semibold text-sm'>{item.lensTitle}</p>
+            <p className='font-bold text-lenssisDark text-base'>{item.lensColor}</p>
+            <p className='text-xs'>{item.lensOption}</p>
+            <p className='text-xs font-semibold'>{item.lensPrice}</p>
           </div>
-          <div>
-            <button>수정하기</button>
-            <button>삭제하기</button>
+          <div className='flex flex-col items-center justify-center min-w-[90px] gap-y-2'>
+            <button className='border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm'>수정하기</button>
+            <button className='border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm'>삭제하기</button>
           </div>
         </div>
-        <div>
-          <p>{item.lensRating}</p>
-          <p>{item.content}</p>
+        <div className='mt-2'>
+          <p>★★★★★</p>
+          <p className='font-base text-lenssisGray'>{item.content}</p>
         </div>
       </div>))}
       {review.length === 0 && <p className='flex justify-center items-center h-[200px] text-[#7a7a7a] border-b border-solid border-[#ABC8DF]'>{reviewArray.length === 0 && '최근 작성한 리뷰가 없습니다'}</p>}

@@ -23,11 +23,6 @@ const events = [
     id: '4',
     img: 'https://user-images.githubusercontent.com/90392240/193076592-d71a3a5c-ab7d-4908-b2a8-2c3e497d5e07.png',
     description: '이벤트 내용'
-  },
-  {
-    id: '5',
-    img: 'https://user-images.githubusercontent.com/90392240/193076592-d71a3a5c-ab7d-4908-b2a8-2c3e497d5e07.png',
-    description: '이벤트 내용'
   }
 ]
 
@@ -53,7 +48,7 @@ const MainEvent = () => {
               src={event.img}
               alt=""
             />
-            <div className=" h-[95px]  rounded-b-xl">
+            <div className=" h-[95px] rounded-b-xl">
               {/* 이벤트 내용 */}
               {event.description}
             </div>
