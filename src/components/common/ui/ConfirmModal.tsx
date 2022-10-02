@@ -23,12 +23,12 @@ const ConfirmModal = ({isModalOpen,title,onClose,onConfirm,children}:ConfirmModa
       <div className="py-5 text-center">{children}</div>
       <div className="flex justify-center gap-2">
         <div className="p-1">
-          <Button onClick={() => onClose()}>
+          <Button onClick={() => onClose()} bgColor='white'>
           아니요
           </Button>
         </div>
         <div className="p-1">
-          <Button onClick={() => {onClose(),onConfirm()}}>
+          <Button onClick={() => {onClose(),onConfirm()}} bgColor='dark'>
             네
           </Button>
         </div>

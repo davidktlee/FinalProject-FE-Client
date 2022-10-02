@@ -15,6 +15,7 @@ import MembersTerms from './terms/MembersTerms'
 import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
 
 export interface PaymentFormValueType {
+  memberId:string | number
   orderer: string
   postCode: number | string
   address: string
@@ -66,6 +67,7 @@ const Payment = () => {
     lastNumber: ''
   })
   const [formValue, setFormValue] = useState<PaymentFormValueType>({
+    memberId:0,
     orderer:  '',
     postCode: '',
     address:  '',
@@ -171,6 +173,7 @@ const Payment = () => {
         emailDomain: splitUserEmail[1]
       })
     setFormValue({
+      memberId: user.memberId,
       orderer:  user.name,
       postCode: user.postCode,
       address:  user.address,
@@ -189,6 +192,9 @@ const Payment = () => {
   
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
+      
+      <ConfirmModal title="배송지 정보" isModalOpen={isModalOpen} onClose={() => {setIsNew(true),setIsModalOpen(false)}} onConfirm={() => setIsNew(false)}><span className=' text-lenssisDark text-lg font-semibold '>주문자 정보와 배송지 정보가 일치하십니까? </span></ConfirmModal>
+      
      <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
@@ -231,9 +237,9 @@ const Payment = () => {
 
 
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-        <div className='relative'>
-      <ConfirmModal title="배송지 정보" isModalOpen={isModalOpen} onClose={() => {setIsNew(true),setIsModalOpen(false)}} onConfirm={() => setIsNew(false)}><span className=' text-lenssisDark text-lg font-semibold '>주문자 정보와 배송지 정보가 일치하십니까? </span></ConfirmModal>
-      </div>
+        
+      
+      
         <h3 className="w-full pb-1 font-bold border-b border-solid border-lenssisDark text-xl">
           주문서 작성
         </h3>

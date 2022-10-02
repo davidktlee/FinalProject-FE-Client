@@ -28,6 +28,7 @@ const NewShippingPaper = ({
   visibleEmail
 }: NewShippingPaperProps) => {
   const [newFormValue, setNewFormValue] = useState<PaymentFormValueType>({
+    memberId:0,
     orderer: '',
     postCode: '',
     address: '',

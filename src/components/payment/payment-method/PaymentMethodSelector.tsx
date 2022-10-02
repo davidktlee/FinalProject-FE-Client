@@ -14,7 +14,7 @@ const PaymentMethodSelector = () => {
 
   }
   return (
-    <div className='w-full'>
+    <div className='w-full flex flex-col'>
     
     <div className='flex items-center justify-between xs:justify-center gap-4 mt-4 pb-4 border-b border-solid border-black flex-wrap xs:flex-nowrap'>
      <Radio onChange={currentPaymentMethodHandler} title='クレジットカード' value='クレジットカード' />
@@ -31,7 +31,7 @@ const PaymentMethodSelector = () => {
       <PaymentMethodInfoMessage message='소액 결제의 경우 PG사에 정책에 따라 결제 금액 제한이 있을 수 있습니다.' />
     </div>
 
-    <div className=' mt-10 xs:mt-24 flex flex-col items-center justify-center w-[300px] xs:w-[780px] mx-auto border border-solid border-lenssisGray p-8 font-semibold'>
+    <div className='mt-10 xs:mt-24 flex flex-col items-center justify-center w-[300px] xs:w-[60%] mx-auto border border-solid border-lenssisGray p-8 font-semibold'>
       <h3 className='font-bold text-xl w-full text-center pb-2'>총 주문금액</h3>
       <div className='flex flex-col h-fit pb-4 border-b border-solid border-lenssisStroke'>
       <div className='flex w-[200px] xs:w-[380px] items-center justify-between my-2'>
