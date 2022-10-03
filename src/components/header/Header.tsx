@@ -1,4 +1,5 @@
-import { useCallback } from 'react'
+
+import { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import LeftSection from './LeftSection'
 import RightSection from './RightSection'
@@ -9,15 +10,24 @@ import { useRecoilState } from 'recoil'
 import { filterState } from '../../store/filterOpen'
 import { useUser } from '../auth/hooks/useUser'
 
+import NavSearch from './NavSearch'
+
+import MobileFilter from '../main/filterbar/mobile/MobileFilter'
+
+
 const Header = () => {
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
+  const [isSearch,setIsSearch] = useState(false);
   const { user } = useUser()
   const handleFilter = useCallback(() => {
     setFilterOpen((prev) => !prev)
-    console.log(filterOpen)
   }, [])
+
   const { pathname } = useLocation()
 
+  const popupSearchBarHandler = () => {
+    setIsSearch(prev => !prev);
+  }
   return (
     <nav className="fixed flex flex-col justify-center bg-[#ABC8DF] text-white z-50 w-full top-0">
       <TopInfomation />
@@ -29,7 +39,7 @@ const Header = () => {
 
         {/* 모바일 navigation */}
         <div className="flex items-center xs:hidden gap-4 pr-2">
-          <button className="flex items-center">
+          <button className="flex items-center" onClick={popupSearchBarHandler}>
             <TbSearch size={24} />
           </button>
           {pathname === '/' && (
@@ -37,6 +47,7 @@ const Header = () => {
               <FiFilter size={24} />
             </button>
           )}
+          {isSearch && <div className='fixed top-[12%] left-[12%] z-50 text-black'><NavSearch searchValueHandler={() => {}} /></div>}
         </div>
       </div>
     </nav>

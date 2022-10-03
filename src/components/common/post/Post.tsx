@@ -39,14 +39,14 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
             onChange={(e) => changeFormHandler(e, [VALIDATOR_REQUIRE()])}
             value={formValue.postCode}
             type="text"
-            className="grow h-10 border border-solid border-gray-200 rounded-md max-w-[400px]  focus:outline-1 focus:outline-[#ABC8DF] pl-1"
+            className="grow h-10 border border-solid border-gray-200 rounded-md w-[200px] xs:max-w-[230px]  focus:outline-1 focus:outline-[#ABC8DF] pl-1"
             readOnly
             onBlur={onBlur}
             
           />
           <div className="grow">
             <button
-              className="w-28 xs:w-40 h-11 bg-lenssisDark rounded-md text-white font-bold border-none cursor-pointer"
+              className="w-28 xs:w-40 h-10 bg-lenssisDark rounded-md text-white font-bold border-none cursor-pointer"
               onClick={addressPopupHandler}
             >
               우편 번호 검색

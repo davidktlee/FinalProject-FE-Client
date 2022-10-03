@@ -80,7 +80,7 @@ const FilterBar = () => {
               onClick={handleFilterValue}
               value="all"
               className={`${
-                duration === 'all' ? 'bg-lenssisDark text-white' : ''
+                duration === 'all' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
               } border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
             >
               상품 전체
@@ -90,7 +90,7 @@ const FilterBar = () => {
                 onClick={handleFilterValue}
                 value="monthly"
                 className={`${
-                  duration === 'monthly' ? 'bg-lenssisDark text-white' : ''
+                  duration === 'monthly' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 먼슬리
@@ -99,7 +99,7 @@ const FilterBar = () => {
                 onClick={handleFilterValue}
                 value="oneDay"
                 className={`${
-                  duration === 'oneDay' ? 'bg-lenssisDark text-white' : ''
+                  duration === 'oneDay' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 원데이

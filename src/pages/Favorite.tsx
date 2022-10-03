@@ -1,49 +1,50 @@
 import React, { useState } from 'react'
-import { useLocation, Outlet, Link } from 'react-router-dom'
+import { Outlet, NavLink } from 'react-router-dom'
 
 const Favorite = () => {
-  const location = useLocation()
-
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
-        <div className="container pt-44 pb-10 mx-auto ">
+        <div className="max-w-[1180px] container pt-44 pb-10 mx-auto ">
           <div className="lg:w-full mx-auto flex flex-wrap py-8 drop-shadow-basic xs-max:w-[95%] ">
             <div className="bg-white w-full dorp-shadow-basic rounded-[5px] px-[40px] py-[20px] xs-max:px-[10px]">
-              <div className="text-center mt-2 mb-6 font-bold">즐겨찾기</div>
+              <div className="text-center mt-6 mb-6 font-bold">즐겨찾기</div>
               <nav className="flex justify-between xs-max:text-[12px]">
-                <button
-                  className={`${
-                    location.pathname === '/favorite/all' &&
-                    'border-[#030303] border-b-[3px] boder-solid text-[#030303]'
-                  } flex-1 text-gray-600 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}
+                <NavLink
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? '3px solid black' : '2px solid #d3d3d3',
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? '#1B304A' : '#d3d3d3'
+                  })}
+                  to="all"
+                  className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-[1px] font-medium text-center text-lenssisDark"
                 >
-                  <Link to="all">
-                    <span>전체</span>
-                  </Link>
-                </button>
+                  <span className="text-lenssisDark">전체</span>
+                </NavLink>
 
-                <button
-                  className={`${
-                    location.pathname === '/favorite/oneday' &&
-                    'border-[#030303] border-b-[3px] boder-solid text-[#030303]'
-                  } flex-1 text-gray-600 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}
+                <NavLink
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? '3px solid black' : '2px solid #d3d3d3',
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? '#1B304A' : '#d3d3d3'
+                  })}
+                  to="oneDay"
+                  className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-2 font-medium text-center text-lenssisDark"
                 >
-                  <Link to="oneday">
-                    <span>원데이</span>
-                  </Link>
-                </button>
+                  <span className="text-lenssisDark">먼슬리</span>
+                </NavLink>
 
-                <button
-                  className={`${
-                    location.pathname === '/favorite/monthly' &&
-                    'border-[#030303] border-b-[3px] boder-solid text-[#030303]'
-                  } flex-1 text-gray-600 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}
+                <NavLink
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? '3px solid black' : '2px solid #d3d3d3',
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? '#1B304A' : '#d3d3d3'
+                  })}
+                  to="monthly"
+                  className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-2 font-medium text-center"
                 >
-                  <Link to="monthly">
-                    <span>먼슬리</span>
-                  </Link>
-                </button>
+                  <span className="text-lenssisDark">원데이</span>
+                </NavLink>
               </nav>
               <div className="flex justify-between mt-6 xs-max:text-[14px]">
                 <div>

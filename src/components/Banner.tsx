@@ -65,7 +65,7 @@ const Banner = () => {
   }, [swiperSetting])
 
   return (
-    <div className="w-full mx-auto my-10 relative">
+    <div className="w-full xs-max:mt-[120px] xs-max:mb-[20px] mt-[140px] mb-[40px] mx-auto  relative">
       <button ref={prevRef} className="absolute top-[45%] left-[15px] md:left-[30px] z-[2] hover:color-white">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle
@@ -116,7 +116,7 @@ const Banner = () => {
                     <img
                       src={img}
                       alt="banner-image"
-                      className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
+                      className=" w-full h-[500px] md:h-auto object-fit md:object-cover "
                     />
                   </SwiperSlide>
                 </div>
