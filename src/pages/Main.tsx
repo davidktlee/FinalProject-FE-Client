@@ -68,7 +68,7 @@ const Main = () => {
           </div>
         </section>
         <div
-          onClick={() => navigate('/')} /* 퍼스널 컬러 테스트로 이동 */
+          onClick={() => navigate('https://www.lenssiscolor.com/?utm_source=homapage_main&utm_medium=personal+color&utm_campaign=personal+color')} /* 퍼스널 컬러 테스트로 이동 */
           className="w-full h-auto mb-[30px] mx-auto border-none rounded-md shadow-basic object-fit md:object-cover overflow-hidden"
         >
           <img
