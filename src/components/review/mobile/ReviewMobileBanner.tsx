@@ -17,7 +17,6 @@ const ReviewMobileBanner = () => {
     if (!swiperSetting) {
       setSwiperSetting({
         scrollbar: { draggable: true },
-        pagination: { clickable: true },
         slidesPerView: 2,
         watchOverflow: true,
         onBeforeInit: (swiper) => {
@@ -43,7 +42,7 @@ const ReviewMobileBanner = () => {
   ]
 
   return (
-    <div className="py-5 relative border-solid border-[#1B304A] border-b-2">
+    <div className=" relative">
       {swiperSetting && (
         <Swiper {...swiperSetting} style={{ borderRadius: '15px', padding: '20px 0' }}>
           <div className=" flex w-full justify-between ">

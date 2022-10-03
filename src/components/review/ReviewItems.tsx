@@ -5,11 +5,11 @@ const RevieItems = () => {
 
   return (
     <section className="text-gray-600 body-font ">
-      <div className="container py-4 mt-2 mx-auto ">
+      <div className="container py-4 mt-2 mx-auto">
         <div
           className={`${
             isToggle ? 'bg-lenssisLightGray ' : ''
-          } "lg:w-full flex-col flex-wrap p-8 cursor-pointer shadow-basic drop-shadow-basic" xs-max:p-4 rounded-[5px]`}
+          } "w-full flex-col flex-wrap p-8 cursor-pointer" border-[2px] border-solid border-lenssisLightGray xs-max:p-4 rounded-[5px]`}
           onClick={() => setIsToggle(!isToggle)}
         >
           <div className="w-full">

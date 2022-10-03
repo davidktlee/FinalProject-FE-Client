@@ -8,11 +8,11 @@ const MainReview = () => {
   return (
     <div className="py-2 bg-white rounded-[5px]">
       <div className="flex justify-center items-center text-[24px] my-4 ">
-        <span className="border-b-[6px] border-solid border-[#0B0954] font-[700] hover:cursor-pointer">
+        <span className="border-b-[6px] mb-[30px] border-solid border-[#0B0954] font-[700] hover:cursor-pointer xs-max:text-[18px] ">
           Review
         </span>
       </div>
-      <div className="xs-max:hidden p-10 flex flex-wrap justify-center gap-6 max-w-[1280px] mx-auto">
+      <div className="xs-max:hidden pt-10 flex flex-wrap justify-center gap-6 max-w-[1280px] mx-auto">
         <MainReviewCard />
         <MainReviewCard />
         <MainReviewCard />
@@ -22,7 +22,7 @@ const MainReview = () => {
         <MainReviewCard />
         <MainReviewCard />
       </div>
-      <div className="xs:hidden py-6 flex flex-wrap justify-center gap-[4px] max-w-[1280px] mx-auto">
+      <div className="xs:hidden pt-6 flex flex-wrap justify-center gap-[8px] max-w-[1280px] mx-auto">
         <MobileReviewCard />
         <MobileReviewCard />
         <MobileReviewCard />
