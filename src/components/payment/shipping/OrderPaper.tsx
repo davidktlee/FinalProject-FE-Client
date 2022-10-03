@@ -24,7 +24,7 @@ interface OrderPaperProps {
   domainArray: string[]
   phoneFormValueChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
   phoneFormValue: Record<string, string | number>
-  visibleAddress?:boolean
+  
   visibleEmail?:boolean
   visibleRequest?:boolean
 }
@@ -41,7 +41,7 @@ const OrderPaper = ({
   domainArray,
   phoneFormValueChangeHandler,
   phoneFormValue,
-  visibleAddress,
+  
   visibleEmail,
   visibleRequest
 }: OrderPaperProps) => {
@@ -51,7 +51,7 @@ const OrderPaper = ({
         <ShippingOrderer onChange={changeFormHandler} value={formValue.orderer} />
       </ShippingCard>
 
-      {visibleAddress && <ShippingCard title="주소" isRequired>
+      <ShippingCard title="주소" isRequired>
         <ShippingAddress
           onChange={changeFormHandler}
           value1={formValue.postCode}
@@ -59,7 +59,7 @@ const OrderPaper = ({
           value3={formValue.detailAddress}
           onClick={addressPopupHandler}
         />
-      </ShippingCard>}
+      </ShippingCard>
 
       <ShippingCard title="휴대폰" isRequired>
         <ShippingPhone
