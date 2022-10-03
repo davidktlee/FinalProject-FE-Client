@@ -26,15 +26,12 @@ const AllFavoriteList = () => {
               <Card
                 key={`${item.productId}-${idx}`}
                 idx={idx}
-                id={item.productId}
-                name={item.name}
+                colorAndImage={item.colorAndImage}
+                productId={item.productId}
                 series={item.series}
-                price={item.details.price}
-                discount={item.details.discount}
-                diameter={item.diameter}
-                colorCode={item.details.color_code}
-                productImg={item.details.product_details_image_url}
-                graphicDiameter={item.details.graphicDiameter}
+                price={item.price}
+                discount={item.discount}
+                graphicDiameter={item.graphicDiameter}
               />
             ))}
       </div>
