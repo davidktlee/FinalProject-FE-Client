@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Event from '../components/main/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Banner from './../components/Banner'
@@ -22,6 +22,21 @@ const Main = () => {
   const navigate = useNavigate()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
+  const MobileFilterRef = useRef<HTMLDivElement>(null)
+
+  console.log(filterOpen)
+  const handleClickOutside = ({ target }: MouseEvent) => {
+    if (!MobileFilterRef.current?.contains(target as Node) && filterOpen) {
+      console.log('click outside')
+      setFilterOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
+
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -38,7 +53,10 @@ const Main = () => {
             <FilterBar />
           </div>
           {filterOpen && (
-            <div className="xs:hidden mobile-filter fixed left-0 top-[106px] z-10 w-full animate-drop">
+            <div
+              ref={MobileFilterRef}
+              className="xs:hidden mobile-filter fixed left-0 top-[100px] z-10 w-full animate-drop"
+            >
               <MobileFilter />
             </div>
           )}

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import LeftSection from './LeftSection'
 import RightSection from './RightSection'
@@ -8,14 +8,15 @@ import { FiFilter } from 'react-icons/fi'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../../store/filterOpen'
 import { useUser } from '../auth/hooks/useUser'
+import MobileFilter from '../main/filterbar/mobile/MobileFilter'
 
 const Header = () => {
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
   const { user } = useUser()
   const handleFilter = useCallback(() => {
     setFilterOpen((prev) => !prev)
-    console.log(filterOpen)
   }, [])
+  console.log(filterOpen)
   const { pathname } = useLocation()
 
   return (
