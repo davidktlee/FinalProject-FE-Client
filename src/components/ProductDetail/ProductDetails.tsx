@@ -5,10 +5,12 @@ import ProductTabs from './ProductTabs'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { graphicDiameter } from '../../constants/filterData'
-
+import { useLocation } from 'react-router-dom'
 import { axiosInstance } from '../axiosinstance'
 
 const ProductDetails = () => {
+  const { pathname } = useLocation()
+
   const getProducts = async () => {
     const res = await axios.get(`http://43.200.50.49:8080/main/product?page=1`)
     console.log(res)
@@ -17,6 +19,10 @@ const ProductDetails = () => {
 
   const { data } = useQuery('products', getProducts)
   console.log(data)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div>
