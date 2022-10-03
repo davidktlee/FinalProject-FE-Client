@@ -61,13 +61,13 @@ const Main = () => {
             </div>
           )}
           {/*메인에서 상품 리스트 */}
-          <div className="w-[880px] border-none rounded-md shadow-basic bg-white">
+          <div className="w-[880px] border-none rounded-[5px] shadow-basic bg-white">
             <CardContainer data="Best" />
           </div>
         </section>
         <div
           onClick={() => navigate('/')} /* 퍼스널 컬러 테스트로 이동 */
-          className="w-full h-auto mx-auto border-none rounded-md shadow-basic my-[20px] md:my-12 object-fit md:object-cover overflow-hidden"
+          className="w-full h-auto mx-auto border-none rounded-[5px] shadow-basic my-[20px] md:my-12 object-fit md:object-cover overflow-hidden"
         >
           <img
             src="https://user-images.githubusercontent.com/90392240/193073587-58b90f5a-e06c-4f2c-baec-87351fbf4b96.png"
@@ -76,19 +76,19 @@ const Main = () => {
           />
         </div>
 
-        <div className="w-full border-none rounded-md pb-1 shadow-basic bg-white">
+        <div className="w-full border-none rounded-[5px] pb-1 shadow-basic bg-white">
           <CardContainer data="New" />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
+        <div className="w-full my-12 border-none rounded-[5px]  shadow-basic bg-white">
           <Event />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
+        <div className="w-full my-12 border-none rounded-[5px]  shadow-basic bg-white">
           <Recommend />
         </div>
         <div className="w-full my-12 border-none drop-shadow-basic">
           <MainReview />
         </div>
-        <div className="w-full my-12 border-none rounded-md shadow-basic bg-white">
+        <div className="w-full my-12 border-none rounded-[5px] shadow-basic bg-white">
           <NoticePage />
         </div>
       </div>

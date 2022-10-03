@@ -207,12 +207,12 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
       <div className="flex w-full items-center mt-8 h-[45px] gap-4">
         <Link
           to="/"
-          className="rounded-md flex-1 h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center"
+          className="rounded-[5px] flex-1 h-full text-lenssisDark bg-white border-lenssisDtext-lenssisDark border-solid border box-border font-bold cursor-pointer flex justify-center items-center"
         >
           <span className="text-[14px] font-bold">취소</span>
         </Link>
         <button
-          className="rounded-md flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
+          className="rounded-[5px] flex-1 h-full bg-lenssisDark text-white border-transparent box-border font-bold cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
           onClick={submitFormHandler}
           disabled={!totalValid}
         >

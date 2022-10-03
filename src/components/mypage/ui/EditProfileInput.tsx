@@ -16,7 +16,7 @@ const EditProfileInput = ({onChange,value,name,placeholder,type}:EditProfileInpu
       name={name}
       onChange={onChange}
       value={value}
-      className={`w-full h-10 border border-solid border-gray-200 rounded-md max-w-[310px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`}
+      className={`w-full h-10 border border-solid border-gray-200 rounded-[5px] max-w-[310px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`}
       type={type || 'text'}
       placeholder={placeholder}
     />

@@ -50,7 +50,7 @@ const PaymentMethodSelector = () => {
       
     </div>
     <div className='flex w-[300px] xs:w-[780px] items-center justify-between my-2 mt-6 mx-auto'>
-      <button className='w-full bg-lenssisDark text-white font-semibold rounded-md h-10'>결제하기</button>
+      <button className='w-full bg-lenssisDark text-white font-semibold rounded-[5px] h-10'>결제하기</button>
       </div>
     </div>
   );

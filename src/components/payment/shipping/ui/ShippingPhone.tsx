@@ -14,7 +14,7 @@ const ShippingPhone = ({value1,value2,value3,onChange}:ShippingPhoneProps) => {
             name='firstNumber'
             value={value1}
             type="number"
-            className="border border-solid border-gray-200 h-10 rounded-md max-w-[80px] xs:max-w-[120px]"
+            className="border border-solid border-gray-200 h-10 rounded-[5px] max-w-[80px] xs:max-w-[120px]"
             onChange={onChange}
           />
           <span>&nbsp; - &nbsp;</span>
@@ -22,7 +22,7 @@ const ShippingPhone = ({value1,value2,value3,onChange}:ShippingPhoneProps) => {
             name="middleNumber"
             value={value2}
             type="number"
-            className="border border-solid border-gray-200 h-10 rounded-md max-w-[80px] xs:max-w-[120px]"
+            className="border border-solid border-gray-200 h-10 rounded-[5px] max-w-[80px] xs:max-w-[120px]"
             onChange={onChange}
           />
           <span>&nbsp; - &nbsp;</span>
@@ -30,7 +30,7 @@ const ShippingPhone = ({value1,value2,value3,onChange}:ShippingPhoneProps) => {
             name="lastNumber"
             value={value3}
             type="number"
-            className="border border-solid border-gray-200 h-10 rounded-md max-w-[80px] xs:max-w-[120px]"
+            className="border border-solid border-gray-200 h-10 rounded-[5px] max-w-[80px] xs:max-w-[120px]"
             onChange={onChange}
           />
         </div>
