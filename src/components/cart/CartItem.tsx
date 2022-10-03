@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Counter from './Counter';
 import {HiCheck} from 'react-icons/hi'
+import CheckBox from '../common/ui/CheckBox';
 
 interface CartItemProps {
   isTotalChecked: boolean;
@@ -17,12 +18,7 @@ const CartItem = ({isTotalChecked,setIsTotalChecked}:CartItemProps) => {
   }
   return (
     <li className='flex my-6 text-sm xs:text-base items-center h-[90px] xs:h-[110px] '>
-      <div
-      onClick={onClick}
-      className={`flex items-center justify-center h-4 w-4 border border-solid border-lenssisStroke rounded-[5px] ${(isChecked || isTotalChecked) && 'bg-lenssisDark'}   transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer`}
-      >
-      <HiCheck size={14} color="#ffffff" />
-      </div>
+      <CheckBox isChecked={isChecked} onClick={onClick} isTotalChecked={isTotalChecked} bgColor="bg-lenssisDark" />
           <img className='w-[90px] xs:w-[120px] h-[100px] xs:h-[120px]' src="assets/eyes.png" alt="" />
           <div className='ml-[6px] xs:ml-4 grow flex flex-col'>
         <div className='mb-2'>에이 링+ 그레이</div>
