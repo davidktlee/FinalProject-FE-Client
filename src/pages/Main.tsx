@@ -31,6 +31,10 @@ const Main = () => {
       setFilterOpen(false)
     }
   }
+  const toColorTest = () => {
+    window.location.href =
+      'https://www.lenssiscolor.com/?utm_source=homapage_main&utm_medium=personal+color&utm_campaign=personal+color'
+  }
   const toTopHandler = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -68,7 +72,7 @@ const Main = () => {
           </div>
         </section>
         <div
-          onClick={() => navigate('https://www.lenssiscolor.com/?utm_source=homapage_main&utm_medium=personal+color&utm_campaign=personal+color')} /* 퍼스널 컬러 테스트로 이동 */
+          onClick={toColorTest} /* 퍼스널 컬러 테스트로 이동 */
           className="w-full h-auto mb-[30px] mx-auto border-none rounded-md shadow-basic object-fit md:object-cover overflow-hidden"
         >
           <img
