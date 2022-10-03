@@ -9,7 +9,7 @@ const NavSearch = ({searchValueHandler}:NavSearchProps) => {
 
 
   return (
-    <div className="flex items-center relative  rounded-3xl border border-solid border-white w-1/3 max-w-[300px] min-w-[300px]">
+    <div className="flex items-center relative rounded-3xl border border-solid border-white w-1/3 max-w-[300px] min-w-[300px]">
       <input
         className="w-full h-8 pl-4 outline-none bg-[#73A4CA] placeholder-white placeholder:text-sm rounded-full"
         type="text"

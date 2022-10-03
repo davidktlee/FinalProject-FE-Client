@@ -79,7 +79,7 @@ const Payment = () => {
   const [isNew, setIsNew] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
   const [isModalOpen,setIsModalOpen] = useState(false);
-
+  const [isChecked,setIsChecked] = useState(false);
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
@@ -89,6 +89,8 @@ const Payment = () => {
       [name]: value
     }))
   },[])
+
+
   const handleComplete = useCallback((data: any) => {
     let fullAddress = data.address
     let extraAddress = ''
@@ -311,13 +313,16 @@ const Payment = () => {
       <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 비회원 구매시 개인정보 수집 이용동의
         </h3>
         
-        <NonMembersTerms />
+        <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
       <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
         <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
           결제수단 선택
         </h3>
         <PaymentMethodSelector />
+      <div className='flex w-[60%] items-center justify-between my-2 mt-6 mx-auto'>
+      <button className='w-full bg-lenssisDark text-white font-semibold rounded-[5px] h-10'>결제하기</button>
+      </div>
       </CardTemplate>
     </PageLayout>
   )

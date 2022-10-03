@@ -57,7 +57,7 @@ const Birth = ({ formValue, setFormValue, changeFormHandler }: BirthProps) => {
             onChange={(e) => changeFormHandler(e, [VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(5)])}
             value={formValue.birthYear}
             type="number"
-            className="h-10 border border-solid border-gray-200 rounded-md min-w-[60px] max-w-[80px]  focus:outline-1 focus:outline-[#ABC8DF]"
+            className="h-10 border border-solid border-gray-200 rounded-[5px] min-w-[60px] max-w-[80px]  focus:outline-1 focus:outline-[#ABC8DF]"
             onBlur={onBlur}
           />
           <label className="">년</label>
@@ -69,7 +69,7 @@ const Birth = ({ formValue, setFormValue, changeFormHandler }: BirthProps) => {
             onChange={(e) => changeFormHandler(e, [VALIDATOR_MIN(1), VALIDATOR_MAX(12)])}
             value={formValue.birthMonth}
             type="number"
-            className="h-10 border border-solid border-gray-200 rounded-md min-w-[60px] max-w-[60px]  focus:outline-1 focus:outline-[#ABC8DF]"
+            className="h-10 border border-solid border-gray-200 rounded-[5px] min-w-[60px] max-w-[60px]  focus:outline-1 focus:outline-[#ABC8DF]"
             onBlur={onBlur}
           />
           <span className="">월</span>
@@ -81,7 +81,7 @@ const Birth = ({ formValue, setFormValue, changeFormHandler }: BirthProps) => {
             onChange={(e) => changeFormHandler(e, [VALIDATOR_MINLENGTH(1), VALIDATOR_MAXLENGTH(31)])}
             value={formValue.birthDay}
             type="number"
-            className="h-10 border border-solid border-gray-200 rounded-md min-w-[60px] max-w-[60px]  focus:outline-1 focus:outline-[#ABC8DF]"
+            className="h-10 border border-solid border-gray-200 rounded-[5px] min-w-[60px] max-w-[60px]  focus:outline-1 focus:outline-[#ABC8DF]"
             onBlur={onBlur}
           />
           <span className="">일</span>

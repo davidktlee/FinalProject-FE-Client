@@ -10,7 +10,7 @@ function MobileNotice() {
   return (
     <>
       <div className="block xs:hidden pb-10">
-        <div className="rounded-md items-center my-2 py-2 pl-4 shadow-basic">
+        <div className="rounded-[5px] items-center my-2 py-2 pl-4 shadow-basic">
           <div className="">
             <span className="hover:cursor-pointer hover:underline" onClick={() => navigate(`/notice/${id}`)}>
               내용에 용에 들어 달것

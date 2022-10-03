@@ -14,14 +14,14 @@ function Search() {
         <input
           type="text"
           placeholder="Search"
-          className="text-lenssisGray text-[15px] border-[1px] border-solid py-1 pl-1 rounded-md"
+          className="text-lenssisGray text-[15px] border-[1px] border-solid py-1 pl-1 rounded-[5px]"
         />
       </span>
       <span className="inline-block xs:hidden absolute top-12 right-0 ">
         {isOpenSearch ? (
           <span className="relative animate-left">
             <input
-              className="p-[4px] border-[1px] border-solid border-[#A6A6A6] rounded-md opacity relative"
+              className="p-[4px] border-[1px] border-solid border-[#A6A6A6] rounded-[5px] opacity relative"
               placeholder="Search"
             />
             <span className="absolute top-[2px] right-2" onClick={closeSearchHandler}>
