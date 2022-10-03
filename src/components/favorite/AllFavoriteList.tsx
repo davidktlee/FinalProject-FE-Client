@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
 import CardContainer from '../main/CardContainer'
-import { Item } from '../main/types/productTypes'
+import { ProductResponseType } from '../main/types/productTypes'
 import { queryKeys } from '../react-query/queryKeys'
 
 const AllFavoriteList = () => {
@@ -22,7 +22,7 @@ const AllFavoriteList = () => {
         {productLists &&
           productLists
             .slice(0, 2)
-            .map((item: Item, idx: number) => (
+            .map((item: ProductResponseType, idx: number) => (
               <Card
                 key={`${item.productId}-${idx}`}
                 idx={idx}
