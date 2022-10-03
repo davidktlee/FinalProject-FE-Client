@@ -95,13 +95,13 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
               key={index}
               className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]
               ${w} ${h} ${px} ${py}
-              ${duration === content.value ? 'bg-lenssisDark text-white' : ''} ${
-                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white' : ''
-              } ${series.includes(content.value) ? 'bg-lenssisDark text-white' : ''} ${
+              ${duration === content.value ? 'bg-lenssisDark text-white border-lenssisDark' : ''} ${
+                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+              } ${series.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''} ${
                 color.includes(content.color)
-                  ? 'border-solid border-2 border-lenssisDark'
+                  ? 'border-solid border-[3px] border-lenssisDark'
                   : 'border-lenssisStroke'
-              } ${features.includes(content.value) ? 'bg-lenssisDark text-white' : ''}`}
+              } ${features.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''}`}
               style={content.color && { backgroundColor: `${content.color}`, width: '25px' }}
               onClick={() => handleFilterValue(content)}
             >
