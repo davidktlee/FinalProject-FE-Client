@@ -256,7 +256,7 @@ const Payment = () => {
           domainArray={domainArray}
           phoneFormValueChangeHandler={phoneFormValueChangeHandler}
           phoneFormValue={phoneFormValue}
-          visibleAddress={false}
+          
           visibleEmail
           
         />
@@ -280,7 +280,7 @@ const Payment = () => {
             domainArray={domainArray}
             phoneFormValueChangeHandler={phoneFormValueChangeHandler}
             phoneFormValue={phoneFormValue}
-            visibleAddress={true}
+            
             visibleRequest
           />
         )}

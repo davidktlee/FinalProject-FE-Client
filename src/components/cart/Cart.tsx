@@ -7,6 +7,7 @@ import { useUser } from '../auth/hooks/useUser'
 import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
 import CardTemplate from '../common/ui/CardTemplate'
+import CheckBox from '../common/ui/CheckBox'
 import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
 import { queryKeys } from '../react-query/queryKeys'
@@ -43,21 +44,12 @@ const Cart = () => {
   <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
     <div className='flex flex-col items-center xs:flex-row xs:items-start text-lenssisGray'>
+
       <div className='grow flex flex-col px-0 xs:px-2 w-full'>
         <div className='flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 xs:gap-0 w-full py-4 border-y border-solid border-lenssisStroke text-xs xs:text-base '>
           <div className='flex items-center'>
-          {isTotalChecked &&
-          <div
-      onClick={totalCheckedHandler}
-      className={`ring-[1px] ring-[#efefef] flex items-center justify-center h-4 w-4  rounded-[5px] bg-lenssisDark transition duration-200 mt-1 float-left mr-2 cursor-pointer`}
-      >
-      <HiCheck size={14} color="#ffffff" />
-      </div>}
-      {!isTotalChecked &&
-          <div
-      onClick={totalCheckedHandler}
-      className={`ring-[1px] ring-[#efefef] flex items-center justify-center h-4 w-4  bg-lenssisStroke rounded-[5px]  transition duration-200 mt-1 float-left mr-2 cursor-pointer`}
-      />}
+          {isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisDark" isChecked={isTotalChecked} />}
+          {!isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisStroke" />}
       
       <label>전체선택(2/2)</label>
         </div>
@@ -70,6 +62,7 @@ const Cart = () => {
       <CartItem isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked}/>
       </ul>
       </div>
+
       <div className='w-full xs:w-2/5 xs:max-w-[440px] text-base '>
         <div className='border border-solid border-gray-100 bg-[#f4f6f8] font-bold text-lenssisGray flex flex-col pt-2 p-6 rounded-sm px-8 gap-2'>
         <h3 className='text-xl py-4 text-[#5a5a5a]'>지불 금액</h3>
@@ -78,16 +71,23 @@ const Cart = () => {
         <div className='flex items-center justify-between text-black'><p>결제 예상 금액</p> <p>3,600円</p></div>
         </div>
         <div className='flex gap-4 flex-col xs:flex-row items-center w-full justify-between mt-4'>
+          {/* onClick시 선택한 상품만 담아 주문페이지에 request하는 로직 작성해야 함 */}
           <button className='border border-solid border-lenssisDark py-2 w-full xs:w-[220px] rounded-md text-lenssisDark text-base h-10 font-semibold'>선택상품구매</button>
-          <button className='border border-solid border-transparent bg-lenssisDark py-2 w-full xs:w-[220px] rounded-md text-white text-base h-10 font-semibold'>전체상품구매</button>
+          {/* onClick시 모든 상품을 주문페이지에 request하는 로직 작성해야 함 */}
+          <Link to="/payment" className='text-center border border-solid border-transparent bg-lenssisDark py-2 w-full xs:w-[220px] rounded-md text-white text-base h-10 font-semibold'>전체상품구매</Link>
         </div>
         <div className='flex flex-col items-center mt-10 text-lenssisGray font-semibold'>
           <p className=''>3,000円 이상 구매 시 무료 배송</p>
           <Link to="/" ><span className='underline'>쇼핑 계속</span></Link>
         </div>
       </div>
+
+
     </div>
     </CardTemplate>
+
+
+
 
     <div className='hidden xs:block'>
     <CardTemplate title='2번' marginTop='mt-12'>
