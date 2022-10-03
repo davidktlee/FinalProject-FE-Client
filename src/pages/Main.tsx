@@ -21,7 +21,7 @@ const Main = () => {
   const refreshToken = useRefreshToken()
   const navigate = useNavigate()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
-  
+
   const MobileFilterRef = useRef<HTMLDivElement>(null)
 
   console.log(filterOpen)
@@ -32,7 +32,7 @@ const Main = () => {
     }
   }
   const toTopHandler = () => {
-    window.scrollTo()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   useEffect(() => {
     document.addEventListener('click', handleClickOutside)
@@ -93,6 +93,7 @@ const Main = () => {
         <div className="w-full xs-max:my-[20px] my-[30px] border-none rounded-md shadow-basic bg-white">
           <NoticePage />
         </div>
+        <button onClick={toTopHandler}>toTop</button>
       </div>
     </div>
   )
