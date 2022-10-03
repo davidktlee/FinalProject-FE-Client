@@ -1,27 +1,36 @@
 import React, { ChangeEvent, useState } from 'react';
+import CartItem from '../../cart/CartItem';
 import Radio from '../../common/ui/Radio';
 import PaymentMethodInfoMessage from './PaymentMethodInfoMessage';
 
 
-const paymentMethodArray = ['クレジットカード','コンビニ','銀行振込','PayEasy','あと払いペイディー','PayPay']
+const paymentMethodArray = ['クレジットカード','コンビニ','銀行振込','PayEasy','あと払いペイディー']
 
 const PaymentMethodSelector = () => {
 
   const [currentPaymentMethod,setCurrentPaymentMethod] = useState('')
+  const [paymentMethodNumber,setPaymentMethodNumber] = useState<null|number>(null);
   const currentPaymentMethodHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    
     const {target:{value}} = e;
-    setCurrentPaymentMethod(value)
 
+    
+    if(value === 'PayPay'){
+      setPaymentMethodNumber(5);
+      return
+    }else{
+      setPaymentMethodNumber(paymentMethodArray.findIndex(item => item === value));
+      setCurrentPaymentMethod(value)
+    }
   }
+  console.log(paymentMethodNumber);
   return (
     <div className='w-full flex flex-col'>
     
     <div className='flex items-center justify-between xs:justify-center gap-4 mt-4 pb-4 border-b border-solid border-black flex-wrap xs:flex-nowrap'>
-     <Radio onChange={currentPaymentMethodHandler} title='クレジットカード' value='クレジットカード' />
-     <Radio onChange={currentPaymentMethodHandler} title="コンビニ" value="コンビニ" />
-     <Radio onChange={currentPaymentMethodHandler} title="銀行振込" value="銀行振込" />
-     <Radio onChange={currentPaymentMethodHandler} title="PayEasy" value="PayEasy" />
-     <Radio onChange={currentPaymentMethodHandler} title="あと払いペイディー" value='あと払いペイディー' />
+      {paymentMethodArray.map((item) => (
+        <Radio key={item} onChange={currentPaymentMethodHandler} title={item} value={item} />
+      ))}
      <Radio onChange={currentPaymentMethodHandler} value="PayPay"><img className='w-24' src="assets/paypay.png" alt="" /></Radio> 
     </div>
 
