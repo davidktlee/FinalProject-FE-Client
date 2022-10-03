@@ -21,7 +21,7 @@ const Main = () => {
   const refreshToken = useRefreshToken()
   const navigate = useNavigate()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
-
+  
   const MobileFilterRef = useRef<HTMLDivElement>(null)
 
   console.log(filterOpen)
@@ -31,7 +31,9 @@ const Main = () => {
       setFilterOpen(false)
     }
   }
-
+  const toTopHandler = () => {
+    window.scrollTo()
+  }
   useEffect(() => {
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
