@@ -45,9 +45,9 @@ const Main = () => {
 
   return (
     <div className="max-w-[1180px] mx-auto pb-10 ">
-      <div className="pt-[100px] relative ">
+      <div className="relative">
         <Banner />
-        <section className="flex justify-between">
+        <section className="flex justify-between  xs-max:my-[20px] my-[30px]">
           {/* 메인의 왼쪽 검색 필터 */}
           <div className="xs-max:hidden hidden lg:block xl:block w-[280px] mr-[20px]">
             <FilterBar />
@@ -67,7 +67,7 @@ const Main = () => {
         </section>
         <div
           onClick={() => navigate('/')} /* 퍼스널 컬러 테스트로 이동 */
-          className="w-full h-auto mx-auto border-none rounded-md shadow-basic my-[20px] md:my-12 object-fit md:object-cover overflow-hidden"
+          className="w-full h-auto mb-[30px] mx-auto border-none rounded-md shadow-basic object-fit md:object-cover overflow-hidden"
         >
           <img
             src="https://user-images.githubusercontent.com/90392240/193073587-58b90f5a-e06c-4f2c-baec-87351fbf4b96.png"
@@ -79,16 +79,16 @@ const Main = () => {
         <div className="w-full border-none rounded-md pb-1 shadow-basic bg-white">
           <CardContainer data="New" />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
+        <div className="w-full xs-max:my-[20px] my-[30px] border-none rounded-md  shadow-basic bg-white">
           <Event />
         </div>
-        <div className="w-full my-12 border-none rounded-md  shadow-basic bg-white">
+        <div className="w-full xs-max:my-[20px] my-[30px] border-none rounded-md  shadow-basic bg-white">
           <Recommend />
         </div>
-        <div className="w-full my-12 border-none drop-shadow-basic">
+        <div className="w-full xs-max:my-[20px] my-[30px] border-none drop-shadow-basic">
           <MainReview />
         </div>
-        <div className="w-full my-12 border-none rounded-md shadow-basic bg-white">
+        <div className="w-full xs-max:my-[20px] my-[30px] border-none rounded-md shadow-basic bg-white">
           <NoticePage />
         </div>
       </div>

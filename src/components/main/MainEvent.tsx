@@ -30,9 +30,9 @@ const MainEvent = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="py-2">
-      <div className="flex justify-center items-center text-[24px] mt-[25px] mb-[50px] md:mb-[50px] ">
-        <span className="border-b-[6px] border-solid border-[#1B304A] text-[18px] md:text-[24px] font-[600] hover:cursor-pointer">
+    <div>
+      <div className="flex justify-center text-[24px] ">
+        <span className="px-2 h-[45px] border-b-[5px] border-solid border-[#1B304A] text-[18px] md:text-[24px] mt-[25px] mb-[50px] font-[600] hover:cursor-pointer">
           Event
         </span>
       </div>
