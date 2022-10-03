@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Card from '../common/Card'
-import { Item, CardContainerPropsType } from './types/productTypes'
+import { CardContainerPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
-import { useQuery } from 'react-query'
-import { axiosInstance } from '../axiosinstance'
-import { queryKeys } from '../react-query/queryKeys'
-import { usePrefetchProductLists } from './hooks/useProductLists'
+
+import { useGetProductsList } from './hooks/useProductLists'
 
 // Pagination 부분 수정해야 함
 
@@ -13,48 +11,31 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
 
-  const getProduct = async (pageNo: number) => {
-    const res = await axiosInstance({
-      url: `https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products?page=${pageNo}&limit=9`
-    })
-
-    return res.data
-  }
-  // const productLists = useGetProductsList(allProductCurrentPage)
+  const productLists = useGetProductsList(allProductCurrentPage)
   // console.log(productLists)
-  useEffect(() => {}, [])
-  const { data: productLists } = useQuery(
-    [queryKeys.product, allProductCurrentPage],
-    () => getProduct(allProductCurrentPage),
-    {
-      refetchOnWindowFocus: false
-    }
-  )
 
   return (
     <>
       {data === 'New' ? (
         <>
-          <div className="flex justify-center">
-            <span className=" text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[50px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+          <div className="flex justify-center ">
+            <span className=" h-[45px] text-center font-[600] px-2 text-[18px] md:text-[24px] mt-[20px] mb-[50px] border-b-[5px] border-solid border-[#1B304A]">
               {data}
             </span>
           </div>
           <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
             {productLists &&
-              productLists.map((item: Item, idx: number) => (
+              productLists.map((item: ProductResponseType, idx: number) => (
                 <Card
-                  key={`${item.productId}-${idx}`}
                   idx={idx}
-                  id={item.productId}
-                  name={item.name}
+                  key={`${item.productId}-${idx}`}
+                  colorAndImage={item.colorAndImage}
+                  productId={item.productId}
                   series={item.series}
-                  price={item.details.price}
-                  discount={item.details.discount}
-                  diameter={item.diameter}
-                  colorCode={item.details.color_code}
-                  productImg={item.details.product_details_image_url}
-                  graphicDiameter={item.details.graphicDiameter}
+                  price={item.price}
+                  discount={item.discount}
+                  graphicDiameter={item.graphicDiameter}
+                  isNew={true}
                 />
               ))}
           </div>
@@ -68,25 +49,22 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
         data === 'Best' && (
           <>
             <div className="flex justify-center">
-              <span className="text-center font-[600] text-[18px] md:text-[24px] mt-[25px] mb-[50px] md:mb-[50px] border-b-[6px] border-solid border-[#1B304A]">
+              <span className=" h-[45px] text-center font-[600] px-2 text-[18px] md:text-[24px] mt-[20px] mb-[50px] border-b-[5px] border-solid border-[#1B304A]">
                 {data}
               </span>
             </div>
             <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
               {productLists &&
-                productLists.map((item: Item, idx: number) => (
+                productLists.map((item: ProductResponseType, idx: number) => (
                   <Card
                     key={`${item.productId}-${idx}`}
                     idx={idx}
-                    id={item.productId}
-                    name={item.name}
+                    colorAndImage={item.colorAndImage}
+                    productId={item.productId}
                     series={item.series}
-                    price={item.details.price}
-                    discount={item.details.discount}
-                    diameter={item.diameter}
-                    colorCode={item.details.color_code}
-                    productImg={item.details.product_details_image_url}
-                    graphicDiameter={item.details.graphicDiameter}
+                    price={item.price}
+                    discount={item.discount}
+                    graphicDiameter={item.graphicDiameter}
                   />
                 ))}
             </div>
