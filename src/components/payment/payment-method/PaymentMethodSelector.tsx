@@ -4,6 +4,8 @@ import Radio from '../../common/ui/Radio';
 import PaymentMethodInfoMessage from './PaymentMethodInfoMessage';
 
 
+
+
 const paymentMethodArray = ['クレジットカード','コンビニ','銀行振込','PayEasy','あと払いペイディー']
 
 const PaymentMethodSelector = () => {
@@ -42,25 +44,24 @@ const PaymentMethodSelector = () => {
 
     <div className='mt-10 xs:mt-24 flex flex-col items-center justify-center w-[300px] xs:w-[60%] mx-auto border border-solid border-lenssisGray p-8 font-semibold'>
       <h3 className='font-bold text-xl w-full text-center pb-2'>총 주문금액</h3>
-      <div className='flex flex-col h-fit pb-4 border-b border-solid border-lenssisStroke'>
-      <div className='flex w-[200px] xs:w-[380px] items-center justify-between my-2'>
+      
+      <div className='flex flex-col h-fit pb-4 border-b border-solid border-lenssisStroke w-full justify-center'>
+      <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mx-auto'>
         <p>총 상품금액</p> <p>얼마</p>
       </div>
-      <div className='flex w-[200px] xs:w-[380px] items-center justify-between my-2'>
+      <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mx-auto'>
         <p>총 배송비</p> <p>얼마</p>
       </div>
-      <div className='flex w-[200px] xs:w-[380px] items-center justify-between my-2'>
+      <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mx-auto'>
         <p>총 할인혜택</p> <p className='text-lenssis'>얼마</p>
       </div>
       </div>
-      <div className='flex w-[200px] xs:w-[380px] items-center justify-between my-2 mt-6'>
+      <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mt-6'>
         <p>{currentPaymentMethod}</p> <p>얼마</p>
       </div>
       
     </div>
-    <div className='flex w-[300px] xs:w-[780px] items-center justify-between my-2 mt-6 mx-auto'>
-      <button className='w-full bg-lenssisDark text-white font-semibold rounded-[5px] h-10'>결제하기</button>
-      </div>
+    
     </div>
   );
 };
