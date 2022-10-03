@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
 import CardContainer from '../main/CardContainer'
-import { Item } from '../main/types/productTypes'
+import { ProductResponseType } from '../main/types/productTypes'
 import { queryKeys } from '../react-query/queryKeys'
 
 const AllFavoriteList = () => {
@@ -22,19 +22,16 @@ const AllFavoriteList = () => {
         {productLists &&
           productLists
             .slice(0, 2)
-            .map((item: Item, idx: number) => (
+            .map((item: ProductResponseType, idx: number) => (
               <Card
                 key={`${item.productId}-${idx}`}
                 idx={idx}
-                id={item.productId}
-                name={item.name}
+                colorAndImage={item.colorAndImage}
+                productId={item.productId}
                 series={item.series}
-                price={item.details.price}
-                discount={item.details.discount}
-                diameter={item.diameter}
-                colorCode={item.details.color_code}
-                productImg={item.details.product_details_image_url}
-                graphicDiameter={item.details.graphicDiameter}
+                price={item.price}
+                discount={item.discount}
+                graphicDiameter={item.graphicDiameter}
               />
             ))}
       </div>

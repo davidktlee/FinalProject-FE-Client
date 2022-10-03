@@ -20,7 +20,7 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
     }
     setPagesCount(arr)
   }, [])
-  // usePrefetchProductLists(currentPage, allCount)
+  usePrefetchProductLists(currentPage, allCount)
 
   return (
     <div className={`my-[51px] flex grow justify-center items-center `}>

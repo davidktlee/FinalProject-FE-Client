@@ -84,7 +84,7 @@ function EventPage() {
                 <img
                   className="w-full h-[145px] md:h-[226px] rounded-t-xl object-fit md:object-cover"
                   src={event.mainImg}
-                  alt=""
+                  alt="イヴェントイメージ"
                 />
                 <div className=" h-[95px] rounded-b-xl">
                   {/* 이벤트 내용 */}
