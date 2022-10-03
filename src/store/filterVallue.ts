@@ -1,5 +1,15 @@
 import { atom } from 'recoil'
-import { graphicDiameter } from '../constants/filterData'
+
+export const filterState = atom({
+  key: 'filterValues',
+  default: {
+    duration: 'all',
+    graphicDiameter: [],
+    colors: [],
+    series: [],
+    features: []
+  }
+})
 
 export const durationState = atom<string>({
   key: 'durationState',
