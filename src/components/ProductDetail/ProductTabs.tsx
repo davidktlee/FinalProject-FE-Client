@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ProductInfo from './ProductInfo'
+import ProductDescription from './ProductDescription'
 import ProductInquiry from './ProductInquiry'
 
 const ProductAbout = () => {
@@ -28,7 +28,7 @@ const ProductAbout = () => {
               <span>상품 문의</span>
             </button>
           </nav>
-          {tabState ? <ProductInfo /> : <ProductInquiry />}
+          {tabState ? <ProductDescription /> : <ProductInquiry />}
         </div>
       </div>
     </section>

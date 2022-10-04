@@ -1,27 +1,21 @@
 import { atom } from 'recoil'
-import { graphicDiameter } from '../constants/filterData'
 
-export const durationState = atom<string>({
-  key: 'durationState',
-  default: 'all'
-})
+interface FilterValue {
+  // [index: string]: string | number[] | string[]
+  durationState: string
+  graphicDiameterState: number[]
+  colorState: string[]
+  seriesState: string[]
+  featureState: string[]
+}
 
-export const graphicDiameterState = atom<string[]>({
-  key: 'graphicDiameterState',
-  default: []
-})
-
-export const colorState = atom<string[]>({
-  key: 'colorState',
-  default: []
-})
-
-export const seriesState = atom<string[]>({
-  key: 'seriesState',
-  default: []
-})
-
-export const featuresState = atom<string[]>({
-  key: 'featuresState',
-  default: []
+export const filterState = atom<FilterValue>({
+  key: 'filterValues',
+  default: {
+    durationState: 'all',
+    graphicDiameterState: [],
+    colorState: [],
+    seriesState: [],
+    featureState: []
+  }
 })
