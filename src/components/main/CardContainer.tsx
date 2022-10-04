@@ -12,7 +12,6 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
 
   const productLists = useGetProductsList(allProductCurrentPage)
-  // console.log(productLists)
 
   return (
     <>
@@ -42,7 +41,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
           <Pagination
             currentPage={newProductCurrentPage}
             setCurrentPage={setNewProductCurrentPage}
-            allCount={30}
+            allCount={productLists && productLists.length}
           />
         </>
       ) : (
@@ -71,7 +70,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
             <Pagination
               currentPage={allProductCurrentPage}
               setCurrentPage={setAllProductCurrentPage}
-              allCount={40}
+              allCount={productLists && productLists.length}
             />
           </>
         )
