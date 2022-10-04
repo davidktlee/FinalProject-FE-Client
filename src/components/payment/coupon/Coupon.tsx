@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import ShippingCard from '../shipping/ui/ShippingCard';
+import ShippingCard from '../ui/ShippingCard';
 
 
 const COUPON_CODE = 'lenssis';
 
-const Coupon = () => {
+interface CouponProps {
   
-  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
+}
+
+const Coupon = ({}:CouponProps) => {
   
-  const [discountCode,setDisCountCode] = useState('');
+  
   return (
     <>
     <ShippingCard title='할인코드 적용'>

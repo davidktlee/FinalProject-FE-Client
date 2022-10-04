@@ -4,11 +4,11 @@ import { GoTriangleDown } from 'react-icons/go'
 import ConfirmModal from '../../common/ui/ConfirmModal'
 import DeliveryRequest from './DeliveryRequest'
 import { PaymentFormValueType } from '../Payment'
-import ShippingCard from './ui/ShippingCard'
-import ShippingAddress from './ui/ShippingAddress'
-import ShippingPhone from './ui/ShippingPhone'
-import ShippingEmail from './ui/ShippingEmail'
-import ShippingOrderer from './ui/ShippingOrderer'
+import ShippingCard from '../ui/ShippingCard'
+import ShippingAddress from '../ui/ShippingAddress'
+import ShippingPhone from '../ui/ShippingPhone'
+import ShippingEmail from '../ui/ShippingEmail'
+import ShippingOrderer from '../ui/ShippingOrderer'
 
 interface NewShippingPaperProps {
   domainArray: string[]
@@ -17,6 +17,12 @@ interface NewShippingPaperProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   open: (options?: DaumPostcodePopupParams | undefined) => Promise<void>
   visibleEmail?:boolean
+  newFormValue:PaymentFormValueType
+  setNewFormValue:React.Dispatch<React.SetStateAction<PaymentFormValueType>>,
+  newPhoneFormValue:Record<string, string | number>
+  setNewPhoneFormValue:React.Dispatch<React.SetStateAction<Record<string, string | number>>>
+  newEmailFormValue: Record<string, string>
+  setNewEmailFormValue:React.Dispatch<React.SetStateAction<Record<string, string>>>
 }
 
 const NewShippingPaper = ({
@@ -25,31 +31,15 @@ const NewShippingPaper = ({
   domainSelectHandler,
   setIsOpen,
   open,
-  visibleEmail
+  visibleEmail,
+  newFormValue,
+  newEmailFormValue,
+  newPhoneFormValue,
+  setNewEmailFormValue,
+  setNewFormValue,
+  setNewPhoneFormValue
 }: NewShippingPaperProps) => {
-  const [newFormValue, setNewFormValue] = useState<PaymentFormValueType>({
-      memberId: '',
-      orderer:  '',
-      postCode: '',
-      address:  '',
-      phone:  '',
-      email: '',
-      detailAddress: '',
-      shippingMessage:'',
-      couponId:null,
-      method:null,
-      point:0,
-      totalPrice:0
-  })
-  const [newPhoneFormValue, setNewPhoneFormValue] = useState<Record<string, string | number>>({
-    firstNumber: '',
-    middleNumber: '',
-    lastNumber: ''
-  })
-  const [newEmailFormValue, setNewEmailFormValue] = useState<Record<string, string>>({
-    emailIdentity: '',
-    emailDomain: ''
-  })
+  
   const newEmailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }

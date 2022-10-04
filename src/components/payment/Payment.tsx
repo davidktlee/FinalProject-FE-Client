@@ -13,10 +13,13 @@ import Coupon from './coupon/Coupon'
 import NonMembersTerms from './terms/NonMembersTerms'
 import MembersTerms from './terms/MembersTerms'
 import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
-import PaymentTitle from './shipping/ui/PaymentTitle'
+import PaymentTitle from './ui/PaymentTitle'
+import TermsTitle from './ui/TermsTitle'
 
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
+
+const paymentMethodArray = ['クレジットカード','コンビニ','銀行振込','PayEasy','あと払いペイディー']
 
 
 /*{
@@ -87,10 +90,49 @@ const Payment = () => {
     totalPrice:0,
     shippingMessage:''
   })
+  const [newFormValue, setNewFormValue] = useState<PaymentFormValueType>({
+    memberId: '',
+    orderer:  '',
+    postCode: '',
+    address:  '',
+    phone:  '',
+    email: '',
+    detailAddress: '',
+    shippingMessage:'',
+    couponId:null,
+    method:null,
+    point:0,
+    totalPrice:0
+})
+  const [newPhoneFormValue, setNewPhoneFormValue] = useState<Record<string, string | number>>({
+    firstNumber: '',
+    middleNumber: '',
+    lastNumber: ''
+  })
+  const [newEmailFormValue, setNewEmailFormValue] = useState<Record<string, string>>({
+    emailIdentity: '',
+    emailDomain: ''
+  })
   const [isNew, setIsNew] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
   const [isModalOpen,setIsModalOpen] = useState(false);
   const [isChecked,setIsChecked] = useState(false);
+  const [currentPaymentMethod,setCurrentPaymentMethod] = useState('')
+  const [paymentMethodNumber,setPaymentMethodNumber] = useState<null|number>(null);
+  const currentPaymentMethodHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const {target:{value}} = e;
+    if(value === 'PayPay'){
+      setPaymentMethodNumber(5);
+      return
+    }else{
+      setPaymentMethodNumber(paymentMethodArray.findIndex(item => item === value));
+      setCurrentPaymentMethod(value)
+    }
+  }
+
+  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
+  
+  const [discountCode,setDisCountCode] = useState('');
 
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -176,28 +218,32 @@ const Payment = () => {
   },[])
 
   const paymentHandler = () => {
+    if(!isChecked){
+      alert('개인정보 수집 이용에 동의해주세요')
+      return;
+    }
     const obj = {
-      addOrderDetailsRequestList: [
+      product: [
         {
           pcs: 0,
           productDetailsId: 0
         }
       ],  
       couponId: 0,
-      memberId: 0,
-      method: 0,
-      orderer: '',
-      address: '',
-      detailAddress: '',
-      ordererEmail: '',
-      ordererPhone: '',
+      memberId: user?.memberId || 0,
+      method: paymentMethodNumber,
+      orderer: formValue.orderer,
+      address: newFormValue.address || formValue.address,
+      detailAddress: newFormValue.detailAddress || formValue.detailAddress,
+      ordererEmail: formValue.email,
+      ordererPhone: formValue.phone,
       point: 0,
-      receiver: '', 
-      receiverPhone: '',
-      shippingMessage: '',
+      receiver: newFormValue.orderer || formValue.orderer, 
+      receiverPhone: newFormValue.phone || formValue.phone,
+      shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage,
       totalPrice: 0
     }
-    
+    console.log(obj);
   }
 
   useEffect(() => {
@@ -216,7 +262,7 @@ const Payment = () => {
       postCode: user.postCode,
       address:  user.address,
       phone:  user.phone,
-      email: emailFormValue.emailIdentity + emailFormValue.emailDomain || '',
+      email: emailFormValue.emailIdentity + '@' + emailFormValue.emailDomain || '',
       detailAddress: user.detailAddress,
       shippingMessage:'',
       couponId:null,
@@ -291,13 +337,9 @@ const Payment = () => {
           domainArray={domainArray}
           phoneFormValueChangeHandler={phoneFormValueChangeHandler}
           phoneFormValue={phoneFormValue}
-          
           visibleEmail
-          
         />
       </CardTemplate>
-
-
       <CardTemplate title="배송지정보" isTitleVisible={false} marginTop="mt-6">
       <PaymentTitle text='배송지 정보'/>
         <ShippingAreaSelector selectChangeHandler={selectChangeHandler} isNew={isNew} />
@@ -318,37 +360,28 @@ const Payment = () => {
             visibleRequest
           />
         )}
-        
-        {isNew && <NewShippingPaper domainArray={domainArray} isOpen={isOpen} domainSelectHandler={domainSelectHandler} setIsOpen={setIsOpen} open={open} />}
- 
-       
+        {isNew && <NewShippingPaper domainArray={domainArray} isOpen={isOpen} domainSelectHandler={domainSelectHandler} setIsOpen={setIsOpen} open={open} newEmailFormValue={newEmailFormValue} newFormValue={newFormValue} newPhoneFormValue={newPhoneFormValue} setNewEmailFormValue={setNewEmailFormValue} setNewFormValue={setNewFormValue} setNewPhoneFormValue={setNewPhoneFormValue} />}
       </CardTemplate>
 
-
-
-
-{/* 할인코드 'lenssis'로 총 결제금액의 10% 차감될 수 있게끔 처리 */}
+        {/* 할인코드 'lenssis'로 총 결제금액의 10% 차감될 수 있게끔 처리 */}
       <CardTemplate title="쿠폰/적립금" isTitleVisible={false} marginTop="mt-6">
-      <PaymentTitle text='쿠폰/적립금'/>
+        <PaymentTitle text='쿠폰/적립금'/>
         <Coupon />
       </CardTemplate>
+      
       <CardTemplate title="쇼핑몰 이용약관" isTitleVisible={false} marginTop="mt-6">
-      <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
-          <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 쇼핑몰 이용 약관
-        </h3>
+        <TermsTitle text='쇼핑몰 이용 약관' />
         <MembersTerms />
       </CardTemplate>
+
       <CardTemplate title="비회원 구매시..." isTitleVisible={false} marginTop="mt-6">
-      <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
-      <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 비회원 구매시 개인정보 수집 이용동의
-        </h3>
+        <TermsTitle text='비회원 구매시 개인정보 수집 이용동의' />
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
 
-
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
       <PaymentTitle text='결제수단 선택'/>
-        <PaymentMethodSelector />
+        <PaymentMethodSelector currentPaymentMethod={currentPaymentMethod} currentPaymentMethodHandler={currentPaymentMethodHandler} paymentMethodArray={paymentMethodArray} />
       <div className='flex w-[60%] items-center justify-between my-2 mt-6 mx-auto'>
       <button className='w-full bg-lenssisDark text-white font-semibold rounded-[5px] h-10' onClick={paymentHandler}>결제하기</button>
       </div>

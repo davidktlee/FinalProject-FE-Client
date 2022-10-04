@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import ShippingCard from './ui/ShippingCard';
+import ShippingCard from '../ui/ShippingCard';
 
 interface DeliveryRequestProps {
   value:string;

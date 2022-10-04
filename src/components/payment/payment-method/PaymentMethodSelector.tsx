@@ -6,26 +6,16 @@ import PaymentMethodInfoMessage from './PaymentMethodInfoMessage';
 
 
 
-const paymentMethodArray = ['クレジットカード','コンビニ','銀行振込','PayEasy','あと払いペイディー']
+interface PaymentMethodSelectorProps {
+  currentPaymentMethod:string
+  currentPaymentMethodHandler : (e: ChangeEvent<HTMLInputElement>) => void
+  paymentMethodArray: string[]
+}
 
-const PaymentMethodSelector = () => {
+const PaymentMethodSelector = ({currentPaymentMethod,currentPaymentMethodHandler,paymentMethodArray}:PaymentMethodSelectorProps) => {
 
-  const [currentPaymentMethod,setCurrentPaymentMethod] = useState('')
-  const [paymentMethodNumber,setPaymentMethodNumber] = useState<null|number>(null);
-  const currentPaymentMethodHandler = (e:ChangeEvent<HTMLInputElement>) => {
-    
-    const {target:{value}} = e;
-
-    
-    if(value === 'PayPay'){
-      setPaymentMethodNumber(5);
-      return
-    }else{
-      setPaymentMethodNumber(paymentMethodArray.findIndex(item => item === value));
-      setCurrentPaymentMethod(value)
-    }
-  }
-  console.log(paymentMethodNumber);
+  
+  
   return (
     <div className='w-full flex flex-col'>
     
