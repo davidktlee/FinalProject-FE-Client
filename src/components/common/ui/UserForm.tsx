@@ -1,22 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useDaumPostcodePopup } from 'react-daum-postcode'
-import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '../../auth/hooks/useAuth'
+import { Link } from 'react-router-dom'
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE
+  
 } from '../../auth/hooks/validator'
 import Birth from '../../auth/signup/birth/Birth'
 import Recaptcha from '../../auth/signup/Recaptcha'
 import { SignupRecordType } from '../../auth/signup/Signup'
-import { RegisterType } from '../../auth/types/userTypes'
 import Input from '../Input'
 import Post from '../post/Post'
-import useToast from '../toast/hooks/useToast'
-import PageLayout from './PageLayout'
-
+import usePost from '../util/usePost'
 interface UserFormProps {
   formValue: SignupRecordType
   setFormValue: React.Dispatch<React.SetStateAction<SignupRecordType>>
@@ -25,36 +20,12 @@ interface UserFormProps {
 }
 
 const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFormProps) => {
-  const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
-
-  const { pathname } = useLocation()
-  const { fireToast } = useToast()
+  const {addressPopupHandler} = usePost({setFormValue})
+  
 
   const [totalValid, setTotalValid] = useState(false)
 
-  const handleComplete = (data: any) => {
-    let fullAddress = data.address
-    let extraAddress = ''
-
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress = data.bname
-      }
-      if (data.buildingName) {
-        extraAddress += extraAddress !== '' ? `,${data.buildingName} ` : `${data.buildingName}`
-      }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
-    }
-    setFormValue((prev) => ({
-      ...prev,
-      postCode: data.zonecode,
-      address: fullAddress
-    }))
-  }
-
-  const addressPopupHandler = () => {
-    open({ onComplete: handleComplete })
-  }
+ 
 
   const changeFormHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -207,12 +178,12 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
       <div className="flex w-full items-center mt-8 h-[45px] gap-4">
         <Link
           to="/"
-          className="rounded-md flex-1 h-full text-[#3e6d87] bg-white border-[#3e6d87] border-solid border box-border font-bold cursor-pointer flex justify-center items-center"
+          className="rounded-[5px] flex-1 h-full text-lenssisDark bg-white border-lenssisDtext-lenssisDark border-solid border box-border font-bold cursor-pointer flex justify-center items-center"
         >
           <span className="text-[14px] font-bold">취소</span>
         </Link>
         <button
-          className="rounded-md flex-1 h-full bg-[#3e6d87] text-white border-transparent box-border font-bold cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
+          className="rounded-[5px] flex-1 h-full bg-lenssisDark text-white border-transparent box-border font-bold cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
           onClick={submitFormHandler}
           disabled={!totalValid}
         >

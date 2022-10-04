@@ -121,7 +121,7 @@ const Signin = () => {
           />
 
           <button
-            className="bg-[#1B304A] w-full h-12 rounded-md mt-7 disabled:bg-gray-400 disabled:cursor-default text-white"
+            className="bg-[#1B304A] w-full h-12 rounded-[5px] mt-7 disabled:bg-gray-400 disabled:cursor-default text-white"
             onClick={submitSigninHandler}
             disabled={!totalValid}
           >

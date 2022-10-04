@@ -1,7 +1,4 @@
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
-import Pagination from '../../common/Pagination'
-import Search from '../../common/Search'
 
 function MobileNotice() {
   const navigate = useNavigate()

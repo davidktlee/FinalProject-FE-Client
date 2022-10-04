@@ -1,22 +1,25 @@
 import React, { ChangeEvent, useState } from 'react'
-import { DaumPostcodePopupParams } from 'react-daum-postcode'
-import { GoTriangleDown } from 'react-icons/go'
-import ConfirmModal from '../../common/ui/ConfirmModal'
 import DeliveryRequest from './DeliveryRequest'
 import { PaymentFormValueType } from '../Payment'
-import ShippingCard from './ui/ShippingCard'
-import ShippingAddress from './ui/ShippingAddress'
-import ShippingPhone from './ui/ShippingPhone'
-import ShippingEmail from './ui/ShippingEmail'
-import ShippingOrderer from './ui/ShippingOrderer'
+import ShippingCard from '../ui/ShippingCard'
+import ShippingAddress from '../ui/ShippingAddress'
+import ShippingPhone from '../ui/ShippingPhone'
+import ShippingEmail from '../ui/ShippingEmail'
+import ShippingOrderer from '../ui/ShippingOrderer'
+import usePost from '../../common/util/usePost'
 
 interface NewShippingPaperProps {
   domainArray: string[]
   isOpen: boolean
   domainSelectHandler: () => void
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  open: (options?: DaumPostcodePopupParams | undefined) => Promise<void>
   visibleEmail?:boolean
+  newFormValue:PaymentFormValueType
+  setNewFormValue:React.Dispatch<React.SetStateAction<PaymentFormValueType>>,
+  newPhoneFormValue:Record<string, string | number>
+  setNewPhoneFormValue:React.Dispatch<React.SetStateAction<Record<string, string | number>>>
+  newEmailFormValue: Record<string, string>
+  setNewEmailFormValue:React.Dispatch<React.SetStateAction<Record<string, string>>>
 }
 
 const NewShippingPaper = ({
@@ -24,28 +27,16 @@ const NewShippingPaper = ({
   isOpen,
   domainSelectHandler,
   setIsOpen,
-  open,
-  visibleEmail
+  visibleEmail,
+  newFormValue,
+  newEmailFormValue,
+  newPhoneFormValue,
+  setNewEmailFormValue,
+  setNewFormValue,
+  setNewPhoneFormValue
 }: NewShippingPaperProps) => {
-  const [newFormValue, setNewFormValue] = useState<PaymentFormValueType>({
-    memberId:0,
-    orderer: '',
-    postCode: '',
-    address: '',
-    phone: '',
-    email: '',
-    detailAddress: '',
-    userRequestMessage: ''
-  })
-  const [newPhoneFormValue, setNewPhoneFormValue] = useState<Record<string, string | number>>({
-    firstNumber: '',
-    middleNumber: '',
-    lastNumber: ''
-  })
-  const [newEmailFormValue, setNewEmailFormValue] = useState<Record<string, string>>({
-    emailIdentity: '',
-    emailDomain: ''
-  })
+  const {addressPopupHandler,formChangeHandler:newFormChangeHandler} = usePost({setNewFormValue})
+
   const newEmailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
@@ -71,38 +62,8 @@ const NewShippingPaper = ({
     }))
     setIsOpen((prev) => !prev)
   }
-  const newFormChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {
-      target: { name, value }
-    } = e
-    setNewFormValue((prev) => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-  const handleComplete = (data: any) => {
-    let fullAddress = data.address
-    let extraAddress = ''
 
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress = data.bname
-      }
-      if (data.buildingName) {
-        extraAddress += extraAddress !== '' ? `,${data.buildingName} ` : `${data.buildingName}`
-      }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
-    }
-    setNewFormValue((prev) => ({
-      ...prev,
-      postCode: data.zonecode,
-      address: fullAddress
-    }))
-  }
-
-  const addressPopupHandler = () => {
-    open({ onComplete: handleComplete })
-  }
+  
   return (
     <>
       <ShippingCard title="주문자" isRequired>
@@ -140,7 +101,7 @@ const NewShippingPaper = ({
         />
       </ShippingCard>}
       
-      <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.userRequestMessage} />
+      <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.shippingMessage} />
     </>
   )
 }

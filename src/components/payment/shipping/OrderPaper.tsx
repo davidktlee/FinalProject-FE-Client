@@ -2,11 +2,11 @@ import { ChangeEvent, useEffect } from 'react'
 import { GoTriangleDown } from 'react-icons/go'
 import { PaymentFormValueType } from '../Payment'
 import DeliveryRequest from './DeliveryRequest'
-import ShippingAddress from './ui/ShippingAddress'
-import ShippingCard from './ui/ShippingCard'
-import ShippingEmail from './ui/ShippingEmail'
-import ShippingOrderer from './ui/ShippingOrderer'
-import ShippingPhone from './ui/ShippingPhone'
+import ShippingAddress from '../ui/ShippingAddress'
+import ShippingCard from '../ui/ShippingCard'
+import ShippingEmail from '../ui/ShippingEmail'
+import ShippingOrderer from '../ui/ShippingOrderer'
+import ShippingPhone from '../ui/ShippingPhone'
 
 interface OrderPaperProps {
   formValue: PaymentFormValueType
@@ -83,7 +83,7 @@ const OrderPaper = ({
       </ShippingCard>}
       
 
-      {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.userRequestMessage} />}
+      {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.shippingMessage} />}
     </>
   )
 }

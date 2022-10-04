@@ -7,6 +7,7 @@ import { ColorAndImage, ProductResponseType } from '../main/types/productTypes'
 interface PropsType extends ProductResponseType {
   idx: number
   isNew?: boolean
+  id:string;
 }
 
 const Card = ({
