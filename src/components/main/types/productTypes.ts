@@ -1,34 +1,14 @@
-import { ProductResponseType } from '../hooks/useProductLists'
-
-export interface CardPropsType {
-  productId: string // 상품 id
-  idx: number
-  name: string // 상품 타이틀
-  diameter: number
-  series: string[] // 상품 시리즈
-  details: {
-    graphicDiameter: number[]
-    price: number // 상품 가격
-    discount: number // 할인률
-    product_details_image_url: string[] // 상품 이미지
-    color_code?: string[] // 색상 코드
-  }
-  isNew?: boolean // 새로운 상품 여부
+export interface ColorAndImage {
+  colorCode: string
+  imageUrl: string
 }
-
-export interface Item {
-  productId: string // 상품 id
-  name: string // 상품 타이틀
-  diameter: number
-  series?: string[] // 상품 시리즈
-  details: {
-    graphicDiameter: number[]
-    price: number // 상품 가격
-    discount: number // 할인률
-    product_details_image_url: string[] // 상품 이미지
-    color_code?: string[] // 색상 코드
-  }
-  isNew?: boolean // 새로운 상품 여부
+export interface ProductResponseType {
+  productId?: string // 상품 id
+  series: string // 상품 이름
+  colorAndImage: ColorAndImage[] // 상품 이미지와 상품 색상
+  graphicDiameter: number[] // 그래픽 직경
+  price: number // 상품 가격
+  discount: number // 할인률
 }
 
 export interface CardContainerPropsType {

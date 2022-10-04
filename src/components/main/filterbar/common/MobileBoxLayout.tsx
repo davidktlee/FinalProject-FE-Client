@@ -1,12 +1,6 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import {
-  durationState,
-  graphicDiameterState,
-  colorState,
-  seriesState,
-  featuresState
-} from '../../../../store/filterVallue'
+import { filterState } from '../../../../store/filterVallue'
 
 type MobileBoxLayoutProps = {
   title: string
@@ -21,67 +15,83 @@ type MobileBoxLayoutProps = {
 
 type contentTypes = {
   type: string
-  value: string
+  value: string | number
   color: string
 }
 
 const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBoxLayoutProps) => {
-  const [duration, setDuration] = useRecoilState(durationState)
-  const [graphicDiameter, setGraphicDiameter] = useRecoilState(graphicDiameterState)
-  const [color, setColor] = useRecoilState(colorState)
-  const [series, setSeries] = useRecoilState(seriesState)
-  const [features, setFeatures] = useRecoilState(featuresState)
+  const [filter, setFilter] = useRecoilState(filterState)
 
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {
       case 'duration':
-        setDuration(content?.value)
-        console.log(duration)
+        if (typeof content.value === 'string') {
+          setFilter({ ...filter, durationState: content.value })
+        }
+        console.log(filter)
         break
       case 'graphicDiameter':
-        setGraphicDiameter((prev) => {
-          if (prev.includes(content?.value)) {
-            return prev.filter((item) => item !== content?.value)
-          } else {
-            return [...prev, content?.value]
-          }
-        })
-        console.log(graphicDiameter)
+        if (typeof content.value === 'string') return
+        if (filter.graphicDiameterState.includes(content.value)) {
+          setFilter({
+            ...filter,
+            graphicDiameterState: filter.graphicDiameterState.filter((item: number) => item !== content.value)
+          })
+        } else {
+          setFilter({
+            ...filter,
+            graphicDiameterState: [...filter.graphicDiameterState, content.value]
+          })
+        }
+        console.log(filter.graphicDiameterState)
         break
       case 'color':
-        setColor((prev) => {
-          if (prev.includes(content?.color)) {
-            return prev.filter((item) => item !== content?.color)
-          } else {
-            return [...prev, content?.color]
-          }
-        })
-        console.log(color)
-        break
+        if (typeof content.color === 'undefined') return
+        if (filter.colorState.includes(content.color)) {
+          setFilter({
+            ...filter,
+            colorState: filter.colorState.filter((item: string) => item !== content.color)
+          })
+        } else {
+          setFilter({
+            ...filter,
+            colorState: [...filter.colorState, content.color]
+          })
+        }
+        console.log(filter.colorState)
       case 'series':
-        setSeries((prev) => {
-          if (prev.includes(content?.value)) {
-            return prev.filter((item) => item !== content?.value)
-          } else {
-            return [...prev, content?.value]
-          }
-        })
-        console.log(series)
-        break
+        if (typeof content.value !== 'string') return
+        if (filter.seriesState.includes(content.value)) {
+          setFilter({
+            ...filter,
+            seriesState: filter.seriesState.filter((item: string) => item !== content.value)
+          })
+        } else {
+          setFilter({
+            ...filter,
+            seriesState: [...filter.seriesState, content.value]
+          })
+        }
+        console.log(filter.seriesState)
       case 'feature':
-        setFeatures((prev) => {
-          if (prev.includes(content?.value)) {
-            return prev.filter((item) => item !== content?.value)
-          } else {
-            return [...prev, content?.value]
-          }
-        })
-        console.log(features)
-        break
+        if (typeof content.value !== 'string') return
+        if (filter.featureState.includes(content.value)) {
+          setFilter({
+            ...filter,
+            featureState: filter.featureState.filter((item: string) => item !== content.value)
+          })
+        } else {
+          setFilter({
+            ...filter,
+            featureState: [...filter.featureState, content.value]
+          })
+        }
+        console.log(filter.featureState)
       default:
         break
     }
   }
+
   return (
     <div>
       <div className="flex justify-between py-[12px] px-[15px]">
@@ -95,13 +105,25 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
               key={index}
               className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]
               ${w} ${h} ${px} ${py}
-              ${duration === content.value ? 'bg-lenssisDark text-white border-lenssisDark' : ''} ${
-                graphicDiameter.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''
-              } ${series.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''} ${
-                color.includes(content.color)
+              ${
+                filter.durationState === content.value ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+              } ${
+                filter.graphicDiameterState.includes(content.value)
+                  ? 'bg-lenssisDark text-white border-lenssisDark'
+                  : ''
+              } ${
+                filter.seriesState.includes(content.value)
+                  ? 'bg-lenssisDark text-white border-lenssisDark'
+                  : ''
+              } ${
+                filter.colorState.includes(content.color)
                   ? 'border-solid border-[3px] border-lenssisDark'
                   : 'border-lenssisStroke'
-              } ${features.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''}`}
+              } ${
+                filter.featureState.includes(content.value)
+                  ? 'bg-lenssisDark text-white border-lenssisDark'
+                  : ''
+              }`}
               style={content.color && { backgroundColor: `${content.color}`, width: '25px' }}
               onClick={() => handleFilterValue(content)}
             >

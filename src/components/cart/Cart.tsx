@@ -13,7 +13,6 @@ import { getStoredToken } from '../local-storage/userStorage'
 import { queryKeys } from '../react-query/queryKeys'
 import CartItem from './CartItem'
 
-
 const Cart = () => {
   const refreshToken = useRefreshToken()
   const [isTotalChecked, setIsTotalChecked] = useState(false)
@@ -22,12 +21,11 @@ const Cart = () => {
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
-  },[])
-  
-  const totalCheckedHandler = useCallback(() => {
-    setIsTotalChecked(prev => !prev)
-  },[])
+  }, [])
 
+  const totalCheckedHandler = useCallback(() => {
+    setIsTotalChecked((prev) => !prev)
+  }, [])
 
   const getProduct = async () => {
     const res = await axiosInstance({
@@ -41,6 +39,7 @@ const Cart = () => {
   })
 
   return (
+
   <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
       <div className='flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full'><p className='pl-2 pb-1 text-base xs:text-xl text-lenssisDark font-bold'>전체</p></div>
@@ -110,18 +109,16 @@ const Cart = () => {
               .slice(0, 4)
               .map((item: any, idx: number) => (
                 <Card
-                  key={`${item.productId}-${idx}`}
-                  idx={idx}
-                  id={item.productId}
-                  name={item.name}
-                  series={item.series}
-                  price={item.details.price}
-                  discount={item.details.discount}
-                  diameter={item.diameter}
-                  colorCode={item.details.color_code}
-                  productImg={item.details.product_details_image_url}
-                  graphicDiameter={item.details.graphicDiameter}
-                />
+                    key={`${item.productId}-${idx}`}
+                    idx={idx}
+                    id={item.productId}
+                    colorAndImage={item.colorAndImage}
+                    productId={item.productId}
+                    series={item.series}
+                    price={item.price}
+                    discount={item.discount}
+                    graphicDiameter={item.graphicDiameter}
+                  />
               ))}
 
         </div>
@@ -132,8 +129,6 @@ const Cart = () => {
   </PageLayout>
 
 
-
- 
   )
 }
 
