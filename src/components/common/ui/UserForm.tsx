@@ -15,6 +15,7 @@ import { RegisterType } from '../../auth/types/userTypes'
 import Input from '../Input'
 import Post from '../post/Post'
 import useToast from '../toast/hooks/useToast'
+import usePost from '../util/usePost'
 import PageLayout from './PageLayout'
 
 interface UserFormProps {
@@ -25,36 +26,13 @@ interface UserFormProps {
 }
 
 const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFormProps) => {
-  const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
-
+  const {addressPopupHandler,formChangeHandler,handleComplete} = usePost({setFormValue})
   const { pathname } = useLocation()
   const { fireToast } = useToast()
 
   const [totalValid, setTotalValid] = useState(false)
 
-  const handleComplete = (data: any) => {
-    let fullAddress = data.address
-    let extraAddress = ''
-
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress = data.bname
-      }
-      if (data.buildingName) {
-        extraAddress += extraAddress !== '' ? `,${data.buildingName} ` : `${data.buildingName}`
-      }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
-    }
-    setFormValue((prev) => ({
-      ...prev,
-      postCode: data.zonecode,
-      address: fullAddress
-    }))
-  }
-
-  const addressPopupHandler = () => {
-    open({ onComplete: handleComplete })
-  }
+ 
 
   const changeFormHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {

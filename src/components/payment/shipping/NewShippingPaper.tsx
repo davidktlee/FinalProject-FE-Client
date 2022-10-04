@@ -9,13 +9,13 @@ import ShippingAddress from '../ui/ShippingAddress'
 import ShippingPhone from '../ui/ShippingPhone'
 import ShippingEmail from '../ui/ShippingEmail'
 import ShippingOrderer from '../ui/ShippingOrderer'
+import usePost from '../../common/util/usePost'
 
 interface NewShippingPaperProps {
   domainArray: string[]
   isOpen: boolean
   domainSelectHandler: () => void
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  open: (options?: DaumPostcodePopupParams | undefined) => Promise<void>
   visibleEmail?:boolean
   newFormValue:PaymentFormValueType
   setNewFormValue:React.Dispatch<React.SetStateAction<PaymentFormValueType>>,
@@ -30,7 +30,6 @@ const NewShippingPaper = ({
   isOpen,
   domainSelectHandler,
   setIsOpen,
-  open,
   visibleEmail,
   newFormValue,
   newEmailFormValue,
@@ -39,7 +38,8 @@ const NewShippingPaper = ({
   setNewFormValue,
   setNewPhoneFormValue
 }: NewShippingPaperProps) => {
-  
+  const {addressPopupHandler,formChangeHandler:newFormChangeHandler} = usePost({setNewFormValue})
+
   const newEmailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
@@ -65,38 +65,8 @@ const NewShippingPaper = ({
     }))
     setIsOpen((prev) => !prev)
   }
-  const newFormChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {
-      target: { name, value }
-    } = e
-    setNewFormValue((prev) => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-  const handleComplete = (data: any) => {
-    let fullAddress = data.address
-    let extraAddress = ''
 
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress = data.bname
-      }
-      if (data.buildingName) {
-        extraAddress += extraAddress !== '' ? `,${data.buildingName} ` : `${data.buildingName}`
-      }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
-    }
-    setNewFormValue((prev) => ({
-      ...prev,
-      postCode: data.zonecode,
-      address: fullAddress
-    }))
-  }
-
-  const addressPopupHandler = () => {
-    open({ onComplete: handleComplete })
-  }
+  
   return (
     <>
       <ShippingCard title="주문자" isRequired>

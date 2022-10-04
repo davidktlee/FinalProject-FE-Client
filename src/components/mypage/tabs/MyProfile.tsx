@@ -10,22 +10,7 @@ const MyProfile = () => {
   const {user} = useUser()
 
   console.log(user);
-  const [formValue, setFormValue] = useState<SignupRecordType>({
-    lastname: '',
-    firstname: '',
-    lastReadname: '',
-    firstReadname: '',
-    postCode: '',
-    address: '',
-    detailAddress: '',
-    phone: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    birthYear: '',
-    birthMonth: '',
-    birthDay: ''
-  })
+
   return (
     <CardLayout title='정보 수정'>
       <Outlet />
