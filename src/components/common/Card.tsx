@@ -11,7 +11,6 @@ interface PropsType extends ProductResponseType {
 
 const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, isNew }: PropsType) => {
   const navigate = useNavigate()
-
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
   const [commaPrice, setCommaPrice] = useState({
@@ -20,7 +19,7 @@ const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, is
   })
 
   const toComma = () => {
-    const addCommaPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
     addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
@@ -97,12 +96,12 @@ const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, is
             </span>
           )}
         </span>
-        <div className="flex flex-col ">
-          <div className="mt-[5px] mb-[4px] flex ">
+        <div className="flex flex-col">
+          <div className="flex items-center">
             {colorAndImage.map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] rounded-full`}
+                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px] md:mr-[15px] rounded-full box-border self-center`}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
@@ -127,7 +126,7 @@ const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, is
             </div>
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
-            {graphicDiameter.map((item: number, idx: number) => (
+            {graphicDiameter?.map((item: number, idx: number) => (
               <div
                 key={`${item}-${idx}`}
                 className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisBadge text-lenssisBadge rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]"
