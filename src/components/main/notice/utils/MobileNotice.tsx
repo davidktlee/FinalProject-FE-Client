@@ -9,7 +9,7 @@ function MobileNotice() {
 
   return (
     <>
-      <div className="block xs:hidden pb-10">
+      <div className="block xs:hidden mt-[20px]  ">
         <div className="rounded-md items-center my-2 py-2 pl-4 shadow-basic">
           <div className="">
             <span className="hover:cursor-pointer hover:underline" onClick={() => navigate(`/notice/${id}`)}>
@@ -18,7 +18,6 @@ function MobileNotice() {
           </div>
           <div className="flex">
             <div className="mr-4">◴ 08-09</div>
-            <div className="">👀 조회수</div>
           </div>
         </div>
       </div>
