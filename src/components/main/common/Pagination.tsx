@@ -16,7 +16,7 @@ function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
       arr.push(i)
     }
     setPagesCount(arr)
-  }, [])
+  }, [allCount])
   usePrefetchProductLists(currentPage, allCount)
 
   return (
