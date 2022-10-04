@@ -2,13 +2,7 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
-import {
-  durationState,
-  graphicDiameterState,
-  colorState,
-  seriesState,
-  featuresState
-} from '../../../store/filterVallue'
+import { filterState } from '../../../store/filterVallue'
 import { axiosInstance } from '../../axiosinstance'
 import { useGetProductsList } from '../hooks/useProductLists'
 import BoxLayout from './common/BoxLayout'
@@ -16,24 +10,17 @@ import FilterButtons from './FilterButtons'
 import Refresh from '/assets/Refresh.svg'
 
 const FilterBar = () => {
-  const resetDuration = useResetRecoilState(durationState)
-  const resetGraphicDiameter = useResetRecoilState(graphicDiameterState)
-  const resetColor = useResetRecoilState(colorState)
-  const resetSeries = useResetRecoilState(seriesState)
-  const resetfeatures = useResetRecoilState(featuresState)
-  const [duration, setDuration] = useRecoilState(durationState)
+  const resetFilter = useResetRecoilState(filterState)
+
+  const [filter, setFilter] = useRecoilState(filterState)
 
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setDuration(e.currentTarget.value)
-    console.log(duration)
+    setFilter({ ...filter, durationState: e.currentTarget.value })
+    console.log(filter.durationState)
   }
 
   const refreshHandler = () => {
-    resetDuration()
-    resetGraphicDiameter()
-    resetColor()
-    resetSeries()
-    resetfeatures()
+    resetFilter()
   }
 
   const requestFilter = async () => {
@@ -62,7 +49,7 @@ const FilterBar = () => {
 
   useEffect(() => {
     // requestFilter()
-    getProduct()
+    // getProduct()
   }, [])
 
   return (
@@ -80,7 +67,7 @@ const FilterBar = () => {
               onClick={handleFilterValue}
               value="all"
               className={`${
-                duration === 'all' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                filter.durationState === 'all' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
               } border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
             >
               상품 전체
@@ -90,7 +77,7 @@ const FilterBar = () => {
                 onClick={handleFilterValue}
                 value="monthly"
                 className={`${
-                  duration === 'monthly' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                  filter.durationState === 'monthly' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 먼슬리
@@ -99,7 +86,7 @@ const FilterBar = () => {
                 onClick={handleFilterValue}
                 value="oneDay"
                 className={`${
-                  duration === 'oneDay' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                  filter.durationState === 'oneDay' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 원데이
