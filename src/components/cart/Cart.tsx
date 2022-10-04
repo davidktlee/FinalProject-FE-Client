@@ -43,7 +43,7 @@ const Cart = () => {
   return (
   <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
-      <div className='flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full'><p className='pl-2 pb-1 text-base xs:text-xl text-lenssisDark font-bold'>전체</p><p className='text-lenssisDark font-semibold text-sm xs:text-base hidden xs:block'><Link to="/mypage/mycoupon">쿠폰함으로 가기</Link  ></p></div>
+      <div className='flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full'><p className='pl-2 pb-1 text-base xs:text-xl text-lenssisDark font-bold'>전체</p></div>
     <div className='flex flex-col items-center xs:flex-row xs:items-start text-lenssisGray mt-4 xs:mt-10'>
 
       <div className='grow flex flex-col px-0 xs:px-2 w-full'>
