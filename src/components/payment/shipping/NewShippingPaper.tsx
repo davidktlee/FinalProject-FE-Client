@@ -28,14 +28,18 @@ const NewShippingPaper = ({
   visibleEmail
 }: NewShippingPaperProps) => {
   const [newFormValue, setNewFormValue] = useState<PaymentFormValueType>({
-    memberId:0,
-    orderer: '',
-    postCode: '',
-    address: '',
-    phone: '',
-    email: '',
-    detailAddress: '',
-    userRequestMessage: ''
+      memberId: '',
+      orderer:  '',
+      postCode: '',
+      address:  '',
+      phone:  '',
+      email: '',
+      detailAddress: '',
+      shippingMessage:'',
+      couponId:null,
+      method:null,
+      point:0,
+      totalPrice:0
   })
   const [newPhoneFormValue, setNewPhoneFormValue] = useState<Record<string, string | number>>({
     firstNumber: '',
@@ -140,7 +144,7 @@ const NewShippingPaper = ({
         />
       </ShippingCard>}
       
-      <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.userRequestMessage} />
+      <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.shippingMessage} />
     </>
   )
 }

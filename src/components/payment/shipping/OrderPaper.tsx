@@ -83,7 +83,7 @@ const OrderPaper = ({
       </ShippingCard>}
       
 
-      {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.userRequestMessage} />}
+      {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.shippingMessage} />}
     </>
   )
 }

@@ -13,50 +13,56 @@ import Coupon from './coupon/Coupon'
 import NonMembersTerms from './terms/NonMembersTerms'
 import MembersTerms from './terms/MembersTerms'
 import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
+import PaymentTitle from './shipping/ui/PaymentTitle'
 
+
+const domainArray = ['google.com', 'naver.com', 'daum.net']
+
+
+/*{
+  "addOrderDetailsRequestList": [
+    {
+      "pcs": 0,
+      "productDetailsId": 0
+    }
+  ],  
+  "couponId": 0,
+  "memberId": 0,
+  "method": 0,
+  "orderer": "string",
+  "address": "string",
+  "detailAddress": "string",
+  "ordererEmail": "string",
+  "ordererPhone": "string",
+  "point": 0,
+  "receiver": "string", receiver = orderer
+  "receiverPhone": "string", = ordererPhone
+  "shippingMessage": "string",
+  "totalPrice": 0
+} */
 export interface PaymentFormValueType {
+  couponId: null | number,
   memberId:string | number
+  method:null|number
   orderer: string
-  postCode: number | string
   address: string
   phone: string
   email: string
   detailAddress: string
-  userRequestMessage:string;
+  postCode: number | string
+  // point - 최종 결제 금액의 1%
+  point:number
+  totalPrice:number
+
+  shippingMessage:string;
+  
 }
-const domainArray = ['google.com', 'naver.com', 'daum.net']
-
-
-/* {
-  data: {
-    order:{
-      orderer:'주문자',
-      ordererPhone:'주문자휴대폰',
-      ordererEmail:'주문자이메일주소',
-    }
-    shipping:{
-      reciever:'받는사람',
-      address:'기본주소',
-      detailAddress:'상세주소',
-      recieverPhone:'받는사람휴대폰',
-      recieverEmail:'받는사람이메일'
-      shippingMessage:'배송요청사항'
-    }
-    product:{
-      ...product
-    },
-    coupon:'쿠폰id',
-    paymentMethod:'결제방법',
-    totalPrice:'총결제금액',
-    point:'총결제금액의 1%',
-  }
-} */
-
 
 const Payment = () => {
   const { user, isLoading } = useUser()
   const product = useRecoilValue(productState)
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
+
   const [emailFormValue, setEmailFormValue] = useState({
     emailIdentity: '',
     emailDomain: ''
@@ -67,19 +73,25 @@ const Payment = () => {
     lastNumber: ''
   })
   const [formValue, setFormValue] = useState<PaymentFormValueType>({
-    memberId:0,
-    orderer:  '',
-    postCode: '',
-    address:  '',
-    phone:  '',
+    couponId: null,
+    memberId: '',
+    method:null,
+    orderer: '',
+    address: '',
+    phone: '',
     email: '',
     detailAddress: '',
-    userRequestMessage:'',
+    postCode: '',
+    // point - 최종 결제 금액의 1%
+    point:0,
+    totalPrice:0,
+    shippingMessage:''
   })
   const [isNew, setIsNew] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
   const [isModalOpen,setIsModalOpen] = useState(false);
   const [isChecked,setIsChecked] = useState(false);
+
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
@@ -162,7 +174,31 @@ const Payment = () => {
       setIsModalOpen(false)
     }
   },[])
-  
+
+  const paymentHandler = () => {
+    const obj = {
+      addOrderDetailsRequestList: [
+        {
+          pcs: 0,
+          productDetailsId: 0
+        }
+      ],  
+      couponId: 0,
+      memberId: 0,
+      method: 0,
+      orderer: '',
+      address: '',
+      detailAddress: '',
+      ordererEmail: '',
+      ordererPhone: '',
+      point: 0,
+      receiver: '', 
+      receiverPhone: '',
+      shippingMessage: '',
+      totalPrice: 0
+    }
+    
+  }
 
   useEffect(() => {
     if(user){
@@ -182,7 +218,11 @@ const Payment = () => {
       phone:  user.phone,
       email: emailFormValue.emailIdentity + emailFormValue.emailDomain || '',
       detailAddress: user.detailAddress,
-      userRequestMessage:''
+      shippingMessage:'',
+      couponId:null,
+      method:null,
+      point:0,
+      totalPrice:0
     })
     setPhoneFormValue({
       firstNumber:splitUserPhoneFirst,
@@ -199,9 +239,7 @@ const Payment = () => {
       
      <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
-          <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
-            주문 상품
-          </h3>
+          <PaymentTitle text='주문 상품'/>
           <div className="flex w-full justify-between items-center py-2 text-gray-300 text-sm px-2">
             <p className="flex-1 text-center">상품명</p>
             <p className="text-center w-[85px] xs:w-[100px]">수량</p>
@@ -238,13 +276,8 @@ const Payment = () => {
       </CardTemplate>
 
 
-      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-        
-      
-      
-        <h3 className="w-full pb-1 font-bold border-b border-solid border-lenssisDark text-xl">
-          주문서 작성
-        </h3>
+      <CardTemplate title="주문서작성" isTitleVisible={false} marginTop="mt-6">
+        <PaymentTitle text='주문서 작성'/>
         <OrderPaper
           formValue={formValue}
           setFormValue={setFormValue}
@@ -265,8 +298,8 @@ const Payment = () => {
       </CardTemplate>
 
 
-      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-        <h3 className="w-full pb-1 text-xl font-bold border-b border-solid border-lenssisDark">배송지 정보</h3>
+      <CardTemplate title="배송지정보" isTitleVisible={false} marginTop="mt-6">
+      <PaymentTitle text='배송지 정보'/>
         <ShippingAreaSelector selectChangeHandler={selectChangeHandler} isNew={isNew} />
         {!isNew  && (
           <OrderPaper
@@ -282,7 +315,6 @@ const Payment = () => {
             domainArray={domainArray}
             phoneFormValueChangeHandler={phoneFormValueChangeHandler}
             phoneFormValue={phoneFormValue}
-            
             visibleRequest
           />
         )}
@@ -296,32 +328,29 @@ const Payment = () => {
 
 
 {/* 할인코드 'lenssis'로 총 결제금액의 10% 차감될 수 있게끔 처리 */}
-      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-        <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark ">
-          쿠폰/적립금
-        </h3>
+      <CardTemplate title="쿠폰/적립금" isTitleVisible={false} marginTop="mt-6">
+      <PaymentTitle text='쿠폰/적립금'/>
         <Coupon />
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
+      <CardTemplate title="쇼핑몰 이용약관" isTitleVisible={false} marginTop="mt-6">
       <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
           <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 쇼핑몰 이용 약관
         </h3>
         <MembersTerms />
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
+      <CardTemplate title="비회원 구매시..." isTitleVisible={false} marginTop="mt-6">
       <h3 className="w-full pb-1 text-lenssisDeepGray font-bold flex items-center gap-2">
       <div className='w-2 h-2 bg-lenssisDeepGray rounded-full' /> 비회원 구매시 개인정보 수집 이용동의
         </h3>
-        
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
-      <CardTemplate title="주문/결제" isTitleVisible={false} marginTop="mt-6">
-        <h3 className="w-full pb-1 text-lenssisDark font-bold border-b border-solid border-lenssisDark">
-          결제수단 선택
-        </h3>
+
+
+      <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
+      <PaymentTitle text='결제수단 선택'/>
         <PaymentMethodSelector />
       <div className='flex w-[60%] items-center justify-between my-2 mt-6 mx-auto'>
-      <button className='w-full bg-lenssisDark text-white font-semibold rounded-[5px] h-10'>결제하기</button>
+      <button className='w-full bg-lenssisDark text-white font-semibold rounded-[5px] h-10' onClick={paymentHandler}>결제하기</button>
       </div>
       </CardTemplate>
     </PageLayout>
