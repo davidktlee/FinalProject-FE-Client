@@ -10,7 +10,16 @@ interface PropsType extends ProductResponseType {
   id:string;
 }
 
-const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, isNew }: PropsType) => {
+const Card = ({
+  idx,
+  series,
+  price,
+  discount,
+  colorAndImage,
+  graphicDiameter,
+  isNew,
+  productId
+}: PropsType) => {
   const navigate = useNavigate()
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)

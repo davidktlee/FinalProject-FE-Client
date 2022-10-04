@@ -9,7 +9,7 @@ interface Title {
 function MainNoticeTab() {
   return (
     <>
-      <div className="overflow-y-scroll flex  xs:text-center w-full xs:border-b-[1px] border-solid border-lenssisDark">
+      <div className="overflow-y-scroll flex  xs:text-center border-b-[1px] border-solid border-lenssisLightGray">
         {NoticeTitles.map((title: Title, index: number) => (
           <NavLink
             key={index}
