@@ -1,23 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useDaumPostcodePopup } from 'react-daum-postcode'
-import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '../../auth/hooks/useAuth'
+import { Link } from 'react-router-dom'
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE
+  
 } from '../../auth/hooks/validator'
 import Birth from '../../auth/signup/birth/Birth'
 import Recaptcha from '../../auth/signup/Recaptcha'
 import { SignupRecordType } from '../../auth/signup/Signup'
-import { RegisterType } from '../../auth/types/userTypes'
 import Input from '../Input'
 import Post from '../post/Post'
-import useToast from '../toast/hooks/useToast'
 import usePost from '../util/usePost'
-import PageLayout from './PageLayout'
-
 interface UserFormProps {
   formValue: SignupRecordType
   setFormValue: React.Dispatch<React.SetStateAction<SignupRecordType>>
@@ -26,9 +20,8 @@ interface UserFormProps {
 }
 
 const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFormProps) => {
-  const {addressPopupHandler,formChangeHandler,handleComplete} = usePost({setFormValue})
-  const { pathname } = useLocation()
-  const { fireToast } = useToast()
+  const {addressPopupHandler} = usePost({setFormValue})
+  
 
   const [totalValid, setTotalValid] = useState(false)
 

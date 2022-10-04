@@ -1,10 +1,9 @@
-import React, { ChangeEvent, HTMLInputTypeAttribute, useCallback, useEffect, useState } from 'react';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useEffect, useState } from 'react';
+
 import { useUser } from '../../auth/hooks/useUser';
 import usePost from '../../common/util/usePost';
 import ShippingAddress from '../../payment/ui/ShippingAddress';
 import ShippingCard from '../../payment/ui/ShippingCard';
-import ShippingOrderer from '../../payment/ui/ShippingOrderer';
 import useEditProfile from '../hooks/useEditProfile';
 import EditProfileInput from '../ui/EditProfileInput';
 import SubmitButton from '../ui/SubmitButton';

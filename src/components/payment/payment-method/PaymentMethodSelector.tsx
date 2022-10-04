@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
-import CartItem from '../../cart/CartItem';
+import React, { ChangeEvent } from 'react';
 import Radio from '../../common/ui/Radio';
 import PaymentMethodInfoMessage from './PaymentMethodInfoMessage';
 

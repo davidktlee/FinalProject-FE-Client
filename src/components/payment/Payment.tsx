@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, useEffect, useCallback } from 'react'
-import { useDaumPostcodePopup } from 'react-daum-postcode'
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
 import { useUser } from '../auth/hooks/useUser'

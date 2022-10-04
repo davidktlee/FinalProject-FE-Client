@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {BsPerson,BsHeart,BsCart,BsBell,BsChatDots} from 'react-icons/bs'
+
 const MobileBottomNav = () => {
 
   return (
@@ -14,4 +14,4 @@ const MobileBottomNav = () => {
   );
 };
 
-export default MobileBottomNav;
+export default React.memo(MobileBottomNav);

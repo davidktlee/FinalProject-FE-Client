@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
 import ShippingCard from '../ui/ShippingCard';
-
 
 const COUPON_CODE = 'lenssis';
 
-interface CouponProps {
-  
-}
-
-const Coupon = ({}:CouponProps) => {
-  
-  
+const Coupon = () => {  
   return (
     <>
     <ShippingCard title='할인코드 적용'>

@@ -1,7 +1,4 @@
 import React, { ChangeEvent, useState } from 'react'
-import { DaumPostcodePopupParams } from 'react-daum-postcode'
-import { GoTriangleDown } from 'react-icons/go'
-import ConfirmModal from '../../common/ui/ConfirmModal'
 import DeliveryRequest from './DeliveryRequest'
 import { PaymentFormValueType } from '../Payment'
 import ShippingCard from '../ui/ShippingCard'
