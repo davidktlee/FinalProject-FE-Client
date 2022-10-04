@@ -43,8 +43,8 @@ const Cart = () => {
   return (
   <PageLayout layoutWidth='w-[90%]' innerTop="top-[30%]" >
     <CardTemplate title='장바구니' isTitleVisible={true}>
-      <div className='flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full'><p className='pl-2 pb-1 text-xl text-lenssisDark font-bold'>전체</p><p className='text-lenssisDark font-semibold'><Link to="/mypage/mycoupon">쿠폰함으로 가기</Link  ></p></div>
-    <div className='flex flex-col items-center xs:flex-row xs:items-start text-lenssisGray mt-10'>
+      <div className='flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full'><p className='pl-2 pb-1 text-base xs:text-xl text-lenssisDark font-bold'>전체</p><p className='text-lenssisDark font-semibold text-sm xs:text-base hidden xs:block'><Link to="/mypage/mycoupon">쿠폰함으로 가기</Link  ></p></div>
+    <div className='flex flex-col items-center xs:flex-row xs:items-start text-lenssisGray mt-4 xs:mt-10'>
 
       <div className='grow flex flex-col px-0 xs:px-2 w-full'>
         <div className='flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 xs:gap-0 w-full py-4 border-y border-solid border-lenssisStroke text-xs xs:text-base '>
@@ -52,9 +52,9 @@ const Cart = () => {
           {isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisDark" isChecked={isTotalChecked} />}
           {!isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisStroke" />}
       
-      <label className='text-lenssisStroke'>전체선택(2/2)</label>
+      <label className='text-lenssisStroke text-base'>전체선택(2/2)</label>
         </div>
-        <p ><span className='font-semibold'>TIP! 1200円</span> 더 구매하면, <span className='font-semibold'>500円 추가 할인</span> 받을 수 있어요.</p>
+        <p className='w-full xs:w-fit text-center xs:text-right'><span className='font-semibold'>TIP! 1200円</span> 더 구매하면, <span className='font-semibold'>500円 추가 할인</span> 받을 수 있어요.</p>
         </div>
       <ul className='pl-4'>
         

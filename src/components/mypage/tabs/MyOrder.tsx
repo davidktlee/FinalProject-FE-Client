@@ -7,6 +7,12 @@ interface MyOrderProps {
 
 }
 
+// 0 주문완료
+// 1 배송준비중
+// 2 출하 완료
+// 3 배송 중
+// 4 배송 완료
+
 const MyOrder = () => {
 
   const product = useRecoilValue(productState)
