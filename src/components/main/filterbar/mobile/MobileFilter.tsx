@@ -2,28 +2,13 @@ import React, { RefObject } from 'react'
 import MobileBoxLayout from '../common/MobileBoxLayout'
 import { graphicDiameter, series, features, duration, colors } from '../../../../constants/filterData'
 import Refresh from '/assets/Refresh.svg'
-import {
-  durationState,
-  graphicDiameterState,
-  colorState,
-  seriesState,
-  featuresState
-} from '../../../../store/filterVallue'
+import { filterState } from '../../../../store/filterVallue'
 import { useResetRecoilState } from 'recoil'
 
 const MobileFilter = () => {
-  const resetDuration = useResetRecoilState(durationState)
-  const resetGraphicDiameter = useResetRecoilState(graphicDiameterState)
-  const resetColor = useResetRecoilState(colorState)
-  const resetSeries = useResetRecoilState(seriesState)
-  const resetfeatures = useResetRecoilState(featuresState)
-
+  const resetFilter = useResetRecoilState(filterState)
   const refreshHandler = () => {
-    resetDuration()
-    resetGraphicDiameter()
-    resetColor()
-    resetSeries()
-    resetfeatures()
+    resetFilter()
   }
   return (
     <div className="bg-[#fff]">

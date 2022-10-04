@@ -11,7 +11,6 @@ interface PropsType extends ProductResponseType {
 
 const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, isNew }: PropsType) => {
   const navigate = useNavigate()
-
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
   const [commaPrice, setCommaPrice] = useState({
@@ -20,7 +19,7 @@ const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, is
   })
 
   const toComma = () => {
-    const addCommaPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
     addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
@@ -127,7 +126,7 @@ const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, is
             </div>
           </div>
           <div className="flex justify-start w-full overflow-hidden flex-wrap">
-            {graphicDiameter.map((item: number, idx: number) => (
+            {graphicDiameter?.map((item: number, idx: number) => (
               <div
                 key={`${item}-${idx}`}
                 className="text-[10px] md:text-[14px] border-[1px] border-solid border-lenssisBadge text-lenssisBadge rounded-md  py-[2px] px-[6px] md:px-[12px] my-1 mr-[5px]"
