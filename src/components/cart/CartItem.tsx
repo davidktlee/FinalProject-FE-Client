@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Counter from './Counter';
-import {HiCheck} from 'react-icons/hi'
+
 import CheckBox from '../common/ui/CheckBox';
 
 interface CartItemProps {

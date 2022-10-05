@@ -18,25 +18,28 @@ const Cart = () => {
   const [isTotalChecked, setIsTotalChecked] = useState(false)
   const { user } = useUser()
 
+
+  const totalCheckedHandler = useCallback(() => {
+    setIsTotalChecked((prev) => !prev)
+  }, [])
+  
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
   }, [])
 
-  const totalCheckedHandler = useCallback(() => {
-    setIsTotalChecked((prev) => !prev)
-  }, [])
 
-  const getProduct = async () => {
-    const res = await axiosInstance({
-      url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
-    })
-    return res.data
-  }
 
-  const { data: productLists } = useQuery([queryKeys.product], getProduct, {
-    refetchOnWindowFocus: false
-  })
+  // const getProduct = async () => {
+  //   const res = await axiosInstance({
+  //     url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
+  //   })
+  //   return res.data
+  // }
+
+  // const { data: productLists } = useQuery([queryKeys.product], getProduct, {
+  //   refetchOnWindowFocus: false
+  // })
 
   return (
     <PageLayout layoutWidth="w-[90%]" innerTop="top-[30%]">
@@ -112,7 +115,7 @@ const Cart = () => {
         </div>
       </CardTemplate>
 
-      <div className="hidden xs:block">
+      {/* <div className="hidden xs:block">
         <CardTemplate title="2번" marginTop="mt-12">
           <h3 className="font-bold text-lenssisDark pb-2 border-b border-solid border-lenssisGray">
             이런 상품도 있어요!
@@ -136,7 +139,7 @@ const Cart = () => {
                 ))}
           </div>
         </CardTemplate>
-      </div>
+      </div> */}
     </PageLayout>
   )
 }
