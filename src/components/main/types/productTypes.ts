@@ -3,7 +3,7 @@ export interface ColorAndImage {
   imageUrl: string
 }
 export interface ProductResponseType {
-  productId?: string // 상품 id
+  productId: number // 상품 id
   series: string // 상품 이름
   colorAndImage: ColorAndImage[] // 상품 이미지와 상품 색상
   graphicDiameter: number[] // 그래픽 직경

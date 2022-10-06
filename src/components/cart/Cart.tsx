@@ -128,7 +128,6 @@ const Cart = () => {
                   <Card
                     key={`${item.productId}-${idx}`}
                     idx={idx}
-                    id={item.productId}
                     colorAndImage={item.colorAndImage}
                     productId={item.productId}
                     series={item.series}
