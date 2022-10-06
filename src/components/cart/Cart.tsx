@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { selectProduct } from '../../store/selectProduct'
+import { selectProduct, totalPriceState } from '../../store/selectProduct'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
@@ -17,9 +17,9 @@ const Cart = () => {
   const { user } = useUser()
   const {cartItems} = useCart()
   const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
-  const [totalPrice,setTotalPrice] = useState(0);
+  const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState);
   const [shippingFee,setShippingFee] = useState(0)
-  
+  const [products,setProducts] = useState<CartItemsType[]>([])
   // 체크박스를 클릭한다.
   // isTotalChecked 또는 isChecked가 true이면 해당 아이템이 담긴다.
   // isTotalChecked 또는 isChecked가 false이면 해당 아이템이 빠진다.
@@ -40,31 +40,37 @@ const Cart = () => {
 
   const buyAllHandler = () => {
     setIsTotalChecked(true);
+    setSelectedProduct(() => [...products])
+    
   }
 
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
   }, [])
+  useEffect(() => {
+    setProducts(cartItems);
+  }, [cartItems])
 
   useEffect(() => {
     if(!isTotalChecked){
       setSelectedProduct([]);
     }
-    cartItems.map((item) => selectProductHandler(item,isTotalChecked))
+    products.map((item) => selectProductHandler(item,isTotalChecked))
   }, [isTotalChecked])
   
   useEffect(() => {
     setTotalPrice(0);
     let totalP = 0;
     let totalDiscount = 0;
-    selectedProduct.map(item => totalP += item.price)
+    selectedProduct.map(item => totalP += (item.price * item.pcs))
     selectedProduct.map(item => totalDiscount += item.discount)
     setTotalPrice(totalP - (totalP * ((totalDiscount/selectedProduct.length || 0) / 100)))
     setShippingFee(totalPrice >= 3000 ? 0 : 500)
-  }, [selectedProduct,totalPrice])
+  }, [selectedProduct,totalPrice,products])
   
-  // 8000 - 2250 = 5750
+  
+  
   // const getProduct = async () => {
   //   const res = await axiosInstance({
   //     url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
@@ -103,8 +109,8 @@ const Cart = () => {
               </p>
             </div>
             <ul className="pl-4">
-              {cartItems.map((item) => (
-                <CartItem key={item.productDetailsId} item={item} isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} selectedProduct={selectedProduct} selectProductHandler={selectProductHandler} setSelectedProduct={setSelectedProduct} />
+              {products.map((item) => (
+                <CartItem setProducts={setProducts} key={item.productDetailsId} products={products} item={item} isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} selectedProduct={selectedProduct} selectProductHandler={selectProductHandler} setSelectedProduct={setSelectedProduct} />
               ))}
               
               
@@ -127,10 +133,10 @@ const Cart = () => {
               </div>
 
               <div className="flex gap-4 flex-col xs:flex-row items-center w-full justify-between mt-4">
-                {/* onClick시 선택한 상품만 담아 주문페이지에 request하는 로직 작성해야 함 */}
-                <button className="flex items-center justify-center border border-solid border-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-lenssisDark text-sm h-[50px] font-semibold">
+                
+                <Link to="/payment" className="flex items-center justify-center border border-solid border-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-lenssisDark text-sm h-[50px] font-semibold">
                   선택상품구매
-                </button>
+                </Link>
                 {/* onClick시 모든 상품을 주문페이지에 request하는 로직 작성해야 함 */}
                 <Link
                   to="/payment"

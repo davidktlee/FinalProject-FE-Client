@@ -11,9 +11,11 @@ interface CartItemProps {
   selectedProduct:CartItemsType[]
   selectProductHandler: (cart: CartItemsType, checked: boolean) => void
   setSelectedProduct: React.Dispatch<React.SetStateAction<CartItemsType[]>>
+  products:CartItemsType[]
+  setProducts: React.Dispatch<React.SetStateAction<CartItemsType[]>>
 }
 
-const CartItem = ({ isTotalChecked, item ,selectedProduct,selectProductHandler,setIsTotalChecked,setSelectedProduct}: CartItemProps) => {
+const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,selectProductHandler,setIsTotalChecked,setSelectedProduct}: CartItemProps) => {
   
   const [isChecked,setIsChecked] = useState(false)
 
@@ -36,7 +38,20 @@ const CartItem = ({ isTotalChecked, item ,selectedProduct,selectProductHandler,s
   useEffect(() => { 
     selectProductHandler(item,isChecked);
   }, [isChecked]);
-  
+
+  useEffect(() => {
+    const pcsChangeProduct = products.find((it) => it.cartId === item.cartId)
+    if(!pcsChangeProduct) return;
+    setSelectedProduct(prev => {
+      return prev.map(it => {
+        if(it.cartId === item.cartId){
+          return {...it,pcs:pcsChangeProduct.pcs}
+        }else{
+          return {...it}
+        }
+      })
+    })
+  }, [products])
   return (
     <li className="flex my-6 text-sm xs:text-base items-center h-[90px] xs:h-[110px] ">
       {/* selectedProduct에 내 cartId가 있으면 true 없으면 false로 작동하게 만든다. */}
@@ -58,7 +73,7 @@ const CartItem = ({ isTotalChecked, item ,selectedProduct,selectProductHandler,s
           </p>
         </div>
         <div>
-          <Counter pcs={item.pcs} />
+          <Counter item={item} pcs={item.pcs} products={products} setProducts={setProducts} />
         </div>
       </div>
       <div className=" min-w-[30px] xs:min-w-[40px]">
