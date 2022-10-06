@@ -9,7 +9,16 @@ interface PropsType extends ProductResponseType {
   isNew?: boolean
 }
 
-const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, isNew }: PropsType) => {
+const Card = ({
+  idx,
+  series,
+  price,
+  discount,
+  colorAndImage,
+  graphicDiameter,
+  isNew,
+  productId
+}: PropsType) => {
   const navigate = useNavigate()
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
@@ -96,12 +105,12 @@ const Card = ({ idx, series, price, discount, colorAndImage, graphicDiameter, is
             </span>
           )}
         </span>
-        <div className="flex flex-col ">
-          <div className="mt-[5px] mb-[4px] flex ">
-            {colorAndImage?.map((eachColor: ColorAndImage, idx: number) => (
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            {colorAndImage.map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] h-[15px] mr-[10px] md:w-[25px] md:h-[25px] md:mr-[15px] rounded-full`}
+                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px] md:mr-[15px] rounded-full box-border self-center`}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)

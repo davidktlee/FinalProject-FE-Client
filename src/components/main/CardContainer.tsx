@@ -39,11 +39,13 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                 />
               ))}
           </div>
-          <Pagination
-            currentPage={newProductCurrentPage}
-            setCurrentPage={setNewProductCurrentPage}
-            allCount={30}
-          />
+          {productLists && (
+            <Pagination
+              currentPage={newProductCurrentPage}
+              setCurrentPage={setNewProductCurrentPage}
+              allCount={productLists.length}
+            />
+          )}
         </>
       ) : (
         data === 'Best' && (
@@ -68,11 +70,13 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                   />
                 ))}
             </div>
-            <Pagination
-              currentPage={allProductCurrentPage}
-              setCurrentPage={setAllProductCurrentPage}
-              allCount={40}
-            />
+            {productLists && (
+              <Pagination
+                currentPage={newProductCurrentPage}
+                setCurrentPage={setNewProductCurrentPage}
+                allCount={productLists.length}
+              />
+            )}
           </>
         )
       )}

@@ -17,15 +17,17 @@ function NoticePage() {
     if (location.pathname.includes('notice')) {
       navigate('/notice/mustread')
     }
-  }, [])
+  }, [location.pathname])
 
   return (
     <>
       {location.pathname.includes('notice') === false ? (
         <div className="max-w-[1180px] mx-auto">
-          <MainNotice />
-          <Outlet />
-          <ViewMoreBtn moveTo="/notice" />
+          <div className="w-[90%] mx-auto">
+            <MainNotice />
+            <Outlet />
+            <ViewMoreBtn moveTo="/notice" />
+          </div>
         </div>
       ) : (
         <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[30%]">

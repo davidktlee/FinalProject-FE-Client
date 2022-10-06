@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from '../../react-query/queryKeys'
 
@@ -27,10 +27,18 @@ const getEvents = async (pageNum: number): Promise<EventResponseType[]> => {
 }
 export const useGetEvent = (pageNum: number) => {
   const fallback: [] = []
-  const { data = fallback } = useQuery(queryKeys.allEvent, () => getEvents(pageNum), {
+  const { data = fallback } = useQuery([queryKeys.allEvent, pageNum], () => getEvents(pageNum), {
     refetchOnWindowFocus: false
   })
   return data
+}
+export const prefetchEvent = (pageNum: number, count: number) => {
+  const queryClient = useQueryClient()
+  const maxPage = Math.floor(count / 10)
+  if (maxPage > pageNum) {
+    const nextPage = pageNum + 1
+    queryClient.prefetchQuery([queryKeys.allEvent, nextPage], () => getEvents(nextPage))
+  }
 }
 
 const detailEvent = async (id: string): Promise<EventResponseType[]> => {

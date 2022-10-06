@@ -12,7 +12,7 @@ const ShippingOrderer = ({onChange,value}:ShippingOrdererProps) => {
       name="orderer"
       onChange={onChange}
       value={value}
-      className={`w-full h-10 border border-solid border-gray-200 rounded-md max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`}
+      className={`w-full h-10 border border-solid border-gray-200 rounded-[5px] max-w-[410px] pl-1 focus:outline-1 focus:outline-[#ABC8DF]`}
       type="text"
     />
   </div>

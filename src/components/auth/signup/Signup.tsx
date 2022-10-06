@@ -1,8 +1,7 @@
-import React, { ChangeEvent, useState, useEffect } from 'react'
+import { useState } from 'react'
 import { RegisterType } from '../types/userTypes'
 import { useAuth } from '../hooks/useAuth'
 import PageLayout from '../../common/ui/PageLayout'
-
 import UserForm from '../../common/ui/UserForm'
 import CardTemplate from '../../common/ui/CardTemplate'
 
@@ -42,6 +41,8 @@ const Signup = () => {
     birthMonth: '',
     birthDay: ''
   })
+  console.log(formValue);
+  
 
   const submitFormHandler = () => {
     const formData: RegisterType = {

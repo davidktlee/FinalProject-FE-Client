@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useUser } from '../../auth/hooks/useUser';
-import ShippingCard from '../../payment/shipping/ui/ShippingCard';
+import ShippingCard from '../../payment/ui/ShippingCard';
 import useEditSecret from '../hooks/useEditSecret';
 import EditProfileInput from '../ui/EditProfileInput';
 import SubmitButton from '../ui/SubmitButton';

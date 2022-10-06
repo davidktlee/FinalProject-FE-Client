@@ -2,14 +2,16 @@ import React from 'react'
 import CardTemplate from './common/ui/CardTemplate'
 import PageLayout from './common/ui/PageLayout'
 import { useGetDetailEvent } from './main/hooks/useEventLists'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 const img =
   'https://user-images.githubusercontent.com/97086762/192783636-f77a8dd9-02b0-4044-a526-47fcd7a1353c.png'
 
 function EventDetail() {
   // const detailEvent = useGetDetailEvent()
   const navigate = useNavigate()
+  const { state } = useLocation()
 
+  // const data = useGetDetailEvent(state as string)
   const clickEventBtn = () => {}
   return (
     <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
@@ -26,8 +28,6 @@ function EventDetail() {
           <div className="flex justify-end items-center py-2">
             <span className="font-[500] mr-2">작성일</span>
             <span className="text-lenssisGray font-[500] mr-6">2022.09.17{/* date */}</span>
-            <span className="font-[500] mr-2">조회수</span>
-            <span className="text-lenssisGray font-[500]">245{/* clickCount */}</span>
           </div>
           <div className=" flex flex-col items-center my-8">
             <img src={img} alt="event-image" />
