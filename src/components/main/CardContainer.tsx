@@ -12,7 +12,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
 
   const productLists = useGetProductsList(allProductCurrentPage)
-  // console.log(productLists)
+  console.log(productLists)
 
   return (
     <>

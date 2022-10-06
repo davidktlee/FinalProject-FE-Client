@@ -46,16 +46,16 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
         console.log(filter.graphicDiameterState)
         break
       case 'color':
-        if (typeof content.color === 'undefined') return
-        if (filter.colorState.includes(content.color)) {
+        if (typeof content.value === 'string' || typeof content.value === 'number') return
+        if (filter.colorState === content.value) {
           setFilter({
             ...filter,
-            colorState: filter.colorState.filter((item: string) => item !== content.color)
+            colorState: filter.colorState.filter((item: string) => item !== content.value)
           })
         } else {
           setFilter({
             ...filter,
-            colorState: [...filter.colorState, content.color]
+            colorState: content.value
           })
         }
         console.log(filter.colorState)

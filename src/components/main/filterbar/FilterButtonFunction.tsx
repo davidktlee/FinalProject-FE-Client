@@ -6,7 +6,7 @@ const [filter, setFilter] = useRecoilState(filterState)
 export type contentTypes = {
   type: string
   name: string
-  value: string | number
+  value: string | number | string[]
   color?: string
 }
 
@@ -22,17 +22,18 @@ export const handleFilterValue = (content: contentTypes) => {
       console.log(filter)
       break
     case 'graphicDiameter':
-      if (typeof content.value === 'string') return
-      if (filter.graphicDiameterState.includes(content.value)) {
-        setFilter({
-          ...filter,
-          graphicDiameterState: filter.graphicDiameterState.filter((item: number) => item !== content.value)
-        })
-      } else {
-        setFilter({
-          ...filter,
-          graphicDiameterState: [...filter.graphicDiameterState, content.value]
-        })
+      if (typeof content.value === 'number') {
+        if (filter.graphicDiameterState.includes(content.value)) {
+          setFilter({
+            ...filter,
+            graphicDiameterState: filter.graphicDiameterState.filter((item: number) => item !== content.value)
+          })
+        } else {
+          setFilter({
+            ...filter,
+            graphicDiameterState: [...filter.graphicDiameterState, content.value]
+          })
+        }
       }
       console.log(filter.graphicDiameterState)
       break

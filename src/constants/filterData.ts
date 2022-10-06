@@ -28,15 +28,39 @@ export const graphicDiameter = [
 // export const graphicDiameter = [11.9, 12.9, 13.0, 13.2, 13.5, 13.8, 14.0]
 
 export const colors = [
-  { type: 'color', color: '#a76c27', name: '브라운' },
-  { type: 'color', color: '#e5d0d0', name: '피치' },
-  { type: 'color', color: '#6e3b3b', name: '모카' },
-  { type: 'color', color: '#3a3a3a', name: '블랙' },
-  { type: 'color', color: '#f2ead1', name: '베이지' },
-  { type: 'color', color: '#b9b9b9', name: '그레이' },
-  { type: 'color', color: '#7ea7cd', name: '블루' },
-  { type: 'color', color: '#8ca171', name: '그린' }
+  { type: 'color', color: '#a76c27', name: '브라운', value: ['#6a543b', '#524333', '#554637', '#695642'] },
+  { type: 'color', color: '#e5d0d0', name: '핑크', value: ['#e87f7f'] },
+  { type: 'color', color: '#6e3b3b', name: '초코', value: ['#573831'] },
+  { type: 'color', color: '#3a3a3a', name: '블랙', value: ['#0f0f0f'] },
+  { type: 'color', color: '#f2ead1', name: '베이지', value: ['#856f62', '#dbb461', '#b8a28a'] },
+  { type: 'color', color: '#b9b9b9', name: '그레이', value: ['#84878d'] },
+  { type: 'color', color: '#7ea7cd', name: '블루', value: ['#3e5582', '#b8bfcc'] },
+  { type: 'color', color: '#8ca171', name: '그린', value: ['#2f7f59', '#aba99b'] }
 ]
+
+// 전체 상품 컬러코드 종류
+// #6a543b
+// #524333
+
+// #e87f7f
+
+// #573831
+// #554637
+// #695642
+
+// #0f0f0f
+
+// #856f62
+// #dbb461
+// #b8a28a
+
+// #84878d
+
+// #3e5582
+// #b8bfcc
+
+// #2f7f59
+// #aba99b
 
 export const series = [
   { type: 'series', name: '에이린', value: 'erin' },
