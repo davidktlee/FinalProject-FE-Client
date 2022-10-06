@@ -14,10 +14,10 @@ const ReviewPage = () => {
             <div className="text-center mt-4 mb-6 font-bold text-[20px] xs-max:pb-20 pb-20">리뷰</div>
             <select
               name="상품명"
-              id=""
               className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[245px] h-[40px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
             >
               <option value="샌드플러스 그레이">샌드플러스그레이</option>
+              <option value="샌드플러스 그레이">에일린</option>
             </select>
             <div className="xs-max:hidden">
               <ReviewBanner />

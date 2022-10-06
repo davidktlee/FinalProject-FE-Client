@@ -8,7 +8,7 @@ const getProductsList = async (pageNo: number): Promise<ProductResponseType[]> =
   const {
     data: { data }
   } = await axiosInstance({
-    url: `/main/product?page=${pageNo}&memberId=0&size=9`,
+    url: `/product/main?page=${pageNo}&memberId=0&size=9`,
     // url: '/main/product?page=1&memberId=0&size=9',
     headers: {
       ContentType: 'application/json'

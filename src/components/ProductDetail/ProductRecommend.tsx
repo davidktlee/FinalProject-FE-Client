@@ -25,7 +25,7 @@ const ProductRecommend = () => {
           <p className="xs:hidden">더보기</p>
         </div>
         <div className="divider h-[1px] mt-4 mb-8 bg-[#BCBCBC] xs-max:mb-0"></div>
-        <div className="xs-max:hidden flex flex-wrap -m-4 p-4">
+        {/* <div className="xs-max:hidden flex flex-wrap -m-4 p-4">
           {productLists &&
             productLists
               .slice(0, 4)
@@ -44,7 +44,7 @@ const ProductRecommend = () => {
         </div>
         <div className="xs:hidden ">
           <MobileProductRecommend />
-        </div>
+        </div> */}
       </div>
     </section>
   )
