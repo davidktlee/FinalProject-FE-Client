@@ -27,7 +27,7 @@ const Card = ({
     price: '',
     discount: ''
   })
-  
+
   const toComma = () => {
     const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
@@ -81,7 +81,7 @@ const Card = ({
         <span className="relative">
           <img
             onClick={() => navigate('/product/1')}
-            src={viewImg ? viewImg : '/public/assets/person.png'}
+            src={viewImg || '/public/assets/person.png'}
             alt="プロダクトイメージ"
             className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
           />
