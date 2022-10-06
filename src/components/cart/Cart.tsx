@@ -1,16 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import { HiCheck } from 'react-icons/hi'
-import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
-import { axiosInstance } from '../axiosinstance'
-import Card from '../common/Card'
 import CardTemplate from '../common/ui/CardTemplate'
 import CheckBox from '../common/ui/CheckBox'
 import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
-import { queryKeys } from '../react-query/queryKeys'
 import CartItem from './CartItem'
 
 const Cart = () => {
@@ -22,7 +17,11 @@ const Cart = () => {
   const totalCheckedHandler = useCallback(() => {
     setIsTotalChecked((prev) => !prev)
   }, [])
-  
+
+  const buyAllHandler = () => {
+    setIsTotalChecked(true);
+  }
+
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
@@ -99,6 +98,7 @@ const Cart = () => {
                 <Link
                   to="/payment"
                   className="flex items-center justify-center text-center border border-solid border-transparent bg-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-white text-sm h-[50px] font-semibold"
+                  onClick={buyAllHandler}
                 >
                   전체상품구매
                 </Link>

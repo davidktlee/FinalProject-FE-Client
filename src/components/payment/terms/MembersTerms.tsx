@@ -20,4 +20,4 @@ const MembersTerms = () => {
   );
 };
 
-export default MembersTerms;
+export default React.memo(MembersTerms);

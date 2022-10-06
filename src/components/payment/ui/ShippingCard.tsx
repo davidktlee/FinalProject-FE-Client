@@ -16,4 +16,4 @@ const ShippingCard = ({title,children,isRequired}:ShippingCardProps) => {
   );
 };
 
-export default ShippingCard;
+export default React.memo(ShippingCard);

@@ -14,4 +14,4 @@ const TermsDropdownButton = ({onClick}:TermsDropdownButtonProps) => {
   
 };
 
-export default TermsDropdownButton;
+export default React.memo(TermsDropdownButton);

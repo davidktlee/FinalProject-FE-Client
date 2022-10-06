@@ -15,6 +15,7 @@ import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
 import PaymentTitle from './ui/PaymentTitle'
 import TermsTitle from './ui/TermsTitle'
 import usePost from '../common/util/usePost'
+import OrderProductName from './ui/OrderProductName'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -116,7 +117,8 @@ const Payment = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState('')
   const [paymentMethodNumber, setPaymentMethodNumber] = useState<null | number>(null)
-
+  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
+  const [discountCode, setDisCountCode] = useState('')
   const currentPaymentMethodHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value }
@@ -130,9 +132,7 @@ const Payment = () => {
     }
   }
 
-  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
 
-  const [discountCode, setDisCountCode] = useState('')
 
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -270,11 +270,8 @@ const Payment = () => {
       <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <PaymentTitle text="주문 상품" />
-          <div className="flex w-full justify-between items-center py-2 text-gray-300 text-sm px-2">
-            <p className="flex-1 text-center">상품명</p>
-            <p className="text-center w-[85px] xs:w-[100px]">수량</p>
-            <p className="text-center w-[50px] xs:w-[140px]">판매가</p>
-          </div>
+          <OrderProductName />
+          {/* product api 연결시 item 컴포넌트로 분리 */}
           <div className="flex flex-col w-full gap-4 items-center justify-center">
             {product.map((item, index) => (
               <div className="flex w-full border-y border-solid border-gray-300" key={item.lensTitle + index}>
@@ -374,6 +371,7 @@ const Payment = () => {
         <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
+
 
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
         <PaymentTitle text="결제수단 선택" />
