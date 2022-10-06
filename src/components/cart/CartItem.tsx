@@ -48,7 +48,7 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
       })
     })
   }, [products])
-  
+
   return (
     <li className="flex my-6 text-sm xs:text-base items-center h-[90px] xs:h-[110px] ">
       {/* selectedProduct에 내 cartId가 있으면 true 없으면 false로 작동하게 만든다. */}
@@ -59,7 +59,7 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
       />
       <img className="w-[90px] xs:w-[120px] h-[100px] xs:h-[120px]" src={item.imageUrl} alt="" />
       <div className="ml-[6px] xs:ml-4 grow flex flex-col">
-        <div className="mb-2">
+        <div className="mb-2 text-xs xs:text-sm">
           {item.name} - {item.color}
         </div>
 

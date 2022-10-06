@@ -13,7 +13,7 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   const searchSubmitHandler = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserSearched(prev => [...prev,searchValue])
-    
+   setTimeout(() => {popupSearchBarHandler()},0)
   }
 
   const searchValueChangeHander = (e:ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +35,7 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   
   useEffect(() => {
     localStorage.setItem('lenssis_search', JSON.stringify(userSearched))
+    
   },[userSearched])
   
 
