@@ -27,7 +27,7 @@ const Card = ({
     price: '',
     discount: ''
   })
-
+  
   const toComma = () => {
     const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
