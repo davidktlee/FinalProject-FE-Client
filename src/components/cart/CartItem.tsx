@@ -21,12 +21,8 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
 
   const onClick = () => {
     setIsTotalChecked(false);
-    setIsChecked(prev => !prev);
-    
+    setIsChecked(prev => !prev); 
   }
-
-
-
 
   useEffect(() => {
     if(!isTotalChecked){
@@ -40,18 +36,19 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
   }, [isChecked]);
 
   useEffect(() => {
-    const pcsChangeProduct = products.find((it) => it.cartId === item.cartId)
+    const pcsChangeProduct = products.find((product) => product.cartId === item.cartId)
     if(!pcsChangeProduct) return;
     setSelectedProduct(prev => {
-      return prev.map(it => {
-        if(it.cartId === item.cartId){
-          return {...it,pcs:pcsChangeProduct.pcs}
+      return prev.map(selectProduct => {
+        if(selectProduct.cartId === item.cartId){
+          return {...selectProduct,pcs:pcsChangeProduct.pcs}
         }else{
-          return {...it}
+          return {...selectProduct}
         }
       })
     })
   }, [products])
+  
   return (
     <li className="flex my-6 text-sm xs:text-base items-center h-[90px] xs:h-[110px] ">
       {/* selectedProduct에 내 cartId가 있으면 true 없으면 false로 작동하게 만든다. */}

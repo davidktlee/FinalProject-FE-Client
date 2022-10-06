@@ -44,10 +44,10 @@ const Cart = () => {
     
   }
 
-  useEffect(() => {
-    const token = getStoredToken()
-    refreshToken(token)
-  }, [])
+  // useEffect(() => {
+  //   const token = getStoredToken()
+  //   refreshToken(token)
+  // }, [])
   useEffect(() => {
     setProducts(cartItems);
   }, [cartItems])
@@ -112,8 +112,6 @@ const Cart = () => {
               {products.map((item) => (
                 <CartItem setProducts={setProducts} key={item.productDetailsId} products={products} item={item} isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} selectedProduct={selectedProduct} selectProductHandler={selectProductHandler} setSelectedProduct={setSelectedProduct} />
               ))}
-              
-              
             </ul>
           </div>
 
