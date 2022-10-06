@@ -5,5 +5,6 @@ export const queryKeys = {
   newToken: 'newToken',
   allEvent: 'allEvent',
   event: 'event',
-  allNotice: 'allNotice'
+  allNotice: 'allNotice',
+  cart: 'cart'
 }
