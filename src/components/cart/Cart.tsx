@@ -51,11 +51,12 @@ const Cart = () => {
   useEffect(() => {
     setProducts(cartItems);
   }, [cartItems])
+
   useEffect(() => {
     if(!isTotalChecked){
       setSelectedProduct([]);
     }
-    cartItems.map((item) => selectProductHandler(item,isTotalChecked))
+    products.map((item) => selectProductHandler(item,isTotalChecked))
   }, [isTotalChecked])
   
   useEffect(() => {

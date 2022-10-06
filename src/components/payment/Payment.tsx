@@ -300,7 +300,7 @@ const Payment = () => {
                   {item.pcs}
                 </p>
                 <p className="flex justify-center items-center w-[80px] xs:w-[160px] text-xs xs:text-base">
-                {(item.price - item.price * (item.discount / 100)).toLocaleString()}円
+                {((item.price * item.pcs) - (item.price * item.pcs) * (item.discount / 100)).toLocaleString()}円
                 </p>
               </div>
             ))}
