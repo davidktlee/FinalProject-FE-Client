@@ -14,7 +14,6 @@ function MustRead() {
     <>
       <WebNotice />
       <MobileNotice />
-     
     </>
   )
 }

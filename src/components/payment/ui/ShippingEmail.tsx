@@ -20,7 +20,7 @@ const ShippingEmail = ({domainArray,emailDomainSelectHandler,onChange,onClick,va
                 name="emailIdentity"
                 value={value1}
                 type="text"
-                className="flex-1 border border-solid border-gray-200 h-10 rounded-md max-w-[100px] xs:max-w-[160px] text-xs xs:text-sm pl-1"
+                className="flex-1 border border-solid border-gray-200 h-10 rounded-[5px] max-w-[100px] xs:max-w-[160px] text-xs xs:text-sm pl-1"
                 onChange={onChange}
               />
               <span className="text-gray-400">&nbsp;@&nbsp;</span>
@@ -29,11 +29,11 @@ const ShippingEmail = ({domainArray,emailDomainSelectHandler,onChange,onClick,va
               name="emailDomain"
               value={value2}
               type="text"
-              className="flex-1 border border-solid border-gray-200 h-10 rounded-md max-w-[80px] xs:max-w-[100px] text-xs xs:text-sm pl-1"
+              className="flex-1 border border-solid border-gray-200 h-10 rounded-[5px] max-w-[80px] xs:max-w-[100px] text-xs xs:text-sm pl-1"
               onChange={onChange}
             />
             <div
-              className="flex items-center justify-center w-[80px] xs:w-[100px] border border-solid border-gray-200 h-10 rounded-md ml-2 xs:ml-6 cursor-pointer"
+              className="flex items-center justify-center w-[80px] xs:w-[100px] border border-solid border-gray-200 h-10 rounded-[5px] ml-2 xs:ml-6 cursor-pointer"
               onClick={onClick}
             >
               <span className="text-xs xs:text-sm">
@@ -43,7 +43,7 @@ const ShippingEmail = ({domainArray,emailDomainSelectHandler,onChange,onClick,va
             </div>
   
             {isOpen && (
-              <ul className="absolute left-[38%] xs:left-[68%] top-10 bg-white border border-solid border-gray-400 rounded-md min-w-[80px] xs:max-w-[100px]">
+              <ul className="absolute left-[38%] xs:left-[68%] top-10 bg-white border border-solid border-gray-400 rounded-[5px] min-w-[80px] xs:max-w-[100px]">
                 {domainArray.map((item) => (
                   <li
                     key={item}

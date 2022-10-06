@@ -57,7 +57,7 @@ function EventPage() {
 
   const onClickEvent = (id: string) => {
     setEventId(id)
-    navigate(`/event/${id}`)
+    navigate(`/event/${id}`, { state: id })
   }
   // console.log(eventId)
   // if (eventId) {
