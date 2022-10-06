@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { addCart } from '../main/hooks/useCart'
+import { addCart } from '../cart/hooks/useCart'
 import { addFavorite, deleteFavorite } from './../main/hooks/useFavorite'
 
 interface PropsType {
