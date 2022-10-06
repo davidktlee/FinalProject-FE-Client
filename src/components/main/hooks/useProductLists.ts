@@ -8,7 +8,8 @@ const getProductsList = async (pageNo: number): Promise<ProductResponseType[]> =
   const {
     data: { data }
   } = await axiosInstance({
-    url: `/product/main?page=${pageNo}`,
+    url: `/main/product?page=${pageNo}&memberId=0&size=9`,
+    // url: '/main/product?page=1&memberId=0&size=9',
     headers: {
       ContentType: 'application/json'
     }
@@ -22,6 +23,7 @@ export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
     keepPreviousData: true,
     refetchOnWindowFocus: false
   })
+  console.log(data)
   return data
 }
 

@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
+import { addCart, addFavorite } from '../main/hooks/useAddProductLists'
 
-function CartAndHeart() {
+interface PropsType {
+  productId: number
+}
+
+function CartAndHeart({ productId }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
   const [onCartAnimation, setOnCartAnimation] = useState(false)
@@ -9,6 +14,9 @@ function CartAndHeart() {
     setOnHeartAnimation((prev) => !prev)
     setTimeout(() => {
       // post 보낼 로직
+      if (!onHeartAnimation) {
+        addFavorite(productId)
+      }
     }, 500)
   }
   const changeWindowWidth = () => {
@@ -18,8 +26,10 @@ function CartAndHeart() {
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
   }, [])
+
   const ClickCart = () => {
     setOnCartAnimation((prev) => !prev)
+    addCart(productId)
   }
 
   return (

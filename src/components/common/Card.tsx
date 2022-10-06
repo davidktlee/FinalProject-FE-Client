@@ -7,7 +7,6 @@ import { ColorAndImage, ProductResponseType } from '../main/types/productTypes'
 interface PropsType extends ProductResponseType {
   idx: number
   isNew?: boolean
-  id:string;
 }
 
 const Card = ({
@@ -121,10 +120,10 @@ const Card = ({
           </div>
 
           <span className="hidden xs:block absolute top-[190px] right-1 ">
-            <CartAndHeart />
+            <CartAndHeart productId={productId} />
           </span>
           <span className="xs:hidden block absolute top-[120px] right-1">
-            <CartAndHeart />
+            <CartAndHeart productId={productId} />
           </span>
           <div className=" text-[12px] md:text-[14px]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">

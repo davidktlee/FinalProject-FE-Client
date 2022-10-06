@@ -27,31 +27,34 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         console.log(filter)
         break
       case 'graphicDiameter':
-        if (typeof content.value === 'string') return
-        if (filter.graphicDiameterState.includes(content.value)) {
-          setFilter({
-            ...filter,
-            graphicDiameterState: filter.graphicDiameterState.filter((item: number) => item !== content.value)
-          })
-        } else {
-          setFilter({
-            ...filter,
-            graphicDiameterState: [...filter.graphicDiameterState, content.value]
-          })
+        if (typeof content.value === 'number') {
+          if (filter.graphicDiameterState.includes(content.value)) {
+            setFilter({
+              ...filter,
+              graphicDiameterState: filter.graphicDiameterState.filter(
+                (item: number) => item !== content.value
+              )
+            })
+          } else {
+            setFilter({
+              ...filter,
+              graphicDiameterState: [...filter.graphicDiameterState, content.value]
+            })
+          }
         }
         console.log(filter.graphicDiameterState)
         break
       case 'color':
-        if (typeof content.color === 'undefined') return
-        if (filter.colorState.includes(content.color)) {
+        if (typeof content.value === 'string' || typeof content.value === 'number') return
+        if (filter.colorState === content.value) {
           setFilter({
             ...filter,
-            colorState: filter.colorState.filter((item: string) => item !== content.color)
+            colorState: filter.colorState.filter((item: string) => item !== content.value)
           })
         } else {
           setFilter({
             ...filter,
-            colorState: [...filter.colorState, content.color]
+            colorState: content.value
           })
         }
         console.log(filter.colorState)
