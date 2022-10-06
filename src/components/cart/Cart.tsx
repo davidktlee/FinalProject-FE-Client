@@ -44,10 +44,10 @@ const Cart = () => {
     
   }
 
-  useEffect(() => {
-    const token = getStoredToken()
-    refreshToken(token)
-  }, [])
+  // useEffect(() => {
+  //   const token = getStoredToken()
+  //   refreshToken(token)
+  // }, [])
   useEffect(() => {
     setProducts(cartItems);
   }, [cartItems])
@@ -101,7 +101,7 @@ const Cart = () => {
                 )}
                 {!isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisStroke" />}
 
-                <label className="text-lenssisStroke text-base">전체선택(2/2)</label>
+                <label className="text-lenssisStroke text-base">전체선택({selectedProduct.length}/{products.length})</label>
               </div>
               <p className="w-full xs:w-fit text-center xs:text-right">
                 <span className="font-semibold">TIP! 1200円</span> 더 구매하면,{' '}
@@ -112,8 +112,6 @@ const Cart = () => {
               {products.map((item) => (
                 <CartItem setProducts={setProducts} key={item.productDetailsId} products={products} item={item} isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} selectedProduct={selectedProduct} selectProductHandler={selectProductHandler} setSelectedProduct={setSelectedProduct} />
               ))}
-              
-              
             </ul>
           </div>
 

@@ -13,11 +13,13 @@ import { useUser } from '../auth/hooks/useUser'
 import NavSearch from './NavSearch'
 
 import MobileFilter from '../main/filterbar/mobile/MobileFilter'
+import MobileSearchBar from './MobileSearchBar'
 
 
 const Header = () => {
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
   const [isSearch,setIsSearch] = useState(false);
+  
   const { user } = useUser()
   const handleFilter = useCallback(() => {
     setFilterOpen((prev) => !prev)
@@ -28,6 +30,7 @@ const Header = () => {
   const popupSearchBarHandler = () => {
     setIsSearch(prev => !prev);
   }
+
   return (
     <nav className="fixed flex flex-col justify-center bg-[#ABC8DF] text-white z-50 w-full top-0">
       <TopInfomation />
@@ -47,7 +50,7 @@ const Header = () => {
               <FiFilter size={24} />
             </button>
           )}
-          {isSearch && <div className='fixed top-[12%] left-[12%] z-50 text-black'><NavSearch searchValueHandler={() => {}} /></div>}
+          {isSearch && <MobileSearchBar popupSearchBarHandler={popupSearchBarHandler} />}
         </div>
       </div>
     </nav>
