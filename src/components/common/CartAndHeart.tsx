@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react'
-import { addCart, addFavorite } from '../main/hooks/useAddProductLists'
+import { addCart } from '../main/hooks/useCart'
+import { addFavorite, deleteFavorite } from './../main/hooks/useFavorite'
 
 interface PropsType {
   productId: number
+  isFavorite?: number
 }
 
-function CartAndHeart({ productId }: PropsType) {
+function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
   const [onCartAnimation, setOnCartAnimation] = useState(false)
   const [isCartModalOpen, setIsCartModalOpen] = useState(false)
+  console.log(isFavorite)
   const ClickHeart = () => {
-    setOnHeartAnimation((prev) => !prev)
     setTimeout(() => {
       // post 보낼 로직
       if (!onHeartAnimation) {
         addFavorite(productId)
       }
     }, 500)
+    setOnHeartAnimation((prev) => !prev)
+    if (onHeartAnimation) {
+      deleteFavorite(productId)
+    }
   }
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
@@ -25,7 +31,10 @@ function CartAndHeart({ productId }: PropsType) {
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
-  }, [])
+    if (isFavorite === 1) {
+      setOnHeartAnimation(true)
+    }
+  }, [isFavorite])
 
   const ClickCart = () => {
     setOnCartAnimation((prev) => !prev)

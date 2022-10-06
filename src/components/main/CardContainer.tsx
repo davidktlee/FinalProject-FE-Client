@@ -35,7 +35,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                   price={item.price}
                   discount={item.discount}
                   graphicDiameter={item.graphicDiameter}
-                  isNew={true}
+                  isFavorite={item.isFavorite}
                 />
               ))}
           </div>
@@ -67,6 +67,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                     price={item.price}
                     discount={item.discount}
                     graphicDiameter={item.graphicDiameter}
+                    isFavorite={item.isFavorite}
                   />
                 ))}
             </div>
