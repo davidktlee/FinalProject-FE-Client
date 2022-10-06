@@ -10,6 +10,7 @@ interface PropsType {
 function Pagination({ currentPage, allCount, setCurrentPage }: PropsType) {
   const [pagesCount, setPagesCount] = useState<number[] | []>([])
   const maxPage = Math.floor(allCount / 10)
+
   useEffect(() => {
     const arr = []
     for (let i = 1; i <= maxPage; i++) {
