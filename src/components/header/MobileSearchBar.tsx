@@ -24,6 +24,10 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   const userSearchedDeleteHandler = (item:string) => {
     setUserSearched(prev => prev.filter(searchword => searchword !== item))
   }
+  const wholeSearchedValueDeleteHandler = () => {
+    localStorage.setItem('lenssis_search', '')
+    setUserSearched([]);
+  }
 
   useEffect(() => {
     if(localStorage.getItem('lenssis_search')){
@@ -67,7 +71,7 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
           <div className="flex items-center justify-between w-full">
             <p className="text-lenssisDark font-bold">최근 검색어</p>
             <p>
-              <button className="font-bold text-lenssisGray">전체 지우기</button>
+              <button className="font-bold text-lenssisGray" onClick={wholeSearchedValueDeleteHandler}>전체 지우기</button>
             </p>
           </div>
           <div className="flex flex-col items-center w-full mt-4">
