@@ -57,8 +57,9 @@ function NoticePageTab() {
             <ul className="absolute top-[36px] right-[2px] py-4 flex flex-col items-start w-[160px] rounded-md shadow-basic bg-[#fff]  z-[9]">
               {NoticePageTitle.map((title: Title, index: number) => (
                 <li
-                  className="w-[90%] mx-auto border-b-[1px] border-solid border-lenssisGray py-2"
-                  onClick={(e) => selectOptionHandler(title.title)}
+                  key={`${title.title}-${index}`}
+                  className="w-[90%] mx-auto border-b-[1px] border-solid border-lenssisStroke py-2"
+                  onClick={() => selectOptionHandler(title.title)}
                 >
                   <NavLink
                     key={index}

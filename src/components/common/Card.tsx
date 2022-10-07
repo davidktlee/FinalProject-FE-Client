@@ -17,7 +17,8 @@ const Card = ({
   colorAndImage,
   graphicDiameter,
   isNew,
-  productId
+  productId,
+  isFavorite
 }: PropsType) => {
   const navigate = useNavigate()
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
@@ -120,10 +121,10 @@ const Card = ({
           </div>
 
           <span className="hidden xs:block absolute top-[190px] right-1 ">
-            <CartAndHeart productId={productId} />
+            <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
           <span className="xs:hidden block absolute top-[120px] right-1">
-            <CartAndHeart productId={productId} />
+            <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
           <div className=" text-[12px] md:text-[14px]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
