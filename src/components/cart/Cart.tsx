@@ -2,17 +2,16 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
-import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
 import CheckBox from '../common/ui/CheckBox'
 import PageLayout from '../common/ui/PageLayout'
-import { getStoredToken } from '../local-storage/userStorage'
 import CartItem from './CartItem'
 import useCart, { CartItemsType } from './hooks/useCart'
+import CartInfo from './ui/CartInfo'
 
 const Cart = () => {
-  const refreshToken = useRefreshToken()
+  
   const [isTotalChecked, setIsTotalChecked] = useState(false)
   const { user } = useUser()
   const {cartItems} = useCart()
@@ -42,7 +41,6 @@ const Cart = () => {
   const buyAllHandler = () => {
     setIsTotalChecked(true);
     setSelectedProduct(() => [...products])
-    
   }
 
   const includeVerifyHandler = useCallback(() => {
@@ -56,6 +54,7 @@ const Cart = () => {
 
   useEffect(() => {
     setProducts(cartItems);
+    
   }, [cartItems])
 
   useEffect(() => {
@@ -107,12 +106,9 @@ const Cart = () => {
                 )}
                 {!isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisStroke" />}
 
-                <label className="text-lenssisStroke text-base">전체선택({selectedProduct.length}/{products.length})</label>
+                <label className={`${isTotalChecked || selectedProduct.length === products.length ? 'text-lenssisDark' : 'text-lenssisStroke'} text-base`}>전체선택({selectedProduct.length}/{products.length})</label>
               </div>
-              <p className="w-full xs:w-fit text-center xs:text-right">
-                <span className="font-semibold">TIP! 1200円</span> 더 구매하면,{' '}
-                <span className="font-semibold">500円 추가 할인</span> 받을 수 있어요.
-              </p>
+              <CartInfo />
             </div>
             <ul className="pl-4">
               {products.map((item) => (
