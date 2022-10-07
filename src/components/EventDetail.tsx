@@ -7,9 +7,11 @@ const img =
   'https://user-images.githubusercontent.com/97086762/192783636-f77a8dd9-02b0-4044-a526-47fcd7a1353c.png'
 
 function EventDetail() {
-  // const detailEvent = useGetDetailEvent()
   const navigate = useNavigate()
   const { state } = useLocation()
+  // if (state) {
+  //   const detailEvent = useGetDetailEvent(state as number)
+  // }
 
   // const data = useGetDetailEvent(state as string)
   const clickEventBtn = () => {}
