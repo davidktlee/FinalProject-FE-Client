@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react'
 import { graphicDiameter } from '../../constants/filterData'
-import { axiosInstance } from '../axiosinstance/index'
 import Heart from '/assets/Heart.svg'
+import { useParams } from 'react-router'
+// import { useProductDetails } from './hooks/useProductDetails'
 
 const ProductInfo = () => {
+  const { id } = useParams()
+
+  // const details = useProductDetails()
+  // console.log(details)
+
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container pt-44 pb-10 mx-auto ">
