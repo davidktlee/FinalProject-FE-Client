@@ -45,15 +45,15 @@ const Cart = () => {
     
   }
 
-  const includeVerifyHandler = () => {
-    
+  const includeVerifyHandler = useCallback(() => {
     alert('선택된 상품이 없습니다. 구입하시려는 상품을 체크해주세요')
-  }
+  },[])
 
   // useEffect(() => {
   //   const token = getStoredToken()
   //   refreshToken(token)
   // }, [])
+  
   useEffect(() => {
     setProducts(cartItems);
   }, [cartItems])

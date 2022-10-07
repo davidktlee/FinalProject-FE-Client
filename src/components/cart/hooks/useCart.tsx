@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { axiosInstance } from '../../axiosinstance';
 import { queryKeys } from '../../react-query/queryKeys';
 
@@ -29,7 +29,10 @@ const getCartItems = async():Promise<CartItemsType[]> => {
 
 const useCart = () => {
   const fallback:CartItemsType[] = []
-  const {data:cartItems = fallback} = useQuery(queryKeys.cart, () => getCartItems())
+  const queryClient = useQueryClient()
+  const {data:cartItems = fallback} = useQuery(queryKeys.cart, () => getCartItems(),{
+    
+  })
 
   return {cartItems}
 };
