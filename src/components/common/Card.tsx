@@ -80,8 +80,8 @@ const Card = ({
         )}
         <span className="relative">
           <img
-            onClick={() => navigate('/product/1')}
-            src={viewImg || '/public/assets/person.png'}
+            onClick={() => navigate(`/product/${productId}`)}
+            src={viewImg ? viewImg : '/assets/logo.svg'}
             alt="プロダクトイメージ"
             className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
           />

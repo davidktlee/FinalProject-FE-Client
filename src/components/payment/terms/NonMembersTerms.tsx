@@ -10,7 +10,7 @@ interface NonMemberTermsProps {
 const NonMembersTerms = ({ isChecked, setIsChecked }: NonMemberTermsProps) => {
   return (
     <div className="relative">
-      <TermsDropdownButton />
+      {/* <TermsDropdownButton /> */}
       <div className="flex items-center gap-2 pt-2">
         <CheckBox
           bgColor="bg-lenssisDark"
