@@ -26,7 +26,7 @@ const Card = ({
     price: '',
     discount: ''
   })
-  
+
   const toComma = () => {
     const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
@@ -79,7 +79,7 @@ const Card = ({
         )}
         <span className="relative">
           <img
-            onClick={() => navigate('/product/1')}
+            onClick={() => navigate(`/product/${productId}`)}
             src={viewImg ? viewImg : '/assets/logo.svg'}
             alt="プロダクトイメージ"
             className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
