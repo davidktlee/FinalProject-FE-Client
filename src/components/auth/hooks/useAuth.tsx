@@ -5,9 +5,7 @@ import useToast from '../../common/toast/hooks/useToast'
 import { setStoredToken } from '../../local-storage/userStorage'
 
 import { RegisterType, SigninType, Token } from '../types/userTypes'
-import {  useUser } from './useUser'
-
-
+import { useUser } from './useUser'
 
 type AuthEndpoint = 'member/login' | 'member/signup'
 
@@ -15,14 +13,14 @@ type ErrorResponse = { message: string }
 type AuthResponseType = Token | ErrorResponse
 
 interface UseAuth {
-  signin: (user: SigninType) => Promise<void>,
+  signin: (user: SigninType) => Promise<void>
   signup: (newUser: RegisterType) => Promise<void>
-  signout:() => void
+  signout: () => void
 }
 
-export const useAuth = ():UseAuth => {
+export const useAuth = (): UseAuth => {
   const { clearUser, updateUser } = useUser()
-  const {fireToast} = useToast()
+  const { fireToast } = useToast()
   const navigate = useNavigate()
 
   /** 회원가입 함수 */
@@ -32,42 +30,38 @@ export const useAuth = ():UseAuth => {
         url: urlEndpoint,
         method: 'POST',
         data: userData,
-        headers: { "Content-Type":"application/json" },
-        withCredentials:false
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: false
       })
       if (status >= 400) {
         const title = 'message' in data ? data.message : '회원가입에 실패하였습니다.'
         fireToast({
-          id:status + '',
-          message:title,
-          position:'bottom',
-          timer:2000,
-          type:'failed'
+          id: status + '',
+          message: title,
+          position: 'bottom',
+          timer: 2000,
+          type: 'failed'
         })
         return
-      }else{
+      } else {
         fireToast({
-          id:'회원가입 성공',
-          message:'가입하신 이메일로 로그인 해주세요!',
+          id: '회원가입 성공',
+          message: '가입하신 이메일로 로그인 해주세요!',
           position: 'bottom',
-          timer:5000,
-          type:'success'
+          timer: 5000,
+          type: 'success'
         })
         navigate('/signin')
       }
-      
-
     } catch (error) {
       const title =
-        axios.isAxiosError(error) && error?.message
-          ? error.message
-          : '서버에서 에러가 발생했습니다.'
+        axios.isAxiosError(error) && error?.message ? error.message : '서버에서 에러가 발생했습니다.'
       fireToast({
-        id:'서버 에러',
+        id: '서버 에러',
         message: title,
         position: 'top',
-        timer:2000,
-        type:'failed'
+        timer: 2000,
+        type: 'failed'
       })
     }
   }
@@ -80,18 +74,18 @@ export const useAuth = ():UseAuth => {
         method: 'POST',
         data: userData,
         headers: {
-          ContentType: 'application/json',
-         },
-        withCredentials:false
+          ContentType: 'application/json'
+        },
+        withCredentials: false
       })
       if (status === 400) {
         const title = 'message' in data ? data.message : '인증되지 않았습니다.'
         fireToast({
-          id:'인증 실패',
-          message:title,
-          position:'bottom',
-          timer:2000,
-          type:'failed'
+          id: '인증 실패',
+          message: title,
+          position: 'bottom',
+          timer: 2000,
+          type: 'failed'
         })
         return
       }
@@ -107,29 +101,28 @@ export const useAuth = ():UseAuth => {
           ? errorResponse.message
           : '서버에서 에러가 발생했습니다.'
       fireToast({
-        id:'서버 에러',
+        id: '서버 에러',
         message: title,
         position: 'top',
-        timer:2000,
-        type:'failed'
+        timer: 2000,
+        type: 'failed'
       })
     }
   }
-
 
   const signup = async (newUser: RegisterType) => {
     authSignUp('member/signup', newUser)
   }
 
-  const signin = async (user:SigninType) => {  
+  const signin = async (user: SigninType) => {
     authSignin('member/login', user)
   }
 
   const signout = () => {
     clearUser()
     fireToast({
-      id:'logged out',
-      message:'로그아웃 되었습니다!',
+      id: 'logged out',
+      message: '로그아웃 되었습니다!',
       position: 'bottom',
       timer: 2000,
       type: 'complete'

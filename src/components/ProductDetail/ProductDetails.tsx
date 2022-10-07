@@ -4,20 +4,30 @@ import ProductRecommend from './ProductRecommend'
 import ProductTabs from './ProductTabs'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { axiosInstance } from '../axiosinstance'
 import ProductInfo from './ProductInfo'
+import { useProductDetails } from './hooks/useProductDetails'
+import { useUser } from '../auth/hooks/useUser'
+import { useRecoilValue } from 'recoil'
+import { userState } from '../../store/user'
 
 const ProductDetails = () => {
-  const { pathname } = useLocation()
+  const params = useParams()
+  const id = Number(params.id)
+
+  const user = useRecoilValue(userState)
+
+  const productDetails = useProductDetails(user?.memberId, id)
 
   useEffect(() => {
+    if (!user) return
     window.scrollTo(0, 0)
   }, [])
 
   return (
     <div>
-      <ProductInfo />
+      <ProductInfo productDetails={productDetails} />
       <ProductRecommend />
       <ProductBanner />
       <ProductTabs />
