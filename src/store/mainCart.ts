@@ -1,11 +1,14 @@
 import { atom } from 'recoil'
 
-export const mainCartModal = atom({
+type MainCartModal = boolean
+type MainCartId = number[] | []
+
+export const mainCartModal = atom<MainCartModal>({
   key: 'mainCartModal',
   default: false
 })
 
-export const mainCartId = atom({
+export const mainCartId = atom<MainCartId>({
   key: 'mainCartId',
-  default: 0
+  default: []
 })

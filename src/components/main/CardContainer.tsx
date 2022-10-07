@@ -5,6 +5,8 @@ import Pagination from './common/Pagination'
 
 import { useGetProductsList } from './hooks/useProductLists'
 import { getFavorite } from './hooks/useFavorite'
+import { useSetRecoilState } from 'recoil'
+import { mainCartId } from '../../store/mainCart'
 
 // Pagination 부분 수정해야 함
 
@@ -13,6 +15,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
   const [filteredItem, setFilteredItem] = useState<[]>([])
   const productLists = useGetProductsList(allProductCurrentPage)
+  const setFavoriteIds = useSetRecoilState(mainCartId)
   console.log(productLists)
 
   const useGetFavorite = async () => {
@@ -20,7 +23,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
     const filteredItem = res.map((item) => {
       return item.productInfo.productId
     })
-    console.log(filteredItem)
+    setFavoriteIds(filteredItem)
   }
 
   useEffect(() => {

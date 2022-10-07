@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { mainCartId, mainCartModal } from './../../store/mainCart'
 import ProductInfo from '../ProductDetail/ProductInfo'
 // import { useProductDetails } from './../ProductDetail/hooks/useProductDetails'
 
 function MainCartModal() {
-  const [modalState, setModalState] = useRecoilState(mainCartModal)
+  const modalState = useRecoilValue(mainCartModal)
   // 상품 id를 recoilState 로 전달하고 받아서 제품 상세 불러오는 리액트 쿼리문에 전달
-  const [productId, setProductId] = useRecoilState(mainCartId)
+
   // useQuery문
   // const productDetail = useProductDetails(productId)
   useEffect(() => {}, [])

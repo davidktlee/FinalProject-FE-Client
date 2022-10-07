@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useAddCart } from '../cart/hooks/useCart'
 import { addFavorite, deleteFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
-import { useRecoilState } from 'recoil'
-import { mainCartModal } from '../../store/mainCart'
-import MainCartModal from '../main/MainCartModal'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { mainCartId, mainCartModal } from '../../store/mainCart'
 
 interface PropsType {
   productId: number
@@ -13,10 +12,10 @@ interface PropsType {
 function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
-  const [onCartAnimation, setOnCartAnimation] = useState(false)
   const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(mainCartModal)
   const deleteFavor = useDeleteFavorite()
   const addCartMutate = useAddCart()
+  const favoriteId = useRecoilValue(mainCartId)
   const ClickHeart = () => {
     setTimeout(() => {
       // post 보낼 로직
@@ -39,19 +38,20 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
       setOnHeartAnimation(true)
     }
   }, [isFavorite])
+  useEffect(() => {
+    if (favoriteId.includes(productId)) {
+      setOnHeartAnimation((prev) => (prev = true))
+    }
+  }, [])
 
   const ClickCart = () => {
-    setOnCartAnimation((prev) => !prev)
     setIsCartModalOpen((prev) => !prev)
     // addCart(productId)
   }
 
   return (
     <div className={`flex justify-center items-center  `}>
-      <div
-        className={`mr-2 cursor-pointer ${onCartAnimation && 'animate-click'} relative`}
-        onClick={ClickCart}
-      >
+      <div className={`mr-2 cursor-pointer hover:animate-spin relative`} onClick={ClickCart}>
         <svg
           width={`${windowWidth < 440 ? 20 : 28}`}
           height={`${windowWidth < 440 ? 20 : 28}`}
