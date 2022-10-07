@@ -13,4 +13,4 @@ const PaymentMethodInfoMessage = ({message}:PaymentMethodInfoMessageProps) => {
   );
 };
 
-export default PaymentMethodInfoMessage;
+export default React.memo(PaymentMethodInfoMessage);

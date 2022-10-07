@@ -9,6 +9,7 @@ export interface ProductResponseType {
   graphicDiameter: number[] // 그래픽 직경
   price: number // 상품 가격
   discount: number // 할인률
+  isFavorite?: number
 }
 
 export interface CardContainerPropsType {

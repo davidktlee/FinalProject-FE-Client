@@ -1,6 +1,8 @@
 import { useRecoilValue } from 'recoil'
 import { productState } from '../../../store/product'
+import ReviewForm from '../../review/ReviewForm'
 import CardLayout from '../common/CardLayout'
+import { useState } from 'react'
 
 // 0 주문완료
 // 1 배송준비중
@@ -9,11 +11,18 @@ import CardLayout from '../common/CardLayout'
 // 4 배송 완료
 
 const MyOrder = () => {
+  const [isModal, setIsModal] = useState(false)
+
+  const onModalHandler = () => {
+    console.log('모달 오픈!', isModal)
+    setIsModal(!isModal)
+  }
   const product = useRecoilValue(productState)
   if (!product) return <div>loading...</div>
 
   return (
     <CardLayout title="주문 내역">
+      <ReviewForm onClose={onModalHandler} isModalOpen={isModal} />
       <h4 className="py-0 xs:py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold">
         상품 정보
       </h4>
@@ -50,7 +59,10 @@ const MyOrder = () => {
               </div>
 
               <div className="">
-                <button className="border border-solid border-[#d9d9d9] text-[#7a7a7a] h-[25px] w-[70px] xs:h-fit xs:w-fit xs:min-w-[105px] xs:py-1 xs:px-2  rounded-[3px]">
+                <button
+                  onClick={onModalHandler}
+                  className="border border-solid border-[#d9d9d9] text-[#7a7a7a] h-[25px] w-[70px] xs:h-fit xs:w-fit xs:min-w-[105px] xs:py-1 xs:px-2  rounded-[3px]"
+                >
                   <span className="">리뷰 작성하기</span>
                 </button>
               </div>

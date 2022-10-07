@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect, useCallback } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { productState } from '../../store/product'
 import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
@@ -15,6 +15,8 @@ import PaymentMethodSelector from './payment-method/PaymentMethodSelector'
 import PaymentTitle from './ui/PaymentTitle'
 import TermsTitle from './ui/TermsTitle'
 import usePost from '../common/util/usePost'
+import OrderProductName from './ui/OrderProductName'
+import { selectProduct } from '../../store/selectProduct'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -60,7 +62,6 @@ export interface PaymentFormValueType {
 
 const Payment = () => {
   const { user, isLoading } = useUser()
-  const product = useRecoilValue(productState)
 
   const [emailFormValue, setEmailFormValue] = useState({
     emailIdentity: '',
@@ -116,7 +117,11 @@ const Payment = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState('')
   const [paymentMethodNumber, setPaymentMethodNumber] = useState<null | number>(null)
+  const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
 
+
+  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
+  const [discountCode, setDisCountCode] = useState('')
   const currentPaymentMethodHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value }
@@ -130,9 +135,7 @@ const Payment = () => {
     }
   }
 
-  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
 
-  const [discountCode, setDisCountCode] = useState('')
 
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -220,6 +223,7 @@ const Payment = () => {
     console.log(obj)
   }
 
+  
   useEffect(() => {
     if (user) {
       const splitUserEmail = user.email.split('@')
@@ -270,34 +274,33 @@ const Payment = () => {
       <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <PaymentTitle text="주문 상품" />
-          <div className="flex w-full justify-between items-center py-2 text-gray-300 text-sm px-2">
-            <p className="flex-1 text-center">상품명</p>
-            <p className="text-center w-[85px] xs:w-[100px]">수량</p>
-            <p className="text-center w-[50px] xs:w-[140px]">판매가</p>
-          </div>
+          <OrderProductName />
+          {/* product api 연결시 item 컴포넌트로 분리 */}
           <div className="flex flex-col w-full gap-4 items-center justify-center">
-            {product.map((item, index) => (
-              <div className="flex w-full border-y border-solid border-gray-300" key={item.lensTitle + index}>
+            {selectedProduct.map((item, index) => (
+              <div className="flex w-full border-y border-solid border-gray-300" key={item.name + index}>
                 <div className="flex items-center justify-start w-full gap-4 py-4 flex-1">
                   <div className="w-16 xs:w-32 flex items-center h-full">
-                    <img src={item.imageURL} />
+                    <img src={item.imageUrl} />
                   </div>
                   <div className="flex items-start flex-col ">
                     <div className="text-[#5a5a5a] font-semibold">
-                      {item.lensTitle} - <span className="text-sm">{item.lensColor}</span>
+                      {item.name} - <span className="text-sm">{item.color}</span>
                     </div>
+
+                    {/* option을 받아야 될 것 같다
                     <div className="text-xs">
                       {item.option.map((option, index) => (
                         <span key={option + index}>{option} /</span>
                       ))}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <p className="flex justify-center items-center w-[40px] xs:w-[80px] text-xs xs:text-base">
-                  {index + 1}
+                  {item.pcs}
                 </p>
                 <p className="flex justify-center items-center w-[80px] xs:w-[160px] text-xs xs:text-base">
-                  {item.price}
+                {((item.price * item.pcs) - (item.price * item.pcs) * (item.discount / 100)).toLocaleString()}円
                 </p>
               </div>
             ))}
@@ -374,6 +377,7 @@ const Payment = () => {
         <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
+
 
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
         <PaymentTitle text="결제수단 선택" />

@@ -24,5 +24,5 @@ const CardTemplate = ({ children, isTitleVisible, title, marginTop }: CardTempla
   )
 }
 
-export default CardTemplate
+export default React.memo(CardTemplate)
 
