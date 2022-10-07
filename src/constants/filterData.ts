@@ -38,44 +38,19 @@ export const colors = [
   { type: 'color', color: '#8ca171', name: '그린', value: ['#2f7f59', '#aba99b'] }
 ]
 
-// 전체 상품 컬러코드 종류
-// #6a543b
-// #524333
-
-// #e87f7f
-
-// #573831
-// #554637
-// #695642
-
-// #0f0f0f
-
-// #856f62
-// #dbb461
-// #b8a28a
-
-// #84878d
-
-// #3e5582
-// #b8bfcc
-
-// #2f7f59
-// #aba99b
-
 export const series = [
-  { type: 'series', name: '에이린', value: 'erin' },
-  { type: 'series', name: '마리나', value: 'marina' },
-  { type: 'series', name: '샌드', value: 'sand' },
-  { type: 'series', name: '베티', value: 'betty' },
-  { type: 'series', name: '루나', value: 'luna' }
+  { type: 'series', name: 'エイリン', value: 'エイリン' },
+  { type: 'series', name: 'ブリス', value: 'ブリス' },
+  { type: 'series', name: 'サンド', value: 'サンド' },
+  { type: 'series', name: 'ウィサム', value: 'ウィサム' },
+  { type: 'series', name: 'ハッシュ', value: 'ハッシュ' }
 ]
 // export const series = ['에이린', '마리나', '샌드', '베티', '루나']
 
 export const features = [
-  { type: 'feature', name: 'UV차단', value: 'uv' },
-  { type: 'feature', name: '수분', value: 'moisture' },
-  { type: 'feature', name: '블루라이트', value: 'blueLight' },
-  { type: 'feature', name: '실리콘', value: 'silicon' },
-  { type: 'feature', name: '학생용', value: 'student' }
+  { type: 'feature', name: 'UVカット', value: 'UVカット' },
+  { type: 'feature', name: '水分', value: '水分' },
+  { type: 'feature', name: 'ブルーライト', value: 'ブルーライト' },
+  { type: 'feature', name: 'シリコン', value: 'シリコン' }
 ]
 // export const features = ['UV 차단', '수분', '블루 라이트', '실리콘', '학생용']

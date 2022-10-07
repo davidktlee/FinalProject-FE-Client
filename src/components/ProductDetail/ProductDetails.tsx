@@ -11,15 +11,6 @@ import ProductInfo from './ProductInfo'
 const ProductDetails = () => {
   const { pathname } = useLocation()
 
-  // const getProducts = async () => {
-  //   const res = await axios.get(`http://43.200.50.49:8080/main/productDetail`)
-  //   console.log(res)
-  //   return res
-  // }
-
-  // const { data } = useQuery('products', getProducts)
-  // console.log(data)
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])

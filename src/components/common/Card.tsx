@@ -79,7 +79,7 @@ const Card = ({
         )}
         <span className="relative">
           <img
-            onClick={() => navigate('/product/1')}
+            onClick={() => navigate(`/product/${productId}`)}
             src={viewImg ? viewImg : '/assets/logo.svg'}
             alt="プロダクトイメージ"
             className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
@@ -120,10 +120,10 @@ const Card = ({
           </div>
 
           <span className="hidden xs:block absolute top-[190px] right-1 ">
-            <CartAndHeart />
+            <CartAndHeart productId={productId} />
           </span>
           <span className="xs:hidden block absolute top-[120px] right-1">
-            <CartAndHeart />
+            <CartAndHeart productId={productId} />
           </span>
           <div className=" text-[12px] md:text-[14px]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">

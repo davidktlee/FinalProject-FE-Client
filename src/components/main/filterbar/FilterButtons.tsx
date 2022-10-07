@@ -107,7 +107,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             className={`
           ${w} ${h} ${px} ${py} ${gapX} ${gapY}
           justify-center
-          flex font-medium border-solid box-border leading-6 border-[1px] rounded-[20px] text-center text-[14px]  
+          flex font-medium border-solid box-border leading-6 border-[1px] rounded-[20px] text-center text-[12px]  
               ${
                 filter.durationState === content.value ? 'bg-lenssisDark text-white border-lenssisDark' : ''
               } ${
