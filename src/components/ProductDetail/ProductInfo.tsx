@@ -17,11 +17,13 @@ const ProductInfo = ({ isClose }: PropsType) => {
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
-      <img
-        className="absolute top-[195px] right-[20px] font-bold z-[99999] hover:cursor-pointer"
-        onClick={() => setModalState(false)}
-        src={'/assets/close.png'}
-      />
+      {isClose && (
+        <img
+          className="absolute top-[195px] right-[20px] font-bold z-[99999] hover:cursor-pointer"
+          onClick={() => setModalState(false)}
+          src={'/assets/close.png'}
+        />
+      )}
       <div className="container pt-44 pb-10 mx-auto ">
         <div className="lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white ">
           <div className="md:flex-row lg:flex-col lg:w-1/2 w-full lg:h-auto flex flex-col gap-4">
