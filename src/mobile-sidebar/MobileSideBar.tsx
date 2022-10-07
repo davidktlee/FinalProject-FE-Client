@@ -4,7 +4,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { useUser } from '../components/auth/hooks/useUser';
 import RightArrow from '../components/common/ui/RightArrow';
+import { clearStoredToken } from '../components/local-storage/userStorage';
 import { sideBarState } from '../store/sideBarToggle';
+
 const MobileSideBar = () => {
   const {user} = useUser()
   const [isShow,setIsShow] = useRecoilState(sideBarState)
@@ -25,6 +27,8 @@ const MobileSideBar = () => {
 
   const signoutHandler = useCallback(() => {
     setIsShow(false);
+    clearStoredToken()
+    location.href = '/'
   },[])
 
   useEffect(() => {
