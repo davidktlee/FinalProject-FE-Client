@@ -1,17 +1,17 @@
 export const duration = [
   {
     type: 'duration',
-    name: '상품 전체',
+    name: 'All',
     value: 'all'
   },
   {
     type: 'duration',
-    name: '원데이',
+    name: '1DAY',
     value: 'oneDay'
   },
   {
     type: 'duration',
-    name: '먼슬리',
+    name: '1MONTH',
     value: 'monthly'
   }
 ]

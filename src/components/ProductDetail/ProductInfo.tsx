@@ -31,13 +31,12 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
     setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice! })
   }
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src =
-      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    e.currentTarget.src = '/assets/noImage.jpeg'
   }
 
   useEffect(() => {
     toComma()
-  }, [])
+  }, [productDetails?.price])
 
   console.log(productDetails)
 
@@ -47,6 +46,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
         <img
           className="absolute top-[195px] right-[20px] font-bold z-[99999] hover:cursor-pointer"
           onClick={() => setModalState(false)}
+          onError={(e) => handleImgError(e)}
           src={'/assets/close.png'}
         />
       )}
@@ -60,10 +60,16 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
               src={productDetails?.mainImageUrl}
               width="465"
               height="460"
+              onError={(e) => handleImgError(e)}
             />
             <div className="flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
               {productDetails?.subMainImageUrlList.map((image) => (
-                <img key={image} className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]" src={image} />
+                <img
+                  key={image}
+                  onError={(e) => handleImgError(e)}
+                  className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
+                  src={image}
+                />
               ))}
             </div>
           </div>
@@ -124,19 +130,11 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
                 <div className="flex gap-2">
                   {productDetails?.colorCodeList.map((color: string) => (
                     <button
+                      key={color}
                       className="w-[30px] h-[30px] rounded-full"
                       style={{ backgroundColor: `${color}` }}
                     />
                   ))}
-
-                  {/* <div
-                    className="w-[30px] h-[30px] rounded-full"
-                    style={{ backgroundColor: '#F2EAD1' }}
-                  ></div>
-                  <div
-                    className="w-[30px] h-[30px] rounded-full"
-                    style={{ backgroundColor: '#B9B9B9' }}
-                  ></div> */}
                 </div>
               </div>
               <div className="delivery flex my-2 pt-4">

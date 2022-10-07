@@ -35,8 +35,7 @@ const Card = ({
     setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
   }
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src =
-      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
+    e.currentTarget.src = '/assets/noImage.jpeg'
   }
 
   const changeWindowWidth = () => {
