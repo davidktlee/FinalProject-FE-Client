@@ -85,7 +85,7 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
         </div>
       </div>
       <div className=" min-w-[30px] xs:min-w-[40px]">
-        <button className="underline text-lenssisStroke" onClick={() =>productDeleteHandler(item.cartId)}>삭제</button>
+        <button className="underline text-lenssisStroke" onClick={() =>productDeleteHandler(item.cartId!)}>삭제</button>
       </div>
     </li>
   )

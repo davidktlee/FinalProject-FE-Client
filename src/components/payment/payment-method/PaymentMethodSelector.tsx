@@ -1,4 +1,6 @@
 import React, { ChangeEvent } from 'react';
+import { useRecoilState } from 'recoil';
+import { shippingFeeState, totalPriceState } from '../../../store/selectProduct';
 import Radio from '../../common/ui/Radio';
 import PaymentMethodInfoMessage from './PaymentMethodInfoMessage';
 
@@ -13,8 +15,8 @@ interface PaymentMethodSelectorProps {
 
 const PaymentMethodSelector = ({currentPaymentMethod,currentPaymentMethodHandler,paymentMethodArray}:PaymentMethodSelectorProps) => {
 
-  
-  
+  const [shippingFee,setShippingFee] = useRecoilState(shippingFeeState)
+  const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState)
   return (
     <div className='w-full flex flex-col'>
     
@@ -36,17 +38,17 @@ const PaymentMethodSelector = ({currentPaymentMethod,currentPaymentMethodHandler
       
       <div className='flex flex-col h-fit pb-4 border-b border-solid border-lenssisStroke w-full justify-center'>
       <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mx-auto'>
-        <p>총 상품금액</p> <p>얼마</p>
+        <p>총 상품금액</p> <p>{totalPrice.toLocaleString()} 円</p>
       </div>
       <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mx-auto'>
-        <p>총 배송비</p> <p>얼마</p>
+        <p>총 배송비</p> <p>{shippingFee} 円</p>
       </div>
       <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mx-auto'>
-        <p>총 할인혜택</p> <p className='text-lenssis'>얼마</p>
+        <p>총 할인혜택</p> <p className='text-lenssis'>0 円</p>
       </div>
       </div>
       <div className='flex w-[200px] xs:w-full items-center justify-between my-2 mt-6'>
-        <p>{currentPaymentMethod}</p> <p>얼마</p>
+        <p>{currentPaymentMethod}</p> <p>{(totalPrice + shippingFee).toLocaleString()} 円</p>
       </div>
       
     </div>

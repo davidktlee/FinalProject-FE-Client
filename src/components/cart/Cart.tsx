@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { selectProduct, totalPriceState } from '../../store/selectProduct'
+import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
@@ -18,7 +18,7 @@ const Cart = () => {
   const {cartItems} = useCart()
   const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
   const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState);
-  const [shippingFee,setShippingFee] = useState(0)
+  const [shippingFee,setShippingFee] = useRecoilState(shippingFeeState)
   const [products,setProducts] = useState<CartItemsType[]>([])
   const [isNotSelected,setIsNowSelected] = useState(false)
   // 체크박스를 클릭한다.
@@ -53,7 +53,7 @@ const Cart = () => {
   //   const token = getStoredToken()
   //   refreshToken(token)
   // }, [])
-  
+
   useEffect(() => {
     setProducts(cartItems);
   }, [cartItems])

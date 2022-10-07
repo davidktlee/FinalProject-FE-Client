@@ -7,6 +7,11 @@ export const selectProduct = atom<CartItemsType[]>({
 })
 
 export const totalPriceState = atom<number>({
-  key:'totalPriceState',
+  key:'totalPrice',
   default:0
+})
+
+export const shippingFeeState = atom<number>({
+  key:'ShippingFeeState',
+  default:500
 })

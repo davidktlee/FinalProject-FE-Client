@@ -16,7 +16,7 @@ import PaymentTitle from './ui/PaymentTitle'
 import TermsTitle from './ui/TermsTitle'
 import usePost from '../common/util/usePost'
 import OrderProductName from './ui/OrderProductName'
-import { selectProduct } from '../../store/selectProduct'
+import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -118,8 +118,7 @@ const Payment = () => {
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState('')
   const [paymentMethodNumber, setPaymentMethodNumber] = useState<null | number>(null)
   const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
-
-
+  const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState)
   // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
   const [discountCode, setDisCountCode] = useState('')
   const currentPaymentMethodHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -128,6 +127,7 @@ const Payment = () => {
     } = e
     if (value === 'PayPay') {
       setPaymentMethodNumber(5)
+      setCurrentPaymentMethod(value)
       return
     } else {
       setPaymentMethodNumber(paymentMethodArray.findIndex((item) => item === value))
@@ -194,31 +194,31 @@ const Payment = () => {
     }
   }, [])
 
+  
   const paymentHandler = () => {
     if (!isChecked) {
       alert('개인정보 수집 이용에 동의해주세요')
       return
     }
+    const extractArray = selectedProduct.map((item) => {
+      return {pcs:item.pcs,productDetailsId:item.productDetailsId}
+    }) 
+
     const obj = {
-      product: [
-        {
-          pcs: 0,
-          productDetailsId: 0
-        }
-      ],
+      product: extractArray,
       couponId: 0,
-      memberId: user?.memberId || 0,
+      memberId: user? user.memberId : 0,
       method: paymentMethodNumber,
       orderer: formValue.orderer,
       address: newFormValue.address || formValue.address,
       detailAddress: newFormValue.detailAddress || formValue.detailAddress,
       ordererEmail: formValue.email,
       ordererPhone: formValue.phone,
-      point: 0,
+      point: totalPrice/100,
       receiver: newFormValue.orderer || formValue.orderer,
       receiverPhone: newFormValue.phone || formValue.phone,
       shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage,
-      totalPrice: 0
+      totalPrice: totalPrice
     }
     console.log(obj)
   }

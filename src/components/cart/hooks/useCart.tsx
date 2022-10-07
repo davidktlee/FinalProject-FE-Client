@@ -6,7 +6,7 @@ import { queryKeys } from '../../react-query/queryKeys';
 
 
 export interface CartItemsType {
-  cartId:number
+  cartId?:number
   color:string
   colorCode:string
   degree: number
