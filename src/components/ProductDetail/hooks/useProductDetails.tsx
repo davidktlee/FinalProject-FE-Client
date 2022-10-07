@@ -1,20 +1,25 @@
 import { useQuery } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
-import { ProductResponseType } from '../../main/types/productTypes'
+import { ProductDetailResponseType } from '../../main/types/productTypes'
 import { queryKeys } from '../../react-query/queryKeys'
+import { Pagination } from 'swiper'
 
-const getProductDetails = async (memberId: string, productId: string): Promise<ProductResponseType[]> => {
-  const { data } = await axiosInstance.post(
-    `/productDetails/main?productId=${productId}&memberId=${memberId}`
-  )
+const getProductDetails = async (memberId: number, productId: number) => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    url: `/productDetails/main?productId=${productId}&memberId=${memberId}`
+  })
   console.log(data)
-  return data
+  return data?.data
 }
 
-// export const useProductDetails = () => {
-//   const { data: productDetails } = useQuery([queryKeys.productDetails], getProductDetails, {
-//     refetchOnWindowFocus: false
-//   })
-//   console.log(productDetails)
-//   return productDetails
-// }
+export const useProductDetails = (memberId: number, productId: number) => {
+  const { data: productDetails } = useQuery(
+    [queryKeys.productDetails],
+    () => getProductDetails(memberId, productId),
+    {
+      refetchOnWindowFocus: false
+    }
+  )
+  return productDetails
+}

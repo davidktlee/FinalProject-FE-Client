@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAddCart } from '../cart/hooks/useCart'
 import { addFavorite, deleteFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { mainCartModal } from '../../store/mainCart'
 import MainCartModal from '../main/MainCartModal'
 
@@ -14,7 +14,7 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
   const [onCartAnimation, setOnCartAnimation] = useState(false)
-  const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(mainCartModal)
+  const setIsCartModalOpen = useSetRecoilState(mainCartModal)
   const deleteFavor = useDeleteFavorite()
   const addCartMutate = useAddCart()
   const ClickHeart = () => {

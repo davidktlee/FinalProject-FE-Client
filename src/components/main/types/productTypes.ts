@@ -12,6 +12,20 @@ export interface ProductResponseType {
   isFavorite?: number
 }
 
+export interface ProductDetailResponseType {
+  colorCodeList: string[]
+  discount: number
+  graphicDiameterList: number[]
+  isFavorite: number
+  mainImageUrl: string
+  name: string
+  periodList: number[]
+  price: number
+  productId: number
+  series: string
+  subMainImageUrlList: string[]
+}
+
 export interface CardContainerPropsType {
   data: Data
   allProductCurrentPage?: number
