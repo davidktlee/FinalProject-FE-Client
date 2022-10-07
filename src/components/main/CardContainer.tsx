@@ -1,18 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Card from '../common/Card'
 import { CardContainerPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
 
 import { useGetProductsList } from './hooks/useProductLists'
+import { getFavorite } from './hooks/useFavorite'
 
 // Pagination 부분 수정해야 함
 
 const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
-
+  const [filteredItem, setFilteredItem] = useState<[]>([])
   const productLists = useGetProductsList(allProductCurrentPage)
   console.log(productLists)
+
+  const useGetFavorite = async () => {
+    const res = await getFavorite()
+    const filteredItem = res.map((item) => {
+      return item.productInfo.productId
+    })
+    console.log(filteredItem)
+  }
+
+  useEffect(() => {
+    useGetFavorite()
+  }, [])
 
   return (
     <>

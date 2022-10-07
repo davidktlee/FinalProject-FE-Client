@@ -7,5 +7,6 @@ export const queryKeys = {
   event: 'event',
   allNotice: 'allNotice',
   cart: 'cart',
-  productDetails: 'productDetails'
+  productDetails: 'productDetails',
+  favorite: 'favorite'
 }

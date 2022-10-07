@@ -16,12 +16,7 @@ function MainCartModal() {
       {modalState && (
         <div className="fixed width-[100%] h-[100%] top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.35)] mx-auto z-[9999]">
           <div className="max-w-[1180px] mx-auto">
-            <img
-              className="absolute top-[195px] right-[75px] font-bold z-[99999] hover:cursor-pointer"
-              onClick={() => setModalState(false)}
-              src={'/assets/close.png'}
-            />
-            <ProductInfo />
+            <ProductInfo isClose={true} />
           </div>
         </div>
       )}
