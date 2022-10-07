@@ -2,7 +2,7 @@ import React from 'react'
 import { useRecoilState } from 'recoil'
 import { totalPriceState } from '../../../store/selectProduct'
 
-const CartInfo = () => {
+const CartPriceInfo = () => {
   const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState)
   return (
     <>
@@ -20,4 +20,4 @@ const CartInfo = () => {
   )
 }
 
-export default CartInfo
+export default CartPriceInfo
