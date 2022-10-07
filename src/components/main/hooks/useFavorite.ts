@@ -1,8 +1,10 @@
 import { axiosInstance } from '../../axiosinstance'
 import { getStoredToken } from '../../local-storage/userStorage'
 import { getJWTToken } from '../../axiosinstance/index'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import useToast from '../../common/toast/hooks/useToast'
+import { FavorResponseType } from '../types/favorTypes'
+import { queryKeys } from '../../react-query/queryKeys'
 const token = getStoredToken()
 
 export const addFavorite = async (id: number) => {
@@ -50,4 +52,28 @@ export const useDeleteFavorite = () => {
     }
   })
   return deleteFavor
+}
+
+export const getFavorite = async (): Promise<FavorResponseType[]> => {
+  const {
+    data: { data }
+  } = await axiosInstance({ url: '/favor/list', headers: getJWTToken(token) })
+  return data
+}
+
+export const useGetFavorite = () => {
+  const { fireToast } = useToast()
+  const fallback: [] = []
+  const { data = fallback } = useQuery(queryKeys.favorite, getFavorite, {
+    onError: () => {
+      fireToast({
+        id: 'getFavoriteFailed',
+        message: '즐겨찾기 상품을 가져오는데 실패하였습니다. 다시 시도해주세요',
+        position: 'bottom',
+        timer: 2000,
+        type: 'failed'
+      })
+    }
+  })
+  return data
 }

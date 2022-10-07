@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
 import { useNavigate } from 'react-router-dom'
@@ -33,6 +33,10 @@ const Card = ({
     let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
     addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
+  }
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src =
+      '/assets/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-on-blue-sky-background_74190-13665.webp'
   }
 
   const changeWindowWidth = () => {
@@ -82,6 +86,7 @@ const Card = ({
           <img
             onClick={() => navigate(`/product/${productId}`)}
             src={viewImg ? viewImg : '/assets/logo.svg'}
+            onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
             className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
           />
@@ -106,12 +111,12 @@ const Card = ({
             </span>
           )}
         </span>
-        <div className="flex flex-col">
-          <div className="flex items-center">
-            {colorAndImage.map((eachColor: ColorAndImage, idx: number) => (
+        <div className="flex flex-col ">
+          <div className="flex items-center ">
+            {colorAndImage.slice(0, 2).map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px] md:mr-[15px] rounded-full box-border self-center`}
+                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] hover:my-[5px] md:hover:h-[25px] md:mr-[15px] rounded-full  `}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
@@ -119,7 +124,6 @@ const Card = ({
               ></div>
             ))}
           </div>
-
           <span className="hidden xs:block absolute top-[190px] right-1 ">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
@@ -135,7 +139,7 @@ const Card = ({
               {commaPrice.discount}円
             </div>
           </div>
-          <div className="flex justify-start w-full overflow-hidden flex-wrap">
+          <div className="flex justify-start mt-[5px] w-full overflow-hidden flex-wrap">
             {graphicDiameter?.map((item: number, idx: number) => (
               <div
                 key={`${item}-${idx}`}
