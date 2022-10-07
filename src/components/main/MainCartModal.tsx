@@ -4,12 +4,12 @@ import { mainCartModal } from './../../store/mainCart'
 import ProductInfo from '../ProductDetail/ProductInfo'
 
 interface PropsType {
-  productId: number
+  productId?: number
 }
 
 function MainCartModal({ productId }: PropsType) {
   const [modalState, setModalState] = useRecoilState(mainCartModal)
-  
+  // 불러온 상품 데이터의 filter를 돌려서 productId와 같다면 띄운다 
   useEffect(() => {
 
   }, [])

@@ -61,9 +61,10 @@ function EventPage() {
   }
   // console.log(eventId)
   // if (eventId) {
-  //   const event = useGetDetailEvent(eventId)
   // }
-  // const eventList = useGetEvent(currentPage)
+  const event = useGetDetailEvent(1)
+  console.log(event)
+  // const eventList = useGetEvent()
   // console.log(eventList)
 
   useEffect(() => {
