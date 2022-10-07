@@ -1,23 +1,33 @@
 import { useEffect, useState } from 'react'
-import { addCart, addFavorite } from '../main/hooks/useAddProductLists'
+import { useAddCart } from '../cart/hooks/useCart'
+import { addFavorite, deleteFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
+import { useRecoilState } from 'recoil'
+import { mainCartModal } from '../../store/mainCart'
+import MainCartModal from '../main/MainCartModal'
 
 interface PropsType {
   productId: number
+  isFavorite?: number
 }
 
-function CartAndHeart({ productId }: PropsType) {
+function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
   const [onCartAnimation, setOnCartAnimation] = useState(false)
-  const [isCartModalOpen, setIsCartModalOpen] = useState(false)
+  const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(mainCartModal)
+  const deleteFavor = useDeleteFavorite()
+  const addCartMutate = useAddCart()
   const ClickHeart = () => {
-    setOnHeartAnimation((prev) => !prev)
     setTimeout(() => {
       // post 보낼 로직
       if (!onHeartAnimation) {
         addFavorite(productId)
       }
     }, 500)
+    setOnHeartAnimation((prev) => !prev)
+    if (onHeartAnimation) {
+      deleteFavor(productId)
+    }
   }
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
@@ -25,16 +35,23 @@ function CartAndHeart({ productId }: PropsType) {
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
-  }, [])
+    if (isFavorite === 1) {
+      setOnHeartAnimation(true)
+    }
+  }, [isFavorite])
 
   const ClickCart = () => {
     setOnCartAnimation((prev) => !prev)
-    addCart(productId)
+    setIsCartModalOpen((prev) => !prev)
+    // addCart(productId)
   }
 
   return (
-    <div className={`flex justify-center items-center `}>
-      <div className={`mr-2 cursor-pointer ${onCartAnimation && 'animate-click'}`} onClick={ClickCart}>
+    <div className={`flex justify-center items-center  `}>
+      <div
+        className={`mr-2 cursor-pointer ${onCartAnimation && 'animate-click'} relative`}
+        onClick={ClickCart}
+      >
         <svg
           width={`${windowWidth < 440 ? 20 : 28}`}
           height={`${windowWidth < 440 ? 20 : 28}`}

@@ -16,6 +16,7 @@ import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
 import { axiosInstance } from './../components/axiosinstance/index'
 import { useNavigate } from 'react-router-dom'
+import MainCartModal from '../components/main/MainCartModal'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
@@ -98,6 +99,7 @@ const Main = () => {
           <NoticePage />
         </div>
         <button onClick={toTopHandler}>toTop</button>
+        <MainCartModal />
       </div>
     </div>
   )
