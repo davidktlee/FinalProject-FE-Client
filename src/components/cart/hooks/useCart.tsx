@@ -1,10 +1,11 @@
-import { AxiosResponse } from 'axios'
-import React from 'react'
-import { useQuery } from 'react-query'
-import { axiosInstance } from '../../axiosinstance'
-import { queryKeys } from '../../react-query/queryKeys'
 import { getStoredToken } from '../../local-storage/userStorage'
 import { getJWTToken } from '../../axiosinstance/index'
+
+import { AxiosResponse } from 'axios'
+import React from 'react'
+import { useQuery, useQueryClient } from 'react-query'
+import { axiosInstance } from '../../axiosinstance'
+import { queryKeys } from '../../react-query/queryKeys'
 
 export interface CartItemsType {
   cartId: number
@@ -29,7 +30,8 @@ const getCartItems = async (): Promise<CartItemsType[]> => {
 
 const useCart = () => {
   const fallback: CartItemsType[] = []
-  const { data: cartItems = fallback } = useQuery(queryKeys.cart, () => getCartItems())
+  const queryClient = useQueryClient()
+  const { data: cartItems = fallback } = useQuery(queryKeys.cart, () => getCartItems(), {})
 
   return { cartItems }
 }

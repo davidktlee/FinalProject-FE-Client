@@ -20,6 +20,7 @@ const Cart = () => {
   const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState);
   const [shippingFee,setShippingFee] = useState(0)
   const [products,setProducts] = useState<CartItemsType[]>([])
+  const [isNotSelected,setIsNowSelected] = useState(false)
   // 체크박스를 클릭한다.
   // isTotalChecked 또는 isChecked가 true이면 해당 아이템이 담긴다.
   // isTotalChecked 또는 isChecked가 false이면 해당 아이템이 빠진다.
@@ -44,10 +45,15 @@ const Cart = () => {
     
   }
 
+  const includeVerifyHandler = useCallback(() => {
+    alert('선택된 상품이 없습니다. 구입하시려는 상품을 체크해주세요')
+  },[])
+
   // useEffect(() => {
   //   const token = getStoredToken()
   //   refreshToken(token)
   // }, [])
+  
   useEffect(() => {
     setProducts(cartItems);
   }, [cartItems])
@@ -132,9 +138,14 @@ const Cart = () => {
 
               <div className="flex gap-4 flex-col xs:flex-row items-center w-full justify-between mt-4">
                 
+                {selectedProduct.length === 0
+                ? <button onClick={includeVerifyHandler} className="flex items-center justify-center border border-solid border-lenssisStroke py-2 w-full xs:w-[220px] rounded-[5px] text-lenssisGray text-sm h-[50px]">
+                  1개 이상 상품을 체크 해주세요.
+                </button> :
                 <Link to="/payment" className="flex items-center justify-center border border-solid border-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-lenssisDark text-sm h-[50px] font-semibold">
                   선택상품구매
-                </Link>
+                </Link>}
+                
                 {/* onClick시 모든 상품을 주문페이지에 request하는 로직 작성해야 함 */}
                 <Link
                   to="/payment"
