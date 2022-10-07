@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { addCart } from '../cart/hooks/useCart'
-import { addFavorite, deleteFavorite } from './../main/hooks/useFavorite'
+import { useAddCart } from '../cart/hooks/useCart'
+import { addFavorite, deleteFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
 import { useRecoilState } from 'recoil'
 import { mainCartModal } from '../../store/mainCart'
 import MainCartModal from '../main/MainCartModal'
@@ -15,7 +15,8 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
   const [onCartAnimation, setOnCartAnimation] = useState(false)
   const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(mainCartModal)
-
+  const deleteFavor = useDeleteFavorite()
+  const addCartMutate = useAddCart()
   const ClickHeart = () => {
     setTimeout(() => {
       // post 보낼 로직
@@ -25,7 +26,7 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
     }, 500)
     setOnHeartAnimation((prev) => !prev)
     if (onHeartAnimation) {
-      deleteFavorite(productId)
+      deleteFavor(productId)
     }
   }
   const changeWindowWidth = () => {

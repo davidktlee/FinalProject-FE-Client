@@ -3,9 +3,10 @@ import { getJWTToken } from '../../axiosinstance/index'
 
 import { AxiosResponse } from 'axios'
 import React from 'react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from '../../react-query/queryKeys'
+import useToast from '../../common/toast/hooks/useToast'
 
 export interface CartItemsType {
   cartId: number
@@ -36,8 +37,8 @@ const useCart = () => {
   return { cartItems }
 }
 
-const token = getStoredToken()
-export const addCart = async (id: number) => {
+const addCart = async (id: number) => {
+  const token = getStoredToken()
   await axiosInstance({
     url: `/cart/add`,
     method: 'POST',
@@ -46,6 +47,31 @@ export const addCart = async (id: number) => {
       productDetailsId: id
     }
   })
+}
+
+export const useAddCart = () => {
+  const { fireToast } = useToast()
+  const { data: addCartMutate } = useMutation(addCart, {
+    onSuccess: () => {
+      fireToast({
+        id: 'addCartCompleted',
+        message: '장바구니 추가에 성공하였습니다.',
+        position: 'bottom',
+        timer: 2000,
+        type: 'complete'
+      })
+    },
+    onError: () => {
+      fireToast({
+        id: 'addCartFailed',
+        message: '장바구니 추가에 실패하였습니다. 다시 시도해주세요.',
+        position: 'bottom',
+        timer: 2000,
+        type: 'failed'
+      })
+    }
+  })
+  return addCartMutate
 }
 
 export default useCart
