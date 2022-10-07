@@ -2,17 +2,21 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
-import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
 import CheckBox from '../common/ui/CheckBox'
 import PageLayout from '../common/ui/PageLayout'
-import { getStoredToken } from '../local-storage/userStorage'
 import CartItem from './CartItem'
 import useCart, { CartItemsType } from './hooks/useCart'
+import CartButtonGroup from './ui/CartButtonGroup'
+import CartBuyInfo from './ui/CartBuyInfo'
+import CartPriceInfo from './ui/CartPriceInfo'
+import CartPriceTable from './ui/CartPriceTable'
+import CartStatusBar from './ui/CartStatusBar'
+import CartStatusLine from './ui/CartStatusLine'
 
 const Cart = () => {
-  const refreshToken = useRefreshToken()
+  
   const [isTotalChecked, setIsTotalChecked] = useState(false)
   const { user } = useUser()
   const {cartItems} = useCart()
@@ -42,7 +46,6 @@ const Cart = () => {
   const buyAllHandler = () => {
     setIsTotalChecked(true);
     setSelectedProduct(() => [...products])
-    
   }
 
   const includeVerifyHandler = useCallback(() => {
@@ -56,6 +59,7 @@ const Cart = () => {
 
   useEffect(() => {
     setProducts(cartItems);
+    
   }, [cartItems])
 
   useEffect(() => {
@@ -91,29 +95,12 @@ const Cart = () => {
   return (
     <PageLayout layoutWidth="w-[90%]" innerTop="top-[30%]">
       <CardTemplate title="장바구니" isTitleVisible={true}>
-        <div className="flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full">
-          <p className="pl-2 pb-1 text-base xs:text-xl text-lenssisDark font-bold">전체</p>
-        </div>
+        <CartStatusLine />
         <div className="flex flex-col items-center xs:flex-row xs:items-start text-lenssisGray mt-4 xs:mt-10">
-          <div className="grow flex flex-col px-0 xs:px-2 w-full">
-            <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 xs:gap-0 w-full py-4 border-y border-solid border-lenssisStroke text-xs xs:text-base ">
-              <div className="flex items-center pl-4">
-                {isTotalChecked && (
-                  <CheckBox
-                    onClick={totalCheckedHandler}
-                    bgColor="bg-lenssisDark"
-                    isChecked={isTotalChecked}
-                  />
-                )}
-                {!isTotalChecked && <CheckBox onClick={totalCheckedHandler} bgColor="bg-lenssisStroke" />}
 
-                <label className="text-lenssisStroke text-base">전체선택({selectedProduct.length}/{products.length})</label>
-              </div>
-              <p className="w-full xs:w-fit text-center xs:text-right">
-                <span className="font-semibold">TIP! 1200円</span> 더 구매하면,{' '}
-                <span className="font-semibold">500円 추가 할인</span> 받을 수 있어요.
-              </p>
-            </div>
+          {/* cartList(left-section) */}
+          <div className="grow flex flex-col px-0 xs:px-2 w-full">
+            <CartStatusBar isTotalChecked={isTotalChecked} products={products} totalCheckedHandler={totalCheckedHandler} />
             <ul className="pl-4">
               {products.map((item) => (
                 <CartItem setProducts={setProducts} key={item.productDetailsId} products={products} item={item} isTotalChecked={isTotalChecked} setIsTotalChecked={setIsTotalChecked} selectedProduct={selectedProduct} selectProductHandler={selectProductHandler} setSelectedProduct={setSelectedProduct} />
@@ -121,48 +108,13 @@ const Cart = () => {
             </ul>
           </div>
 
+          {/* priceBox(right-section) */}
           <div className="w-full xs:w-2/5 xs:max-w-[440px] text-base">
             <div className="flex flex-col">
-              <div className="border border-solid border-gray-100 bg-[#f4f6f8] font-bold text-lenssisGray flex flex-col pt-2 p-6 rounded-[3px] px-8 gap-2">
-                <h3 className="text-xl py-4 text-[#5a5a5a]">지불 금액</h3>
-                <div className="flex items-center justify-between">
-                  <p>총 상품 금액</p> <p>{totalPrice.toLocaleString()}円</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p>총 배송비</p> <p>{shippingFee}円</p>
-                </div>
-                <div className="flex items-center justify-between text-black">
-                  <p>결제 예상 금액</p> <p>{(shippingFee + totalPrice).toLocaleString()}円</p>
-                </div>
-              </div>
-
-              <div className="flex gap-4 flex-col xs:flex-row items-center w-full justify-between mt-4">
-                
-                {selectedProduct.length === 0
-                ? <button onClick={includeVerifyHandler} className="flex items-center justify-center border border-solid border-lenssisStroke py-2 w-full xs:w-[220px] rounded-[5px] text-lenssisGray text-sm h-[50px]">
-                  1개 이상 상품을 체크 해주세요.
-                </button> :
-                <Link to="/payment" className="flex items-center justify-center border border-solid border-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-lenssisDark text-sm h-[50px] font-semibold">
-                  선택상품구매
-                </Link>}
-                
-                {/* onClick시 모든 상품을 주문페이지에 request하는 로직 작성해야 함 */}
-                <Link
-                  to="/payment"
-                  className="flex items-center justify-center text-center border border-solid border-transparent bg-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-white text-sm h-[50px] font-semibold"
-                  onClick={buyAllHandler}
-                >
-                  전체상품구매
-                </Link>
-              </div>
+              <CartPriceTable />
+              <CartButtonGroup buyAllHandler={buyAllHandler} includeVerifyHandler={includeVerifyHandler}/>
             </div>
-
-            <div className="flex flex-col items-center mt-[52px] text-lenssisGray font-semibold gap-4">
-              <p className="">3,000円 이상 구매 시 무료 배송</p>
-              <Link to="/">
-                <span className="underline">쇼핑 계속</span>
-              </Link>
-            </div>
+            <CartBuyInfo />
           </div>
         </div>
       </CardTemplate>
