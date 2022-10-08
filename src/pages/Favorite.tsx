@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
+import { useGetFavorite } from '../components/main/hooks/useFavorite'
 
 const Favorite = () => {
   return (
@@ -28,7 +29,7 @@ const Favorite = () => {
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? '#1B304A' : '#d3d3d3'
                   })}
-                  to="oneDay"
+                  to="monthly"
                   className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-2 font-medium text-center text-lenssisDark"
                 >
                   <span className="text-lenssisDark">먼슬리</span>
@@ -40,7 +41,7 @@ const Favorite = () => {
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? '#1B304A' : '#d3d3d3'
                   })}
-                  to="monthly"
+                  to="oneDay"
                   className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-2 font-medium text-center"
                 >
                   <span className="text-lenssisDark">원데이</span>

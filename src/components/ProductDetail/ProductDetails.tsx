@@ -19,6 +19,7 @@ const ProductDetails = () => {
   const user = useRecoilValue(userState)
 
   const productDetails = useProductDetails(user?.memberId, id)
+  console.log(productDetails)
 
   useEffect(() => {
     if (!user) return

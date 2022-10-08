@@ -7,6 +7,7 @@ import { mainCartModal } from '../../store/mainCart'
 // import { useProductDetails } from './hooks/useProductDetails'
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
+import { useAddFavorite } from '../main/hooks/useFavorite'
 
 interface PropsType {
   isClose?: boolean
@@ -32,6 +33,12 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
   }
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/assets/noImage.jpeg'
+  }
+  const addFavor = useAddFavorite()
+  const addFavorHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const productId = Number(e.currentTarget.value)
+    console.log(productId)
+    addFavor(productId)
   }
 
   useEffect(() => {
@@ -62,7 +69,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
               height="460"
               onError={(e) => handleImgError(e)}
             />
-            <div className="flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
+            <div className="overflow-auto flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
               {productDetails?.subMainImageUrlList.map((image) => (
                 <img
                   key={image}
@@ -77,7 +84,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
             <h2 className="text-sm title-font text-lenssisGray mb-2 text-[12px]">60개의 리뷰 &gt;</h2>
             <div className="text-gray-900 text-3xl title-font font-medium mb-2 flex justify-between">
               <span className="">{productDetails?.name}</span>
-              <button>
+              <button onClick={(e) => addFavorHandler(e)} value={productDetails?.productId}>
                 {productDetails?.isFavorite ? (
                   <img src={FillHeart} width={35} height={35} alt="찬 하트" />
                 ) : (
@@ -139,7 +146,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
               </div>
               <div className="delivery flex my-2 pt-4">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">그래프 직경</p>
-                <div className="badge flex gap-2">
+                <div className="badge flex gap-[5px] lg:flex-wrap lg:w-[280px] xl:w-[415px]">
                   {productDetails?.graphicDiameterList.map((item, index) => (
                     <button
                       key={index}
