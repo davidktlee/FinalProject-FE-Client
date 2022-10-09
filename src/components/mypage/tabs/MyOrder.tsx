@@ -12,17 +12,25 @@ import { useState } from 'react'
 
 const MyOrder = () => {
   const [isModal, setIsModal] = useState(false)
+  const [reviewItem, setReviewItem] = useState<any>()
+  const [orderNumber, setOrderNumber] = useState(0)
 
   const onModalHandler = () => {
-    console.log('모달 오픈!', isModal)
     setIsModal(!isModal)
   }
   const product = useRecoilValue(productState)
   if (!product) return <div>loading...</div>
+  console.log(product)
+
+  const addReviewHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setOrderNumber(Number(e.currentTarget.value))
+    setReviewItem(product.filter((item) => item.orderNumber === Number(e.currentTarget.value)))
+    onModalHandler()
+  }
 
   return (
     <CardLayout title="주문 내역">
-      <ReviewForm onClose={onModalHandler} isModalOpen={isModal} />
+      <ReviewForm onClose={onModalHandler} isModalOpen={isModal} reviewItem={reviewItem} />
       <h4 className="py-0 xs:py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold">
         상품 정보
       </h4>
@@ -58,9 +66,10 @@ const MyOrder = () => {
                 <p className="py-1 text-[#7a7a7a] font-semibold">{item.price}</p>
               </div>
 
-              <div className="">
+              <div>
                 <button
-                  onClick={onModalHandler}
+                  value={item.orderNumber}
+                  onClick={(e) => addReviewHandler(e)}
                   className="border border-solid border-[#d9d9d9] text-[#7a7a7a] h-[25px] w-[70px] xs:h-fit xs:w-fit xs:min-w-[105px] xs:py-1 xs:px-2  rounded-[3px]"
                 >
                   <span className="">리뷰 작성하기</span>
