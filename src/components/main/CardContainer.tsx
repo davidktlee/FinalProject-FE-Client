@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Card from '../common/Card'
-import { CardContainerPropsType, ProductResponseType } from './types/productTypes'
+import { CardContainerPropsType, ProductPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
 
 import { useGetProductsList } from './hooks/useProductLists'
@@ -14,8 +14,9 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
   const [filteredItem, setFilteredItem] = useState<[]>([])
-  const productLists = useGetProductsList(allProductCurrentPage)
   const setFavoriteIds = useSetRecoilState(mainCartId)
+
+  const productLists = useGetProductsList(allProductCurrentPage)
   console.log(productLists)
 
   const useGetFavorite = async () => {
@@ -41,7 +42,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
           </div>
           <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
             {productLists &&
-              productLists.map((item: ProductResponseType, idx: number) => (
+              productLists.map((item: ProductPropsType, idx: number) => (
                 <Card
                   idx={idx}
                   key={`${item.productId}-${idx}`}
@@ -55,11 +56,11 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                 />
               ))}
           </div>
-          {productLists && (
+          {productLists[0] && (
             <Pagination
               currentPage={newProductCurrentPage}
               setCurrentPage={setNewProductCurrentPage}
-              allCount={productLists.length}
+              allCount={productLists[0].totalCount}
             />
           )}
         </>
@@ -87,11 +88,11 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                   />
                 ))}
             </div>
-            {productLists && (
+            {productLists[0] && (
               <Pagination
-                currentPage={newProductCurrentPage}
-                setCurrentPage={setNewProductCurrentPage}
-                allCount={productLists.length}
+                currentPage={allProductCurrentPage}
+                setCurrentPage={setAllProductCurrentPage}
+                allCount={productLists[0].totalCount}
               />
             )}
           </>
