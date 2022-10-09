@@ -12,6 +12,7 @@ import { useState } from 'react'
 
 const MyOrder = () => {
   const [isModal, setIsModal] = useState(false)
+  const [reviewItem, setReviewItem] = useState<any>()
   const [orderNumber, setOrderNumber] = useState(0)
 
   const onModalHandler = () => {
@@ -23,12 +24,13 @@ const MyOrder = () => {
 
   const addReviewHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOrderNumber(Number(e.currentTarget.value))
+    setReviewItem(product.filter((item) => item.orderNumber === Number(e.currentTarget.value)))
     onModalHandler()
   }
 
   return (
     <CardLayout title="주문 내역">
-      <ReviewForm onClose={onModalHandler} isModalOpen={isModal} orderNumber={orderNumber} />
+      <ReviewForm onClose={onModalHandler} isModalOpen={isModal} reviewItem={reviewItem} />
       <h4 className="py-0 xs:py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold">
         상품 정보
       </h4>

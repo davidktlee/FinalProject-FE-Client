@@ -8,5 +8,6 @@ export const queryKeys = {
   allNotice: 'allNotice',
   cart: 'cart',
   productDetails: 'productDetails',
-  favorite: 'favorite'
+  favorite: 'favorite',
+  review: 'review'
 }

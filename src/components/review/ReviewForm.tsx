@@ -1,18 +1,35 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
+import { useAddReview } from './hooks/useReview'
+import AWS from 'aws-sdk'
 
 interface ReviewFormProps {
   onClose: Function
   isModalOpen: boolean
-  orderNumber: number
+  reviewItem: any
 }
 
-const ReviewForm = ({ onClose, isModalOpen, orderNumber }: ReviewFormProps) => {
+const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
+  const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
   const [reviewData, setReviewData] = useState()
   const [reviewText, setReviewText] = useState('')
   const [rating, setRating] = useState(0)
-  console.log(orderNumber)
+  const [selectedFile, setSelectedFile] = useState<File>()
+  const imageRef = useRef<HTMLInputElement>(null)
+  console.log(reviewItem)
+
+  AWS.config.update({
+    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: VITE_SECRET_ACCESS_KEY
+  })
+
+  const myBucket = new AWS.S3({
+    params: { Bucket: 'iko-amazon-storage' },
+    region: 'ap-northeast-2'
+  })
+
+  const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
 
@@ -22,6 +39,43 @@ const ReviewForm = ({ onClose, isModalOpen, orderNumber }: ReviewFormProps) => {
 
   const handleReviewText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReviewText(e.target.value)
+  }
+
+  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(e.target.files?.[0])
+    console.log(e.target.files?.[0])
+  }
+
+  const handleReviewSubmit = async () => {
+    const params = {
+      ACL: 'public-read',
+      Bucket: 'iko-amazon-storage',
+      Key: `review/${reviewItem.orderId}-${reviewItem.productDetailsId}`,
+      Body: selectedFile
+    }
+
+    myBucket.putObject(params, (err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(data)
+      }
+    })
+
+    if (!selectedFile) return
+
+    const reviewInfo = {
+      content: reviewText,
+      productDetailsId: reviewItem.productDetailsId,
+      orderId: reviewItem.orderId,
+      memberId: reviewItem.memberId,
+      rating: rating,
+      replyImageUrl: selectedFile?.name
+    }
+
+    addReviewMutate(reviewInfo)
+
+    onClose()
   }
 
   return (
@@ -45,7 +99,14 @@ const ReviewForm = ({ onClose, isModalOpen, orderNumber }: ReviewFormProps) => {
                           </span>
                         </div>
                       </label>
-                      <input type="file" name="image" id="selectImage" hidden={true} />
+                      <input
+                        ref={imageRef}
+                        onChange={(e) => handleFileInput(e)}
+                        type="file"
+                        name="image"
+                        id="selectImage"
+                        hidden={true}
+                      />
                     </div>
                     <div className="flex flex-col py-[25px] justify-between">
                       <div className="xs-max:text-[12px] text-[14px]">샌드 플러스 그레이</div>
@@ -94,7 +155,7 @@ const ReviewForm = ({ onClose, isModalOpen, orderNumber }: ReviewFormProps) => {
                   <Button onClick={() => onClose()} bgColor="white" width="w-[120px]">
                     <span>취소</span>
                   </Button>
-                  <Button onClick={() => onClose()} bgColor="dark" width="w-[120px]">
+                  <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[120px]">
                     <span>저장</span>
                   </Button>
                 </div>
@@ -102,7 +163,7 @@ const ReviewForm = ({ onClose, isModalOpen, orderNumber }: ReviewFormProps) => {
                   <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
                     <span>취소</span>
                   </Button>
-                  <Button onClick={() => onClose()} bgColor="dark" width="w-[150px]">
+                  <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[150px]">
                     <span>저장</span>
                   </Button>
                 </div>
