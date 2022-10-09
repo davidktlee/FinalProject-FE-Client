@@ -9,7 +9,6 @@ const getProductsList = async (pageNo: number): Promise<ProductResponseType[]> =
     data: { data }
   } = await axiosInstance({
     url: `/product/main?page=${pageNo}&memberId=0&size=9`,
-    // url: '/main/product?page=1&memberId=0&size=9',
     headers: {
       ContentType: 'application/json'
     }
@@ -23,13 +22,12 @@ export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
     keepPreviousData: true,
     refetchOnWindowFocus: false
   })
-  console.log(data)
   return data
 }
 
 export const usePrefetchProductLists = (currentPage: number, count: number): void => {
   const queryClient = useQueryClient()
-  const maxPage = Math.floor(count / 10)
+  const maxPage = Math.ceil(count / 10)
   if (maxPage > currentPage) {
     const nextPage = currentPage + 1
     queryClient.prefetchQuery([queryKeys.product, nextPage], () => getProductsList(nextPage))

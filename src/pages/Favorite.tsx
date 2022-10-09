@@ -47,13 +47,7 @@ const Favorite = () => {
                   <span className="text-lenssisDark">원데이</span>
                 </NavLink>
               </nav>
-              <div className="flex justify-between mt-6 xs-max:text-[14px]">
-                <div>
-                  <input type="checkbox" value="품절제외" id="isSale" />
-                  <label className="ml-1" htmlFor="isSale">
-                    품절제외
-                  </label>
-                </div>
+              <div className="flex justify-end mt-6 xs-max:text-[14px]">
                 <div>
                   <button>최근 찜한 순</button>
                 </div>
