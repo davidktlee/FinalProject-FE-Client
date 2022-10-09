@@ -1,21 +1,22 @@
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useRecoilValue } from 'recoil'
+import { userState } from '../../store/user'
 import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
-import { queryKeys } from '../react-query/queryKeys'
+import { useGetProductRandom } from '../main/hooks/useProductLists'
+import { useUser } from '../auth/hooks/useUser'
 import MobileProductRecommend from './mobile/MobileProductRecommend'
 
-const ProductRecommend = () => {
-  const getProduct = async () => {
-    const res = await axiosInstance({
-      url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
-    })
-    return res.data
-  }
+type ProductRecommendProps = {
+  productId: number
+}
 
-  const { data: productLists } = useQuery(['productRecommend'], getProduct, {
-    refetchOnWindowFocus: false
-  })
+const ProductRecommend = ({ productId }: ProductRecommendProps) => {
+  const { user } = useUser()
+  console.log(user)
+  const data = useGetProductRandom(user?.memberId!, productId)
+  console.log(data)
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-10 mb-10 mx-auto drop-shadow-basic rounded-[10px] bg-white xs-max:w-[95%]">
@@ -25,26 +26,23 @@ const ProductRecommend = () => {
           <p className="xs:hidden">더보기</p>
         </div>
         <div className="divider h-[1px] mt-4 mb-8 bg-[#BCBCBC] xs-max:mb-0"></div>
-        {/* <div className="xs-max:hidden flex flex-wrap -m-4 p-4">
-          {productLists &&
-            productLists
-              .slice(0, 4)
-              .map((item: any, idx: number) => (
-                <Card
-                  key={`${item.productId}-${idx}`}
-                  idx={idx}
-                  colorAndImage={item.colorAndImage}
-                  productId={item.productId}
-                  series={item.series}
-                  price={item.price}
-                  discount={item.discount}
-                  graphicDiameter={item.graphicDiameter}
-                />
-              ))}
+        <div className="xs-max:hidden flex flex-wrap -m-4 p-4">
+          {data?.map((item: any, idx: number) => (
+            <Card
+              key={`${item.productId}-${idx}`}
+              idx={idx}
+              colorAndImage={item.colorAndImage}
+              productId={item.productId}
+              series={item.series}
+              price={item.price}
+              discount={item.discount}
+              graphicDiameter={item.graphicDiameter}
+            />
+          ))}
         </div>
         <div className="xs:hidden ">
           <MobileProductRecommend />
-        </div> */}
+        </div>
       </div>
     </section>
   )

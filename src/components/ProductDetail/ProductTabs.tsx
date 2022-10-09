@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
+import { useReview } from '../review/hooks/useReview'
+import RevieItems from '../review/ReviewItems'
 import ProductDescription from './ProductDescription'
 import ProductInquiry from './ProductInquiry'
 
 const ProductAbout = () => {
   const [tabState, setTabState] = useState<boolean>(true)
+
+  // const data = useReview()
+  // console.log(data)
 
   return (
     <section className="text-gray-600 body-font ">
@@ -28,7 +33,7 @@ const ProductAbout = () => {
               <span>리뷰(205)</span>
             </button>
           </nav>
-          {tabState ? <ProductDescription /> : <ProductInquiry />}
+          {tabState ? <ProductDescription /> : <RevieItems />}
         </div>
       </div>
     </section>

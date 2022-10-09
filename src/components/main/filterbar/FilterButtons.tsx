@@ -17,6 +17,8 @@ type filterButtonTypes = {
 
 const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes) => {
   const [filter, setFilter] = useRecoilState(filterState)
+  // console.log(filter.colorState)
+  // console.log(contents)
 
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {
@@ -46,10 +48,11 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         break
       case 'color':
         if (typeof content.value === 'string' || typeof content.value === 'number') return
-        if (filter.colorState === content.value) {
+
+        if (filter.colorState.includes(content.value[0])) {
           setFilter({
             ...filter,
-            colorState: filter.colorState.filter((item: string) => item !== content.value)
+            colorState: []
           })
         } else {
           setFilter({

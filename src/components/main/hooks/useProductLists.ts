@@ -1,8 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
 import { useQuery, useQueryClient } from 'react-query'
-import { axiosInstance } from '../../axiosinstance'
+import { axiosInstance, getJWTToken } from '../../axiosinstance'
 import { queryKeys } from './../../react-query/queryKeys'
 import { ProductResponseType } from '../types/productTypes'
+import { getStoredToken } from '../../local-storage/userStorage'
+
+const token = getStoredToken()
 
 const getProductsList = async (pageNo: number): Promise<ProductResponseType[]> => {
   const {
@@ -14,6 +17,18 @@ const getProductsList = async (pageNo: number): Promise<ProductResponseType[]> =
       ContentType: 'application/json'
     }
   })
+  return data
+}
+
+const getProductRandom = async (memberId: number, productId: number) => {
+  const {
+    data: { data }
+  } = await axiosInstance({
+    method: 'GET',
+    url: `/productDetails/forRandom?memberId=${memberId}&productId=${productId}`,
+    headers: getJWTToken(token)
+  })
+
   return data
 }
 
@@ -34,4 +49,18 @@ export const usePrefetchProductLists = (currentPage: number, count: number): voi
     const nextPage = currentPage + 1
     queryClient.prefetchQuery([queryKeys.product, nextPage], () => getProductsList(nextPage))
   }
+}
+
+export const useGetProductRandom = (memberId: number, productId: number) => {
+  const fallback: [] = []
+  const { data = fallback } = useQuery(
+    [queryKeys.product, 'random'],
+    () => getProductRandom(memberId, productId),
+    {
+      keepPreviousData: true,
+      refetchOnWindowFocus: false
+    }
+  )
+  console.log(data)
+  return data
 }

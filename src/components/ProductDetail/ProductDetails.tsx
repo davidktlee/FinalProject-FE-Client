@@ -29,7 +29,7 @@ const ProductDetails = () => {
   return (
     <div>
       <ProductInfo productDetails={productDetails} />
-      <ProductRecommend />
+      <ProductRecommend productId={id} />
       <ProductBanner />
       <ProductTabs />
     </div>
