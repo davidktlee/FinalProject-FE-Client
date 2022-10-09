@@ -1,4 +1,4 @@
-import {useCallback,useEffect} from 'react';
+import {useCallback,useEffect, useState} from 'react';
 import {BsX} from 'react-icons/bs'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -12,6 +12,7 @@ const MobileSideBar = () => {
   const [isShow,setIsShow] = useRecoilState(sideBarState)
   const navigate = useNavigate();
   const {pathname} = useLocation()
+  const [toggleNonMemberInquiryModal,setToggleNonMemberInquiryModal] = useState(false);
   const sideBarToggleHandler = useCallback(() => {
     setIsShow(false)
   },[])
@@ -30,7 +31,11 @@ const MobileSideBar = () => {
     clearStoredToken()
     location.href = '/'
   },[])
+  const nonMemberOrderInquiryHandler = () => {
+    setIsShow(false);
+    setToggleNonMemberInquiryModal(prev => !prev)
 
+  }
   useEffect(() => {
     window.scrollTo(0,0)
   },[pathname])
@@ -45,7 +50,7 @@ const MobileSideBar = () => {
         <button onClick={sideBarToggleHandler}><BsX size={50} color="#ffffff" /></button>
       </div>
       <div className='mt-8 pl-2 h-[66px] flex flex-col items-start justify-end'>
-      {!user && <Link onClick={pageChangeHandler} to="">非会員 注文照会 {'>'}</Link>}
+      {!user && <button onClick={nonMemberOrderInquiryHandler}>非会員 注文照会 {'>'}</button>}
       {!user && <p className='mt-[10px]'><span className='font-bold text-2xl'>Lenssisへ ようこそ。</span></p>}
       {user && <p className='mt-[10px]'><span className='font-bold text-2xl'>{user?.name}&nbsp;</span><span className='text-sm font-normal'>さん、こんにちは。</span></p>}
       </div>
