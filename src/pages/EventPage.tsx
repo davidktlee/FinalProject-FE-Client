@@ -1,12 +1,7 @@
 import { useNavigate } from 'react-router'
 import PageLayout from '../components/common/ui/PageLayout'
 import CardTemplate from './../components/common/ui/CardTemplate'
-import {
-  EventMainList,
-  EventResponseType,
-  useGetDetailEvent,
-  useGetEvent
-} from '../components/main/hooks/useEventLists'
+import { InEventMainList, useGetDetailEvent, useGetEvent } from '../components/main/hooks/useEventLists'
 import { useEffect, useState } from 'react'
 import Pagination from './../components/main/common/Pagination'
 import Search from '../components/main/common/Search'
@@ -48,7 +43,7 @@ function EventPage() {
           <div className=" grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 justify-items-stretch  md:gap-8 md:px-12">
             {/* eventList.map */}
             {eventList &&
-              eventList?.eventMainList?.map((event: EventMainList) => (
+              eventList?.data?.eventMainList.map((event: InEventMainList) => (
                 <div
                   key={event.eventId}
                   className="w-full rounded-xl xs-max:h-[215px] flex flex-col items-center my-2 shadow-basic hover:cursor-pointer"
@@ -67,7 +62,13 @@ function EventPage() {
               ))}
           </div>
           <div className="relative flex justify-center items-center">
-            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} allCount={50} />
+            {eventList?.data?.totalCount && (
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                allCount={eventList.data.totalCount}
+              />
+            )}
             <Search />
           </div>
         </CardTemplate>
