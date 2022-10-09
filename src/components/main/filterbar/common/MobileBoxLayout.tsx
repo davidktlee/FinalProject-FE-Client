@@ -47,10 +47,11 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
         break
       case 'color':
         if (typeof content.value === 'string' || typeof content.value === 'number') return
-        if (filter.colorState === content.value) {
+
+        if (filter.colorState.includes(content.value[0])) {
           setFilter({
             ...filter,
-            colorState: filter.colorState.filter((item: string) => item !== content.value)
+            colorState: []
           })
         } else {
           setFilter({

@@ -129,6 +129,7 @@ export const useAddFavorite = () => {
         type: 'complete'
       })
       queryClient.invalidateQueries(queryKeys.favorite)
+      // queryClient.invalidateQueries(queryKeys.product, { exact: true })
     },
     onError: () => {
       fireToast({

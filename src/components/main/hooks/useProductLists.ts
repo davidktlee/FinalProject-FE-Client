@@ -59,6 +59,5 @@ export const useGetProductRandom = (memberId: number, productId: number) => {
       refetchOnWindowFocus: false
     }
   )
-  console.log(data)
   return data
 }

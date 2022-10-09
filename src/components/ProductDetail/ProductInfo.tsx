@@ -37,15 +37,13 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
   const addFavor = useAddFavorite()
   const addFavorHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const productId = Number(e.currentTarget.value)
-    console.log(productId)
+
     addFavor(productId)
   }
 
   useEffect(() => {
     toComma()
   }, [productDetails?.price])
-
-  console.log(productDetails)
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
@@ -58,7 +56,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
         />
       )}
       <div className="container pt-44 pb-10 mx-auto ">
-        <div className="lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white ">
+        <div className="max-w-[1180px] lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white ">
           <div className="md:flex-row lg:flex-col lg:w-1/2 w-full lg:h-auto flex flex-col gap-4">
             <h2 className="xs:hidden text-center text-[20px] text-lenssisDark font-bold">상품상세</h2>
             <img
