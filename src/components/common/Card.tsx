@@ -111,11 +111,13 @@ const Card = ({
           )}
         </span>
         <div className="flex flex-col ">
-          <div className="flex items-center ">
+          <div className="flex items-center">
             {colorAndImage.slice(0, 2).map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] hover:my-[5px] md:hover:h-[25px] md:mr-[15px] rounded-full  `}
+                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
+                  colorAndImage.length === 1 ? 'hover:my-[7.5px] ' : 'hover:my-[5px]'
+                }  md:mr-[15px] rounded-full  `}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
