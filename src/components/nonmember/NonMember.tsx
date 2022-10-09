@@ -1,5 +1,8 @@
 
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { currentInquiryState } from '../../store/currentInquiry';
 import { VALIDATOR_REQUIRE } from '../auth/hooks/validator';
 import Input from '../common/Input';
 import CardTemplate from '../common/ui/CardTemplate';
@@ -10,13 +13,15 @@ import useNonMember, { NonMemberFormType } from './hooks/useNonMember';
 
 const NonMember = () => {
   const {getInquiry} = useNonMember();
+  const inquiry = useRecoilValue(currentInquiryState)
+  const navigate = useNavigate()
   const [nonMemberInquiryForm, setNonMemberInquiryForm] = useState<NonMemberFormType>({
     memberId:0,
     orderId: '',
     orderer: '',
     email: ''
   })
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
     } = e
@@ -24,11 +29,21 @@ const NonMember = () => {
       ...prev,
       [name]: value
     }))
-  }
+  },[])
   
-  const inquiryClickHandler = () => {
-    getInquiry(nonMemberInquiryForm)
+  const inquiryClickHandler =  () => {
+     getInquiry(nonMemberInquiryForm)
   }
+
+  useEffect(() => {
+    if(inquiry && inquiry.length > 0){
+      navigate(`/nonmember/${inquiry.map((item) => item.orderInfo.orderId)}`,{
+        state: inquiry
+      })
+    }
+  },[inquiry])
+
+  
   return (
     <PageLayout layoutWidth="w-[90%]">
     <CardTemplate title="비회원 주문배송조회" isTitleVisible>
