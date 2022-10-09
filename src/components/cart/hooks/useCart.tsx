@@ -34,9 +34,9 @@ const getCartItems = async (): Promise<CartItemsType[]> => {
 const useCart = () => {
   const fallback: CartItemsType[] = []
   const queryClient = useQueryClient()
-  const { data: cartItems = fallback } = useQuery(queryKeys.cart, () => getCartItems(), {})
+  const { data: cartItems = fallback,isLoading } = useQuery(queryKeys.cart, () => getCartItems(), {})
 
-  return { cartItems }
+  return { cartItems,isLoading }
 }
 
 const addCart = async (id: number) => {
@@ -73,7 +73,7 @@ export const useAddCart = () => {
       })
     }
   })
-  return addCartMutate
+  return {addCartMutate}
 }
 
 export default useCart
