@@ -2,9 +2,9 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
 import { useNavigate } from 'react-router-dom'
-import { ColorAndImage, ProductResponseType } from '../main/types/productTypes'
+import { ColorAndImage, ProductPropsType } from '../main/types/productTypes'
 
-interface PropsType extends ProductResponseType {
+interface PropsType extends ProductPropsType {
   idx: number
   isNew?: boolean
 }
