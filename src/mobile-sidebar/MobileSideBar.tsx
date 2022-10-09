@@ -12,7 +12,6 @@ const MobileSideBar = () => {
   const [isShow,setIsShow] = useRecoilState(sideBarState)
   const navigate = useNavigate();
   const {pathname} = useLocation()
-  const [toggleNonMemberInquiryModal,setToggleNonMemberInquiryModal] = useState(false);
   const sideBarToggleHandler = useCallback(() => {
     setIsShow(false)
   },[])
@@ -31,11 +30,7 @@ const MobileSideBar = () => {
     clearStoredToken()
     location.href = '/'
   },[])
-  const nonMemberOrderInquiryHandler = () => {
-    setIsShow(false);
-    setToggleNonMemberInquiryModal(prev => !prev)
-
-  }
+  
   useEffect(() => {
     window.scrollTo(0,0)
   },[pathname])
@@ -50,7 +45,7 @@ const MobileSideBar = () => {
         <button onClick={sideBarToggleHandler}><BsX size={50} color="#ffffff" /></button>
       </div>
       <div className='mt-8 pl-2 h-[66px] flex flex-col items-start justify-end'>
-      {!user && <button onClick={nonMemberOrderInquiryHandler}>非会員 注文照会 {'>'}</button>}
+      {!user && <Link onClick={pageChangeHandler} to="/nonmember">非会員 注文照会 {'>'}</Link>}
       {!user && <p className='mt-[10px]'><span className='font-bold text-2xl'>Lenssisへ ようこそ。</span></p>}
       {user && <p className='mt-[10px]'><span className='font-bold text-2xl'>{user?.name}&nbsp;</span><span className='text-sm font-normal'>さん、こんにちは。</span></p>}
       </div>
@@ -88,9 +83,6 @@ const MobileSideBar = () => {
           <li className='pl-2 pr-4 pb-2 w-full  text-lenssisDark'><Link onClick={pageChangeHandler} className='flex justify-between' to="review"><span>Review</span><RightArrow /></Link></li>
         </ul>
       </div>
-
-    
-
     </div>
   );
 };
