@@ -15,7 +15,7 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(mainCartModal)
   const deleteFavor = useDeleteFavorite()
   const addCartMutate = useAddCart()
-  const favoriteId = useRecoilValue(mainCartId)
+  const favoriteId: number[] = useRecoilValue(mainCartId)
   const ClickHeart = () => {
     setTimeout(() => {
       // post 보낼 로직
