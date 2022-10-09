@@ -70,15 +70,19 @@ const useNonMember = () => {
   const [_,setInquiry] = useRecoilState(currentInquiryState)
   const {mutate:getInquiry,isLoading} = useMutation((nonMemberForm:NonMemberFormType) =>getNonMemberInquiry(nonMemberForm),{
     onSuccess: (data) => {
-
-      fireToast({
-        id:'조회성공',
-        message:'임시토스트',
-        position:'top',
-        timer:2000,
-        type:'success'
-      })
-      setInquiry(data.data)
+      if(data.data.length < 1){
+        fireToast({
+          id:'조회성공',
+          message:'주문번호, 이름, 이메일을 확인해주세요.',
+          position:'top',
+          timer:2000,
+          type:'warning'
+        })
+      }else{
+        setInquiry(data.data)
+      }
+      
+      
     },
     onError: () => {
       fireToast({
