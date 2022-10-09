@@ -3,6 +3,7 @@ import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview } from './hooks/useReview'
 import AWS from 'aws-sdk'
+const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 
 interface ReviewFormProps {
   onClose: Function
@@ -11,11 +12,10 @@ interface ReviewFormProps {
 }
 
 const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
-  const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
-  const [reviewData, setReviewData] = useState()
   const [reviewText, setReviewText] = useState('')
   const [rating, setRating] = useState(0)
   const [selectedFile, setSelectedFile] = useState<File>()
+  const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
   console.log(reviewItem)
 
@@ -42,8 +42,13 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
   }
 
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(e.target.files?.[0])
-    console.log(e.target.files?.[0])
+    const file = e.target.files?.[0]
+    setSelectedFile(file)
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setPreviewImage(reader.result as string)
+    }
+    reader.readAsDataURL(file as Blob)
   }
 
   const handleReviewSubmit = async () => {
@@ -75,6 +80,10 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
 
     addReviewMutate(reviewInfo)
 
+    setReviewText('')
+    setRating(0)
+    setSelectedFile(undefined)
+    setPreviewImage(undefined)
     onClose()
   }
 
@@ -92,12 +101,28 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
                   <div className="xs-max:gap-[10px] flex gap-[20px] border-solid border-lenssisStroke border-[1px] rounded-[5px]">
                     <div className="py-[15px] px-[14px] ">
                       <label htmlFor="selectImage" className="relative cursor-pointer hover:contrast-[.6]">
-                        <img className="" width={120} height={120} src="/assets/eyes.png" />
-                        <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
-                          <span className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]">
-                            사진 첨부하기
-                          </span>
-                        </div>
+                        <img
+                          className=""
+                          width={120}
+                          height={120}
+                          src={previewImage ? previewImage : '/assets/eyes.png'}
+                        />
+                        {!previewImage ? (
+                          <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
+                            <span className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]">
+                              사진 첨부하기
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
+                            <span
+                              onClick={() => setPreviewImage('')}
+                              className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]"
+                            >
+                              사진 변경하기
+                            </span>
+                          </div>
+                        )}
                       </label>
                       <input
                         ref={imageRef}

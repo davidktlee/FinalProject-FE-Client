@@ -19,7 +19,7 @@ const Cart = () => {
   
   const [isTotalChecked, setIsTotalChecked] = useState(false)
   const { user } = useUser()
-  const {cartItems} = useCart()
+  const {cartItems,isLoading} = useCart()
   const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
   const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState);
   const [shippingFee,setShippingFee] = useRecoilState(shippingFeeState)
@@ -58,9 +58,9 @@ const Cart = () => {
   // }, [])
 
   useEffect(() => {
-    setProducts(cartItems);
     
-  }, [cartItems])
+    setProducts(cartItems);
+  }, [isLoading])
 
   useEffect(() => {
     if(!isTotalChecked){

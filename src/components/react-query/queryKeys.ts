@@ -9,5 +9,6 @@ export const queryKeys = {
   cart: 'cart',
   productDetails: 'productDetails',
   favorite: 'favorite',
-  review: 'review'
+  review: 'review',
+  coupon: 'coupon'
 }
