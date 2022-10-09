@@ -17,7 +17,6 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const setFavoriteIds = useSetRecoilState(mainCartId)
 
   const productLists = useGetProductsList(allProductCurrentPage)
-  console.log(productLists)
 
   const useGetFavorite = async () => {
     const res = await getFavorite()

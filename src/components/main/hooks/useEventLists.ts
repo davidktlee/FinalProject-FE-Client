@@ -10,30 +10,35 @@ export interface EventDetailResponseType {
   endTime: Date
   imageUrl: String[]
 }
-
-export interface EventMainList {
+export interface InEventMainList {
   eventId: number
   eventTitle: string
   imageUrl: string
 }
 
 export interface EventResponseType {
-  eventMainList: EventMainList[]
-  totalCount: number
+  data: {
+    eventMainList: InEventMainList[]
+    totalCount: number
+  }
+  status: number
+  message: string
 }
 
-const getEvents = async (): Promise<EventResponseType> => {
+export const getEvents = async (): Promise<EventResponseType> => {
   const { data }: AxiosResponse<EventResponseType> = await axiosInstance({
     url: '/event/main',
     headers: {
       ContentType: 'application/json'
     }
   })
+
   return data
 }
 export const useGetEvent = () => {
   const { data } = useQuery([queryKeys.allEvent], () => getEvents(), {
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    staleTime: 900000
   })
   return data
 }
