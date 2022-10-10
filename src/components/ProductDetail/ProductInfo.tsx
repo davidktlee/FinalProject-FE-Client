@@ -8,6 +8,10 @@ import { mainCartModal } from '../../store/mainCart'
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
 import { useAddFavorite } from '../main/hooks/useFavorite'
+import { axiosInstance, getJWTToken } from '../axiosinstance'
+import { getStoredToken } from '../local-storage/userStorage'
+import { useProductDetails, useDetailsPeriodMutate } from './hooks/useProductDetails'
+import { productDetailsState } from '../../store/productDetails'
 
 interface PropsType {
   isClose?: boolean
@@ -19,6 +23,31 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
     price: '',
     discount: ''
   })
+  const [period, setPeriod] = useState(1)
+  const [colorCode, setColorCode] = useState('')
+  const [graphicDiameter, setGraphicDiameter] = useState(0)
+  const [degree, setDegree] = useState(0)
+  const [detailState, setDetailState] = useRecoilState(productDetailsState)
+
+  const getPeriodMutate = useDetailsPeriodMutate()
+
+  const periodHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(e.currentTarget.value)
+    getPeriodMutate(Number(e.currentTarget.value))
+    setPeriod(Number(e.currentTarget.value))
+  }
+
+  const colorCodeHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setColorCode(e.currentTarget.value)
+  }
+
+  const graphicDiameterHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setGraphicDiameter(Number(e.currentTarget.value))
+  }
+
+  const degreeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDegree(Number(e.currentTarget.value))
+  }
 
   const setModalState = useSetRecoilState(mainCartModal)
 
@@ -118,10 +147,18 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
               <div className="delivery flex my-2">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">사용 기간</p>
                 <div className="flex flex-1 gap-2">
-                  <button className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[100px] h-[30px] ">
+                  <button
+                    value={1}
+                    onClick={(e) => periodHandler(e)}
+                    className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[100px] h-[30px] "
+                  >
                     원데이
                   </button>
-                  <button className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[100px] h-[30px] ">
+                  <button
+                    value={30}
+                    onClick={(e) => periodHandler(e)}
+                    className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[100px] h-[30px] "
+                  >
                     먼슬리
                   </button>
                 </div>

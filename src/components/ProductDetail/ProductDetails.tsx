@@ -5,20 +5,17 @@ import ProductTabs from './ProductTabs'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { useLocation, useParams, useSearchParams } from 'react-router-dom'
-import { axiosInstance } from '../axiosinstance'
 import ProductInfo from './ProductInfo'
 import { useProductDetails } from './hooks/useProductDetails'
 import { useUser } from '../auth/hooks/useUser'
-import { useRecoilValue } from 'recoil'
-import { userState } from '../../store/user'
 
 const ProductDetails = () => {
   const params = useParams()
   const id = Number(params.id)
 
-  const user = useRecoilValue(userState)
+  const { user } = useUser()
 
-  const productDetails = useProductDetails(user?.memberId, id)
+  const productDetails = useProductDetails(user?.memberId!, id)
 
   useEffect(() => {
     if (!user) return
@@ -27,7 +24,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <ProductInfo productDetails={productDetails} />
+      <ProductInfo productDetails={productDetails?.data} />
       <ProductRecommend productId={id} />
       <ProductBanner />
       <ProductTabs />

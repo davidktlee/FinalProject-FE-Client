@@ -37,6 +37,7 @@ export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
     keepPreviousData: true,
     refetchOnWindowFocus: false
   })
+  console.log(data)
   return data
 }
 

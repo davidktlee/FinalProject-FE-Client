@@ -10,5 +10,9 @@ export const queryKeys = {
   productDetails: 'productDetails',
   favorite: 'favorite',
   review: 'review',
-  coupon: 'coupon'
+  coupon: 'coupon',
+  productDetailsPeriod: 'productDetailsPeriod',
+  productDetailsColor: 'productDetailsColor',
+  productDetailsGraphic: 'productDetailsGraphic',
+  productDetailsAll: 'productDetailsAll'
 }
