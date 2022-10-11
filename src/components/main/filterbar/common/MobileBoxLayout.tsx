@@ -47,7 +47,6 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
         break
       case 'color':
         if (typeof content.value === 'string' || typeof content.value === 'number') return
-
         if (filter.colorState.includes(content.value[0])) {
           setFilter({
             ...filter,
@@ -117,7 +116,7 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
                   ? 'bg-lenssisDark text-white border-lenssisDark'
                   : ''
               } ${
-                filter.colorState.includes(content.color)
+                filter.colorState.includes(content.value[0])
                   ? 'border-solid border-[3px] border-lenssisDark'
                   : 'border-lenssisStroke'
               } ${

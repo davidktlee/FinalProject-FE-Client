@@ -120,7 +120,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             } ${
               filter.seriesState.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''
             } ${
-              filter.colorState.includes(content.color)
+              filter.colorState.includes(content.value[0])
                 ? 'border-solid box-border border-[2px] border-lenssisDark'
                 : 'border-lenssisStroke border-[1px]'
             } ${
