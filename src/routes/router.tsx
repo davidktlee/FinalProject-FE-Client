@@ -41,12 +41,13 @@ import { sideBarState } from '../store/sideBarToggle'
 import MobileSideBar from '../mobile-sidebar/MobileSideBar'
 import NonMemberPage from '../pages/NonMemberPage'
 import NonMemberInquiry from '../components/nonmember/inquiry/NonMemberInquiry'
+import Footer from './../components/footer/Footer'
 
 const Router = () => {
-  const [isShowSideBar,setIsShowSideBar] = useRecoilState(sideBarState)
+  const [isShowSideBar, setIsShowSideBar] = useRecoilState(sideBarState)
   return (
     <BrowserRouter>
-    {isShowSideBar && <MobileSideBar />}
+      {isShowSideBar && <MobileSideBar />}
       <Header />
       <Routes>
         <Route path="/" element={<Main />}>
@@ -76,7 +77,6 @@ const Router = () => {
           <Route path="mygrade" element={<MyGrade />} />
           <Route path="mycoupon" element={<MyCoupon />} />
         </Route>
-
         <Route path="/favorite" element={<Favorite />}>
           <Route path="all" element={<AllFavoriteList />} />
           <Route path="oneday" element={<OneDayFavorite />} />
@@ -95,12 +95,11 @@ const Router = () => {
         <Route path="/event" element={<EventPage />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/review" element={<Review />} />
-        <Route path="/nonmember" element={<NonMemberPage/>} />
+        <Route path="/nonmember" element={<NonMemberPage />} />
         <Route path="/nonmember/:orderId" element={<NonMemberInquiry />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <MobileBottomNav />
-      
     </BrowserRouter>
   )
 }

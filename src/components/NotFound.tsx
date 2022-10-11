@@ -6,8 +6,8 @@ import Footer from './footer/Footer'
 const NotFound = () => {
   return (
     <>
-      <CardTemplate title="ERROR">
-        <div className="flex flex-col justify-center items-center h-[540px]">
+      <CardTemplate title="ERROR" marginTop="xs-max:mt-[130px]">
+        <div className=" flex flex-col justify-center items-center h-[540px]">
           <div className="flex items-center justify-center">
             <div className="w-[10px] h-[10px]  rounded-full bg-lenssisSky"></div>
             <div className="mx-[5px] text-[30px] font-[600]">ERROR</div>
