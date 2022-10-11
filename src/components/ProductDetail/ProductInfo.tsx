@@ -24,7 +24,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
     discount: ''
   })
   const [detailState, setDetailState] = useRecoilState(productDetailsState)
-  const [optionComplete, setOptionComplete] = useState<boolean>(false)
+  const [optionComplete, setOptionComplete] = useState<boolean>(true)
 
   const getPeriodMutate = useDetailsPeriodMutate()
 
@@ -72,7 +72,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
       console.log(detailState.graphicDiameter)
     } else if (name === 'degree') {
       setDetailState({ ...detailState, degree: Number(value) })
-      setOptionComplete(true)
+
       console.log(detailState.degree)
     }
   }
@@ -99,9 +99,13 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
   }
 
   useEffect(() => {
-    detailState.graphicDiameter === 0 ? setOptionComplete(true) : setOptionComplete(false)
+    setOptionComplete(
+      detailState.period !== 0 && detailState.colorCode !== '' && detailState.graphicDiameter !== 0
+        ? false
+        : true
+    )
     toComma()
-  }, [productDetails?.price, detailState.graphicDiameter])
+  }, [productDetails?.price, detailState])
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
@@ -183,8 +187,8 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
                     className={`${
                       detailState.period === 1
                         ? 'bg-lenssisDark text-white border-lenssisDark'
-                        : 'text-lenssisDeepGray'
-                    } "border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
+                        : 'text-lenssisDeepGray border-lenssisStroke border-[1px]'
+                    } "border-solid rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
                   >
                     원데이
                   </button>
@@ -196,7 +200,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
                       detailState.period === 30
                         ? 'bg-lenssisDark text-white border-lenssisDark'
                         : 'text-lenssisDeepGray'
-                    } "border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
+                    } "border-solid border-lenssisStroke border-[1px] rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
                   >
                     먼슬리
                   </button>

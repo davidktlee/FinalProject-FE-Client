@@ -8,6 +8,7 @@ import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import ProductInfo from './ProductInfo'
 import { useProductDetails } from './hooks/useProductDetails'
 import { useUser } from '../auth/hooks/useUser'
+import Skeleton from './Skeleton'
 
 const ProductDetails = () => {
   const params = useParams()
@@ -34,6 +35,7 @@ const ProductDetails = () => {
   return (
     <div>
       <ProductInfo productDetails={data} />
+      {/* <Skeleton /> */}
       <ProductRecommend productId={id} />
       <ProductBanner />
       <ProductTabs />
