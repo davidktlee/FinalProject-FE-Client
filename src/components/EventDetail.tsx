@@ -3,6 +3,9 @@ import CardTemplate from './common/ui/CardTemplate'
 import PageLayout from './common/ui/PageLayout'
 import { useGetDetailEvent } from './main/hooks/useEventLists'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useAddCoupon } from './event/hooks/useAddCoupon'
+import { useMutation } from 'react-query'
+import axios from 'axios'
 const img =
   'https://user-images.githubusercontent.com/97086762/192783636-f77a8dd9-02b0-4044-a526-47fcd7a1353c.png'
 
@@ -12,9 +15,26 @@ function EventDetail() {
   // if (state) {
   //   const detailEvent = useGetDetailEvent(state as number)
   // }
+  const addCoupon = async (couponId: number) => {
+    const res = await axios({
+      url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/eventDetail',
+      data: {
+        couponId
+      },
+      method: 'POST'
+    })
+    console.log(res)
+  }
+  const { mutate: addCouponMutate } = useMutation((couponId: number) => addCoupon(couponId))
+
+  // const addCouponMutate = useAddCoupon()
+
 
   // const data = useGetDetailEvent(state as string)
-  const clickEventBtn = () => {}
+  const clickEventBtn = () => {
+    // addCouponMutate(1)
+    addCouponMutate(1)
+  }
   return (
     <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
       <CardTemplate title="이벤트" isTitleVisible={true}>
@@ -34,7 +54,7 @@ function EventDetail() {
           <div className=" flex flex-col items-center my-8">
             <img src={img} alt="event-image" />
             <button
-              className="my-8 w-[300px] h-[80px] text-[20px] text-[#fff] font-bold bg-lenssisSky rounded-md drop-shadow-basic"
+              className="my-8 xs-max:w-[200px] xs-max:h-[50px] w-[300px] h-[80px] text-[20px] text-[#fff] font-bold bg-lenssisSky rounded-md drop-shadow-basic"
               onClick={clickEventBtn}
             >
               쿠폰 발급받기

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import Event from '../components/main/MainEvent'
+import Event from '../components/event/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Banner from './../components/Banner'
 import CardContainer from '../components/main/CardContainer'

@@ -41,7 +41,7 @@ export interface ProductDetailResponseType {
 }
 
 export interface CardContainerPropsType {
-  data: Data
+  data?: Data
   allProductCurrentPage?: number
   newProductCurrentPage?: number
   allProductCount?: number

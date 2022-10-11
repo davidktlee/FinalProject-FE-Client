@@ -121,8 +121,8 @@ function RecommendBanner() {
       autoplay: { delay: 20000, disableOnInteraction: true }
     }
     return (
-      <div className="w-[90%] mx-auto px-14 relative">
-        <button ref={prevRef} className="absolute top-[45%] left-[-30px] z-[2] hover:color-white">
+      <div className="w-[90%] mx-auto px-4 relative pb-[50px]">
+        <button ref={prevRef} className="absolute top-[45%] left-[-40px] z-[2] hover:color-white">
           <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle
               cx="18"
@@ -183,7 +183,7 @@ function RecommendBanner() {
             ))}
           </Swiper>
         )}
-        <button ref={nextRef} className="absolute top-[45%] right-[-30px] z-[1] hover:color-white">
+        <button ref={nextRef} className="absolute top-[45%] right-[-40px] z-[1] hover:color-white">
           <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle
               r="17.1874"

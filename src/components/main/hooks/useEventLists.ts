@@ -28,10 +28,11 @@ export interface EventResponseType {
 
 export const getEvents = async (): Promise<EventResponseType> => {
   const { data }: AxiosResponse<EventResponseType> = await axiosInstance({
-    url: '/event/main',
-    headers: {
-      ContentType: 'application/json'
-    }
+    // url: '/event/main',
+    url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/event',
+    // headers: {
+    //   ContentType: 'application/json'
+    // }
   })
 
   return data
@@ -65,7 +66,7 @@ const detailEvent = async (id: number): Promise<EventDetailResponseType[]> => {
   return data
 }
 export const useGetDetailEvent = (id: number): EventDetailResponseType[] => {
-  const {fireToast} = useToast()
+  const { fireToast } = useToast()
   const fallback: [] = []
   const { data = fallback } = useQuery([queryKeys.event, id], () => detailEvent(id), {
     refetchOnWindowFocus: false,

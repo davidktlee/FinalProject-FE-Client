@@ -1,4 +1,4 @@
-import NoticeTitle from './notice/NoticeTitle'
+import NoticeTitle from './NoticeTitle'
 const MainNotice = () => {
   return (
     <>
