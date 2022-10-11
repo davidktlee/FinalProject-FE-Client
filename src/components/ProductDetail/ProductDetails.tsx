@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductBanner from './ProductBanner'
 import ProductRecommend from './ProductRecommend'
 import ProductTabs from './ProductTabs'
@@ -13,18 +13,27 @@ const ProductDetails = () => {
   const params = useParams()
   const id = Number(params.id)
 
-  const { user } = useUser()
+  // const { user } = useUser()
+  const [data, setData] = useState<any>()
 
-  const productDetails = useProductDetails(user?.memberId!, id)
+  const getProductDetails = async () => {
+    const data = await axios.get('https://6345098639ca915a69f4998a.mockapi.io/productDetails')
+    setData(data.data[0])
+    console.log(data.data[0])
+    return data.data[0]
+  }
+
+  // const productDetails = useProductDetails(user?.memberId!, id)
 
   useEffect(() => {
-    if (!user) return
+    // if (!user) return
     window.scrollTo(0, 0)
+    getProductDetails()
   }, [])
 
   return (
     <div>
-      <ProductInfo productDetails={productDetails?.data} />
+      <ProductInfo productDetails={data} />
       <ProductRecommend productId={id} />
       <ProductBanner />
       <ProductTabs />
