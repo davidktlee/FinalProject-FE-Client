@@ -17,6 +17,7 @@ import { filterState } from '../store/filterOpen'
 import { axiosInstance } from './../components/axiosinstance/index'
 import { useNavigate } from 'react-router-dom'
 import MainCartModal from '../components/main/MainCartModal'
+import axios from 'axios'
 
 const Main = () => {
   const refreshToken = useRefreshToken()

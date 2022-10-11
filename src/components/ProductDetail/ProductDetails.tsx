@@ -9,32 +9,26 @@ import ProductInfo from './ProductInfo'
 import { useProductDetails } from './hooks/useProductDetails'
 import { useUser } from '../auth/hooks/useUser'
 import Skeleton from './Skeleton'
+import { useRecoilState } from 'recoil'
+import { productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
 
 const ProductDetails = () => {
   const params = useParams()
   const id = Number(params.id)
 
-  // const { user } = useUser()
-  const [data, setData] = useState<any>()
+  const { user } = useUser()
+  const [productByOtions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
 
-  const getProductDetails = async () => {
-    const data = await axios.get('https://6345098639ca915a69f4998a.mockapi.io/productDetails')
-    setData(data.data[0])
-    console.log(data.data[0])
-    return data.data[0]
-  }
-
-  // const productDetails = useProductDetails(user?.memberId!, id)
+  const productDetails = useProductDetails(user?.memberId!, id)
 
   useEffect(() => {
-    // if (!user) return
+    if (!user) return
     window.scrollTo(0, 0)
-    getProductDetails()
   }, [])
 
   return (
     <div>
-      <ProductInfo productDetails={data} />
+      <ProductInfo productDetails={productDetails?.data} productId={id} />
       {/* <Skeleton /> */}
       <ProductRecommend productId={id} />
       <ProductBanner />

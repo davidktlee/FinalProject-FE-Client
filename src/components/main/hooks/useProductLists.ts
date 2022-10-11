@@ -4,6 +4,7 @@ import { axiosInstance, getJWTToken } from '../../axiosinstance'
 import { queryKeys } from './../../react-query/queryKeys'
 import { ProductResponseType } from '../types/productTypes'
 import { getStoredToken } from '../../local-storage/userStorage'
+import { useUser } from '../../auth/hooks/useUser'
 
 const token = getStoredToken()
 
@@ -24,7 +25,11 @@ const getProductRandom = async (memberId: number, productId: number) => {
     data: { data }
   } = await axiosInstance({
     method: 'GET',
-    url: `/productDetails/forRandom?memberId=${memberId}&productId=${productId}`,
+    url: `/productDetails/forRandom`,
+    params: {
+      memberId: memberId ? memberId : 0,
+      productId
+    },
     headers: getJWTToken(token)
   })
 
@@ -34,6 +39,9 @@ const getProductRandom = async (memberId: number, productId: number) => {
 export const useGetProductsList = (pageNo: number): ProductResponseType[] => {
   const fallback: [] = []
   const { data = fallback } = useQuery([queryKeys.product, pageNo], () => getProductsList(pageNo), {
+    onSuccess: (data) => {
+      console.log(data)
+    },
     keepPreviousData: true,
     refetchOnWindowFocus: false
   })

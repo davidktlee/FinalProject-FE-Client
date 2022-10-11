@@ -4,6 +4,10 @@ import { ProductDetailResponseType } from '../../main/types/productTypes'
 import { queryKeys } from '../../react-query/queryKeys'
 import { Pagination } from 'swiper'
 import { getStoredToken } from '../../local-storage/userStorage'
+import { useUser } from '../../auth/hooks/useUser'
+import { ProductDetailsType } from '../../../store/productDetails'
+import { productByOptionsState, ProductByOptionsType } from '../../../store/productByOptions'
+import { useRecoilState } from 'recoil'
 
 const token = getStoredToken()
 
@@ -11,17 +15,25 @@ const token = getStoredToken()
 const getProductDetails = async (memberId: number, productId: number) => {
   const { data } = await axiosInstance({
     method: 'POST',
-    url: `/productDetails/main?productId=${productId}&memberId=${memberId}`,
+    url: `/productDetails/main`,
+    params: {
+      productId,
+      memberId: memberId ? memberId : 0
+    },
     headers: getJWTToken(token)
   })
   return data
 }
 
 // 제품 상세 사용기간 선택 API
-const getProductDetailsPeriod = async (period: number) => {
+const getProductDetailsPeriod = async (detailsState: ProductDetailsType) => {
   const { data } = await axiosInstance({
     method: 'GET',
-    url: `/productDetails/byPeriodOption?period=${period}`
+    url: '/productDetails/byPeriodOption',
+    params: {
+      period: detailsState.period,
+      productId: detailsState.productId
+    }
   })
   return data
 }
@@ -89,9 +101,9 @@ export const useProductDetails = (memberId: number, productId: number) => {
     [queryKeys.productDetails, productId],
     () => getProductDetails(memberId, productId),
     {
-      enabled: !!productId,
       refetchOnWindowFocus: false,
-      refetchOnMount: false
+      refetchOnMount: false,
+      keepPreviousData: false
     }
   )
   console.log(productDetails)
@@ -100,14 +112,17 @@ export const useProductDetails = (memberId: number, productId: number) => {
 
 // 제품 상세 사용기간 선택 쿼리
 export const useDetailsPeriodMutate = () => {
-  const { mutate: getPeriodMutate } = useMutation((period: number) => getProductDetailsPeriod(period), {
-    onSuccess: ({ data }) => {
-      console.log(data)
-    },
-    onError: (error) => {
-      console.log(error)
+  const { mutate: getPeriodMutate } = useMutation(
+    (detailsState: ProductDetailsType) => getProductDetailsPeriod(detailsState),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data)
+      },
+      onError: (error) => {
+        console.log(error)
+      }
     }
-  })
+  )
   return getPeriodMutate
 }
 

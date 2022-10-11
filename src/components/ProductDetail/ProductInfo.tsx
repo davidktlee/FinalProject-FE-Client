@@ -4,78 +4,121 @@ import FillHeart from '/assets/FillHeart.svg'
 import { useParams } from 'react-router'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { mainCartModal } from '../../store/mainCart'
-// import { useProductDetails } from './hooks/useProductDetails'
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
 import { useAddFavorite } from '../main/hooks/useFavorite'
 import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
-import { useProductDetails, useDetailsPeriodMutate } from './hooks/useProductDetails'
 import { productDetailsState } from '../../store/productDetails'
+import { useMutation } from 'react-query'
+import { productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
+import { ProductDetailsType } from '../../store/productDetails'
 
 interface PropsType {
   isClose?: boolean
   productDetails?: ProductDetailResponseType
+  productId: number
 }
 
-const ProductInfo = ({ isClose, productDetails }: PropsType) => {
+const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
   const [commaPrice, setCommaPrice] = useState({
     price: '',
     discount: ''
   })
-  const [detailState, setDetailState] = useRecoilState(productDetailsState)
+  const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
+  const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
   const [optionComplete, setOptionComplete] = useState<boolean>(true)
 
-  const getPeriodMutate = useDetailsPeriodMutate()
+  const getProductByOptions = async (detailState: ProductDetailsType) => {
+    const { data } = await axiosInstance({
+      method: detailState.degree !== 0 ? 'POST' : 'GET',
+      url:
+        detailState.colorCode == ''
+          ? '/productDetails/byPeriodOption'
+          : detailState.graphicDiameter == 0
+          ? '/productDetails/byColorCodeOption'
+          : detailState.degree == 0
+          ? '/productDetails/byGraphicOption'
+          : '/productDetails/byDetailsOption',
+      params: {
+        productId: productId,
+        period: detailState.period !== 0 ? detailState.period : undefined,
+        colorCode: detailState.colorCode !== '' ? detailState.colorCode : undefined,
+        graphicDiameter: detailState.graphicDiameter !== 0 ? detailState.graphicDiameter : undefined,
+        degree: detailState.degree !== 0 ? detailState.degree : undefined
+      }
+    })
+    console.log(data)
+    return data
+  }
+
+  const { mutate: selectOptionMutate } = useMutation(
+    (detailState: ProductDetailsType) => getProductByOptions(detailState),
+    {
+      mutationKey: ['productByOptions', detailState],
+      onSuccess: (data) => {
+        console.log(data)
+        setProductByOptions({ ...productByOptions, ...data.data })
+      },
+      onError: (error) => {
+        console.log(error)
+      }
+    }
+  )
 
   const optionHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const { name, value } = e.currentTarget
+
     if (name === 'period') {
+      selectOptionMutate({ ...detailState, [name]: Number(value) })
       if (detailState.period === Number(value)) {
         setDetailState({
           ...detailState,
           period: 0
         })
       } else {
-        setDetailState({
+        setDetailState(() => ({
           ...detailState,
           period: Number(value)
-        })
+        }))
       }
       console.log(detailState.period)
-      // getPeriodMutate.mutate(Number(value))
     } else if (name === 'color') {
+      console.log(value)
+      selectOptionMutate({ ...detailState, colorCode: value })
       if (detailState.colorCode === value) {
         setDetailState({
           ...detailState,
           colorCode: ''
         })
       } else {
-        setDetailState({
+        setDetailState(() => ({
           ...detailState,
           colorCode: value
-        })
+        }))
       }
       console.log(detailState.colorCode)
     } else if (name === 'graphicDiameter') {
+      selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
       if (detailState.graphicDiameter === Number(value)) {
         setDetailState({
           ...detailState,
           graphicDiameter: 0
         })
       } else {
-        setDetailState({
+        setDetailState(() => ({
           ...detailState,
           graphicDiameter: Number(value)
-        })
+        }))
       }
       console.log(detailState.graphicDiameter)
     } else if (name === 'degree') {
       setDetailState({ ...detailState, degree: Number(value) })
-
+      selectOptionMutate(detailState)
       console.log(detailState.degree)
     }
   }
+  console.log(productByOptions)
 
   const setModalState = useSetRecoilState(mainCartModal)
 
@@ -105,7 +148,7 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
         : true
     )
     toComma()
-  }, [productDetails?.price, detailState])
+  }, [productDetails?.price, productByOptions, detailState])
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
@@ -213,40 +256,71 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
               <div className="delivery flex pt-2">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">세부 색상</p>
                 <div className="flex gap-2">
-                  {productDetails?.colorCodeList?.map((color: string) => (
-                    <button
-                      onClick={(e) => optionHandler(e)}
-                      name="color"
-                      value={color}
-                      key={color}
-                      className={` ${
-                        detailState.colorCode === color
-                          ? ' text-white border-lenssisDark border-solid border-4'
-                          : ''
-                      } w-[30px] h-[30px] rounded-full`}
-                      style={{ backgroundColor: `${color}` }}
-                    />
-                  ))}
+                  {productByOptions.colorCodeList.length === 0
+                    ? productDetails?.colorCodeList?.map((color: string) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="color"
+                          value={color}
+                          key={color}
+                          className={` ${
+                            detailState.colorCode === color
+                              ? ' text-white border-lenssisDark border-solid border-4'
+                              : ''
+                          } w-[30px] h-[30px] rounded-full`}
+                          style={{ backgroundColor: `${color}` }}
+                        />
+                      ))
+                    : productByOptions?.colorCodeList?.map((color: string) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="color"
+                          value={color}
+                          key={color}
+                          className={` ${
+                            detailState.colorCode === color
+                              ? ' text-white border-lenssisDark border-solid border-4'
+                              : ''
+                          } w-[30px] h-[30px] rounded-full`}
+                          style={{ backgroundColor: `${color}` }}
+                        />
+                      ))}
                 </div>
               </div>
               <div className="delivery flex my-2 pt-4">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">그래프 직경</p>
-                <div className="badge flex gap-[5px] lg:flex-wrap lg:w-[280px] xl:w-[415px]">
-                  {productDetails?.graphicDiameterList?.map((item, index) => (
-                    <button
-                      onClick={(e) => optionHandler(e)}
-                      name="graphicDiameter"
-                      value={item}
-                      key={index}
-                      className={` ${
-                        detailState.graphicDiameter === item
-                          ? 'bg-lenssisDark text-white border-lenssisDark'
-                          : 'text-lenssisDeepGray'
-                      } w-[55px] h-[30px] text-[14px] text-center leading-6 border-solid border-[1px] border-lenssisStroke rounded-[20px] px-2`}
-                    >
-                      {item}
-                    </button>
-                  ))}
+                <div className="badge flex gap-[5px] lg:flex-wrap lg:w-[280px] xl:w-[355px]">
+                  {productByOptions.graphicDiameterList.length === 0
+                    ? productDetails?.graphicDiameterList?.map((item, index) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="graphicDiameter"
+                          value={item}
+                          key={index}
+                          className={` ${
+                            detailState.graphicDiameter === item
+                              ? 'bg-lenssisDark text-white border-lenssisDark'
+                              : 'text-lenssisDeepGray'
+                          } w-[55px] h-[30px] text-[14px] text-center leading-6 border-solid border-[1px] border-lenssisStroke rounded-[20px] px-2`}
+                        >
+                          {item}
+                        </button>
+                      ))
+                    : productByOptions?.graphicDiameterList?.map((item, index) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="graphicDiameter"
+                          value={item}
+                          key={index}
+                          className={` ${
+                            detailState.graphicDiameter === item
+                              ? 'bg-lenssisDark text-white border-lenssisDark'
+                              : 'text-lenssisDeepGray'
+                          } w-[55px] h-[30px] text-[14px] text-center leading-6 border-solid border-[1px] border-lenssisStroke rounded-[20px] px-2`}
+                        >
+                          {item}
+                        </button>
+                      ))}
                 </div>
               </div>
             </div>
@@ -261,7 +335,13 @@ const ProductInfo = ({ isClose, productDetails }: PropsType) => {
                   disabled={optionComplete}
                 >
                   <option value="">選択してください</option>
-                  <option value="0.00,0,376">0.00</option>
+                  {Object.values(productByOptions)
+                    .slice(0, 24)
+                    .map((item, index) => (
+                      <option value={item} key={index}>
+                        {item.degree} 재고: {item.stock}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
