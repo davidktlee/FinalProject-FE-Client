@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { ProductCount } from '../../../store/product'
 
 interface PropsType {
   count: number
 }
 
 export const ProductMainSkeleton = ({ count }: PropsType) => {
-  const [length, setLength] = useState(9)
-  const arr = new Array(length).fill(1)
-  useEffect(() => {
-    setLength(count)
-  }, [count])
+  const arr = new Array(count).fill(1)
 
   return (
     <>

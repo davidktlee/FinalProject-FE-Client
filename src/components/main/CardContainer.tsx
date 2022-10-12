@@ -2,33 +2,25 @@ import { useEffect, useState } from 'react'
 import Card from '../common/Card'
 import { CardContainerPropsType, ProductPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
-import { useGetProductsList, usePrefetchProductLists } from './hooks/useProductLists'
+import { useGetNewProduct, useGetProductsList } from './hooks/useProductLists'
 import { getFavorite } from './hooks/useFavorite'
-import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { mainCartId } from '../../store/mainCart'
-import axios from 'axios'
 import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
-import { ProductCount } from '../../store/product'
-import { AllProductCurrentPage } from './../../store/product'
 
 const CardContainer = ({ data }: CardContainerPropsType) => {
-  // const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
-  // const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
-  const allProductCurrentPage = useRecoilValue(AllProductCurrentPage)
+  const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
+  const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
+  const [currentPost, setCurrentPost] = useState([])
+  const indexOfLast = newProductCurrentPage * 8
+  const indexOfStart = indexOfLast - 8
+
   const [title, setTitle] = useState<string>('Best')
   const setFavoriteIds = useSetRecoilState(mainCartId)
-  const prefetchProductCount = useRecoilValue(ProductCount)
 
-  const [isLoading, setIsLoading] = useState(false)
-  // const [productLists, setProductLists] = useState<any>([])
-  // const getProductList = async () => {
-  //   setIsLoading(true)
-  //   const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products')
-  //   setProductLists(res.data)
-  //   setIsLoading(false)
-  // }
   const { data: productLists, isFetching: allProductFetching } = useGetProductsList(allProductCurrentPage)
-
+  const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct()
+  console.log(newProductLists)
   const useGetFavorite = async () => {
     const res = await getFavorite()
     const filteredItem = res.map((item) => {
@@ -38,10 +30,12 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   }
 
   useEffect(() => {
-    
     useGetFavorite()
-    // getProductList()
   }, [])
+
+  useEffect(() => {
+    setCurrentPost(newProductLists?.productData?.slice(indexOfStart, indexOfLast))
+  }, [newProductLists, newProductCurrentPage])
 
   return (
     <>
@@ -54,7 +48,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
           </div>
           <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
             {allProductFetching ? (
-              <ProductMainSkeleton count={prefetchProductCount} />
+              <ProductMainSkeleton count={9} />
             ) : (
               productLists
                 .slice(0, 9)
@@ -75,8 +69,8 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
           </div>
           {productLists[0] && (
             <Pagination
-              // currentPage={allProductCurrentPage}
-              // setCurrentPage={setAllProductCurrentPage}
+              currentPage={allProductCurrentPage}
+              setCurrentPage={setAllProductCurrentPage}
               allCount={productLists[0].totalCount}
               divide={9}
             />
@@ -90,31 +84,30 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
             </span>
           </div>
           <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
-            {isLoading ? (
-              <ProductNewSkeleton count={prefetchProductCount} />
+            {newProductFetching ? (
+              <ProductNewSkeleton count={8} />
             ) : (
-              productLists
-                .slice(0, 8)
-                .map((item: ProductPropsType, idx: number) => (
-                  <Card
-                    idx={idx}
-                    key={`${item.productId}-${idx}`}
-                    colorAndImage={item.colorAndImage}
-                    productId={item.productId}
-                    series={item.series}
-                    price={item.price}
-                    discount={item.discount}
-                    graphicDiameter={item.graphicDiameter}
-                    isFavorite={item.isFavorite}
-                  />
-                ))
+              currentPost &&
+              currentPost?.map((item: ProductPropsType, idx: number) => (
+                <Card
+                  idx={idx}
+                  key={`${item.productId}-${idx}`}
+                  colorAndImage={item.colorAndImage}
+                  productId={item.productId}
+                  series={item.series}
+                  price={item.price}
+                  discount={item.discount}
+                  graphicDiameter={item.graphicDiameter}
+                  isFavorite={item.isFavorite}
+                />
+              ))
             )}
           </div>
-          {productLists[0] && (
+          {newProductLists.totalCount && (
             <Pagination
-              // currentPage={allProductCurrentPage}
-              // setCurrentPage={setAllProductCurrentPage}
-              allCount={productLists[0].totalCount}
+              currentPage={newProductCurrentPage}
+              setCurrentPage={setNewProductCurrentPage}
+              allCount={newProductLists.totalCount}
               divide={8}
             />
           )}

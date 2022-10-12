@@ -53,7 +53,7 @@ export const productState = atom<Product[]>({
 
 export const ProductCount = atom({
   key: 'productCount',
-  default: 0
+  default: 9
 })
 
 export const AllProductCurrentPage = atom({
