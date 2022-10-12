@@ -14,19 +14,16 @@ import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
-import { axiosInstance } from './../components/axiosinstance/index'
 import { useNavigate } from 'react-router-dom'
 import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
-  const navigate = useNavigate()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
 
   const MobileFilterRef = useRef<HTMLDivElement>(null)
 
-  console.log(filterOpen)
   const handleClickOutside = ({ target }: MouseEvent) => {
     if (!MobileFilterRef.current?.contains(target as Node) && filterOpen) {
       console.log('click outside')
@@ -48,7 +45,6 @@ const Main = () => {
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
-    console.log('main interceptor')
   }, [])
 
   return (
@@ -76,7 +72,7 @@ const Main = () => {
           </section>
           <div
             onClick={toColorTest} /* 퍼스널 컬러 테스트로 이동 */
-            className="w-full h-auto mb-[30px] mx-auto border-none rounded-md shadow-basic object-fit md:object-cover overflow-hidden"
+            className="w-full h-auto mb-[30px] mx-auto border-none rounded-md shadow-basic object-fit md:object-cover overflow-hidden cursor-pointer"
           >
             <img
               src="https://user-images.githubusercontent.com/90392240/193073587-58b90f5a-e06c-4f2c-baec-87351fbf4b96.png"

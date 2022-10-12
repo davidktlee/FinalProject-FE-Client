@@ -1,79 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SwiperCore, { Navigation, Pagination, Autoplay, Scrollbar } from 'swiper'
 import { SwiperSlide, Swiper } from 'swiper/react'
+import { RecommendSkeleton } from '../../common/ui/Skeleton'
 
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
+import { RecommendResponse } from '../hooks/useRecommend'
+import RecommendCard from './RecommendCard'
 
-interface Item {
-  id: string // 상품 id
-  title: string // 상품 타이틀
-  rank?: string // 상품 순위
-  series: string // 상품 시리즈
-  price: string // 상품 가격
-  tag?: string[] // 상품 밑 태그
-  discount?: string // 할인률
-  img?: string // 상품 이미지
-  imgHeight?: number
-  isNew?: boolean // 새로운 상품 여부
-  color?: string[] // 색상 코드
-  width?: number // 카드의 너비값
-  height?: number // 카드의 높이값
+interface PropsType {
+  recommendProductLists: RecommendResponse[]
 }
 
-const items = [
-  {
-    id: '1',
-    title: '샌드 플러스 그레이',
-    rank: '1',
-    series: '샌드',
-    price: '1000円',
-    tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    discount: '800円',
-    img: 'https://user-images.githubusercontent.com/90392240/193077394-f10340da-3e4e-4916-afc5-254bc67a9651.png',
-    isNew: true
-  },
-  {
-    id: '2',
-    title: '샌드 플러스 그레이',
-    rank: '2',
-    series: '샌드',
-    price: '1000円',
-    tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    discount: '800円',
-    img: 'https://user-images.githubusercontent.com/90392240/193077400-8490f905-1c93-44f7-8c5c-0b2f10984dce.png',
-    isNew: true
-  },
-  {
-    id: '3',
-    title: '샌드 플러스 그레이',
-    rank: '3',
-    series: '샌드',
-    price: '1000円',
-    tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    discount: '800円',
-    img: 'https://user-images.githubusercontent.com/90392240/193077405-ba005884-bcb4-41b6-8e5c-8c679b0ad032.png',
-    isNew: true
-  },
-  {
-    id: '4',
-    title: '샌드 플러스 그레이',
-    rank: '0',
-    series: '샌드',
-    price: '1000円',
-    tag: ['uv차단', '13.5', '인기상품', '추천상품'],
-    discount: '800円',
-    img: 'https://user-images.githubusercontent.com/90392240/193077407-0d53a3a2-5c6e-41f2-b7a3-27c346b96f16.png',
-    isNew: true
-  }
-]
-
-function RecommendBanner() {
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+function RecommendBanner({ recommendProductLists }: PropsType) {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
   }
@@ -145,7 +89,7 @@ function RecommendBanner() {
         </button>
         {swiperSetting && (
           <Swiper {...swiperSetting} style={{ borderRadius: '15px', padding: '20px 0' }}>
-            {items.map((item: Item, index: number) => (
+            {recommendProductLists.map((item: RecommendResponse, index: number) => (
               <div key={index}>
                 <SwiperSlide
                   key={index}
@@ -160,7 +104,7 @@ function RecommendBanner() {
                 >
                   <>
                     <img
-                      src={item.img}
+                      src={item.imageUrl}
                       alt=""
                       style={{
                         width: '230px',
@@ -170,13 +114,7 @@ function RecommendBanner() {
                       }}
                     />
 
-                    <div className="w-[150px] h-[40px] flex flex-col ml-2 relative mt-[10px]">
-                      <div className=" text-[12px] font-semibold xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center">
-                        <div className="md:mr-2 font-bold">{item.price}</div>
-                        <div className="text-[#7A7A7A] line-through text-[12px]">{item.discount}</div>
-                      </div>
-                    </div>
+                    <RecommendCard price={item.price} discount={item.discount} name={item.name} />
                   </>
                 </SwiperSlide>
               </div>
@@ -204,210 +142,23 @@ function RecommendBanner() {
         </button>
       </div>
     )
-  } else if (windowWidth >= 1024) {
-    const swiperSetting = {
-      spaceBetween: 10,
-      navigation: {
-        prevEl: prevRef.current,
-        nextEl: nextRef.current
-      },
-      loop: true
-    }
-    return (
-      <div className="w-[92%] mx-auto px-8 relative">
-        <button ref={prevRef} className="absolute top-[45%] left-[-30px] z-[2] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              cx="18"
-              cy="17.5"
-              r="17.1874"
-              transform="rotate(-180 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M22.5 25L13.5 17.5L22.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        {swiperSetting && (
-          <Swiper {...swiperSetting} slidesPerView="auto" style={{ borderRadius: '15px', padding: '0' }}>
-            {items.map((item: Item, index: number) => (
-              <div key={index}>
-                <SwiperSlide
-                  key={index}
-                  style={{
-                    width: '240px',
-                    borderRadius: '15px',
-                    padding: '4px',
-                    border: '1px solid',
-                    margin: '0 auto 50px' // 수치 변경
-                  }}
-                >
-                  <>
-                    <img
-                      src={item.img}
-                      alt=""
-                      style={{
-                        width: '240px',
-                        margin: '0 auto',
-                        height: '300px',
-                        borderRadius: '15px'
-                      }}
-                    />
-
-                    <div className=" flex flex-col ml-6 relative">
-                      <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px] flex">
-                        <div className="">{item.series}</div>
-                      </div>
-                      <div className=" text-[12px] xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[10px] mb-[18px] font-semibold">
-                        <div className="xl:mr-4 font-bold">{item.price}</div>
-                        <div className="text-[#7A7A7A] line-through text-[12px]">{item.discount}</div>
-                      </div>
-                    </div>
-                  </>
-                </SwiperSlide>
-              </div>
-            ))}
-          </Swiper>
-        )}
-        <button ref={nextRef} className="absolute top-[45%] right-[-30px] z-[1] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              r="17.1874"
-              transform="matrix(1 -8.74228e-08 -8.74228e-08 -1 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M13.5 25L22.5 17.5L13.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-    )
-  } else if (windowWidth >= 768) {
-    const swiperSetting = {
-      spaceBetween: 50,
-      navigation: {
-        prevEl: prevRef.current,
-        nextEl: nextRef.current
-      },
-
-      loop: true,
-      autoplay: { delay: 2000, disableOnInteraction: true }
-    }
-    return (
-      <div className="w-[92%] mx-auto px-4 relative">
-        <button ref={prevRef} className="absolute top-[45%] left-[-30px] z-[2] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              cx="18"
-              cy="17.5"
-              r="17.1874"
-              transform="rotate(-180 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M22.5 25L13.5 17.5L22.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        {swiperSetting && (
-          <Swiper {...swiperSetting} slidesPerView="auto" style={{ borderRadius: '15px', padding: '20px 0' }}>
-            {items.map((item: Item, index: number) => (
-              <div key={index}>
-                <SwiperSlide
-                  key={index}
-                  style={{
-                    width: '240px',
-                    borderRadius: '15px',
-                    padding: '4px',
-                    border: '1px solid',
-                    margin: '0 auto 50px' // 수치 변경
-                  }}
-                >
-                  <>
-                    <img
-                      src={item.img}
-                      alt=""
-                      style={{
-                        width: '260px',
-                        margin: '0 auto',
-                        height: '300px',
-                        borderRadius: '15px'
-                      }}
-                    />
-                    <div className=" flex flex-col ml-8 relative">
-                      <div className="text-[11px] xl:text-[12px] text-[#7A7A7A] mt-[10px] mb-[4px] flex">
-                        <div className="">{item.series}</div>
-                      </div>
-                      <div className=" text-[12px] xl:text-[14px]">{item.title}</div>
-                      <div className="flex justify-start items-center mt-[10px] mb-[18px] font-semibold">
-                        <div className="xl:mr-4 font-bold">{item.price}</div>
-                        <div className="text-[#7A7A7A] line-through text-[12px]">{item.discount}</div>
-                      </div>
-                    </div>
-                  </>
-                </SwiperSlide>
-              </div>
-            ))}
-          </Swiper>
-        )}
-        <button ref={nextRef} className="absolute top-[45%] right-[-30px] z-[1] hover:color-white">
-          <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle
-              r="17.1874"
-              transform="matrix(1 -8.74228e-08 -8.74228e-08 -1 18 17.5)"
-              fill="white"
-              fillOpacity="0.5"
-              stroke="#1B304A"
-              strokeWidth="0.625141"
-            />
-            <path
-              d="M13.5 25L22.5 17.5L13.5 10"
-              stroke="#1B304A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-    )
   } else {
     SwiperCore.use([Scrollbar])
     const swiperSetting = {
       spaceBetween: 10,
       scrollbar: { draggable: true },
       loop: true,
-      autoplay: { delay: 2000, disableOnInteraction: true }
+      autoplay: { delay: 2000000, disableOnInteraction: true }
     }
     return (
       <div className="w-[96%] mx-auto  relative">
         {swiperSetting && (
-          <Swiper {...swiperSetting} slidesPerView={2} style={{ borderRadius: '15px', padding: '20px 0' }}>
-            {items.map((item: Item, index: number) => (
+          <Swiper
+            {...swiperSetting}
+            slidesPerView={2}
+            style={{ borderRadius: '15px', padding: '20px', margin: '0px 0px 30px 0px' }}
+          >
+            {recommendProductLists.map((item: RecommendResponse, index: number) => (
               <div key={index}>
                 <SwiperSlide
                   key={index}
@@ -415,14 +166,14 @@ function RecommendBanner() {
                     width: '170px',
                     height: '250px',
                     borderRadius: '15px',
-                    padding: '5px',
+                    padding: '2.5px 5px 1px 5px',
                     border: '1px solid #efefef',
-                    margin: '0 auto 50px' // 수치 변경
+                    margin: '5px 5px 50px 0px' // 수치 변경
                   }}
                 >
                   <>
                     <img
-                      src={item.img}
+                      src={item.imageUrl}
                       alt=""
                       style={{
                         width: '160px',
@@ -432,13 +183,7 @@ function RecommendBanner() {
                       }}
                     />
 
-                    <div className="w-[160px] h-[40px] flex flex-col ml-2 relative">
-                      <div className=" text-[14px] font-[600] md:text-[16px]">{item.title}</div>
-                      <div className="flex justify-start items-center  font-semibold">
-                        <div className="mr-2 md:mr-4 font-bold">{item.price}</div>
-                        <div className="text-[#7A7A7A] line-through text-[12px] ">{item.discount}</div>
-                      </div>
-                    </div>
+                    <RecommendCard price={item.price} discount={item.discount} name={item.name} />
                   </>
                 </SwiperSlide>
               </div>

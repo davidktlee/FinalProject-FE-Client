@@ -2,27 +2,32 @@ import { useEffect, useState } from 'react'
 import Card from '../common/Card'
 import { CardContainerPropsType, ProductPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
-
-import { useGetProductsList } from './hooks/useProductLists'
+import { useGetProductsList, usePrefetchProductLists } from './hooks/useProductLists'
 import { getFavorite } from './hooks/useFavorite'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil'
 import { mainCartId } from '../../store/mainCart'
 import axios from 'axios'
-
-// Pagination 부분 수정해야 함
+import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
+import { ProductCount } from '../../store/product'
+import { AllProductCurrentPage } from './../../store/product'
 
 const CardContainer = ({ data }: CardContainerPropsType) => {
-  const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
-  const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
+  // const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
+  // const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
+  const allProductCurrentPage = useRecoilValue(AllProductCurrentPage)
   const [title, setTitle] = useState<string>('Best')
   const setFavoriteIds = useSetRecoilState(mainCartId)
+  const prefetchProductCount = useRecoilValue(ProductCount)
 
-  const [productLists, setProductLists] = useState<any>([])
-  const getProductList = async () => {
-    const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products')
-    setProductLists(res.data)
-  }
-  // const productLists = useGetProductsList(allProductCurrentPage)
+  const [isLoading, setIsLoading] = useState(false)
+  // const [productLists, setProductLists] = useState<any>([])
+  // const getProductList = async () => {
+  //   setIsLoading(true)
+  //   const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products')
+  //   setProductLists(res.data)
+  //   setIsLoading(false)
+  // }
+  const { data: productLists, isFetching: allProductFetching } = useGetProductsList(allProductCurrentPage)
 
   const useGetFavorite = async () => {
     const res = await getFavorite()
@@ -33,8 +38,9 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   }
 
   useEffect(() => {
+    
     useGetFavorite()
-    getProductList()
+    // getProductList()
   }, [])
 
   return (
@@ -47,7 +53,9 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
             </span>
           </div>
           <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
-            {productLists &&
+            {allProductFetching ? (
+              <ProductMainSkeleton count={prefetchProductCount} />
+            ) : (
               productLists
                 .slice(0, 9)
                 .map((item: ProductResponseType, idx: number) => (
@@ -62,13 +70,15 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                     graphicDiameter={item.graphicDiameter}
                     isFavorite={item.isFavorite}
                   />
-                ))}
+                ))
+            )}
           </div>
           {productLists[0] && (
             <Pagination
-              currentPage={allProductCurrentPage}
-              setCurrentPage={setAllProductCurrentPage}
+              // currentPage={allProductCurrentPage}
+              // setCurrentPage={setAllProductCurrentPage}
               allCount={productLists[0].totalCount}
+              divide={9}
             />
           )}
         </>
@@ -80,7 +90,9 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
             </span>
           </div>
           <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
-            {productLists &&
+            {isLoading ? (
+              <ProductNewSkeleton count={prefetchProductCount} />
+            ) : (
               productLists
                 .slice(0, 8)
                 .map((item: ProductPropsType, idx: number) => (
@@ -95,13 +107,15 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                     graphicDiameter={item.graphicDiameter}
                     isFavorite={item.isFavorite}
                   />
-                ))}
+                ))
+            )}
           </div>
           {productLists[0] && (
             <Pagination
-              currentPage={newProductCurrentPage}
-              setCurrentPage={setNewProductCurrentPage}
+              // currentPage={allProductCurrentPage}
+              // setCurrentPage={setAllProductCurrentPage}
               allCount={productLists[0].totalCount}
+              divide={8}
             />
           )}
         </>

@@ -10,5 +10,6 @@ export const queryKeys = {
   productDetails: 'productDetails',
   favorite: 'favorite',
   review: 'review',
-  coupon: 'coupon'
+  coupon: 'coupon',
+  recommend: 'recommend'
 }
