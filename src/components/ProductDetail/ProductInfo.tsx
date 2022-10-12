@@ -116,6 +116,7 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
       setDetailState({ ...detailState, degree: Number(value) })
       selectOptionMutate(detailState)
       console.log(detailState.degree)
+      // refresh 처리하기
     }
   }
   console.log(productByOptions)
@@ -334,14 +335,11 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
                   className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[200px] h-[30px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
                   disabled={optionComplete}
                 >
-                  <option value="">選択してください</option>
-                  {Object.values(productByOptions)
-                    .slice(0, 24)
-                    .map((item, index) => (
-                      <option value={item} key={index}>
-                        {item.degree} 재고: {item.stock}
-                      </option>
-                    ))}
+                  {productByOptions.degreeAndStockList?.map((item: any, index) => (
+                    <option key={index} value={item?.degree}>
+                      {item.degree} 재고: {item.stock}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

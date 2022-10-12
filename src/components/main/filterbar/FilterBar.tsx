@@ -16,8 +16,8 @@ const FilterBar = () => {
   const resetFilter = useResetRecoilState(filterState)
   const [filter, setFilter] = useRecoilState(filterState)
 
-  const requestFilterOptions = (filter: FilterValue) => {
-    const data = axiosInstance({
+  const requestFilterOptions = async (filter: FilterValue) => {
+    const data = await axiosInstance({
       method: 'POST',
       url: '/product/byOption',
       params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },

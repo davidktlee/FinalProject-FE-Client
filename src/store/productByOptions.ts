@@ -13,6 +13,7 @@ export interface ProductByOptionsType {
   series: string
   subMainImageUrlList: string[]
   degreeList: number[]
+  degreeAndStockList?: object[]
 }
 
 export const productByOptionsState = atom<ProductByOptionsType>({
