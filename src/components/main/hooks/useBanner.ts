@@ -4,8 +4,11 @@ import useToast from '../../common/toast/hooks/useToast'
 import { queryKeys } from '../../react-query/queryKeys'
 
 const getBanner = async (count: number) => {
-  const res = await axiosInstance({ url: `/image/banner?count=${count}` })
-  console.log(res)
+  const {
+    data: { data }
+  } = await axiosInstance({ url: `/image/banner?count=${count}` })
+  console.log(data)
+  return data
 }
 
 export const useGetBanner = (count: number) => {

@@ -20,7 +20,7 @@ const MainEvent = () => {
   //   getEvent()
   // }, [])
   const { data: eventList, isFetching } = useGetEvent()
-  console.log(eventList)
+  // console.log(eventList)
 
   return (
     <div>

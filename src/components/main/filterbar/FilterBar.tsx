@@ -14,6 +14,7 @@ import Refresh from '/assets/Refresh.svg'
 const FilterBar = () => {
   const { user } = useUser()
   const resetFilter = useResetRecoilState(filterState)
+  const resetFilteredProducts = useResetRecoilState(filteredProudcts)
   const [filter, setFilter] = useRecoilState(filterState)
   const setFilteredProducts = useSetRecoilState(filteredProudcts)
 
@@ -33,7 +34,7 @@ const FilterBar = () => {
     return data
   }
 
-  const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
+  const { mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
     mutationKey: 'filterOptions',
     onSuccess: ({ data }) => {
       console.log('필터가 적용되었습니다.')
@@ -49,9 +50,8 @@ const FilterBar = () => {
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const name = e.currentTarget.name
     const value = e.currentTarget.value.split(',').map(Number)
-    console.log(value)
     if (name === 'period') {
-      requstFilter(filter)
+      // requstFilter(filter)
       if (filter.periodState[1] === Number(value)) {
         setFilter({
           ...filter,
@@ -71,9 +71,18 @@ const FilterBar = () => {
       }
     }
   }
+  const handleFilter = (filter: FilterValue) => {
+    if (filter.periodState.length === 0) return
+    requstFilter(filter)
+  }
+
+  useEffect(() => {
+    handleFilter(filter)
+  }, [filter])
 
   const refreshHandler = () => {
     resetFilter()
+    resetFilteredProducts()
   }
 
   return (

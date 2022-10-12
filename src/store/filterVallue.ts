@@ -9,6 +9,11 @@ export interface FilterValue {
   featureState: string[]
 }
 
+export interface FilteredProductsTypes {
+  productData: object[]
+  totalCount: number
+}
+
 export const filterState = atom<FilterValue>({
   key: 'filterValues',
   default: {
@@ -20,7 +25,10 @@ export const filterState = atom<FilterValue>({
   }
 })
 
-export const filteredProudcts = atom({
-  key: 'filteredProducts',
-  default: []
+export const filteredProudcts = atom<FilteredProductsTypes>({
+  key: 'filteredProudct',
+  default: {
+    productData: [],
+    totalCount: 0
+  }
 })
