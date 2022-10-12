@@ -1,1 +1,1 @@
-export const baseUrl = 'http://3.37.227.119:8080'
+export const baseUrl = 'https://iko-lenssis.click'

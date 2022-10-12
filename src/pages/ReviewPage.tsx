@@ -10,7 +10,7 @@ const ReviewPage = () => {
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="max-w-[1180px] container pt-44 pb-10 mx-auto ">
-          <div className="lg:w-full mx-auto flex-col flex-wrap shadow-basic rounded-[10px] p-8 xs-max:w-[95%] bg-white">
+          <div className="lg:w-full mx-auto flex-col flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] bg-white">
             <div className="text-center mt-4 mb-6 font-bold text-[20px] xs-max:pb-20 pb-20">리뷰</div>
             <select
               name="상품명"

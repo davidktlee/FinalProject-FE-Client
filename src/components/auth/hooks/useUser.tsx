@@ -8,16 +8,14 @@ import { Token } from '../types/userTypes'
 import { User, userState } from '../../../store/user'
 import { useRecoilState } from 'recoil'
 
-
-
 const getUser = async (token: Token | null): Promise<User | null> => {
   if (!token) return null
-  
+
   const { data }: AxiosResponse<User> = await axiosInstance.get('/member/info', {
-    headers: getJWTToken(token),
+    headers: getJWTToken(token)
   })
   console.log('user있음')
-  console.log('getUser - data',data)
+  console.log('getUser - data', data)
   return data
 }
 
@@ -25,27 +23,30 @@ interface UseUser {
   user: User | null | undefined
   updateUser: (user: Token) => void
   clearUser: () => void
-  isLoading:boolean
+  isLoading: boolean
 }
 
 export const useUser = (): UseUser => {
   const [currentUser, setCurrentUser] = useRecoilState(userState)
   const queryClient = useQueryClient()
   const token = getStoredToken()
-  
- 
-  const { data: user,isLoading,isError } = useQuery([queryKeys.user], () => getUser(token), {
+
+  const {
+    data: user,
+    isLoading,
+    isError
+  } = useQuery([queryKeys.user], () => getUser(token), {
     onSuccess: (received: User | null) => {
       if (received) {
         setCurrentUser(received)
         return received
-      }else{
+      } else {
         // clearStoredToken();
         // clearUser()
       }
     },
     onError: () => console.log('queryError'),
-    refetchOnWindowFocus:false
+    refetchOnWindowFocus: false
   })
 
   const updateUser = (newToken: Token): void => {
@@ -57,7 +58,7 @@ export const useUser = (): UseUser => {
     // queryClient.setQueryData(queryKeys.user, null)
     queryClient.removeQueries([queryKeys.user, queryKeys.token])
   }
-  
+
   return {
     user,
     updateUser,

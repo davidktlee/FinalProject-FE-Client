@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { filterState } from '../../../store/filterVallue'
+import { filterState, FilterValue } from '../../../store/filterVallue'
 import ReactTooltip from 'react-tooltip'
 import { graphicDiameter } from '../../../constants/filterData'
 import { contentTypes } from './FilterButtonFunction'
+import { axiosInstance } from '../../axiosinstance'
+import { useMutation } from 'react-query'
+import { useUser } from '../../auth/hooks/useUser'
 
 type filterButtonTypes = {
   contents: string[] | number[] | any[]
@@ -16,17 +19,41 @@ type filterButtonTypes = {
 }
 
 const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes) => {
+  const { user } = useUser()
   const [filter, setFilter] = useRecoilState(filterState)
+  const requestFilterOptions = (filter: FilterValue) => {
+    const data = axiosInstance({
+      method: 'POST',
+      url: '/product/byOption',
+      params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },
+      data: {
+        colorCode: filter.colorState,
+        feature: filter.featureState,
+        graphicDiameter: filter.graphicDiameterState,
+        period: filter.periodState,
+        series: filter.seriesState
+      }
+    })
+    console.log(data)
+    return data
+  }
+
+  const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
+    mutationKey: 'filterOptions',
+    onSuccess: (data) => {
+      console.log('필터가 적용되었습니다.')
+      console.log(data)
+    },
+    onError: (error) => {
+      console.log('필터가 적용에 실패했습니다.')
+      console.log(error)
+    }
+  })
 
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {
-      case 'duration':
-        if (typeof content.value === 'string') {
-          setFilter({ ...filter, durationState: content.value })
-        }
-        console.log(filter)
-        break
       case 'graphicDiameter':
+        requstFilter(filter)
         if (typeof content.value === 'number') {
           if (filter.graphicDiameterState.includes(content.value)) {
             setFilter({
@@ -45,11 +72,13 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         console.log(filter.graphicDiameterState)
         break
       case 'color':
+        requstFilter(filter)
         if (typeof content.value === 'string' || typeof content.value === 'number') return
-        if (filter.colorState === content.value) {
+
+        if (filter.colorState.includes(content.value[0])) {
           setFilter({
             ...filter,
-            colorState: filter.colorState.filter((item: string) => item !== content.value)
+            colorState: []
           })
         } else {
           setFilter({
@@ -59,6 +88,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         }
         console.log(filter.colorState)
       case 'series':
+        requstFilter(filter)
         if (typeof content.value !== 'string') return
         if (filter.seriesState.includes(content.value)) {
           setFilter({
@@ -73,6 +103,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         }
         console.log(filter.seriesState)
       case 'feature':
+        requstFilter(filter)
         if (typeof content.value !== 'string') return
         if (filter.featureState.includes(content.value)) {
           setFilter({
@@ -107,17 +138,14 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             className={`
           ${w} ${h} ${px} ${py} ${gapX} ${gapY}
           justify-center
-          flex font-medium border-solid box-border leading-6 border-[1px] rounded-[20px] text-center text-[12px]  
-              ${
-                filter.durationState === content.value ? 'bg-lenssisDark text-white border-lenssisDark' : ''
-              } ${
-              filter.graphicDiameterState.includes(content.value)
-                ? 'bg-lenssisDark text-white border-lenssisDark'
-                : ''
-            } ${
+          flex font-medium border-solid box-border leading-6 border-[1px] rounded-[20px] text-center text-[12px]  ${
+            filter.graphicDiameterState.includes(content.value)
+              ? 'bg-lenssisDark text-white border-lenssisDark'
+              : ''
+          } ${
               filter.seriesState.includes(content.value) ? 'bg-lenssisDark text-white border-lenssisDark' : ''
             } ${
-              filter.colorState.includes(content.color)
+              filter.colorState.includes(content.value[0])
                 ? 'border-solid box-border border-[2px] border-lenssisDark'
                 : 'border-lenssisStroke border-[1px]'
             } ${

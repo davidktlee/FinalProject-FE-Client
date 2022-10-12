@@ -4,7 +4,7 @@ const ProductBanner = () => {
   return (
     <div className="xs-max:hidden">
       <section className="text-gray-600 body-font">
-        <div className="container py-24 mx-auto flex flex-wrap">
+        <div className="container max-w-[1180px] py-24 mx-auto flex flex-wrap">
           <div className="flex flex-wrap w-full">
             <div className="md:p-2 p-1 w-1/3">
               <img
