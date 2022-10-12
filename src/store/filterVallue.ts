@@ -19,3 +19,8 @@ export const filterState = atom<FilterValue>({
     featureState: []
   }
 })
+
+export const filteredProudcts = atom({
+  key: 'filteredProducts',
+  default: []
+})
