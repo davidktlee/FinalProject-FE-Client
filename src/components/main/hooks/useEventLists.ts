@@ -1,14 +1,15 @@
 import { AxiosResponse } from 'axios'
 import { useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
+import useToast from '../../common/toast/hooks/useToast'
 import { queryKeys } from '../../react-query/queryKeys'
 
 export interface EventDetailResponseType {
   eventTitle: number
-  description: String
-  startTime: Date
-  endTime: Date
-  imageUrl: String[]
+  description: string
+  startTime: string
+  endTime: string
+  imageUrl: string
 }
 export interface InEventMainList {
   eventId: number
@@ -28,6 +29,7 @@ export interface EventResponseType {
 export const getEvents = async (): Promise<EventResponseType> => {
   const { data }: AxiosResponse<EventResponseType> = await axiosInstance({
     url: '/event/main',
+    // url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/event'
     headers: {
       ContentType: 'application/json'
     }
@@ -36,11 +38,21 @@ export const getEvents = async (): Promise<EventResponseType> => {
   return data
 }
 export const useGetEvent = () => {
-  const { data } = useQuery([queryKeys.allEvent], () => getEvents(), {
+  const { fireToast } = useToast()
+  const { data, isFetching } = useQuery([queryKeys.allEvent], () => getEvents(), {
     refetchOnWindowFocus: false,
-    staleTime: 900000
+    staleTime: 900000,
+    onError: () => {
+      fireToast({
+        id: 'getEventFailed',
+        message: '이벤트 불러오는데 실패하였습니다. 다시 시도해주세요.',
+        position: 'bottom',
+        timer: 2000,
+        type: 'failed'
+      })
+    }
   })
-  return data
+  return { data, isFetching }
 }
 // export const prefetchEvent = () => {
 //   const queryClient = useQueryClient()
@@ -48,15 +60,27 @@ export const useGetEvent = () => {
 // }
 
 const detailEvent = async (id: number): Promise<EventDetailResponseType[]> => {
-  const { data }: AxiosResponse<EventDetailResponseType[]> = await axiosInstance({
+  const {
+    data: { data }
+  } = await axiosInstance({
     url: `/event/details?eventId=${id}`
   })
   return data
 }
-export const useGetDetailEvent = (id: number): EventDetailResponseType[] => {
+export const useGetDetailEvent = (id: number) => {
+  const { fireToast } = useToast()
   const fallback: [] = []
-  const { data = fallback } = useQuery([queryKeys.event, id], () => detailEvent(id), {
-    refetchOnWindowFocus: false
+  const { data = fallback, isFetching } = useQuery([queryKeys.event, id], () => detailEvent(id), {
+    refetchOnWindowFocus: false,
+    onError: () => {
+      fireToast({
+        id: 'getDetailEventFailed',
+        message: '이벤트 상세정보를 가져오는데 실패했습니다. 다시 시도해주세요.',
+        position: 'bottom',
+        timer: 2000,
+        type: 'failed'
+      })
+    }
   })
-  return data
+  return { data, isFetching }
 }
