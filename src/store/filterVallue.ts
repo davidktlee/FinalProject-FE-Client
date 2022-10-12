@@ -1,8 +1,8 @@
 import { atom } from 'recoil'
 
-interface FilterValue {
+export interface FilterValue {
   // [index: string]: string | number[] | string[]
-  durationState: string
+  periodState: string[]
   graphicDiameterState: number[]
   colorState: string[]
   seriesState: string[]
@@ -12,7 +12,7 @@ interface FilterValue {
 export const filterState = atom<FilterValue>({
   key: 'filterValues',
   default: {
-    durationState: 'all',
+    periodState: [],
     graphicDiameterState: [],
     colorState: [],
     seriesState: [],

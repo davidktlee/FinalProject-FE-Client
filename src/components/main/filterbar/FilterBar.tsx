@@ -15,36 +15,31 @@ const FilterBar = () => {
   const [filter, setFilter] = useRecoilState(filterState)
 
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setFilter({ ...filter, durationState: e.currentTarget.value })
-    console.log(filter.durationState)
+    const name = e.currentTarget.name
+    const value = e.currentTarget.value
+    if (name === 'period') {
+      if (filter.periodState[0] === value) {
+        setFilter({
+          ...filter,
+          periodState: filter.periodState.filter((item: string) => item !== value)
+        })
+      } else if (filter.periodState[0] !== value) {
+        setFilter({
+          ...filter,
+          periodState: value ? [value] : []
+        })
+      } else {
+        setFilter({
+          ...filter,
+          periodState: [...filter.periodState, value]
+        })
+      }
+    }
+    console.log(filter.periodState)
   }
 
   const refreshHandler = () => {
     resetFilter()
-  }
-
-  const requestFilter = async () => {
-    const res = await axiosInstance({
-      method: 'POST',
-      url: '/main/productOption',
-      data: {
-        colorCode: ['#00FF00'],
-        feature: [],
-        graphicDiameter: [],
-        series: ['마마무'],
-        period: []
-      }
-    })
-    console.log(res)
-    return res
-  }
-  const getProduct = async () => {
-    const res = await axiosInstance({
-      method: 'GET',
-      url: '/main/product?page=2'
-    })
-    console.log(res)
-    return res
   }
 
   useEffect(() => {
@@ -64,29 +59,34 @@ const FilterBar = () => {
         <BoxLayout title="사용기간">
           <div className="flex flex-col py-3 gap-2 text-lenssisDeepGray">
             <button
+              name="period"
               onClick={handleFilterValue}
-              value="all"
+              // value=""
               className={`${
-                filter.durationState === 'all' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                filter.periodState.length === 0 || filter.periodState[0] === ''
+                  ? 'bg-lenssisDark text-white border-lenssisDark'
+                  : ''
               } border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
             >
               상품 전체
             </button>
             <div className="flex justify-between gap-2">
               <button
+                name="period"
                 onClick={handleFilterValue}
                 value="monthly"
                 className={`${
-                  filter.durationState === 'monthly' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                  filter.periodState[0] === 'monthly' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 먼슬리
               </button>
               <button
+                name="period"
                 onClick={handleFilterValue}
                 value="oneDay"
                 className={`${
-                  filter.durationState === 'oneDay' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                  filter.periodState[0] === 'oneDay' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 원데이

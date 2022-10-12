@@ -1,6 +1,6 @@
 import React, { RefObject } from 'react'
 import MobileBoxLayout from '../common/MobileBoxLayout'
-import { graphicDiameter, series, features, duration, colors } from '../../../../constants/filterData'
+import { graphicDiameter, series, features, period, colors } from '../../../../constants/filterData'
 import Refresh from '/assets/Refresh.svg'
 import { filterState } from '../../../../store/filterVallue'
 import { useResetRecoilState } from 'recoil'
@@ -12,7 +12,7 @@ const MobileFilter = () => {
   }
   return (
     <div className="bg-[#fff]">
-      <MobileBoxLayout title="사용기간" contents={duration} py={'py-[3px]'} w={'w-[80px]'} />
+      <MobileBoxLayout title="사용기간" contents={period} py={'py-[3px]'} w={'w-[80px]'} />
       <MobileBoxLayout
         title="그래픽 직경"
         contents={graphicDiameter}

@@ -14,5 +14,6 @@ export const queryKeys = {
   productDetailsPeriod: 'productDetailsPeriod',
   productDetailsColor: 'productDetailsColor',
   productDetailsGraphic: 'productDetailsGraphic',
-  productDetailsAll: 'productDetailsAll'
+  productDetailsAll: 'productDetailsAll',
+  filterList: 'filterList'
 }

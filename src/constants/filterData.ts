@@ -1,16 +1,16 @@
-export const duration = [
+export const period = [
   {
-    type: 'duration',
+    type: 'period',
     name: 'All',
     value: 'all'
   },
   {
-    type: 'duration',
+    type: 'period',
     name: '1DAY',
     value: 'oneDay'
   },
   {
-    type: 'duration',
+    type: 'period',
     name: '1MONTH',
     value: 'monthly'
   }
