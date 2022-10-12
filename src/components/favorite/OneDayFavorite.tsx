@@ -19,6 +19,7 @@ const OneDayFavorite = () => {
             price={item.productInfo.price}
             discount={item.productInfo.discount}
             graphicDiameter={item.graphicDiameter}
+            isFavorite={1}
           />
         ))}
       </div>

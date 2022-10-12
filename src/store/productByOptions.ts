@@ -16,6 +16,19 @@ export interface ProductByOptionsType {
   degreeAndStockList?: object[]
 }
 
+export interface FinalProduct {
+  color: string
+  detailsPrice: number
+  discount: number
+  imageUrlList: {
+    imageType: number
+    imageUrl: string
+  }[]
+  isFavorite: number
+  productDetailsId: number
+  productName: string
+}
+
 export const productByOptionsState = atom<ProductByOptionsType>({
   key: 'productByOptionsState',
   default: {
@@ -31,5 +44,18 @@ export const productByOptionsState = atom<ProductByOptionsType>({
     series: '',
     subMainImageUrlList: [],
     degreeList: []
+  }
+})
+
+export const finalProductState = atom<FinalProduct>({
+  key: 'finalProduct',
+  default: {
+    color: '',
+    detailsPrice: 0,
+    discount: 0,
+    imageUrlList: [],
+    isFavorite: 0,
+    productDetailsId: 0,
+    productName: ''
   }
 })

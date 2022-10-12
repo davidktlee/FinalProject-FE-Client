@@ -1,13 +1,12 @@
 import React from 'react'
+import { FinalProduct } from '../../store/productByOptions'
 
-const ProductDescripton = () => {
+const ProductDescripton = ({ finalProduct }: any) => {
   return (
     <div>
-      <img
-        className="mx-auto"
-        src="https://user-images.githubusercontent.com/90392240/190920313-0030c7c6-c0b6-40e9-b8d0-a3ea52d8217b.png"
-        alt=""
-      />
+      {finalProduct?.imageUrlList?.slice(4, 6).map((item: any) => (
+        <img key={item.imageUrl} className="mx-auto" src={item.imageUrl} />
+      ))}
     </div>
   )
 }

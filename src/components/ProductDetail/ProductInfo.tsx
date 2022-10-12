@@ -11,16 +11,21 @@ import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { productDetailsState } from '../../store/productDetails'
 import { useMutation } from 'react-query'
-import { productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
+import { finalProductState, productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
 import { ProductDetailsType } from '../../store/productDetails'
+import { useAddCart } from '../cart/hooks/useCart'
+import { queryKeys } from '../react-query/queryKeys'
 
 interface PropsType {
   isClose?: boolean
   productDetails?: ProductDetailResponseType
   productId: number
+  memberId?: number
 }
 
-const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
+const token = getStoredToken()
+
+const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType) => {
   const [commaPrice, setCommaPrice] = useState({
     price: '',
     discount: ''
@@ -28,10 +33,12 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
   const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
   const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
   const [optionComplete, setOptionComplete] = useState<boolean>(true)
+  const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
+  const { addCartMutate } = useAddCart()
 
   const getProductByOptions = async (detailState: ProductDetailsType) => {
     const { data } = await axiosInstance({
-      method: detailState.degree !== 0 ? 'POST' : 'GET',
+      method: 'GET',
       url:
         detailState.colorCode == ''
           ? '/productDetails/byPeriodOption'
@@ -39,14 +46,14 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
           ? '/productDetails/byColorCodeOption'
           : detailState.degree == 0
           ? '/productDetails/byGraphicOption'
-          : '/productDetails/byDetailsOption',
+          : '',
       params: {
         productId: productId,
         period: detailState.period !== 0 ? detailState.period : undefined,
         colorCode: detailState.colorCode !== '' ? detailState.colorCode : undefined,
-        graphicDiameter: detailState.graphicDiameter !== 0 ? detailState.graphicDiameter : undefined,
-        degree: detailState.degree !== 0 ? detailState.degree : undefined
-      }
+        graphicDiameter: detailState.graphicDiameter !== 0 ? detailState.graphicDiameter : undefined
+      },
+      headers: getJWTToken(token)
     })
     console.log(data)
     return data
@@ -66,7 +73,43 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
     }
   )
 
-  const optionHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const postProductByOptions = async (detailState: ProductDetailsType) => {
+    const { data } = await axiosInstance({
+      method: 'POST',
+      url: '/productDetails/byDetailsOption',
+      params: {
+        memberId: memberId
+      },
+      data: {
+        colorCode: detailState.colorCode,
+        degree: detailState.degree,
+        graphicDiameter: detailState.graphicDiameter,
+        period: detailState.period,
+        productId: productId
+      },
+      headers: getJWTToken(token)
+    })
+    console.log(data)
+    return data
+  }
+
+  const { mutate: postAllOptions } = useMutation(
+    (detailState: ProductDetailsType) => postProductByOptions(detailState),
+    {
+      mutationKey: ['postAllOptions'],
+      onSuccess: (data) => {
+        console.log(data.data)
+        setFinalProduct(data.data)
+      },
+      onError: (error) => {
+        console.log(error)
+      }
+    }
+  )
+
+  const optionHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.currentTarget
 
     if (name === 'period') {
@@ -114,12 +157,16 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
       console.log(detailState.graphicDiameter)
     } else if (name === 'degree') {
       setDetailState({ ...detailState, degree: Number(value) })
-      selectOptionMutate(detailState)
+      postAllOptions(detailState)
       console.log(detailState.degree)
       // refresh 처리하기
     }
   }
-  console.log(productByOptions)
+
+  const addCartHandler = () => {
+    addCartMutate(finalProduct.productDetailsId)
+    console.log('제품상세 장바구니 버튼 클릭!')
+  }
 
   const setModalState = useSetRecoilState(mainCartModal)
 
@@ -141,6 +188,10 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
 
     addFavor(productId)
   }
+
+  useEffect(() => {
+    console.log(finalProduct)
+  }, [finalProduct])
 
   useEffect(() => {
     setOptionComplete(
@@ -168,20 +219,35 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
             <img
               alt="ecommerce"
               className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px]"
-              src={productDetails?.mainImageUrl}
+              src={
+                finalProduct.imageUrlList.length > 1
+                  ? finalProduct.imageUrlList[0].imageUrl
+                  : productDetails?.mainImageUrl
+              }
               width="465"
               height="460"
               onError={(e) => handleImgError(e)}
             />
             <div className="overflow-auto flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
-              {productDetails?.subMainImageUrlList?.map((image) => (
-                <img
-                  key={image}
-                  onError={(e) => handleImgError(e)}
-                  className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                  src={image}
-                />
-              ))}
+              {finalProduct.imageUrlList.length > 1
+                ? finalProduct.imageUrlList
+                    .slice(1, 4)
+                    .map((image) => (
+                      <img
+                        key={image.imageUrl}
+                        alt="ecommerce"
+                        className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
+                        src={image.imageUrl}
+                      />
+                    ))
+                : productDetails?.subMainImageUrlList?.map((image) => (
+                    <img
+                      key={image}
+                      onError={(e) => handleImgError(e)}
+                      className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
+                      src={image}
+                    />
+                  ))}
             </div>
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-2 mt-6 lg:mt-0">
@@ -224,30 +290,21 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
               <div className="delivery flex my-2">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">사용 기간</p>
                 <div className="flex flex-1 gap-2">
-                  <button
-                    name="period"
-                    value={1}
-                    onClick={(e) => optionHandler(e)}
-                    className={`${
-                      detailState.period === 1
-                        ? 'bg-lenssisDark text-white border-lenssisDark'
-                        : 'text-lenssisDeepGray border-lenssisStroke border-[1px]'
-                    } "border-solid rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
-                  >
-                    원데이
-                  </button>
-                  <button
-                    name="period"
-                    value={30}
-                    onClick={(e) => optionHandler(e)}
-                    className={`${
-                      detailState.period === 30
-                        ? 'bg-lenssisDark text-white border-lenssisDark'
-                        : 'text-lenssisDeepGray'
-                    } "border-solid border-lenssisStroke border-[1px] rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
-                  >
-                    먼슬리
-                  </button>
+                  {productDetails?.periodList?.map((period) => (
+                    <button
+                      key={period}
+                      name="period"
+                      value={period}
+                      onClick={(e) => optionHandler(e)}
+                      className={`${
+                        detailState.period === period
+                          ? 'bg-lenssisDark text-white border-lenssisDark'
+                          : 'text-lenssisDeepGray border-lenssisStroke border-[1px]'
+                      } "border-solid rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
+                    >
+                      원데이
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="flex ">
@@ -334,6 +391,7 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
                   name="degree"
                   className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[200px] h-[30px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
                   disabled={optionComplete}
+                  onChange={(e) => optionHandler(e)}
                 >
                   {productByOptions.degreeAndStockList?.map((item: any, index) => (
                     <option key={index} value={item?.degree}>
@@ -349,7 +407,10 @@ const ProductInfo = ({ isClose, productDetails, productId }: PropsType) => {
             </div>
             <div className="divder h-[2px] bg-slate-700 my-2"></div>
             <div className="flex gap-4 xs-max:flex-col py-2">
-              <button className="w-1/2 cursor-pointer bg-white text-black text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded xs-max:w-full">
+              <button
+                onClick={addCartHandler}
+                className="w-1/2 cursor-pointer bg-white text-black text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded xs-max:w-full"
+              >
                 장바구니
               </button>
               <button className="w-1/2 cursor-pointer text-white bg-lenssisDark text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full">
