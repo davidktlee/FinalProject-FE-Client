@@ -5,6 +5,8 @@ import ReactTooltip from 'react-tooltip'
 import { graphicDiameter } from '../../../constants/filterData'
 import { contentTypes } from './FilterButtonFunction'
 import { axiosInstance } from '../../axiosinstance'
+import { useMutation } from 'react-query'
+import { useUser } from '../../auth/hooks/useUser'
 
 type filterButtonTypes = {
   contents: string[] | number[] | any[]
@@ -17,12 +19,13 @@ type filterButtonTypes = {
 }
 
 const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes) => {
+  const { user } = useUser()
   const [filter, setFilter] = useRecoilState(filterState)
-
   const requestFilterOptions = (filter: FilterValue) => {
     const data = axiosInstance({
       method: 'POST',
       url: '/product/byOption',
+      params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },
       data: {
         colorCode: filter.colorState,
         feature: filter.featureState,
@@ -31,13 +34,26 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         series: filter.seriesState
       }
     })
+    console.log(data)
+    return data
   }
 
-  // const data = useMutation()
+  const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
+    mutationKey: 'filterOptions',
+    onSuccess: (data) => {
+      console.log('필터가 적용되었습니다.')
+      console.log(data)
+    },
+    onError: (error) => {
+      console.log('필터가 적용에 실패했습니다.')
+      console.log(error)
+    }
+  })
 
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {
       case 'graphicDiameter':
+        requstFilter(filter)
         if (typeof content.value === 'number') {
           if (filter.graphicDiameterState.includes(content.value)) {
             setFilter({
@@ -56,6 +72,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         console.log(filter.graphicDiameterState)
         break
       case 'color':
+        requstFilter(filter)
         if (typeof content.value === 'string' || typeof content.value === 'number') return
 
         if (filter.colorState.includes(content.value[0])) {
@@ -71,6 +88,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         }
         console.log(filter.colorState)
       case 'series':
+        requstFilter(filter)
         if (typeof content.value !== 'string') return
         if (filter.seriesState.includes(content.value)) {
           setFilter({
@@ -85,6 +103,7 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         }
         console.log(filter.seriesState)
       case 'feature':
+        requstFilter(filter)
         if (typeof content.value !== 'string') return
         if (filter.featureState.includes(content.value)) {
           setFilter({

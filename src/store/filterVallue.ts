@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 
 export interface FilterValue {
   // [index: string]: string | number[] | string[]
-  periodState: string[]
+  periodState: number[]
   graphicDiameterState: number[]
   colorState: string[]
   seriesState: string[]

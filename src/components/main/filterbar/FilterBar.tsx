@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
-import { filterState } from '../../../store/filterVallue'
+import { filterState, FilterValue } from '../../../store/filterVallue'
+import { useUser } from '../../auth/hooks/useUser'
 import { axiosInstance } from '../../axiosinstance'
 import { useGetProductsList } from '../hooks/useProductLists'
 import BoxLayout from './common/BoxLayout'
@@ -10,42 +12,62 @@ import FilterButtons from './FilterButtons'
 import Refresh from '/assets/Refresh.svg'
 
 const FilterBar = () => {
+  const { user } = useUser()
   const resetFilter = useResetRecoilState(filterState)
-
   const [filter, setFilter] = useRecoilState(filterState)
+
+  const requestFilterOptions = (filter: FilterValue) => {
+    const data = axiosInstance({
+      method: 'POST',
+      url: '/product/byOption',
+      params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },
+      data: {
+        colorCode: filter.colorState,
+        feature: filter.featureState,
+        graphicDiameter: filter.graphicDiameterState,
+        period: filter.periodState,
+        series: filter.seriesState
+      }
+    })
+    console.log(data)
+    return data
+  }
+
+  const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
+    mutationKey: 'filterOptions',
+    onSuccess: (data) => {
+      console.log('필터가 적용되었습니다.')
+      console.log(data)
+    },
+    onError: (error) => {
+      console.log('필터가 적용에 실패했습니다.')
+      console.log(error)
+    }
+  })
 
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const name = e.currentTarget.name
-    const value = e.currentTarget.value
+    const value = e.currentTarget.value.split(',').map(Number)
+    console.log(value)
     if (name === 'period') {
-      if (filter.periodState[0] === value) {
+      requstFilter(filter)
+      if (filter.periodState[0] === Number(value)) {
         setFilter({
           ...filter,
-          periodState: filter.periodState.filter((item: string) => item !== value)
-        })
-      } else if (filter.periodState[0] !== value) {
-        setFilter({
-          ...filter,
-          periodState: value ? [value] : []
+          periodState: filter.periodState.filter((item) => item !== Number(value))
         })
       } else {
         setFilter({
           ...filter,
-          periodState: [...filter.periodState, value]
+          periodState: [...value].length === 2 ? [...value.map(Number)] : [Number(value)]
         })
       }
     }
-    console.log(filter.periodState)
   }
 
   const refreshHandler = () => {
     resetFilter()
   }
-
-  useEffect(() => {
-    // requestFilter()
-    // getProduct()
-  }, [])
 
   return (
     <div className="bg-[#fff] rounded-[10px] h-[1180px] w-[280px] px-[18px] py-[20px] shadow-basic">
@@ -61,22 +83,22 @@ const FilterBar = () => {
             <button
               name="period"
               onClick={handleFilterValue}
-              // value=""
+              value={['1', '30']}
               className={`${
-                filter.periodState.length === 0 || filter.periodState[0] === ''
+                filter.periodState.length === 0 || filter.periodState.length === 2
                   ? 'bg-lenssisDark text-white border-lenssisDark'
                   : ''
               } border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
             >
-              상품 전체
+              상품 전체{filter.periodState}
             </button>
             <div className="flex justify-between gap-2">
               <button
                 name="period"
                 onClick={handleFilterValue}
-                value="monthly"
+                value={30}
                 className={`${
-                  filter.periodState[0] === 'monthly' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                  filter.periodState[0] === 30 ? 'bg-lenssisDark text-white border-lenssisDark' : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 먼슬리
@@ -84,9 +106,11 @@ const FilterBar = () => {
               <button
                 name="period"
                 onClick={handleFilterValue}
-                value="oneDay"
+                value={1}
                 className={`${
-                  filter.periodState[0] === 'oneDay' ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                  filter.periodState[0] === 1 && filter.periodState.length === 1
+                    ? 'bg-lenssisDark text-white border-lenssisDark'
+                    : ''
                 } cursor-pointer flex-1 border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1`}
               >
                 원데이
