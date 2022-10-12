@@ -6,15 +6,11 @@ import CardContainer from '../components/main/CardContainer'
 import NoticePage from './NoticePage'
 import MainReview from '../components/review/MainReview'
 import FilterBar from '../components/main/filterbar/FilterBar'
-
 import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
-
-import MobileBoxLayout from '../components/main/filterbar/common/MobileBoxLayout'
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState } from 'recoil'
 import { filterState } from '../store/filterOpen'
-import { useNavigate } from 'react-router-dom'
 import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
 
