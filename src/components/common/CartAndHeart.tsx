@@ -51,7 +51,7 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
 
   return (
     <div className={`flex justify-center items-center  `}>
-      <div className={`mr-2 cursor-pointer hover:animate-spin relative`} onClick={ClickCart}>
+      <div className={`mr-2 cursor-pointer hover:animate-click relative`} onClick={ClickCart}>
         <svg
           width={`${windowWidth < 440 ? 20 : 28}`}
           height={`${windowWidth < 440 ? 20 : 28}`}
