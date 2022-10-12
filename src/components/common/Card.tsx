@@ -112,11 +112,7 @@ const Card = ({
         </span>
         <div className="flex flex-col ">
           <div className="flex items-center">
-<<<<<<< HEAD
-            {colorAndImage.map((eachColor: ColorAndImage, idx: number) => (
-=======
             {colorAndImage.slice(0, 3).map((eachColor: ColorAndImage, idx: number) => (
->>>>>>> f2cb79c72edb52b1d2f2b23a8a2df1b3b29648ec
               <div
                 key={idx}
                 className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
