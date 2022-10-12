@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
 import { useUser } from '../auth/hooks/useUser'
@@ -7,6 +7,7 @@ import Card from '../common/Card'
 import CardTemplate from '../common/ui/CardTemplate'
 import CheckBox from '../common/ui/CheckBox'
 import PageLayout from '../common/ui/PageLayout'
+import { getStoredToken } from '../local-storage/userStorage'
 import { useGetProductRandom } from '../main/hooks/useProductLists'
 import CartItem from './CartItem'
 import useCart, { CartItemsType } from './hooks/useCart'
@@ -26,6 +27,7 @@ const Cart = () => {
   const [shippingFee, setShippingFee] = useRecoilState(shippingFeeState)
   const [products, setProducts] = useState<CartItemsType[]>([])
   const [isNotSelected, setIsNowSelected] = useState(false)
+  const navigate = useNavigate()
   // 체크박스를 클릭한다.
   // isTotalChecked 또는 isChecked가 true이면 해당 아이템이 담긴다.
   // isTotalChecked 또는 isChecked가 false이면 해당 아이템이 빠진다.
@@ -56,6 +58,14 @@ const Cart = () => {
   //   const token = getStoredToken()
   //   refreshToken(token)
   // }, [])
+
+
+  useEffect(() => {
+    const token = getStoredToken();
+    if(!token){
+      navigate('/signin')
+    }
+  }, [])
 
   useEffect(() => {
     setProducts(cartItems)
