@@ -80,8 +80,8 @@ function EventPage() {
           <div className="relative flex justify-center items-center">
             {eventList?.data?.totalCount && (
               <Pagination
-                // currentPage={currentPage}
-                // setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
                 allCount={eventList.data.totalCount}
                 divide={8}
               />

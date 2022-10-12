@@ -45,15 +45,31 @@ export const useGetProductsList = (pageNo: number) => {
 }
 
 export const usePrefetchProductLists = (currentPage: number, count: number) => {
-  const setCount = useSetRecoilState(ProductCount)
   const queryClient = useQueryClient()
   const maxPage = Math.ceil(count / 10)
   if (maxPage > currentPage) {
     const nextPage = currentPage + 1
     queryClient.prefetchQuery([queryKeys.product, nextPage], () => getProductsList(nextPage))
-    const res = queryClient.getQueryCache()
-    // console.log(res)
-    // 캐시의 데이터 갯수 가져와서 set 해주기
-    setCount(9)
   }
+}
+
+const getNewProduct = async () => {
+  const {
+    data: { data }
+  } = await axiosInstance({
+    url: `/product/newProduct?memberId=0`,
+    // url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products',
+    headers: {
+      ContentType: 'application/json'
+    }
+  })
+  console.log(data)
+  return data
+}
+export const useGetNewProduct = () => {
+  const fallback: [] = []
+  const { data = fallback, isFetching } = useQuery(queryKeys.newProduct, getNewProduct, {
+    refetchOnWindowFocus: false
+  })
+  return { data, isFetching }
 }
