@@ -9,14 +9,17 @@ import FilterBar from '../components/main/filterbar/FilterBar'
 import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterState } from '../store/filterOpen'
 import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
+import { filteredProudcts } from '../store/filterVallue'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
+  const [title, setTitle] = useState<any>('Best')
+  const filteredProducts = useRecoilValue(filteredProudcts)
 
   const MobileFilterRef = useRef<HTMLDivElement>(null)
 
@@ -26,6 +29,7 @@ const Main = () => {
       setFilterOpen(false)
     }
   }
+
   const toColorTest = () => {
     window.location.href =
       'https://www.lenssiscolor.com/?utm_source=homapage_main&utm_medium=personal+color&utm_campaign=personal+color'
@@ -33,6 +37,20 @@ const Main = () => {
   const toTopHandler = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  // 메인에서 filterbar를 클릭했을 때 데이터 변경하는 함수입니다.
+  const changeTitle = (filteredProducts: any) => {
+    if (filteredProducts.productData.length === 0) {
+      setTitle(() => 'Best')
+    } else {
+      setTitle(() => 'Products')
+    }
+  }
+
+  useEffect(() => {
+    changeTitle(filteredProducts)
+  }, [filteredProducts, title])
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
@@ -63,7 +81,7 @@ const Main = () => {
             )}
             {/*메인에서 상품 리스트 */}
             <div className="w-[880px] xs-max:w-[95%] xs-max:mx-auto  border-none rounded-md shadow-basic bg-white">
-              <CardContainer data="Best" />
+              <CardContainer data={title} />
             </div>
           </section>
           <div

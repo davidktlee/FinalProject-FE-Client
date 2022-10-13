@@ -9,10 +9,9 @@ import { queryKeys } from '../../react-query/queryKeys'
 import useToast from '../../common/toast/hooks/useToast'
 
 export interface CartItemsType {
-
-  cartId?:number
-  color:string
-  colorCode:string
+  cartId?: number
+  color: string
+  colorCode: string
 
   degree: number
   discount: number
@@ -34,9 +33,9 @@ const getCartItems = async (): Promise<CartItemsType[]> => {
 const useCart = () => {
   const fallback: CartItemsType[] = []
   const queryClient = useQueryClient()
-  const { data: cartItems = fallback,isLoading } = useQuery(queryKeys.cart, () => getCartItems(), {})
+  const { data: cartItems = fallback, isLoading } = useQuery(queryKeys.cart, () => getCartItems(), {})
 
-  return { cartItems,isLoading }
+  return { cartItems, isLoading }
 }
 
 const addCart = async (id: number) => {
@@ -53,7 +52,7 @@ const addCart = async (id: number) => {
 
 export const useAddCart = () => {
   const { fireToast } = useToast()
-  const { data: addCartMutate } = useMutation(addCart, {
+  const { mutate: addCartMutate } = useMutation(addCart, {
     onSuccess: () => {
       fireToast({
         id: 'addCartCompleted',
@@ -73,7 +72,7 @@ export const useAddCart = () => {
       })
     }
   })
-  return {addCartMutate}
+  return { addCartMutate }
 }
 
 export default useCart

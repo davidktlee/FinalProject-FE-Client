@@ -7,6 +7,8 @@ import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
 import { useGetBanner } from './main/hooks/useBanner'
+import { useRecoilValue } from 'recoil'
+import { filteredProudcts } from '../store/filterVallue'
 
 // 달라질 부분
 // absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
@@ -14,14 +16,17 @@ const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
-  const [imgs, setImgs] = useState([])
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+  const [title, setTitle] = useState<string>('Best')
+
+  const filteredProducts = useRecoilValue(filteredProudcts)
+  console.log(filteredProducts)
+
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
   }
 
   const { data: bannerList, isFetching } = useGetBanner(1)
-  console.log(bannerList)
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
@@ -91,7 +96,11 @@ const Banner = () => {
                   <SwiperSlide key={index}>
                     {/* key값 id 값 넣어주기 */}
                     <img
-                      src={img}
+                      src={
+                        bannerList.length !== 1
+                          ? img
+                          : 'https://user-images.githubusercontent.com/90392240/192770270-0d01350b-1adb-4b08-84c3-069bf9a8b4a0.png'
+                      }
                       alt="banner-image"
                       className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
                     />
@@ -104,7 +113,7 @@ const Banner = () => {
                   <SwiperSlide key={index}>
                     {/* key값 id 값 넣어주기 */}
                     <img
-                      src={img}
+                      src={bannerList.length !== 1 ? img : 'assets/MobileBanner.png'}
                       alt="banner-image"
                       className=" w-full h-[500px] md:h-auto object-fit md:object-cover "
                     />

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
-import { filterState, FilterValue } from '../../../store/filterVallue'
+import { filteredProudcts, filterState, FilterValue } from '../../../store/filterVallue'
 import { useUser } from '../../auth/hooks/useUser'
 import { axiosInstance } from '../../axiosinstance'
 import { useGetProductsList } from '../hooks/useProductLists'
@@ -14,10 +14,12 @@ import Refresh from '/assets/Refresh.svg'
 const FilterBar = () => {
   const { user } = useUser()
   const resetFilter = useResetRecoilState(filterState)
+  const resetFilteredProducts = useResetRecoilState(filteredProudcts)
   const [filter, setFilter] = useRecoilState(filterState)
+  const setFilteredProducts = useSetRecoilState(filteredProudcts)
 
-  const requestFilterOptions = (filter: FilterValue) => {
-    const data = axiosInstance({
+  const requestFilterOptions = async (filter: FilterValue) => {
+    const { data } = await axiosInstance({
       method: 'POST',
       url: '/product/byOption',
       params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },
@@ -29,15 +31,15 @@ const FilterBar = () => {
         series: filter.seriesState
       }
     })
-    console.log(data)
     return data
   }
 
-  const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
+  const { mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
     mutationKey: 'filterOptions',
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       console.log('필터가 적용되었습니다.')
       console.log(data)
+      setFilteredProducts(data)
     },
     onError: (error) => {
       console.log('필터가 적용에 실패했습니다.')
@@ -48,13 +50,18 @@ const FilterBar = () => {
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const name = e.currentTarget.name
     const value = e.currentTarget.value.split(',').map(Number)
-    console.log(value)
     if (name === 'period') {
-      requstFilter(filter)
+      // requstFilter(filter)
+      if (filter.periodState[1] === Number(value)) {
+        setFilter({
+          ...filter,
+          periodState: filter.periodState.filter((item) => item == Number(value))
+        })
+      }
       if (filter.periodState[0] === Number(value)) {
         setFilter({
           ...filter,
-          periodState: filter.periodState.filter((item) => item !== Number(value))
+          periodState: filter.periodState.filter((item) => item == Number(value))
         })
       } else {
         setFilter({
@@ -64,9 +71,18 @@ const FilterBar = () => {
       }
     }
   }
+  const handleFilter = (filter: FilterValue) => {
+    if (filter.periodState.length === 0) return
+    requstFilter(filter)
+  }
+
+  useEffect(() => {
+    handleFilter(filter)
+  }, [filter])
 
   const refreshHandler = () => {
     resetFilter()
+    resetFilteredProducts()
   }
 
   return (
@@ -90,7 +106,7 @@ const FilterBar = () => {
                   : ''
               } border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
             >
-              상품 전체{filter.periodState}
+              상품 전체
             </button>
             <div className="flex justify-between gap-2">
               <button

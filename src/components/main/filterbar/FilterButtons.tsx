@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-import { filterState, FilterValue } from '../../../store/filterVallue'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { filteredProudcts, filterState, FilterValue } from '../../../store/filterVallue'
 import ReactTooltip from 'react-tooltip'
 import { graphicDiameter } from '../../../constants/filterData'
 import { contentTypes } from './FilterButtonFunction'
 import { axiosInstance } from '../../axiosinstance'
-import { useMutation } from 'react-query'
+import { useIsFetching, useMutation } from 'react-query'
 import { useUser } from '../../auth/hooks/useUser'
 
 type filterButtonTypes = {
@@ -21,8 +21,11 @@ type filterButtonTypes = {
 const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes) => {
   const { user } = useUser()
   const [filter, setFilter] = useRecoilState(filterState)
-  const requestFilterOptions = (filter: FilterValue) => {
-    const data = axiosInstance({
+  const setFilteredProducts = useSetRecoilState(filteredProudcts)
+
+  const requestFilterOptions = async (filter: FilterValue) => {
+    console.log(filter)
+    const data = await axiosInstance({
       method: 'POST',
       url: '/product/byOption',
       params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },
@@ -34,14 +37,17 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
         series: filter.seriesState
       }
     })
-    console.log(data)
     return data
   }
 
   const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
     mutationKey: 'filterOptions',
-    onSuccess: (data) => {
+    onMutate: (filter) => {
+      filter.periodState.length === 0
+    },
+    onSuccess: ({ data }) => {
       console.log('필터가 적용되었습니다.')
+      setFilteredProducts(data.data)
       console.log(data)
     },
     onError: (error) => {
@@ -49,11 +55,9 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
       console.log(error)
     }
   })
-
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {
       case 'graphicDiameter':
-        requstFilter(filter)
         if (typeof content.value === 'number') {
           if (filter.graphicDiameterState.includes(content.value)) {
             setFilter({
@@ -69,26 +73,23 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             })
           }
         }
-        console.log(filter.graphicDiameterState)
         break
       case 'color':
-        requstFilter(filter)
         if (typeof content.value === 'string' || typeof content.value === 'number') return
-
-        if (filter.colorState.includes(content.value[0])) {
+        // 교집합이 있을때
+        if (content.value.filter((item: string) => filter.colorState.includes(item)).length > 0) {
           setFilter({
             ...filter,
-            colorState: []
+            colorState: filter.colorState.filter((item) => !content.value.includes(item)) // 차집합
           })
         } else {
           setFilter({
             ...filter,
-            colorState: content.value
+            colorState: [...filter.colorState, ...content.value]
           })
         }
-        console.log(filter.colorState)
+        break
       case 'series':
-        requstFilter(filter)
         if (typeof content.value !== 'string') return
         if (filter.seriesState.includes(content.value)) {
           setFilter({
@@ -101,9 +102,8 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             seriesState: [...filter.seriesState, content.value]
           })
         }
-        console.log(filter.seriesState)
+        break
       case 'feature':
-        requstFilter(filter)
         if (typeof content.value !== 'string') return
         if (filter.featureState.includes(content.value)) {
           setFilter({
@@ -116,11 +116,21 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
             featureState: [...filter.featureState, content.value]
           })
         }
-        console.log(filter.featureState)
+        break
       default:
         break
     }
   }
+
+  const handleFilter = (filter: FilterValue) => {
+    if (filter.periodState.length === 0) return
+    requstFilter(filter)
+  }
+
+  useEffect(() => {
+    handleFilter(filter)
+    // console.log(filter)
+  }, [filter])
 
   useEffect(() => {
     ReactTooltip.rebuild()
@@ -161,6 +171,8 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
                 boxSizing: 'border-box'
               }
             }
+            // name={content.type}
+            // value={content.value}
             data-tip={content.color && content.name}
             data-for={content.color && content.color}
             onClick={() => handleFilterValue(content)}

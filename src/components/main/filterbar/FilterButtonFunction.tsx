@@ -6,7 +6,7 @@ const [filter, setFilter] = useRecoilState(filterState)
 export type contentTypes = {
   type: string
   name: string
-  value: string | number | string[]
+  value: any
   color?: string
 }
 
