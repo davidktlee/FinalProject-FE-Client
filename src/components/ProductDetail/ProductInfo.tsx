@@ -355,7 +355,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
               </div>
               <div className="delivery flex my-2 pt-4">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">그래프 직경</p>
-                <div className="badge flex gap-[5px] lg:flex-wrap lg:w-[280px] xl:w-[355px]">
+                <div className="badge flex flex-wrap gap-[5px] lg:flex-wrap lg:w-[280px] xl:w-[355px] xs-max:w-[276px]">
                   {productByOptions.graphicDiameterList.length === 0
                     ? productDetails?.graphicDiameterList?.map((item, index) => (
                         <button
