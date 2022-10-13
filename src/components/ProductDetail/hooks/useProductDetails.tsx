@@ -12,7 +12,7 @@ import { useRecoilState } from 'recoil'
 const token = getStoredToken()
 
 // 제품 상세 API
-const getProductDetails = async (memberId: number, productId: number) => {
+export const getProductDetails = async (memberId: number, productId: number) => {
   const data = await axiosInstance({
     method: 'POST',
     url: `/productDetails/main`,

@@ -61,7 +61,7 @@ const Signup = () => {
   }
 
   return (
-    <PageLayout layoutWidth="w-[90%]">
+    <PageLayout layoutWidth="w-[100%]">
       <CardTemplate title="회원가입" isTitleVisible={true}>
         <UserForm formValue={formValue} setFormValue={setFormValue} submitFormHandler={submitFormHandler} />
       </CardTemplate>

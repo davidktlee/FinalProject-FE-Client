@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useUser } from '../../auth/hooks/useUser'
 import { usePrefetchProductLists } from '../hooks/useProductLists'
 
 interface PropsType {
@@ -9,6 +10,7 @@ interface PropsType {
 }
 
 function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType) {
+  const { user } = useUser()
   const [pagesCount, setPagesCount] = useState<number[] | []>([])
 
   const maxPage = Math.ceil(allCount / divide)
@@ -34,7 +36,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
     setCurrentPage(page)
   }
 
-  usePrefetchProductLists(currentPage, allCount)
+  usePrefetchProductLists(currentPage, allCount, user ? user?.memberId : 0)
 
   return (
     <div className={`my-[50px] flex grow justify-center items-center`}>

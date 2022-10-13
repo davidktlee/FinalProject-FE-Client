@@ -52,8 +52,8 @@ const Input = ({margin,label,placeholder,type,double, flexDirection,type2,placeh
        ${flexDirection === 'horizontal' ? 'flex items-center justify-start gap-x-4' : 'flex flex-col justify-center gap-y-2'}
        `}>
         
-       <input name={name} onChange={onChange} value={value} onBlur={onBlur} className={`grow pl-[15px] text-sm w-full h-10 py-2 border border-solid border-lenssisStroke rounded-[5px] ${inputWidth ? inputWidth : 'max-w-[400px]'}  focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type={type} placeholder={placeholder} readOnly={readonly} />
-       <input name={name2} onChange={onChange}value={value2} onBlur={onBlur} className={`grow pl-[15px] text-sm w-full h-10 py-2 border border-solid border-lenssisStroke rounded-[5px] ${inputWidth ? inputWidth : 'max-w-[400px]'}  focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type={type2} placeholder={placeholder2} readOnly={readonly2} />
+       <input name={name} onChange={onChange} value={value} onBlur={onBlur} className={` pl-[15px] text-sm w-full h-10 py-2 border border-solid border-lenssisStroke rounded-[5px] ${inputWidth ? inputWidth : 'max-w-[400px]'}  focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type={type} placeholder={placeholder} readOnly={readonly} />
+       <input name={name2} onChange={onChange}value={value2} onBlur={onBlur} className={` pl-[15px] text-sm w-full h-10 py-2 border border-solid border-lenssisStroke rounded-[5px] ${inputWidth ? inputWidth : 'max-w-[400px]'}  focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type={type2} placeholder={placeholder2} readOnly={readonly2} />
        </div>
        {isBlur && !isValidValue && <FormErrorMessage errorText={errorText} errorTitle={placeholder} textSize='xs' titleSize='sm'  />}
        {isBlur && !isValidValue2 && <FormErrorMessage errorText={errorText} errorTitle={placeholder2 || ''} textSize='xs' titleSize='sm' /> }

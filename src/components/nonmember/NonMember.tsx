@@ -1,6 +1,6 @@
 
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { currentInquiryState } from '../../store/currentInquiry';
 import { VALIDATOR_REQUIRE } from '../auth/hooks/validator';

@@ -42,11 +42,10 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
             className="grow h-10 border border-solid border-gray-200 rounded-[5px] w-[200px] xs:max-w-[230px]  focus:outline-1 focus:outline-[#ABC8DF] pl-1"
             readOnly
             onBlur={onBlur}
-            
           />
           <div className="grow">
             <button
-              className="w-28 xs:w-40 h-10 bg-lenssisDark rounded-[5px] text-white font-bold border-none cursor-pointer"
+              className="text-sm xs:text-base w-28 xs:w-40 h-10 bg-lenssisDark rounded-[5px] text-white font-bold border-none cursor-pointer"
               onClick={addressPopupHandler}
             >
               우편 번호 검색
@@ -71,9 +70,8 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
         flexDirection="vertical"
         placeholder="기본 주소"
         placeholder2="상세 주소"
-        inputWidth="[400px]"
-        inputHeight="10"
-        
+        inputWidth='max-w-[400px]'
+        inputHeight='h-10'
         readonly={true}
         validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(30)]}
         errorText="상세 주소를 입력해주세요"
