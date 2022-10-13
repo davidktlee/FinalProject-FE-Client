@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { mainCartModal } from '../../store/mainCart'
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
-import { useAddFavorite } from '../main/hooks/useFavorite'
+import { useAddFavorite, useDeleteFavorite } from '../main/hooks/useFavorite'
 import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { productDetailsState } from '../../store/productDetails'
@@ -26,6 +26,7 @@ interface PropsType {
 const token = getStoredToken()
 
 const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType) => {
+  console.log(productDetails)
   const [commaPrice, setCommaPrice] = useState({
     price: '',
     discount: ''
@@ -34,7 +35,10 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
   const [optionComplete, setOptionComplete] = useState<boolean>(true)
   const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
+  const [favorite, setFavorite] = useState<boolean>(false)
   const { addCartMutate } = useAddCart()
+  const addFavor = useAddFavorite()
+  const deleteFavor = useDeleteFavorite()
 
   const getProductByOptions = async (detailState: ProductDetailsType) => {
     const { data } = await axiosInstance({
@@ -168,6 +172,19 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     console.log('제품상세 장바구니 버튼 클릭!')
   }
 
+  const favoriteHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const productId = Number(e.currentTarget.value)
+    setTimeout(() => {
+      if (!favorite) {
+        addFavor(productId)
+      }
+    }, 500)
+    setFavorite((prev) => !prev)
+    if (favorite) {
+      deleteFavor(productId)
+    }
+  }
+
   const setModalState = useSetRecoilState(mainCartModal)
 
   const toComma = () => {
@@ -182,16 +199,18 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/assets/noImage.jpeg'
   }
-  const addFavor = useAddFavorite()
-  const addFavorHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const productId = Number(e.currentTarget.value)
-
-    addFavor(productId)
-  }
 
   useEffect(() => {
     console.log(finalProduct)
   }, [finalProduct])
+
+  useEffect(() => {
+    if (productDetails?.isFavorite === 1) {
+      setFavorite(true)
+    } else {
+      setFavorite(false)
+    }
+  }, [])
 
   useEffect(() => {
     setOptionComplete(
@@ -219,43 +238,28 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             <img
               alt="ecommerce"
               className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px]"
-              src={
-                finalProduct.imageUrlList.length > 1
-                  ? finalProduct.imageUrlList[0].imageUrl
-                  : productDetails?.mainImageUrl
-              }
+              src={productDetails?.mainImageUrl}
               width="465"
               height="460"
               onError={(e) => handleImgError(e)}
             />
             <div className="overflow-auto flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
-              {finalProduct.imageUrlList.length > 1
-                ? finalProduct.imageUrlList
-                    .slice(1, 4)
-                    .map((image) => (
-                      <img
-                        key={image.imageUrl}
-                        alt="ecommerce"
-                        className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                        src={image.imageUrl}
-                      />
-                    ))
-                : productDetails?.subMainImageUrlList?.map((image) => (
-                    <img
-                      key={image}
-                      onError={(e) => handleImgError(e)}
-                      className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                      src={image}
-                    />
-                  ))}
+              {productDetails?.subMainImageUrlList?.map((image) => (
+                <img
+                  key={image}
+                  onError={(e) => handleImgError(e)}
+                  className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
+                  src={image}
+                />
+              ))}
             </div>
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-2 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-lenssisGray mb-2 text-[12px]">60개의 리뷰 &gt;</h2>
             <div className="text-gray-900 text-3xl title-font font-medium mb-2 flex justify-between">
               <span className="">{productDetails?.name}</span>
-              <button onClick={(e) => addFavorHandler(e)} value={productDetails?.productId}>
-                {productDetails?.isFavorite ? (
+              <button onClick={(e) => favoriteHandler(e)} value={productDetails?.productId}>
+                {favorite ? (
                   <img src={FillHeart} width={35} height={35} alt="찬 하트" />
                 ) : (
                   <img width={35} height={35} src={Heart} alt="빈 하트" />

@@ -40,7 +40,7 @@ const useCart = () => {
 
 const addCart = async (id: number) => {
   const token = getStoredToken()
-  await axiosInstance({
+  const data = await axiosInstance({
     url: `/cart/add`,
     method: 'POST',
     headers: getJWTToken(token),
@@ -48,12 +48,15 @@ const addCart = async (id: number) => {
       productDetailsId: id
     }
   })
+  console.log(data)
+  return data
 }
 
 export const useAddCart = () => {
   const { fireToast } = useToast()
-  const { mutate: addCartMutate } = useMutation(addCart, {
+  const { data, mutate: addCartMutate } = useMutation(addCart, {
     onSuccess: () => {
+      console.log(data)
       fireToast({
         id: 'addCartCompleted',
         message: '장바구니 추가에 성공하였습니다.',
