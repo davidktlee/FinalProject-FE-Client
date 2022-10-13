@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview } from './hooks/useReview'
-import AWS from 'aws-sdk'
-const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
+import ReactS3Client from 'react-aws-s3-typescript'
+import { s3Config } from './config/s3Config'
 
 interface ReviewFormProps {
   onClose: Function
@@ -19,16 +19,6 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
   const imageRef = useRef<HTMLInputElement>(null)
   console.log(reviewItem)
 
-  AWS.config.update({
-    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: VITE_SECRET_ACCESS_KEY
-  })
-
-  const myBucket = new AWS.S3({
-    params: { Bucket: 'iko-amazon-storage' },
-    region: 'ap-northeast-2'
-  })
-
   const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
@@ -41,7 +31,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
     setReviewText(e.target.value)
   }
 
-  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     setSelectedFile(file)
     const reader = new FileReader()
@@ -52,20 +42,12 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
   }
 
   const handleReviewSubmit = async () => {
-    const params = {
-      ACL: 'public-read',
-      Bucket: 'iko-amazon-storage',
-      Key: `review/${reviewItem.orderId}-${reviewItem.productDetailsId}`,
-      Body: selectedFile
-    }
-
-    myBucket.putObject(params, (err, data) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(data)
-      }
-    })
+    const reactS3Client = new ReactS3Client(s3Config)
+    const result = await reactS3Client.uploadFile(
+      selectedFile as File,
+      `${reviewItem.orderId}-${reviewItem.productDetailsId}`
+    )
+    console.log(result)
 
     if (!selectedFile) return
 
@@ -75,7 +57,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
       orderId: reviewItem.orderId,
       memberId: reviewItem.memberId,
       rating: rating,
-      replyImageUrl: selectedFile?.name
+      replyImageUrl: result.location
     }
 
     addReviewMutate(reviewInfo)
@@ -126,7 +108,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
                       </label>
                       <input
                         ref={imageRef}
-                        onChange={(e) => handleFileInput(e)}
+                        onChange={(e) => handleImageInput(e)}
                         type="file"
                         name="image"
                         id="selectImage"
