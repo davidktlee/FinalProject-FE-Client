@@ -3,28 +3,12 @@ import { useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
 import { queryKeys } from '../../react-query/queryKeys'
-
-export interface EventDetailResponseType {
-  eventTitle: number
-  description: string
-  startTime: string
-  endTime: string
-  imageUrl: string
-}
-export interface InEventMainList {
-  eventId: number
-  eventTitle: string
-  imageUrl: string
-}
-
-export interface EventResponseType {
-  data: {
-    eventMainList: InEventMainList[]
-    totalCount: number
-  }
-  status: number
-  message: string
-}
+import {
+  EventDetailResponseType,
+  EventDetailReturnType,
+  EventResponseType,
+  EventReturnType
+} from '../types/eventTypes'
 
 export const getEvents = async (): Promise<EventResponseType> => {
   const { data }: AxiosResponse<EventResponseType> = await axiosInstance({
@@ -37,7 +21,7 @@ export const getEvents = async (): Promise<EventResponseType> => {
 
   return data
 }
-export const useGetEvent = () => {
+export const useGetEvent = (): EventReturnType => {
   const { fireToast } = useToast()
   const { data, isFetching } = useQuery([queryKeys.allEvent], () => getEvents(), {
     refetchOnWindowFocus: false,
@@ -54,10 +38,6 @@ export const useGetEvent = () => {
   })
   return { data, isFetching }
 }
-// export const prefetchEvent = () => {
-//   const queryClient = useQueryClient()
-//   const maxPage = Math.floor(count / 10)
-// }
 
 const detailEvent = async (id: number): Promise<EventDetailResponseType[]> => {
   const {
@@ -67,7 +47,7 @@ const detailEvent = async (id: number): Promise<EventDetailResponseType[]> => {
   })
   return data
 }
-export const useGetDetailEvent = (id: number) => {
+export const useGetDetailEvent = (id: number): EventDetailReturnType => {
   const { fireToast } = useToast()
   const fallback: [] = []
   const { data = fallback, isFetching } = useQuery([queryKeys.event, id], () => detailEvent(id), {
