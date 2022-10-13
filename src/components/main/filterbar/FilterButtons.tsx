@@ -129,7 +129,6 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
 
   useEffect(() => {
     handleFilter(filter)
-    // console.log(filter)
   }, [filter])
 
   useEffect(() => {

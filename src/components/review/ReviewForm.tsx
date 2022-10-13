@@ -2,36 +2,28 @@ import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview } from './hooks/useReview'
-import AWS from 'aws-sdk'
-const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
+import ReactS3Client from 'react-aws-s3-typescript'
+import { s3Config } from './config/s3Config'
 
 interface ReviewFormProps {
   onClose: Function
   isModalOpen: boolean
   reviewItem: any
+  orderId: number
+  memberId: number
 }
 
-const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
+const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: ReviewFormProps) => {
   const [reviewText, setReviewText] = useState('')
   const [rating, setRating] = useState(0)
-  const [selectedFile, setSelectedFile] = useState<File>()
+  const [selectedFile, setSelectedFile] = useState<File | ''>()
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
   console.log(reviewItem)
-
-  AWS.config.update({
-    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: VITE_SECRET_ACCESS_KEY
-  })
-
-  const myBucket = new AWS.S3({
-    params: { Bucket: 'iko-amazon-storage' },
-    region: 'ap-northeast-2'
-  })
-
   const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
+  console.log(reviewItem)
 
   const ratingChanged = (newRating: number) => {
     setRating(newRating)
@@ -41,8 +33,11 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
     setReviewText(e.target.value)
   }
 
-  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+    if (!file) {
+      setSelectedFile('')
+    }
     setSelectedFile(file)
     const reader = new FileReader()
     reader.onloadend = () => {
@@ -52,30 +47,22 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
   }
 
   const handleReviewSubmit = async () => {
-    const params = {
-      ACL: 'public-read',
-      Bucket: 'iko-amazon-storage',
-      Key: `review/${reviewItem.orderId}-${reviewItem.productDetailsId}`,
-      Body: selectedFile
-    }
-
-    myBucket.putObject(params, (err, data) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(data)
-      }
-    })
+    const reactS3Client = new ReactS3Client(s3Config)
+    const result = await reactS3Client.uploadFile(
+      selectedFile as File,
+      `${reviewItem.orderId}-${reviewItem.productDetailsId}`
+    )
+    console.log(result)
 
     if (!selectedFile) return
 
     const reviewInfo = {
       content: reviewText,
-      productDetailsId: reviewItem.productDetailsId,
-      orderId: reviewItem.orderId,
-      memberId: reviewItem.memberId,
+      productDetailsId: reviewItem[0].productDetailsId,
+      orderId,
+      memberId,
       rating: rating,
-      replyImageUrl: selectedFile?.name
+      replyImageUrl: result.location
     }
 
     addReviewMutate(reviewInfo)
@@ -126,7 +113,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
                       </label>
                       <input
                         ref={imageRef}
-                        onChange={(e) => handleFileInput(e)}
+                        onChange={(e) => handleImageInput(e)}
                         type="file"
                         name="image"
                         id="selectImage"
@@ -134,9 +121,23 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
                       />
                     </div>
                     <div className="flex flex-col py-[25px] justify-between">
-                      <div className="xs-max:text-[12px] text-[14px]">샌드 플러스 그레이</div>
-                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">옵션 선택</div>
-                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">가격</div>
+                      <div className="xs-max:text-[12px] text-[14px]">{reviewItem[0].productName}</div>
+                      <div>
+                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                          옵션 선택 - 그래픽 직경: {reviewItem[0].graphicDiameter}
+                        </span>
+                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                          {' '}
+                          / 도수: {reviewItem[0].degree}
+                        </span>
+                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                          {' '}
+                          / 수량: {reviewItem[0].pcs}개
+                        </span>
+                      </div>
+                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                        {reviewItem[0].price}円
+                      </div>
                       <div className="xs:hidden flex gap-[2px]">
                         <ReactStars
                           count={5}

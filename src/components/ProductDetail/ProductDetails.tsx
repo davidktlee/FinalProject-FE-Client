@@ -8,9 +8,6 @@ import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import ProductInfo from './ProductInfo'
 import { useProductDetails } from './hooks/useProductDetails'
 import { useUser } from '../auth/hooks/useUser'
-import Skeleton from './Skeleton'
-import { useRecoilState } from 'recoil'
-import { productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
 
 interface FinalProduct {
   color: string
@@ -31,8 +28,6 @@ const ProductDetails = () => {
 
   const { user } = useUser()
 
-  const [productByOtions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
-
   const productDetails = useProductDetails(user ? user?.memberId! : 0, id)
 
   useEffect(() => {
@@ -46,7 +41,7 @@ const ProductDetails = () => {
       {/* <Skeleton /> */}
       <ProductRecommend productId={id} />
       <ProductBanner />
-      <ProductTabs />
+      <ProductTabs productDetails={productDetails} />
     </div>
   )
 }
