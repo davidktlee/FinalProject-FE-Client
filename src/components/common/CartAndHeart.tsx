@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useAddCart } from '../cart/hooks/useCart'
-import { addFavorite, deleteFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { mainCartId, mainCartModal } from '../../store/mainCart'
+import { addFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { MainCartFavoriteId, MainCartModalState, ItemDetail } from '../../store/mainCart'
+import { useUser } from '../auth/hooks/useUser'
+import { getProductDetails, useProductDetails } from '../ProductDetail/hooks/useProductDetails'
+import { useMutation } from 'react-query'
+import { Navigate } from 'react-router'
 
 interface PropsType {
   productId: number
@@ -12,11 +16,28 @@ interface PropsType {
 function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
-  const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(mainCartModal)
+  const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(MainCartModalState)
   const deleteFavor = useDeleteFavorite()
-  const addCartMutate = useAddCart()
-  const favoriteId: number[] = useRecoilValue(mainCartId)
+  const favoriteId: number[] = useRecoilValue(MainCartFavoriteId)
+  const [id, setId] = useState(0)
+
+  const setDetail = useSetRecoilState(ItemDetail)
+
+  const { user } = useUser()
+  const { mutate } = useMutation(() => getProductDetails(user ? user?.memberId : 0, productId), {
+    onSuccess: (data) => {
+      setDetail(data.data)
+    }
+  })
+
+  // useQuery문
+  // const productDetail = useProductDetails(user ? user?.memberId : 0, id)
+
   const ClickHeart = () => {
+    if (!user) {
+      alert('로그인 해주세요')
+      return
+    }
     setTimeout(() => {
       // post 보낼 로직
       if (!onHeartAnimation) {
@@ -42,16 +63,25 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
     if (favoriteId.includes(productId)) {
       setOnHeartAnimation((prev) => (prev = true))
     }
-  }, [])
+  }, [favoriteId])
 
-  const ClickCart = () => {
-    setIsCartModalOpen((prev) => !prev)
-    // addCart(productId)
+  const ClickCart = (id: number) => {
+    if (!user) {
+      alert('로그인 해주세요')
+      return
+    }
+    mutate()
+    setTimeout(() => {
+      setIsCartModalOpen((prev) => !prev)
+    }, 100)
   }
 
   return (
     <div className={`flex justify-center items-center  `}>
-      <div className={`mr-2 cursor-pointer hover:animate-click relative`} onClick={ClickCart}>
+      <div
+        className={`mr-2 cursor-pointer hover:animate-click relative`}
+        onClick={() => ClickCart(productId)}
+      >
         <svg
           width={`${windowWidth < 440 ? 20 : 28}`}
           height={`${windowWidth < 440 ? 20 : 28}`}

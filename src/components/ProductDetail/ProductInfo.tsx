@@ -1,9 +1,7 @@
 import { graphicDiameter } from '../../constants/filterData'
 import Heart from '/assets/Heart.svg'
 import FillHeart from '/assets/FillHeart.svg'
-import { useParams } from 'react-router'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { mainCartModal } from '../../store/mainCart'
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
 import { useAddFavorite } from '../main/hooks/useFavorite'
@@ -15,6 +13,7 @@ import { finalProductState, productByOptionsState, ProductByOptionsType } from '
 import { ProductDetailsType } from '../../store/productDetails'
 import { useAddCart } from '../cart/hooks/useCart'
 import { queryKeys } from '../react-query/queryKeys'
+import { MainCartModalState } from '../../store/mainCart'
 
 interface PropsType {
   isClose?: boolean
@@ -26,6 +25,7 @@ interface PropsType {
 const token = getStoredToken()
 
 const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType) => {
+  console.log(productId)
   const [commaPrice, setCommaPrice] = useState({
     price: '',
     discount: ''
@@ -168,7 +168,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     console.log('제품상세 장바구니 버튼 클릭!')
   }
 
-  const setModalState = useSetRecoilState(mainCartModal)
+  const setModalState = useSetRecoilState(MainCartModalState)
 
   const toComma = () => {
     const addCommaPrice = productDetails?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
