@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { usePrefetchProductLists } from '../hooks/useProductLists'
-import { AllProductCurrentPage } from './../../../store/product'
-import { useRecoilState } from 'recoil'
 
 interface PropsType {
   currentPage: number

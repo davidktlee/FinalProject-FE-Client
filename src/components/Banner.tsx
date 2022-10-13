@@ -20,7 +20,8 @@ const Banner = () => {
     setWindowWidth(window.innerWidth)
   }
 
-  const { data: bannerList, isFetching } = useGetBanner(3)
+  const { data: bannerList, isFetching } = useGetBanner(1)
+  console.log(bannerList)
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
@@ -84,7 +85,7 @@ const Banner = () => {
       {swiperSetting && (
         <Swiper {...swiperSetting} style={{ borderRadius: '15px', overflow: 'hidden' }}>
           {windowWidth > 440
-            ? imgs &&
+            ? bannerList &&
               bannerList.map((img: string, index: number) => (
                 <div key={index}>
                   <SwiperSlide key={index}>
