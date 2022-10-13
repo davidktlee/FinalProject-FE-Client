@@ -122,7 +122,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
               {data}
             </span>
           </div>
-          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
+          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-3 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
             {filteredProducts.productData?.slice(0, 9).map((item: any, idx: number) => (
               <Card
                 idx={idx}
