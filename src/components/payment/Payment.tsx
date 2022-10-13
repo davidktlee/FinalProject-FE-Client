@@ -17,6 +17,9 @@ import TermsTitle from './ui/TermsTitle'
 import usePost from '../common/util/usePost'
 import OrderProductName from './ui/OrderProductName'
 import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
+import { axiosInstance, getJWTToken } from '../axiosinstance'
+import { getStoredToken } from '../local-storage/userStorage'
+import { useNavigate } from 'react-router-dom'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -121,6 +124,7 @@ const Payment = () => {
   const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState)
   // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
   const [discountCode, setDisCountCode] = useState('')
+  const navigate = useNavigate()
   const currentPaymentMethodHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value }
@@ -195,7 +199,7 @@ const Payment = () => {
   }, [])
 
   
-  const paymentHandler = () => {
+  const paymentHandler = async () => {
     if (!isChecked) {
       alert('개인정보 수집 이용에 동의해주세요')
       return
@@ -203,24 +207,33 @@ const Payment = () => {
     const extractArray = selectedProduct.map((item) => {
       return {pcs:item.pcs,productDetailsId:item.productDetailsId}
     }) 
-
+    const token = getStoredToken()
     const obj = {
-      product: extractArray,
+      totalPrice,
+      address: newFormValue.address || formValue.address,
       couponId: 0,
+      detailAddress: newFormValue.detailAddress || formValue.detailAddress,
+      email: formValue.email,
       memberId: user? user.memberId : 0,
       method: paymentMethodNumber,
       orderer: formValue.orderer,
-      address: newFormValue.address || formValue.address,
-      detailAddress: newFormValue.detailAddress || formValue.detailAddress,
-      ordererEmail: formValue.email,
-      ordererPhone: formValue.phone,
+      phone: formValue.phone,
       point: totalPrice/100,
+      postCode: formValue.postCode,
+      products: extractArray,
       receiver: newFormValue.orderer || formValue.orderer,
       receiverPhone: newFormValue.phone || formValue.phone,
       shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage,
-      totalPrice: totalPrice
+      
     }
-    console.log(obj)
+    try {
+      await axiosInstance.post('/order/add',obj,{headers:getJWTToken(token)})  
+      alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+    }
+    
   }
 
   
@@ -240,7 +253,7 @@ const Payment = () => {
         postCode: user.postCode,
         address: user.address,
         phone: user.phone,
-        email: emailFormValue.emailIdentity + '@' + emailFormValue.emailDomain || '',
+        email: `${emailFormValue.emailIdentity}@${emailFormValue.emailDomain}`,
         detailAddress: user.detailAddress,
         shippingMessage: '',
         couponId: null,
@@ -255,7 +268,7 @@ const Payment = () => {
       })
     }
   }, [user])
-
+  
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
       <ConfirmModal
