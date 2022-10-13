@@ -21,8 +21,8 @@ const ShippingAddress = ({onChange,onClick,value1,value2,value3}:ShippingAddress
             <button className=" w-28 h-10 bg-lenssisDark rounded-[5px] text-white font-semibold border-none cursor-pointer" onClick={onClick}>우편 번호 검색</button>
           </div>
           <div className='flex flex-col w-full gap-y-1'>
-            <input name="address" onChange={onChange} value={value2} className={`grow w-[320px] xs:w-[410px] text-xs xs:text-sm h-10 border border-solid border-gray-200 rounded-[5px] pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" readOnly  />
-            <input name="detailAddress" onChange={onChange}value={value3} className={`grow w-[320px] xs:w-[410px] text-xs xs:text-sm h-10 border border-solid border-gray-200 rounded-[5px] pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" />
+            <input name="address" onChange={onChange} value={value2} className={` w-[280px] xs:w-[410px] text-xs xs:text-sm h-10 border border-solid border-gray-200 rounded-[5px] pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" readOnly  />
+            <input name="detailAddress" onChange={onChange}value={value3} className={` w-[280px] xs:w-[410px] text-xs xs:text-sm h-10 border border-solid border-gray-200 rounded-[5px] pl-1 focus:outline-1 focus:outline-[#ABC8DF] placeholder-gray-400/60 `} type="text" />
          </div>
          </div>
   );

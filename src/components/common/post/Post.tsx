@@ -70,9 +70,8 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
         flexDirection="vertical"
         placeholder="기본 주소"
         placeholder2="상세 주소"
-        inputWidth="[400px]"
-        inputHeight="10"
-        
+        inputWidth='max-w-[400px]'
+        inputHeight='h-10'
         readonly={true}
         validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(30)]}
         errorText="상세 주소를 입력해주세요"
