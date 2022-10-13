@@ -33,6 +33,7 @@ export const useGetAllNotice = (type: number): ReturnType => {
 
 const getDetailNotice = async (id: number) => {
   const { data } = await axiosInstance({ url: `/board/details?boardId=${id}` })
+  console.log(data)
   return data
 }
 

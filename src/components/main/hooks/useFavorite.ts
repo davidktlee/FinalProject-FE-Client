@@ -9,7 +9,7 @@ import { queryKeys } from '../../react-query/queryKeys'
 const token = getStoredToken()
 
 export const addFavorite = async (id: number) => {
-  await axiosInstance({
+  const res = await axiosInstance({
     url: '/favor/add',
     method: 'POST',
     headers: getJWTToken(token),
@@ -17,6 +17,7 @@ export const addFavorite = async (id: number) => {
       productId: id
     }
   })
+  console.log(res)
 }
 
 export const deleteFavorite = async (id: number) => {
