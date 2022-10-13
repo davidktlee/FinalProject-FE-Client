@@ -24,16 +24,10 @@ const Card = ({
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
   const [commaPrice, setCommaPrice] = useState({
-    price: '',
-    discount: ''
+    price: 0,
+    discount: 0
   })
 
-  const toComma = () => {
-    const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
-    addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
-  }
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/assets/noImage.jpeg'
   }
@@ -47,8 +41,12 @@ const Card = ({
   }
 
   useEffect(() => {
-    toComma()
-  }, [])
+    // setCommaPrice({
+    //   ...commaPrice,
+    //   price: (price * (1 - discount / 100)).toFixed(0).toLocaleString(''),
+    //   discount: Number(price.toLocaleString('en'))
+    // })
+  }, [price, discount])
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
@@ -131,7 +129,7 @@ const Card = ({
           <span className="xs:hidden block absolute top-[120px] right-1">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <div className=" text-[12px] md:text-[14px]">{series}</div>
+          <div className=" text-[14px] md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
             <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
               {commaPrice.price}円

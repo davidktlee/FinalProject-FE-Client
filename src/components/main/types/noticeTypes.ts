@@ -2,6 +2,7 @@ export interface BoardMainList {
   boardId: number
   boardTitle: string
   boardType: number
+  createdAt: string
 }
 export interface NoticeResponse {
   totalCount: number

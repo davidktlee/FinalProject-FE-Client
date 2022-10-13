@@ -20,11 +20,16 @@ function MustRead() {
   // 쿼리 키를 페이지네이션 부분에 내려줘서 버튼 누를 때 가능하게 만들기
   return (
     <>
-      {boardList == [] ? (
+      {boardList != [] ? (
         boardList.map((item: BoardMainList) => (
           <>
             <WebNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
-            <MobileNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
+            <MobileNotice
+              id={item.boardId}
+              title={item.boardTitle}
+              isFetching={isFetching}
+              createdAt={item.createdAt}
+            />
           </>
         ))
       ) : (

@@ -36,6 +36,8 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
   const { addCartMutate } = useAddCart()
 
+  const setModalState = useSetRecoilState(MainCartModalState)
+
   const getProductByOptions = async (detailState: ProductDetailsType) => {
     const { data } = await axiosInstance({
       method: 'GET',
@@ -165,10 +167,10 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
 
   const addCartHandler = () => {
     addCartMutate(finalProduct.productDetailsId)
+    setModalState((prev) => (prev = !prev))
     console.log('제품상세 장바구니 버튼 클릭!')
   }
-
-  const setModalState = useSetRecoilState(MainCartModalState)
+  
 
   const toComma = () => {
     const addCommaPrice = productDetails?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')

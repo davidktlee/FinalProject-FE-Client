@@ -4,10 +4,12 @@ import { CardContainerPropsType, ProductPropsType, ProductResponseType } from '.
 import Pagination from './common/Pagination'
 import { useGetNewProduct, useGetProductsList } from './hooks/useProductLists'
 import { getFavorite } from './hooks/useFavorite'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { mainCartId } from '../../store/mainCart'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
 import { filteredProudcts } from '../../store/filterVallue'
+import { MainCartFavoriteId } from '../../store/mainCart'
+import { useUser } from '../auth/hooks/useUser'
+import { userState } from '../../store/user'
 
 const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
@@ -16,24 +18,36 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const [currentPost, setCurrentPost] = useState([])
   const indexOfLast = newProductCurrentPage * 8
   const indexOfStart = indexOfLast - 8
+  const user = useRecoilValue(userState)
 
-  const setFavoriteIds = useSetRecoilState(mainCartId)
+  const [favoriteIds, setFavoriteIds] = useRecoilState(MainCartFavoriteId)
 
   // 필터링된 상품 리스트입니다.
   const filteredProducts = useRecoilValue(filteredProudcts)
 
-  const { data: productLists, isFetching: allProductFetching } = useGetProductsList(allProductCurrentPage)
-  const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct()
-  const useGetFavorite = async () => {
+  const {
+    data: productLists,
+    isFetching: allProductFetching,
+    isLoading
+  } = useGetProductsList(allProductCurrentPage, user ? user?.memberId : 0)
+
+  const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct(
+    user?.memberId ? user?.memberId : 0
+  )
+  console.log(productLists)
+  console.log('new', newProductLists)
+
+  const getFavoriteItem = async () => {
     const res = await getFavorite()
     const filteredItem = res.map((item) => {
       return item.productInfo.productId
     })
+    console.log(filteredItem)
     setFavoriteIds(filteredItem)
   }
 
   useEffect(() => {
-    useGetFavorite()
+    getFavoriteItem()
   }, [])
 
   useEffect(() => {
@@ -52,6 +66,8 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
           <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
             {allProductFetching ? (
               <ProductMainSkeleton count={9} />
+            ) : isLoading ? (
+              <div>로딩중입니다유..</div>
             ) : (
               productLists
                 .slice(0, 9)

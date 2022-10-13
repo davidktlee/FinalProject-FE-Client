@@ -4,9 +4,10 @@ interface PropsType {
   id: number
   title: string
   isFetching: boolean
+  createdAt: string
 }
 
-function MobileNotice({ id, title, isFetching }: PropsType) {
+function MobileNotice({ id, title, isFetching, createdAt }: PropsType) {
   const navigate = useNavigate()
 
   return (
@@ -19,7 +20,7 @@ function MobileNotice({ id, title, isFetching }: PropsType) {
             </span>
           </div>
           <div className="flex">
-            <div className="mr-4">◴ 08-09</div>
+            <div className="mr-4">{createdAt.slice(0, 10)}</div>
           </div>
         </div>
       </div>
