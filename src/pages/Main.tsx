@@ -14,13 +14,15 @@ import { filterState } from '../store/filterOpen'
 import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
 import { filteredProudcts } from '../store/filterVallue'
+import { useUser } from '../components/auth/hooks/useUser'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
   const [filterOpen, setFilterOpen] = useRecoilState(filterState)
   const [title, setTitle] = useState<any>('Best')
   const filteredProducts = useRecoilValue(filteredProudcts)
-
+  const { user } = useUser()
+  const [isLoading, setIsLoading] = useState(false)
   const MobileFilterRef = useRef<HTMLDivElement>(null)
 
   const handleClickOutside = ({ target }: MouseEvent) => {
@@ -46,6 +48,9 @@ const Main = () => {
       setTitle(() => 'Products')
     }
   }
+  useEffect(() => {
+    setIsLoading(true)
+  }, [user])
 
   useEffect(() => {
     changeTitle(filteredProducts)
@@ -81,7 +86,7 @@ const Main = () => {
             )}
             {/*메인에서 상품 리스트 */}
             <div className="w-[880px] xs-max:w-[95%] xs-max:mx-auto  border-none rounded-md shadow-basic bg-white">
-              <CardContainer data={title} />
+              {isLoading && <CardContainer data={title} />}
             </div>
           </section>
           <div
