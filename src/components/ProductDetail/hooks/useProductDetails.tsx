@@ -13,7 +13,7 @@ const token = getStoredToken()
 
 // 제품 상세 API
 const getProductDetails = async (memberId: number, productId: number) => {
-  const { data } = await axiosInstance({
+  const data = await axiosInstance({
     method: 'POST',
     url: `/productDetails/main`,
     params: {
@@ -22,7 +22,7 @@ const getProductDetails = async (memberId: number, productId: number) => {
     },
     headers: getJWTToken(token)
   })
-  return data
+  return data.data
 }
 
 // 제품 상세 사용기간 선택 API
@@ -97,14 +97,8 @@ const getProductDetailsAll = async (
 
 // 제품 상세 쿼리
 export const useProductDetails = (memberId: number, productId: number) => {
-  const { data: productDetails } = useQuery(
-    [queryKeys.productDetails, productId],
-    () => getProductDetails(memberId, productId),
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      keepPreviousData: false
-    }
+  const { data: productDetails } = useQuery(queryKeys.productDetails, () =>
+    getProductDetails(memberId, productId)
   )
   console.log(productDetails)
   return productDetails
@@ -124,11 +118,6 @@ export const useDetailsPeriodMutate = () => {
     }
   )
   return getPeriodMutate
-}
-
-const periodAndColor = {
-  period: 0,
-  colorCode: '#ffff'
 }
 
 // 제품 상세 컬러 선택 쿼리

@@ -12,14 +12,28 @@ import Skeleton from './Skeleton'
 import { useRecoilState } from 'recoil'
 import { productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
 
+interface FinalProduct {
+  color: string
+  detailsPrice: number
+  discount: number
+  imageUrlList: {
+    imageType: number
+    imageUrl: string
+  }[]
+  isFavorite: number
+  productDetailsId: number
+  productName: string
+}
+
 const ProductDetails = () => {
   const params = useParams()
   const id = Number(params.id)
 
   const { user } = useUser()
+
   const [productByOtions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
 
-  const productDetails = useProductDetails(user?.memberId!, id)
+  const productDetails = useProductDetails(user ? user?.memberId! : 0, id)
 
   useEffect(() => {
     if (!user) return
@@ -28,7 +42,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <ProductInfo productDetails={productDetails?.data} productId={id} />
+      <ProductInfo productDetails={productDetails?.data} productId={id} memberId={user?.memberId} />
       {/* <Skeleton /> */}
       <ProductRecommend productId={id} />
       <ProductBanner />

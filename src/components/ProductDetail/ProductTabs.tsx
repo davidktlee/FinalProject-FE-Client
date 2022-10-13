@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { useReview } from '../review/hooks/useReview'
 import RevieItems from '../review/ReviewItems'
 import ProductDescription from './ProductDescription'
 import ProductInquiry from './ProductInquiry'
+import { finalProductState } from '../../store/productByOptions'
 
 const ProductAbout = () => {
   const [tabState, setTabState] = useState<boolean>(true)
-
+  const finalProduct = useRecoilValue(finalProductState)
   // const data = useReview()
-  // console.log(data)
 
   return (
     <section className="text-gray-600 body-font ">
@@ -33,7 +34,7 @@ const ProductAbout = () => {
               <span>리뷰(205)</span>
             </button>
           </nav>
-          {tabState ? <ProductDescription /> : <RevieItems />}
+          {tabState ? <ProductDescription finalProduct={finalProduct} /> : <RevieItems />}
         </div>
       </div>
     </section>

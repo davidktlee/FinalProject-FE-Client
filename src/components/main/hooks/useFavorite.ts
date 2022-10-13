@@ -128,7 +128,8 @@ export const useAddFavorite = () => {
         timer: 2000,
         type: 'complete'
       })
-      queryClient.invalidateQueries(queryKeys.favorite)
+      queryClient.invalidateQueries(queryKeys.favorite),
+        queryClient.invalidateQueries(queryKeys.productDetails)
       // queryClient.invalidateQueries(queryKeys.product, { exact: true })
     },
     onError: () => {
