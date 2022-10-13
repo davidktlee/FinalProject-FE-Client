@@ -24,7 +24,7 @@ export const deleteFavorite = async (id: number) => {
   const res = await axiosInstance({
     url: '/favor/delete',
     method: 'POST',
-    headers: getJWTToken(token),
+    headers: getJWTToken(token) ,
     data: {
       productId: id
     }

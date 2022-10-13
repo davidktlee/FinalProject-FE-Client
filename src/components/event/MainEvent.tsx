@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { EventSkeleton } from '../common/ui/Skeleton'
 import ViewMoreBtn from '../main/common/ViewMoreBtn'
-import { EventResponseType, InEventMainList, useGetEvent } from '../main/hooks/useEventLists'
+import { useGetEvent } from '../main/hooks/useEventLists'
+import { InEventMainList } from '../main/types/eventTypes'
 
 // 지울 것
 
@@ -34,7 +35,7 @@ const MainEvent = () => {
         {isFetching ? (
           <EventSkeleton count={4} />
         ) : (
-          eventList?.data?.eventMainList.map((event: InEventMainList) => (
+          eventList?.data?.eventMainList.slice(0, 4).map((event: InEventMainList) => (
             <div
               key={event.eventId}
               className=" w-full h-[330px] xs-max:h-[215px] rounded-xl flex flex-col items-start my-2 shadow-basic hover:cursor-pointer"

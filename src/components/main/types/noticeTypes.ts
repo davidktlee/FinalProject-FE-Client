@@ -13,3 +13,9 @@ export interface ReturnType {
   data: NoticeResponse | undefined
   isFetching: boolean
 }
+
+export interface NoticeDetailResponse {
+  boardTitle: string
+  createdAt: string
+  description: string
+}

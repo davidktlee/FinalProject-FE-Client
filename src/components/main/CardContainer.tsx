@@ -14,7 +14,6 @@ import { userState } from '../../store/user'
 const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
-  const [filteredProductCurrentPage, setFilteredProductCurrentPage] = useState(1)
   const [currentPost, setCurrentPost] = useState([])
   const indexOfLast = newProductCurrentPage * 8
   const indexOfStart = indexOfLast - 8
@@ -34,15 +33,12 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct(
     user?.memberId ? user?.memberId : 0
   )
-  console.log(productLists)
-  console.log('new', newProductLists)
 
   const getFavoriteItem = async () => {
     const res = await getFavorite()
     const filteredItem = res.map((item) => {
       return item.productInfo.productId
     })
-    console.log(filteredItem)
     setFavoriteIds(filteredItem)
   }
 
@@ -53,6 +49,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
   useEffect(() => {
     setCurrentPost(newProductLists?.productData?.slice(indexOfStart, indexOfLast))
   }, [newProductLists, newProductCurrentPage])
+  const [filteredProductCurrentPage, setFilteredProductCurrentPage] = useState(1)
 
   return (
     <>
