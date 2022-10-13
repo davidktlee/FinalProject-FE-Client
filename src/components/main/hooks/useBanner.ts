@@ -7,7 +7,6 @@ const getBanner = async (count: number) => {
   const {
     data: { data }
   } = await axiosInstance({ url: `/image/banner?count=${count}` })
-  console.log(data)
   return data
 }
 

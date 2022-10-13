@@ -1,11 +1,15 @@
 import React from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import CardTemplate from '../../common/ui/CardTemplate'
+import { useGetDetailEvent } from '../hooks/useEventLists'
 import PageLayout from './../../common/ui/PageLayout'
 
 function NoticeDetail() {
   const content = "<p><div style={{fontSize: '30px'}}>많으 ㄴ내용</div></p>"
   const navigate = useNavigate()
+  const { state } = useLocation()
+  const { data, isFetching } = useGetDetailEvent(state as number)
+
   return (
     <>
       <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[300px]">
