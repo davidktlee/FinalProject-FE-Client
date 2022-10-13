@@ -1,64 +1,80 @@
 import React, { useEffect, useState } from 'react'
-import { useGetAllreview, useReview } from './hooks/useReview'
+import { useRecoilValue } from 'recoil'
+import { selectedNameState } from '../../store/review'
+import ReactStars from 'react-rating-stars-component'
 
-const RevieItems = ({ productDetails }: any) => {
+const RevieItems = ({ item }: any) => {
   const [isToggle, setIsToggle] = useState<boolean>(false)
-  const [productReview, setProductReview] = useState<any>()
+  const reviewItems = useRecoilValue(selectedNameState)
 
-  const data = useGetAllreview(productDetails.data.productId)
-  console.log(data)
+  const toggleHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault()
+    setIsToggle(!isToggle)
+  }
 
   return (
-    <section className="text-gray-600 body-font ">
-      <div className="container py-4 mt-2 mx-auto">
-        <div
-          className={`${
-            isToggle ? 'bg-lenssisLightGray ' : ''
-          } "w-full flex-col flex-wrap p-8 cursor-pointer" border-[2px] border-solid border-lenssisLightGray xs-max:p-4 rounded-[5px]`}
-          onClick={() => setIsToggle(!isToggle)}
-        >
-          {/* {reviewItems?.map((item: any) => (
+    <section className="text-gray-600 body-font">
+      <div className="container mt-2 mx-auto block">
+        {reviewItems.length > 0 ? (
+          <div
+            className={`${
+              isToggle ? 'bg-lenssisLightGray ' : ''
+            } w-full flex-col flex-wrap p-8 cursor-pointer border-[2px] border-solid border-lenssisLightGray xs-max:p-4 rounded-[5px] mb-4`}
+            onClick={(e) => toggleHandler(e)}
+            key={item.content}
+            id={item.content}
+          >
             <div className="w-full">
               <div className="flex-col">
                 <div className="flex w-full justify-between xs-max:hidden ">
                   <div className="flex gap-2 xs-max:flex-col">
-                    <div>★★★★★</div>
-                    <div>아이디</div>
+                    <div className="leading-10 mr-2">{item.email}</div>
+                    <ReactStars
+                      value={item.rating}
+                      fullIcon={<i className="fa fa-star"></i>}
+                      activeColor="#ffd700"
+                      color={'#d9d9d9'}
+                      edit={false}
+                      size={24}
+                    />
                   </div>
                   <div>2022.09.16</div>
                 </div>
                 <div className="xs:hidden mobile flex justify-between leading-5">
                   <div className="flex flex-col gap-[5px]">
-                    <div className="text-[16px]">★★★★★</div>
-                    <div className="text-[12px]">아이디</div>
+                    <div className="text-[16px]">{item.rating}</div>
+                    <div className="text-[12px]">{item.email}</div>
                     <h2 className="text-gray-900 text-lg title-font font-medium text-[16px]">
-                      샌드 플러스 그레이
+                      {item.productName}
                     </h2>
-                    <div className="text-[14px]">2022.09.16</div>
+                    <span>
+                      옵션: {item.color}/{item.graphicDiameter}/{item.period === 1 ? '1Day' : 'Monthly'}
+                    </span>
+                    <div className="text-[14px]">{item.createAt}</div>
                   </div>
                   <div>
                     <img
-                      src="https://lenssis.jp/data/item/0134576790/67CA7YKk67iU656Z_1month_7IOB7IS4.jpg"
+                      src={item.reviewImageUrl ? item.reviewImageUrl : item.productImageUrl}
                       width="100px"
                       height="100px"
                     />
                   </div>
                 </div>
-                <div className={`${isToggle ? 'block' : 'flex justify-between gap-2'} w-full mt-4`}>
+                <div className={`${isToggle ? 'block' : 'flex justify-between gap-2'} w-full`}>
                   <div className="w-[90%] xs-max:w-full">
-                    <h2 className="text-gray-900 text-lg title-font font-medium mb-1 xs-max:hidden">
-                      샌드 플러스 그레이
-                    </h2>
-                    <p className="leading-relaxed text-base flex-wrap xs-max:text-[13px] ">
-                      컬러 렌즈를 처음 기로한 지 8년 정도 지났는데, 그 8년간 가장 마음에 들어서 재구매 하고
-                      있습니다. 칙칙한 브라운 같은 회색 같은 절묘한 색상에 가장자리가 자연스러운 투명감을
-                      줍니다. 자연스려운 색에도 익숙하고 피부톤이 밝은 사람에게도 어두운 헤어컬러의 사람에게도
-                      추천합니다 ^-^
-                    </p>
+                    <div className="flex gap-4">
+                      <h2 className="text-lenssisDeepGray text-lg title-font font-medium mb-4 xs-max:hidden">
+                        {item.productName}
+                      </h2>
+                      <span className="text-lenssisGray leading-7">
+                        옵션: {item.color}/{item.graphicDiameter}/{item.period === 1 ? '1Day' : 'Monthly'}
+                      </span>
+                    </div>
+                    <p className="leading-relaxed text-base flex-wrap xs-max:text-[13px] ">{item.content}</p>
                   </div>
                   <div className={`${isToggle ? 'mt-4' : 'flex-shrink-0 my-auto'} xs-max:hidden`}>
                     <img
-                      src="https://lenssis.jp/data/item/0134576790/67CA7YKk67iU656Z_1month_7IOB7IS4.jpg"
+                      src={item.reviewImageUrl ? item.reviewImageUrl : item.productImageUrl}
                       width={`${isToggle ? '275px' : '100px'}`}
                       height={`${isToggle ? '275px' : '100px'}`}
                     />
@@ -89,8 +105,10 @@ const RevieItems = ({ productDetails }: any) => {
                 </div>
               </div>
             </div>
-          ))} */}
-        </div>
+          </div>
+        ) : (
+          <div className="text-center">리뷰가 존재하지 않습니다.</div>
+        )}
       </div>
     </section>
   )

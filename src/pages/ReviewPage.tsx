@@ -3,11 +3,27 @@ import ReviewBanner from '../components/review/ReviewBanner'
 import ReviewContainer from '../components/review/ReviewContainer'
 import Pagination from '../components/main/common/Pagination'
 import { useState } from 'react'
-import { useReview } from '../components/review/hooks/useReview'
+import { useGetForProductId, useGetReviewByName, useReview } from '../components/review/hooks/useReview'
+import { useRecoilValue } from 'recoil'
+import { selectedNameState } from '../store/review'
+
+interface NameAndProductId {
+  productId: number
+  name: string
+}
 
 const ReviewPage = () => {
-  const { reviewItems } = useReview()
+  const { forProductId } = useGetForProductId()
+  const reviewItems = useRecoilValue(selectedNameState)
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
+  const { GetReviewByNameMutate } = useGetReviewByName()
+
+  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.currentTarget
+    GetReviewByNameMutate(value)
+    console.log(value)
+  }
+
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -17,9 +33,14 @@ const ReviewPage = () => {
             <select
               name="상품명"
               className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[245px] h-[40px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
+              onChange={selectHandler}
             >
-              <option value="샌드플러스 그레이">샌드플러스그레이</option>
-              <option value="샌드플러스 그레이">에일린</option>
+              <option value="all">すべての製品</option>
+              {forProductId?.data.data.map((item: NameAndProductId) => (
+                <option key={item.productId} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
             </select>
             {/* 웹 */}
             <div className="xs-max:hidden">
@@ -30,7 +51,12 @@ const ReviewPage = () => {
               <ReviewMobileBanner />
             </div>
             <ReviewContainer />
-            <Pagination divide={8} allCount={40} currentPage={1} setCurrentPage={setAllProductCurrentPage} />
+            <Pagination
+              divide={1}
+              allCount={reviewItems.length}
+              currentPage={1}
+              setCurrentPage={setAllProductCurrentPage}
+            />
           </div>
         </div>
       </section>

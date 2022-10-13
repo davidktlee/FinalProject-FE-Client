@@ -19,10 +19,11 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
   const [selectedFile, setSelectedFile] = useState<File | ''>()
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
-
+  console.log(reviewItem)
   const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
+  console.log(reviewItem)
 
   const ratingChanged = (newRating: number) => {
     setRating(newRating)
@@ -120,9 +121,23 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
                       />
                     </div>
                     <div className="flex flex-col py-[25px] justify-between">
-                      <div className="xs-max:text-[12px] text-[14px]">샌드 플러스 그레이</div>
-                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">옵션 선택</div>
-                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">가격</div>
+                      <div className="xs-max:text-[12px] text-[14px]">{reviewItem[0].productName}</div>
+                      <div>
+                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                          옵션 선택 - 그래픽 직경: {reviewItem[0].graphicDiameter}
+                        </span>
+                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                          {' '}
+                          / 도수: {reviewItem[0].degree}
+                        </span>
+                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                          {' '}
+                          / 수량: {reviewItem[0].pcs}개
+                        </span>
+                      </div>
+                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                        {reviewItem[0].price}円
+                      </div>
                       <div className="xs:hidden flex gap-[2px]">
                         <ReactStars
                           count={5}

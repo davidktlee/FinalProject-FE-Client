@@ -20,9 +20,7 @@ export const queryKeys = {
   filterList: 'filterList',
   recommend: 'recommend',
   noticeDetail: 'noticeDetail',
-<<<<<<< HEAD
-  allReview: 'allReview'
-=======
-  searchedProduct: 'searchedProduct'
->>>>>>> be0578203a8274ccc9a6ee509c66f6ad584017a1
+  allReview: 'allReview',
+  searchedProduct: 'searchedProduct',
+  forProductId: 'forProductId'
 }

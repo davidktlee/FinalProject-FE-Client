@@ -1,13 +1,7 @@
 import { graphicDiameter } from '../../constants/filterData'
 import Heart from '/assets/Heart.svg'
 import FillHeart from '/assets/FillHeart.svg'
-<<<<<<< HEAD
-import { useParams } from 'react-router'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { mainCartModal } from '../../store/mainCart'
-=======
-import { useRecoilState, useSetRecoilState } from 'recoil'
->>>>>>> be0578203a8274ccc9a6ee509c66f6ad584017a1
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
 import { useAddFavorite, useDeleteFavorite } from '../main/hooks/useFavorite'
@@ -31,11 +25,6 @@ interface PropsType {
 const token = getStoredToken()
 
 const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType) => {
-<<<<<<< HEAD
-  console.log(productDetails)
-=======
-  console.log(productId)
->>>>>>> be0578203a8274ccc9a6ee509c66f6ad584017a1
   const [commaPrice, setCommaPrice] = useState({
     price: '',
     discount: ''
@@ -184,7 +173,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
 
   const addCartHandler = () => {
     addCartMutate(finalProduct.productDetailsId)
-<<<<<<< HEAD
+    setModalState((prev) => (prev = !prev))
     resetOptions()
     console.log('제품상세 장바구니 버튼 클릭!')
   }
@@ -201,14 +190,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       deleteFavor(productId)
     }
   }
-
-  const setModalState = useSetRecoilState(mainCartModal)
-=======
-    setModalState((prev) => (prev = !prev))
-    console.log('제품상세 장바구니 버튼 클릭!')
-  }
-  
->>>>>>> be0578203a8274ccc9a6ee509c66f6ad584017a1
 
   const toComma = () => {
     const addCommaPrice = productDetails?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
