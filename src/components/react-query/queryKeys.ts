@@ -18,5 +18,6 @@ export const queryKeys = {
   productDetailsGraphic: 'productDetailsGraphic',
   productDetailsAll: 'productDetailsAll',
   filterList: 'filterList',
-  recommend: 'recommend'
+  recommend: 'recommend',
+  noticeDetail: 'noticeDetail'
 }

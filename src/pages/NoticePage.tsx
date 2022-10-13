@@ -17,7 +17,7 @@ function NoticePage() {
     if (location.pathname.includes('notice')) {
       navigate('/notice/mustread')
     }
-  }, [location.pathname])
+  }, [])
 
   return (
     <>
@@ -34,9 +34,6 @@ function NoticePage() {
           <CardTemplate title="공지사항" isTitleVisible={true}>
             <NoticeTitle />
             <Outlet />
-            <div className="flex justify-center items-center relative">
-              <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} allCount={10} />
-            </div>
           </CardTemplate>
         </PageLayout>
       )}

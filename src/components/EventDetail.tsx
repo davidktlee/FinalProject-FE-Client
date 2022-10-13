@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import CardTemplate from './common/ui/CardTemplate'
 import PageLayout from './common/ui/PageLayout'
-import { EventDetailResponseType, EventResponseType, useGetDetailEvent } from './main/hooks/useEventLists'
+import { useGetDetailEvent } from './main/hooks/useEventLists'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAddCoupon } from './event/hooks/useAddCoupon'
-import { useMutation } from 'react-query'
-import axios from 'axios'
 import { DetailEventSkeleton } from './common/ui/Skeleton'
+import { EventDetailResponseType } from './main/types/eventTypes'
 const img =
   'https://user-images.githubusercontent.com/97086762/192783636-f77a8dd9-02b0-4044-a526-47fcd7a1353c.png'
 
@@ -37,7 +36,7 @@ function EventDetail() {
     // addCouponMutate(1)
   }
   useEffect(() => {
-    if (detailEvent[0]) {
+    if (detailEvent && detailEvent[0]) {
       const time = new Date(detailEvent[0].startTime)
       const year = time.getFullYear()
       const month = time.getMonth()
@@ -51,6 +50,7 @@ function EventDetail() {
         {isFetching ? (
           <DetailEventSkeleton />
         ) : (
+          detailEvent &&
           detailEvent.map((item: EventDetailResponseType) => (
             <div className="w-[100%]">
               <div className="flex items-center py-4 border-t-[1px] border-solid">
