@@ -59,7 +59,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
   }, [formValue])
   return (
     <>
-      <div className="">
+      <div className="w-full">
         {!isEdit && <h4 className="font-bold">고객정보</h4>}
         <Input
           name="lastname"
