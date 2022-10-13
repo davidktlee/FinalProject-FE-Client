@@ -8,8 +8,24 @@ import { queryKeys } from '../../react-query/queryKeys'
 const token = getStoredToken()
 
 const getReviewItems = async () => {
-  const { data } = await axiosInstance.get('/reply/myReply')
-  console.log(data)
+  const data = await axiosInstance({
+    url: '/reply/myReply',
+    method: 'GET',
+    headers: getJWTToken(token)
+  })
+  return data.data.data
+}
+
+const getAllReview = async (productId: number) => {
+  const data = await axiosInstance({
+    url: '/reply/inProductDetails',
+    method: 'GET',
+    params: {
+      page: 1,
+      productId,
+      size: 10
+    }
+  })
   return data
 }
 
@@ -20,11 +36,11 @@ const addReviewItems = async (reviewInfo: ReviewInfo) => {
     headers: getJWTToken(token),
     data: {
       content: reviewInfo.content,
-      productDetailsId: reviewInfo.productDetailsId | 12,
-      memberId: reviewInfo.memberId || 39,
+      productDetailsId: reviewInfo.productDetailsId,
+      memberId: reviewInfo.memberId,
       rating: reviewInfo.rating,
       replyImageUrl: reviewInfo.replyImageUrl,
-      orderId: reviewInfo.orderId || 1123123
+      orderId: reviewInfo.orderId
     }
   })
   console.log(data)
@@ -35,6 +51,14 @@ export const useReview = () => {
   const { data: reviewItems } = useQuery(queryKeys.review, () => getReviewItems(), {})
   console.log(reviewItems)
   return { reviewItems }
+}
+
+export const useGetAllreview = (productId: number) => {
+  const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
+    enabled: productId !== 0
+  })
+  console.log(allReview)
+  return { allReview }
 }
 
 export const useAddReview = () => {

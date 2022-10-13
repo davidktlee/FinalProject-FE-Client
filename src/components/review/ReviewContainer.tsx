@@ -1,7 +1,10 @@
 import React from 'react'
+import { useReview } from './hooks/useReview'
 import RevieItems from './ReviewItems'
 
 const ReviewContainer = () => {
+  const data = useReview()
+  console.log(data)
   return (
     <div className="pt-10 pb-4 xs-max:pt-4">
       <div className="flex flex-col">
@@ -12,13 +15,13 @@ const ReviewContainer = () => {
         <div className="container px-4 mx-auto flex-wrap">
           <div className="-m-4">
             <RevieItems />
+            {/* <RevieItems />
             <RevieItems />
             <RevieItems />
             <RevieItems />
             <RevieItems />
             <RevieItems />
-            <RevieItems />
-            <RevieItems />
+            <RevieItems /> */}
           </div>
         </div>
       </section>

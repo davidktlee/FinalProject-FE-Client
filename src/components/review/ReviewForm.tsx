@@ -9,15 +9,16 @@ interface ReviewFormProps {
   onClose: Function
   isModalOpen: boolean
   reviewItem: any
+  orderId: number
+  memberId: number
 }
 
-const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
+const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: ReviewFormProps) => {
   const [reviewText, setReviewText] = useState('')
   const [rating, setRating] = useState(0)
-  const [selectedFile, setSelectedFile] = useState<File>()
+  const [selectedFile, setSelectedFile] = useState<File | ''>()
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
-  console.log(reviewItem)
 
   const addReviewMutate = useAddReview()
 
@@ -33,6 +34,9 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+    if (!file) {
+      setSelectedFile('')
+    }
     setSelectedFile(file)
     const reader = new FileReader()
     reader.onloadend = () => {
@@ -53,9 +57,9 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem }: ReviewFormProps) => {
 
     const reviewInfo = {
       content: reviewText,
-      productDetailsId: reviewItem.productDetailsId,
-      orderId: reviewItem.orderId,
-      memberId: reviewItem.memberId,
+      productDetailsId: reviewItem[0].productDetailsId,
+      orderId,
+      memberId,
       rating: rating,
       replyImageUrl: result.location
     }

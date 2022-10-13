@@ -3,8 +3,10 @@ import ReviewBanner from '../components/review/ReviewBanner'
 import ReviewContainer from '../components/review/ReviewContainer'
 import Pagination from '../components/main/common/Pagination'
 import { useState } from 'react'
+import { useReview } from '../components/review/hooks/useReview'
 
 const ReviewPage = () => {
+  const { reviewItems } = useReview()
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   return (
     <div>
@@ -19,14 +21,16 @@ const ReviewPage = () => {
               <option value="샌드플러스 그레이">샌드플러스그레이</option>
               <option value="샌드플러스 그레이">에일린</option>
             </select>
+            {/* 웹 */}
             <div className="xs-max:hidden">
               <ReviewBanner />
             </div>
+            {/* 모바일 */}
             <div className="xs:hidden">
               <ReviewMobileBanner />
             </div>
             <ReviewContainer />
-            <Pagination allCount={40} currentPage={1} setCurrentPage={setAllProductCurrentPage} />
+            <Pagination divide={8} allCount={40} currentPage={1} setCurrentPage={setAllProductCurrentPage} />
           </div>
         </div>
       </section>

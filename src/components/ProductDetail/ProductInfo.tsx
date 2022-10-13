@@ -2,7 +2,7 @@ import { graphicDiameter } from '../../constants/filterData'
 import Heart from '/assets/Heart.svg'
 import FillHeart from '/assets/FillHeart.svg'
 import { useParams } from 'react-router'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { mainCartModal } from '../../store/mainCart'
 import { ProductDetailResponseType } from '../main/types/productTypes'
 import { useEffect, useState } from 'react'
@@ -39,6 +39,11 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   const { addCartMutate } = useAddCart()
   const addFavor = useAddFavorite()
   const deleteFavor = useDeleteFavorite()
+  const resetOptions = useResetRecoilState(productDetailsState)
+
+  useEffect(() => {
+    resetOptions()
+  }, [])
 
   const getProductByOptions = async (detailState: ProductDetailsType) => {
     const { data } = await axiosInstance({
@@ -163,12 +168,12 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       setDetailState({ ...detailState, degree: Number(value) })
       postAllOptions(detailState)
       console.log(detailState.degree)
-      // refresh 처리하기
     }
   }
 
   const addCartHandler = () => {
     addCartMutate(finalProduct.productDetailsId)
+    resetOptions()
     console.log('제품상세 장바구니 버튼 클릭!')
   }
 
@@ -201,8 +206,8 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   }
 
   useEffect(() => {
-    console.log(finalProduct)
-  }, [finalProduct])
+    resetOptions()
+  }, [])
 
   useEffect(() => {
     if (productDetails?.isFavorite === 1) {
