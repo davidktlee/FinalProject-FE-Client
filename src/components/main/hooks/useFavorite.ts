@@ -76,7 +76,7 @@ export const useGetFavorite = () => {
       })
     }
   })
-  return data
+  return {data}
 }
 
 export const useGetFavoriteMonthly = () => {

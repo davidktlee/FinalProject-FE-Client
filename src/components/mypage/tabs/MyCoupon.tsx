@@ -28,6 +28,7 @@ import useCoupon from '../hooks/useCoupon';
 const MyCoupon = () => {
   const {coupon} = useCoupon()
   
+  console.log(coupon);
   return (
     <CardLayout title="쿠폰함">
       <div className='flex xs:flex-wrap xs:flex-row flex-col gap-4 mx-auto xs:justify-end'>

@@ -15,7 +15,7 @@ const CardTemplate = ({ children, isTitleVisible, title, marginTop }: CardTempla
       }`}
     >
       {isTitleVisible && (
-        <h3 className="text-[#1B304A] font-bold text-[22px] text-center w-[180px] h-[50px] mx-auto my-6">
+        <h3 className="text-[#1B304A] font-bold text-[22px] text-center w-full h-[50px] mx-auto my-6">
           {title}
         </h3>
       )}

@@ -42,6 +42,7 @@ import MobileSideBar from '../mobile-sidebar/MobileSideBar'
 import NonMemberPage from '../pages/NonMemberPage'
 import NonMemberInquiry from '../components/nonmember/inquiry/NonMemberInquiry'
 import Footer from './../components/footer/Footer'
+import SearchResult from '../components/search-result/SearchResult'
 
 const Router = () => {
   const [isShowSideBar, setIsShowSideBar] = useRecoilState(sideBarState)
@@ -97,8 +98,10 @@ const Router = () => {
         <Route path="/review" element={<Review />} />
         <Route path="/nonmember" element={<NonMemberPage />} />
         <Route path="/nonmember/:orderId" element={<NonMemberInquiry />} />
+        <Route path="/searchresult" element={<SearchResult />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      
       <MobileBottomNav />
     </BrowserRouter>
   )
