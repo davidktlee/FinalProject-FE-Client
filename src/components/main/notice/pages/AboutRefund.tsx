@@ -28,11 +28,11 @@ function AboutRefund() {
       ) : (
         boardList.map((item: BoardMainList) => (
           <div key={item.boardId}>
-            <WebNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
+            <WebNotice id={item.boardId} title={item.boardTitle}  />
             <MobileNotice
               id={item.boardId}
               title={item.boardTitle}
-              isFetching={isFetching}
+
               createdAt={item.createdAt}
             />
           </div>

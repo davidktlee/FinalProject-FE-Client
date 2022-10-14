@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router'
 interface PropsType {
   id: number
   title: string
-  isFetching: boolean
   createdAt: string
 }
 
-function MobileNotice({ id, title, isFetching, createdAt }: PropsType) {
+function MobileNotice({ id, title, createdAt }: PropsType) {
   const navigate = useNavigate()
 
   return (

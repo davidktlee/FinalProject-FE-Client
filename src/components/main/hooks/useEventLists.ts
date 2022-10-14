@@ -13,7 +13,6 @@ import {
 export const getEvents = async (): Promise<EventResponseType> => {
   const { data }: AxiosResponse<EventResponseType> = await axiosInstance({
     url: '/event/main',
-    // url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/event'
     headers: {
       ContentType: 'application/json'
     }
@@ -23,6 +22,7 @@ export const getEvents = async (): Promise<EventResponseType> => {
 }
 export const useGetEvent = (): EventReturnType => {
   const { fireToast } = useToast()
+
   const { data, isFetching } = useQuery([queryKeys.allEvent], () => getEvents(), {
     refetchOnWindowFocus: false,
     staleTime: 900000,

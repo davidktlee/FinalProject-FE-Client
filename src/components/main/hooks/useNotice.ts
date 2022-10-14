@@ -3,7 +3,11 @@ import { axiosInstance } from './../../axiosinstance/index'
 import { useQuery, useQueryClient } from 'react-query'
 import { queryKeys } from '../../react-query/queryKeys'
 import useToast from '../../common/toast/hooks/useToast'
-import { NoticeDetailResponse, NoticeResponse, ReturnType } from '../types/noticeTypes'
+import { MainBoardList, NoticeDetailResponse, NoticeResponse, ReturnType } from '../types/noticeTypes'
+export interface DetailReturnType {
+  data: MainBoardList[] | undefined
+  isFetching: boolean
+}
 
 const getAllNotice = async (type: number): Promise<NoticeResponse> => {
   const {
@@ -31,14 +35,15 @@ export const useGetAllNotice = (type: number): ReturnType => {
   return { data, isFetching }
 }
 
-const getDetailNotice = async (id: number): Promise<NoticeDetailResponse> => {
+const getDetailNotice = async (id: number): Promise<MainBoardList[]> => {
   const {
     data: { data }
   } = await axiosInstance({ url: `/board/details?boardId=${id}` })
+  console.log(data)
   return data
 }
 
-export const useGetDetailNotice = (id: number) => {
+export const useGetDetailNotice = (id: number): DetailReturnType => {
   const { fireToast } = useToast()
   const { data, isFetching } = useQuery([queryKeys.noticeDetail, id], () => getDetailNotice(id), {
     refetchOnWindowFocus: false,
