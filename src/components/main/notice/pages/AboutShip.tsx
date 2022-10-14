@@ -28,13 +28,8 @@ function AboutShip() {
       ) : (
         boardList.map((item: BoardMainList) => (
           <div key={item.boardId}>
-            <WebNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
-            <MobileNotice
-              id={item.boardId}
-              title={item.boardTitle}
-              isFetching={isFetching}
-              createdAt={item.createdAt}
-            />
+            <WebNotice id={item.boardId} title={item.boardTitle} />
+            <MobileNotice id={item.boardId} title={item.boardTitle} createdAt={item.createdAt} />
           </div>
         ))
       )}

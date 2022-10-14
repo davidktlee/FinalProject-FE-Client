@@ -9,6 +9,7 @@ export interface InEventMainList {
   eventId: number
   eventTitle: string
   imageUrl: string
+  topFixed: number
 }
 
 export interface EventResponseType {

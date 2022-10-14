@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import CardTemplate from '../../common/ui/CardTemplate'
 import { useGetDetailNotice } from '../hooks/useNotice'
-import { NoticeDetailResponse } from '../types/noticeTypes'
+import { MainBoardList } from '../types/noticeTypes'
 import PageLayout from './../../common/ui/PageLayout'
 
 function NoticeDetail() {
@@ -10,7 +10,6 @@ function NoticeDetail() {
   const navigate = useNavigate()
   const { state } = useLocation()
   const { data, isFetching } = useGetDetailNotice(state as number)
-  console.log(data)
 
   return (
     <>
@@ -18,7 +17,7 @@ function NoticeDetail() {
         <CardTemplate title="공지사항" isTitleVisible={true}>
           <div className="w-[100%]">
             {data &&
-              data.map((item: NoticeDetailResponse) => (
+              data?.map((item: MainBoardList) => (
                 <div key={item.createdAt}>
                   <div className="flex items-center py-8 border-t-[1px] border-solid">
                     <div className="ml-10 mr-28">제목</div>
