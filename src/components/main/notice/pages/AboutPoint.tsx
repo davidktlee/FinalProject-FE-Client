@@ -34,7 +34,7 @@ function AboutPoint() {
         ))
       )}
       <div className="flex justify-center items-center relative">
-        {boardList != [] && data && (
+        {data && (
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
