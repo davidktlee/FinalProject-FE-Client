@@ -20,7 +20,7 @@ export const getProductDetails = async (memberId: number, productId: number) => 
       productId,
       memberId: memberId ? memberId : 0
     },
-    headers: getJWTToken(token)
+    headers: token ? getJWTToken(token) : undefined
   })
   return data.data
 }
@@ -33,7 +33,8 @@ const getProductDetailsPeriod = async (detailsState: ProductDetailsType) => {
     params: {
       period: detailsState.period,
       productId: detailsState.productId
-    }
+    },
+    headers: token ? getJWTToken(token) : undefined
   })
   return data
 }
