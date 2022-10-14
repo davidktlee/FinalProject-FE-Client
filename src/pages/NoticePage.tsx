@@ -13,12 +13,6 @@ function NoticePage() {
   const location = useLocation()
   const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    if (location.pathname.includes('notice')) {
-      navigate('/notice/mustread')
-    }
-  }, [])
-
   return (
     <>
       {location.pathname.includes('notice') === false ? (
@@ -26,7 +20,7 @@ function NoticePage() {
           <div className="w-[90%] mx-auto">
             <MainNotice />
             <Outlet />
-            <ViewMoreBtn moveTo="/notice" />
+            <ViewMoreBtn moveTo="/notice/mustread" />
           </div>
         </div>
       ) : (

@@ -3,7 +3,7 @@ import { axiosInstance } from './../../axiosinstance/index'
 import { useQuery, useQueryClient } from 'react-query'
 import { queryKeys } from '../../react-query/queryKeys'
 import useToast from '../../common/toast/hooks/useToast'
-import { NoticeResponse, ReturnType } from '../types/noticeTypes'
+import { NoticeDetailResponse, NoticeResponse, ReturnType } from '../types/noticeTypes'
 
 const getAllNotice = async (type: number): Promise<NoticeResponse> => {
   const {
@@ -16,7 +16,7 @@ const getAllNotice = async (type: number): Promise<NoticeResponse> => {
 
 export const useGetAllNotice = (type: number): ReturnType => {
   const { fireToast } = useToast()
-  const { data, isFetching } = useQuery(queryKeys.allNotice, () => getAllNotice(type), {
+  const { data, isFetching } = useQuery([queryKeys.allNotice, type], () => getAllNotice(type), {
     refetchOnWindowFocus: false,
     onError: () => {
       fireToast({
@@ -31,7 +31,7 @@ export const useGetAllNotice = (type: number): ReturnType => {
   return { data, isFetching }
 }
 
-const getDetailNotice = async (id: number) => {
+const getDetailNotice = async (id: number): Promise<NoticeDetailResponse> => {
   const {
     data: { data }
   } = await axiosInstance({ url: `/board/details?boardId=${id}` })
