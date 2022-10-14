@@ -38,11 +38,11 @@ function EventPage() {
       <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
         <CardTemplate title="이벤트" isTitleVisible={true}>
           <div className="text-center text-[24px] text-lenssisDark font-[600] mb-4">주목 이벤트</div>
-          {filteredItem != [] &&
+          {filteredItem &&
             filteredItem.map((event: InEventMainList) => (
               <div
                 key={event.eventId}
-                className="w-[320px] md:w-[430px] rounded-xl xs-max:h-[215px] flex flex-col my-2 shadow-basic hover:cursor-pointer"
+                className="w-[320px] md:w-[430px] mx-auto rounded-xl xs-max:h-[215px] flex flex-col my-2 shadow-basic hover:cursor-pointer"
                 onClick={() => onClickEvent(event.eventId)}
               >
                 <img
