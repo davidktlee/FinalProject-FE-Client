@@ -117,7 +117,7 @@ export const EventSkeleton = ({ count }: PropsType) => {
   )
 }
 
-export const DetailEventSkeleton = () => {
+export const EventDetailSkeleton = () => {
   return (
     <div>
       <div className="w-[1020px] h-[130px] md:w-[1030px] md:h-[130px] rounded-md mx-auto mt-20 ">
@@ -135,6 +135,34 @@ export const DetailEventSkeleton = () => {
       </div>
       <div className="md:w-[1030px] flex justify-center mx-auto">
         <div className="md:w-[780px] md:h-[1900px] bg-gray-300 rounded-md mt-10"></div>
+      </div>
+    </div>
+  )
+}
+export const NoticeDetailSkeleton = () => {
+  return (
+    <div className="w-[1180px] h-[700px] rounded-md mx-auto">
+      <div className="flex animate-pulse flex-col">
+        <div className="w-[1080px] flex items-center mt-8 ml-12">
+          <div className="w-20 bg-gray-300 h-6 rounded-md mr-[100px]"></div>
+          <div className="w-[300px] bg-gray-300 h-6 rounded-md mr-[360px] "></div>
+        </div>
+        <div className="w-[1080px] flex items-center mt-4 ml-12">
+          <div className="w-20 bg-gray-300 h-6 rounded-md mr-[100px]"></div>
+          <div className="w-[300px] bg-gray-300 h-6 rounded-md mr-[360px] "></div>
+        </div>
+        <div className="w-[1080px] flex items-center mt-4 ml-12">
+          <div className="w-20 bg-gray-300 h-6 rounded-md mr-[100px]"></div>
+          <div className="w-[300px] bg-gray-300 h-6 rounded-md mr-[360px] "></div>
+        </div>
+        <div className="w-[1080px] flex items-center mt-4 ml-12">
+          <div className="w-20 bg-gray-300 h-6 rounded-md mr-[100px]"></div>
+          <div className="w-[300px] bg-gray-300 h-6 rounded-md mr-[360px] "></div>
+        </div>
+        <div className="w-[1080px] flex items-center mt-4 ml-12">
+          <div className="w-20 bg-gray-300 h-6 rounded-md mr-[100px]"></div>
+          <div className="w-[300px] bg-gray-300 h-6 rounded-md mr-[360px] "></div>
+        </div>
       </div>
     </div>
   )

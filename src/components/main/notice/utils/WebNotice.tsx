@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
 interface PropsType {
@@ -9,7 +9,6 @@ interface PropsType {
 
 function WebNotice({ id, title, isFetching }: PropsType) {
   const navigate = useNavigate()
-  console.log(title)
   return (
     <>
       <div className="pb-10 hidden xs:block">

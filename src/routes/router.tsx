@@ -101,7 +101,7 @@ const Router = () => {
         <Route path="/searchresult" element={<SearchResult />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
-      
+
       <MobileBottomNav />
     </BrowserRouter>
   )

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { NoticeDetailSkeleton } from '../../../common/ui/Skeleton'
 import Pagination from '../../common/Pagination'
 import { useGetAllNotice } from '../../hooks/useNotice'
 import { BoardMainList } from '../../types/noticeTypes'
@@ -20,18 +21,25 @@ function AboutPoint() {
   // 쿼리 키를 페이지네이션 부분에 내려줘서 버튼 누를 때 가능하게 만들기
   return (
     <>
-      {boardList == [] ? (
-        boardList.map((item: BoardMainList) => (
-          <>
-            <WebNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
-            <MobileNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
-          </>
-        ))
-      ) : (
+      {isFetching ? (
+        <NoticeDetailSkeleton />
+      ) : data && data?.totalCount === 0 ? (
         <div className="text-center text-[24px] mt-10 text-lenssisDark">등록된 내용이 없습니다</div>
+      ) : (
+        boardList.map((item: BoardMainList) => (
+          <div key={item.boardId}>
+            <WebNotice id={item.boardId} title={item.boardTitle} isFetching={isFetching} />
+            <MobileNotice
+              id={item.boardId}
+              title={item.boardTitle}
+              isFetching={isFetching}
+              createdAt={item.createdAt}
+            />
+          </div>
+        ))
       )}
       <div className="flex justify-center items-center relative">
-        {data && (
+        {boardList != [] && data && (
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
