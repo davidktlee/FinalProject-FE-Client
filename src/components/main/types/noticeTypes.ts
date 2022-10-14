@@ -14,14 +14,7 @@ export interface ReturnType {
   isFetching: boolean
 }
 
-export interface NoticeDetailResponse {
-  data: {
-    totalCount: number
-    MainBoardList: MainBoardList[]
-  }
-}
-
-interface MainBoardList {
+export interface MainBoardList {
   boardTitle: string
   createdAt: string
   boardType: number
