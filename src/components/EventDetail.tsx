@@ -32,7 +32,7 @@ function EventDetail() {
   const addCouponMutate = useAddCoupon()
 
   const clickEventBtn = () => {
-    addCouponMutate(1)
+    addCouponMutate(5)
     // addCouponMutate(1)
   }
   useEffect(() => {
