@@ -48,7 +48,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
   }
 
   const handleReviewSubmit = async () => {
-    const { reactS3Client } = require('react-aws-s3-typescript')
+    var { reactS3Client } = require('react-aws-s3-typescript')
 
     const result = await reactS3Client.uploadFile(
       selectedFile as File,
