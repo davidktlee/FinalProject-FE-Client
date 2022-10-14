@@ -4,7 +4,7 @@ import PageLayout from './common/ui/PageLayout'
 import { useGetDetailEvent } from './main/hooks/useEventLists'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAddCoupon } from './event/hooks/useAddCoupon'
-import { DetailEventSkeleton } from './common/ui/Skeleton'
+import { EventDetailSkeleton } from './common/ui/Skeleton'
 import { EventDetailResponseType } from './main/types/eventTypes'
 const img =
   'https://user-images.githubusercontent.com/97086762/192783636-f77a8dd9-02b0-4044-a526-47fcd7a1353c.png'
@@ -48,7 +48,7 @@ function EventDetail() {
     <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
       <CardTemplate title="이벤트" isTitleVisible={true}>
         {isFetching ? (
-          <DetailEventSkeleton />
+          <EventDetailSkeleton />
         ) : (
           detailEvent &&
           detailEvent.map((item: EventDetailResponseType) => (

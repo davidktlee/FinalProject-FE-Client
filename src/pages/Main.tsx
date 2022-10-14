@@ -15,6 +15,8 @@ import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
 import { filteredProudcts } from '../store/filterVallue'
 import { useUser } from '../components/auth/hooks/useUser'
+import { getFavorite } from '../components/main/hooks/useFavorite'
+import { MainCartFavoriteId } from '../store/mainCart'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
@@ -48,9 +50,6 @@ const Main = () => {
       setTitle(() => 'Products')
     }
   }
-  useEffect(() => {
-    setIsLoading(true)
-  }, [user])
 
   useEffect(() => {
     changeTitle(filteredProducts)
@@ -64,6 +63,10 @@ const Main = () => {
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
+  }, [])
+
+  useEffect(() => {
+    // getFavoriteItem()
   }, [])
 
   return (
@@ -86,7 +89,7 @@ const Main = () => {
             )}
             {/*메인에서 상품 리스트 */}
             <div className="w-[880px] xs-max:w-[95%] xs-max:mx-auto  border-none rounded-md shadow-basic bg-white">
-              {isLoading && <CardContainer data={title} />}
+              {<CardContainer data={title} />}
             </div>
           </section>
           <div
