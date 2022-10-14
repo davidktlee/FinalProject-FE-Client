@@ -29,7 +29,7 @@ const Card = ({
   })
 
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = '/assets/noImage.jpeg'
+    e.currentTarget.src = '/assets/errorImage.png'
   }
 
   const changeWindowWidth = () => {
