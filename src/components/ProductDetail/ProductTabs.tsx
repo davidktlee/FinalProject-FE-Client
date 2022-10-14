@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { useReview } from '../review/hooks/useReview'
 import RevieItems from '../review/ReviewItems'
 import ProductDescription from './ProductDescription'
 import ProductInquiry from './ProductInquiry'
 import { finalProductState } from '../../store/productByOptions'
+import { useGetAllreview } from '../review/hooks/useReview'
 
-const ProductAbout = () => {
+const ProductAbout = ({ productDetails }: any) => {
   const [tabState, setTabState] = useState<boolean>(true)
+  console.log(productDetails?.data?.productId)
+
   const finalProduct = useRecoilValue(finalProductState)
-  // const data = useReview()
+
+  const { allReview } = useGetAllreview(productDetails?.data.productId)
+  console.log(allReview)
 
   return (
     <section className="text-gray-600 body-font ">
@@ -24,17 +28,20 @@ const ProductAbout = () => {
             >
               <span>상품 정보</span>
             </button>
-
             <button
               onClick={() => setTabState(false)}
               className={`${
                 !tabState && 'border-[#030303] border-b-4 text-[#030303]'
               } flex-1 text-gray-600 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}
             >
-              <span>리뷰(205)</span>
+              <span>리뷰({allReview?.data?.data?.length})</span>
             </button>
           </nav>
-          {tabState ? <ProductDescription finalProduct={finalProduct} /> : <RevieItems />}
+          {tabState ? (
+            <ProductDescription finalProduct={finalProduct} />
+          ) : (
+            <RevieItems productDetails={productDetails} allReview={allReview} />
+          )}
         </div>
       </div>
     </section>
