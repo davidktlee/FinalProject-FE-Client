@@ -12,8 +12,8 @@ const ProductAbout = ({ productDetails }: any) => {
 
   const finalProduct = useRecoilValue(finalProductState)
 
-  const { allReview } = useGetAllreview(productDetails?.data.productId)
-  console.log(allReview)
+  const { allReview } = useGetAllreview(productDetails?.data?.productId)
+  console.log(allReview?.data?.data)
 
   return (
     <section className="text-gray-600 body-font ">
@@ -40,7 +40,9 @@ const ProductAbout = ({ productDetails }: any) => {
           {tabState ? (
             <ProductDescription finalProduct={finalProduct} />
           ) : (
-            <RevieItems productDetails={productDetails} allReview={allReview} />
+            allReview?.data.data.map((item: any) => (
+              <RevieItems productDetails={productDetails} item={item} />
+            ))
           )}
         </div>
       </div>
