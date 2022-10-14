@@ -15,7 +15,7 @@ const AllFavoriteList = () => {
   return (
     <div>
       <div className="pt-2 grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[95%] mx-auto gap-x-[20px]">
-        {data?.map((item, index) => (
+        {data?.data.map((item: any, index: number) => (
           <Card
             key={item.productInfo.productId}
             idx={index}

@@ -69,7 +69,7 @@ const MyOrder = () => {
             </h4>
             <div className="flex justify-between items-center py-4 gap-1 xs:gap-4 border-b border-solid border-[#abc8df] text-xs xs:text-base w-full">
               {product.productInfo.map((pInfo) => (
-                <>
+                <div>
                   <div key={pInfo.productId}>
                     <img width={100} height={100} src={pInfo.imageUrl} alt="눈알" />
                   </div>
@@ -93,7 +93,7 @@ const MyOrder = () => {
                       <span className="">리뷰 작성하기</span>
                     </button>
                   </div>
-                </>
+                </div>
               ))}
             </div>
           </div>

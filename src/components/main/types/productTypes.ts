@@ -13,6 +13,7 @@ export interface ProductResponseType {
   discount: number // 할인률
   isFavorite?: number
   totalCount: number
+  name: string
 }
 
 export interface ProductPropsType {

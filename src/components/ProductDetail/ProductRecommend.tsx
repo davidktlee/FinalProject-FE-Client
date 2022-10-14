@@ -18,7 +18,7 @@ const ProductRecommend = ({ productId }: ProductRecommendProps) => {
   const data = useGetProductRandom(user?.memberId!, productId)
 
   return (
-    <section className="text-gray-600 body-font max-w-[1180px] mx-auto">
+    <section className="text-gray-600 body-font max-w-[1180px] mx-auto mb-10">
       <div className=" container px-5 py-10 mx-auto drop-shadow-basic rounded-[10px] bg-white xs-max:w-[95%]">
         <div className="flex justify-between px-10 xs-max:p-0">
           <p className="font-bold text-lg text-black xs-max:text-[20px]">이런 상품도 있어요!</p>
@@ -41,7 +41,7 @@ const ProductRecommend = ({ productId }: ProductRecommendProps) => {
           ))}
         </div>
         <div className="xs:hidden ">
-          <MobileProductRecommend />
+          <MobileProductRecommend productId={productId} />
         </div>
       </div>
     </section>

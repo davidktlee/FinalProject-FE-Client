@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { selectedNameState } from '../../store/review'
 import ReactStars from 'react-rating-stars-component'
+import { useGetReviewByName } from './hooks/useReview'
 
-const RevieItems = ({ item }: any) => {
+const RevieItems = ({ item, productDetails }: any) => {
   const [isToggle, setIsToggle] = useState<boolean>(false)
   const reviewItems = useRecoilValue(selectedNameState)
+  const { GetReviewByNameMutate } = useGetReviewByName()
 
+  console.log(item)
   const toggleHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault()
     setIsToggle(!isToggle)
   }
+
+  useEffect(() => {
+    GetReviewByNameMutate(productDetails?.data?.name)
+  }, [productDetails])
 
   return (
     <section className="text-gray-600 body-font">
@@ -21,8 +28,8 @@ const RevieItems = ({ item }: any) => {
               isToggle ? 'bg-lenssisLightGray ' : ''
             } w-full flex-col flex-wrap p-8 cursor-pointer border-[2px] border-solid border-lenssisLightGray xs-max:p-4 rounded-[5px] mb-4`}
             onClick={(e) => toggleHandler(e)}
-            key={item.content}
-            id={item.content}
+            key={item?.content}
+            id={item?.content}
           >
             <div className="w-full">
               <div className="flex-col">
@@ -47,14 +54,18 @@ const RevieItems = ({ item }: any) => {
                     <h2 className="text-gray-900 text-lg title-font font-medium text-[16px]">
                       {item.productName}
                     </h2>
-                    <span>
-                      옵션: {item.color}/{item.graphicDiameter}/{item.period === 1 ? '1Day' : 'Monthly'}
-                    </span>
+                    {item.color ? (
+                      <span>
+                        옵션: {item.color}/{item.graphicDiameter}/{item.period === 1 ? '1Day' : 'Monthly'}
+                      </span>
+                    ) : (
+                      ''
+                    )}
                     <div className="text-[14px]">{item.createAt}</div>
                   </div>
                   <div>
                     <img
-                      src={item.reviewImageUrl ? item.reviewImageUrl : item.productImageUrl}
+                      src={item.reviewImageUrl ? item.reviewImageUrl : item.productImageUrl || item.imageUrl}
                       width="100px"
                       height="100px"
                     />
@@ -66,15 +77,19 @@ const RevieItems = ({ item }: any) => {
                       <h2 className="text-lenssisDeepGray text-lg title-font font-medium mb-4 xs-max:hidden">
                         {item.productName}
                       </h2>
-                      <span className="text-lenssisGray leading-7">
-                        옵션: {item.color}/{item.graphicDiameter}/{item.period === 1 ? '1Day' : 'Monthly'}
-                      </span>
+                      {item.color ? (
+                        <span>
+                          옵션: {item.color}/{item.graphicDiameter}/{item.period === 1 ? '1Day' : 'Monthly'}
+                        </span>
+                      ) : (
+                        ''
+                      )}
                     </div>
                     <p className="leading-relaxed text-base flex-wrap xs-max:text-[13px] ">{item.content}</p>
                   </div>
                   <div className={`${isToggle ? 'mt-4' : 'flex-shrink-0 my-auto'} xs-max:hidden`}>
                     <img
-                      src={item.reviewImageUrl ? item.reviewImageUrl : item.productImageUrl}
+                      src={item.reviewImageUrl ? item.reviewImageUrl : item.productImageUrl || item.imageUrl}
                       width={`${isToggle ? '275px' : '100px'}`}
                       height={`${isToggle ? '275px' : '100px'}`}
                     />

@@ -120,8 +120,8 @@ const Payment = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState('')
   const [paymentMethodNumber, setPaymentMethodNumber] = useState<null | number>(null)
-  const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
-  const [totalPrice,setTotalPrice] = useRecoilState(totalPriceState)
+  const [selectedProduct, setSelectedProduct] = useRecoilState(selectProduct)
+  const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState)
   // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
   const [discountCode, setDisCountCode] = useState('')
   const navigate = useNavigate()
@@ -138,8 +138,6 @@ const Payment = () => {
       setCurrentPaymentMethod(value)
     }
   }
-
-
 
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -198,15 +196,14 @@ const Payment = () => {
     }
   }, [])
 
-  
   const paymentHandler = async () => {
     if (!isChecked) {
       alert('개인정보 수집 이용에 동의해주세요')
       return
     }
     const extractArray = selectedProduct.map((item) => {
-      return {pcs:item.pcs,productDetailsId:item.productDetailsId}
-    }) 
+      return { pcs: item.pcs, productDetailsId: item.productDetailsId }
+    })
     const token = getStoredToken()
     const obj = {
       totalPrice,
@@ -214,29 +211,26 @@ const Payment = () => {
       couponId: 0,
       detailAddress: newFormValue.detailAddress || formValue.detailAddress,
       email: formValue.email,
-      memberId: user? user.memberId : 0,
+      memberId: user ? user.memberId : 0,
       method: paymentMethodNumber,
       orderer: formValue.orderer,
       phone: formValue.phone,
-      point: totalPrice/100,
+      point: totalPrice / 100,
       postCode: formValue.postCode,
       products: extractArray,
       receiver: newFormValue.orderer || formValue.orderer,
       receiverPhone: newFormValue.phone || formValue.phone,
-      shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage,
-      
+      shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage
     }
     try {
-      await axiosInstance.post('/order/add',obj,{headers:getJWTToken(token)})  
+      await axiosInstance.post('/order/add', obj, { headers: getJWTToken(token) })
       alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
       navigate('/')
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-    
   }
 
-  
   useEffect(() => {
     if (user) {
       const splitUserEmail = user.email.split('@')
@@ -268,7 +262,7 @@ const Payment = () => {
       })
     }
   }, [user])
-  
+
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
       <ConfirmModal
@@ -313,7 +307,7 @@ const Payment = () => {
                   {item.pcs}
                 </p>
                 <p className="flex justify-center items-center w-[80px] xs:w-[160px] text-xs xs:text-base">
-                {((item.price * item.pcs) - (item.price * item.pcs) * (item.discount / 100)).toLocaleString()}円
+                  {(item.price * item.pcs - item.price * item.pcs * (item.discount / 100)).toLocaleString()}円
                 </p>
               </div>
             ))}
@@ -390,7 +384,6 @@ const Payment = () => {
         <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
-
 
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
         <PaymentTitle text="결제수단 선택" />
