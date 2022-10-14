@@ -24,7 +24,7 @@ const getAllReview = async (productId: number) => {
     method: 'GET',
     params: {
       page: 1,
-      productId,
+      productId: productId,
       size: 10
     }
   })
@@ -80,7 +80,7 @@ export const useReview = () => {
 
 export const useGetAllreview = (productId: number) => {
   const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
-    enabled: productId !== 0
+    enabled: !!productId
   })
   console.log(allReview)
   return { allReview }
@@ -94,6 +94,9 @@ export const useGetReviewByName = () => {
       onSuccess: (reviews) => {
         setSelectedName(reviews.data.data)
         console.log('성공')
+      },
+      onError: (error) => {
+        console.log('review를 불러오지 못했습니다!')
       }
     }
   )

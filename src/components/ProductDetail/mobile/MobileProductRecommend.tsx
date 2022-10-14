@@ -6,11 +6,16 @@ import 'swiper/components/scrollbar/scrollbar.scss'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Scrollbar } from 'swiper'
+import { useGetProductRandom } from '../../main/hooks/useProductLists'
+import { useUser } from '../../auth/hooks/useUser'
 
-const MobilePoductRecommend = () => {
+const MobilePoductRecommend = ({ productId }: any) => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
+  const { user } = useUser()
+  const data = useGetProductRandom(user?.memberId!, productId)
+  console.log(data)
 
   SwiperCore.use([Navigation, Scrollbar])
   useEffect(() => {
@@ -47,10 +52,10 @@ const MobilePoductRecommend = () => {
       {swiperSetting && (
         <Swiper {...swiperSetting} style={{ borderRadius: '15px', padding: '20px 0' }}>
           <div className=" flex w-full justify-between ">
-            {reviewImgs.map((img: string, index: number) => (
+            {data.map((img: any, index: number) => (
               <div key={index}>
                 <SwiperSlide key={index}>
-                  <img width={130} height={130} src={img} />
+                  <img width={130} height={130} src={img?.colorAndImage[0].imageUrl} />
                 </SwiperSlide>
               </div>
             ))}

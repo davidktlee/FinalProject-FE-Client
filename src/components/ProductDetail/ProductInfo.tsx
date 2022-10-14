@@ -241,7 +241,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             <h2 className="xs:hidden text-center text-[20px] text-lenssisDark font-bold">상품상세</h2>
             <img
               alt="ecommerce"
-              className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px]"
+              className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px] h-[460px]"
               src={productDetails?.mainImageUrl}
               width="465"
               height="460"
@@ -310,7 +310,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                           : 'text-lenssisDeepGray border-lenssisStroke border-[1px]'
                       } "border-solid rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
                     >
-                      원데이
+                      {period === 1 ? '원데이' : '먼데이'}
                     </button>
                   ))}
                 </div>

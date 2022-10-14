@@ -77,7 +77,7 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                     idx={idx}
                     colorAndImage={item.colorAndImage}
                     productId={item.productId}
-                    series={item.series}
+                    series={item.name}
                     price={item.price}
                     discount={item.discount}
                     graphicDiameter={item.graphicDiameter}

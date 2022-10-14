@@ -58,7 +58,7 @@ const Card = ({
         {/* 순위 라벨/ 순위 라벨 값이 1일 때 ? 3일 때 ? : 아닐 때 */}
         {idx < 3 ? (
           <>
-            <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4 z-10">
+            <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4 z-[9]">
               {windowWidth < 1020 ? (
                 <>
                   <span className="absolute top-[4px] left-[6px] md:top-[3px] text-white text-[10px] font-bold  xl:font-bold ">
@@ -85,7 +85,7 @@ const Card = ({
             src={viewImg && viewImg}
             onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
-            className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
+            className=" cursor-pointer rounded-md w-[160px] md:w-full h-[120px] mx-auto md:h-[190px]"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">
@@ -110,7 +110,7 @@ const Card = ({
         </span>
         <div className="flex flex-col ">
           <div className="flex items-center">
-            {colorAndImage.slice(0, 3).map((eachColor: ColorAndImage, idx: number) => (
+            {colorAndImage.slice(0, 4).map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
                 className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
@@ -129,13 +129,13 @@ const Card = ({
           <span className="xs:hidden block absolute top-[120px] right-1">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <div className=" text-[14px] md:text-[18px] font-[600]">{series}</div>
+          <div className=" text-[14px]ㄴ md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
             <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
-              {commaPrice.price}円
+              {(price * (100 - discount)) / 100}円
             </div>
             <div className="text-lenssisGray line-through font-[700] text-[12px] md:text-[14px]">
-              {commaPrice.discount}円
+              {price}円
             </div>
           </div>
           <div className="flex justify-start mt-[5px] w-full overflow-hidden flex-wrap">
