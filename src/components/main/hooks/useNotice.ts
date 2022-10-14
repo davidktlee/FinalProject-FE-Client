@@ -3,7 +3,7 @@ import { axiosInstance } from './../../axiosinstance/index'
 import { useQuery, useQueryClient } from 'react-query'
 import { queryKeys } from '../../react-query/queryKeys'
 import useToast from '../../common/toast/hooks/useToast'
-import { MainBoardList, NoticeDetailResponse, NoticeResponse, ReturnType } from '../types/noticeTypes'
+import { MainBoardList, NoticeResponse, ReturnType } from '../types/noticeTypes'
 export interface DetailReturnType {
   data: MainBoardList[] | undefined
   isFetching: boolean
