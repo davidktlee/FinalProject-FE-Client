@@ -1,6 +1,10 @@
-import React from 'react'
-import { useRecoilState } from 'recoil'
-import { filterState } from '../../../../store/filterVallue'
+import React, { useEffect } from 'react'
+import { useMutation } from 'react-query'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { filteredProudcts, filterState, FilterValue } from '../../../../store/filterVallue'
+import { useUser } from '../../../auth/hooks/useUser'
+import { axiosInstance } from '../../../axiosinstance'
+import { contentTypes } from '../FilterButtonFunction'
 
 type MobileBoxLayoutProps = {
   title: string
@@ -13,52 +17,98 @@ type MobileBoxLayoutProps = {
   gapY?: number | string
 }
 
-type contentTypes = {
-  type: string
-  value: string | number
-  color: string
-}
-
 const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBoxLayoutProps) => {
+  const { user } = useUser()
   const [filter, setFilter] = useRecoilState(filterState)
+  const setFilteredProducts = useSetRecoilState(filteredProudcts)
+
+  const requestFilterOptions = async (filter: FilterValue) => {
+    console.log(filter)
+    const data = await axiosInstance({
+      method: 'POST',
+      url: '/product/byOption',
+      params: user?.memberId ? { memberId: user.memberId } : { memberId: 0 },
+      data: {
+        colorCode: filter.colorState,
+        feature: filter.featureState,
+        graphicDiameter: filter.graphicDiameterState,
+        period: filter.periodState,
+        series: filter.seriesState
+      }
+    })
+    return data
+  }
+
+  const { data, mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
+    mutationKey: 'filterOptions',
+    onMutate: (filter) => {
+      filter.periodState.length === 0
+    },
+    onSuccess: ({ data }) => {
+      console.log('필터가 적용되었습니다.')
+      setFilteredProducts(data.data)
+      console.log(data)
+    },
+    onError: (error) => {
+      console.log('필터가 적용에 실패했습니다.')
+      console.log(error)
+    }
+  })
 
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {
-      case 'duration':
-        if (typeof content.value === 'string') {
-          setFilter({ ...filter, durationState: content.value })
-        }
-        console.log(filter)
-        break
-      case 'graphicDiameter':
-        if (typeof content.value === 'string') return
-        if (filter.graphicDiameterState.includes(content.value)) {
+      case 'period':
+        console.log(content.value)
+        if (filter.periodState[1] === Number(content.value[0])) {
           setFilter({
             ...filter,
-            graphicDiameterState: filter.graphicDiameterState.filter((item: number) => item !== content.value)
+            periodState: filter.periodState.filter((item) => item == Number(content.value[0]))
+          })
+        }
+        if (filter.periodState[0] === Number(content.value[0])) {
+          setFilter({
+            ...filter,
+            periodState: filter.periodState.filter((item) => item == Number(content.value[0]))
           })
         } else {
           setFilter({
             ...filter,
-            graphicDiameterState: [...filter.graphicDiameterState, content.value]
+            periodState:
+              [...content.value].length === 2 ? [...content.value.map(Number)] : [Number(content.value[0])]
           })
         }
-        console.log(filter.graphicDiameterState)
+      case 'graphicDiameter':
+        if (typeof content.value === 'number') {
+          if (filter.graphicDiameterState.includes(content.value)) {
+            setFilter({
+              ...filter,
+              graphicDiameterState: filter.graphicDiameterState.filter(
+                (item: number) => item !== content.value
+              )
+            })
+          } else {
+            setFilter({
+              ...filter,
+              graphicDiameterState: [...filter.graphicDiameterState, content.value]
+            })
+          }
+        }
         break
       case 'color':
         if (typeof content.value === 'string' || typeof content.value === 'number') return
-        if (filter.colorState === content.value) {
+        // 교집합이 있을때
+        if (content.value.filter((item: string) => filter.colorState.includes(item)).length > 0) {
           setFilter({
             ...filter,
-            colorState: filter.colorState.filter((item: string) => item !== content.value)
+            colorState: filter.colorState.filter((item) => !content.value.includes(item)) // 차집합
           })
         } else {
           setFilter({
             ...filter,
-            colorState: content.value
+            colorState: [...filter.colorState, ...content.value]
           })
         }
-        console.log(filter.colorState)
+        break
       case 'series':
         if (typeof content.value !== 'string') return
         if (filter.seriesState.includes(content.value)) {
@@ -72,7 +122,7 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
             seriesState: [...filter.seriesState, content.value]
           })
         }
-        console.log(filter.seriesState)
+        break
       case 'feature':
         if (typeof content.value !== 'string') return
         if (filter.featureState.includes(content.value)) {
@@ -86,11 +136,13 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
             featureState: [...filter.featureState, content.value]
           })
         }
-        console.log(filter.featureState)
+        break
       default:
         break
     }
   }
+
+  useEffect(() => {}, [filter])
 
   return (
     <div>
@@ -103,10 +155,12 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
           {contents.map((content: string | number | any, index: number) => (
             <button
               key={index}
-              className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[14px]
+              className={`font-medium border-solid border-[1px] rounded-[20px] text-center text-[12px]
               ${w} ${h} ${px} ${py}
               ${
-                filter.durationState === content.value ? 'bg-lenssisDark text-white border-lenssisDark' : ''
+                filter.periodState.filter((item) => item === Number(content.value)).length > 0
+                  ? 'bg-lenssisDark text-white border-lenssisDark'
+                  : ''
               } ${
                 filter.graphicDiameterState.includes(content.value)
                   ? 'bg-lenssisDark text-white border-lenssisDark'
@@ -116,7 +170,7 @@ const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBo
                   ? 'bg-lenssisDark text-white border-lenssisDark'
                   : ''
               } ${
-                filter.colorState.includes(content.color)
+                filter.colorState.includes(content.value[0])
                   ? 'border-solid border-[3px] border-lenssisDark'
                   : 'border-lenssisStroke'
               } ${

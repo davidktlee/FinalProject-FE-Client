@@ -1,22 +1,79 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Card from '../common/Card'
-import { CardContainerPropsType, ProductResponseType } from './types/productTypes'
+import { CardContainerPropsType, ProductPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
-
-import { useGetProductsList } from './hooks/useProductLists'
-
-// Pagination 부분 수정해야 함
+import { useGetNewProduct, useGetProductsList } from './hooks/useProductLists'
+import { getFavorite } from './hooks/useFavorite'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
+import { filteredProudcts } from '../../store/filterVallue'
+import { useUser } from '../auth/hooks/useUser'
 
 const CardContainer = ({ data }: CardContainerPropsType) => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
+  const [currentPost, setCurrentPost] = useState([])
+  const indexOfLast = newProductCurrentPage * 8
+  const indexOfStart = indexOfLast - 8
+  const { user } = useUser()
 
-  const productLists = useGetProductsList(allProductCurrentPage)
-  console.log(productLists)
+  // 필터링된 상품 리스트입니다.
+  const filteredProducts = useRecoilValue(filteredProudcts)
+
+  const { data: productLists, isFetching: allProductFetching } = useGetProductsList(
+    allProductCurrentPage,
+    user ? user?.memberId : 0
+  )
+
+  const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct(
+    user ? user?.memberId : 0
+  )
+
+  useEffect(() => {
+    setCurrentPost(newProductLists?.productData?.slice(indexOfStart, indexOfLast))
+  }, [newProductLists, newProductCurrentPage])
+  const [filteredProductCurrentPage, setFilteredProductCurrentPage] = useState(1)
 
   return (
     <>
-      {data === 'New' ? (
+      {data === 'Best' ? (
+        <>
+          <div className="flex justify-center">
+            <span className=" h-[45px] text-center font-[600] px-2 text-[18px] md:text-[24px] mt-[20px] mb-[50px] border-b-[5px] border-solid border-[#1B304A]">
+              {data}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
+            {allProductFetching ? (
+              <ProductMainSkeleton count={9} />
+            ) : (
+              productLists
+                .slice(0, 9)
+                .map((item: ProductResponseType, idx: number) => (
+                  <Card
+                    key={`${item.productId}-${idx}`}
+                    idx={idx}
+                    colorAndImage={item.colorAndImage}
+                    productId={item.productId}
+                    series={item.name}
+                    price={item.price}
+                    discount={item.discount}
+                    graphicDiameter={item.graphicDiameter}
+                    isFavorite={item.isFavorite}
+                  />
+                ))
+            )}
+          </div>
+          {productLists[0] && (
+            <Pagination
+              currentPage={allProductCurrentPage}
+              setCurrentPage={setAllProductCurrentPage}
+              allCount={productLists[0].totalCount}
+              divide={9}
+            />
+          )}
+        </>
+      ) : data && data === 'New' ? (
         <>
           <div className="flex justify-center ">
             <span className=" h-[45px] text-center font-[600] px-2 text-[18px] md:text-[24px] mt-[20px] mb-[50px] border-b-[5px] border-solid border-[#1B304A]">
@@ -24,8 +81,11 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
             </span>
           </div>
           <div className="grid grid-cols-2 justify-items-center xl:grid-cols-4 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
-            {productLists &&
-              productLists.map((item: ProductResponseType, idx: number) => (
+            {newProductFetching ? (
+              <ProductNewSkeleton count={8} />
+            ) : (
+              currentPost &&
+              currentPost?.map((item: ProductPropsType, idx: number) => (
                 <Card
                   idx={idx}
                   key={`${item.productId}-${idx}`}
@@ -35,51 +95,52 @@ const CardContainer = ({ data }: CardContainerPropsType) => {
                   price={item.price}
                   discount={item.discount}
                   graphicDiameter={item.graphicDiameter}
-                  isNew={true}
+                  isFavorite={item.isFavorite}
                 />
-              ))}
+              ))
+            )}
           </div>
-          {productLists && (
+          {newProductLists.totalCount && (
             <Pagination
               currentPage={newProductCurrentPage}
               setCurrentPage={setNewProductCurrentPage}
-              allCount={productLists.length}
+              allCount={newProductLists.totalCount}
+              divide={8}
             />
           )}
         </>
-      ) : (
-        data === 'Best' && (
-          <>
-            <div className="flex justify-center">
-              <span className=" h-[45px] text-center font-[600] px-2 text-[18px] md:text-[24px] mt-[20px] mb-[50px] border-b-[5px] border-solid border-[#1B304A]">
-                {data}
-              </span>
-            </div>
-            <div className="grid grid-cols-2 xl:grid-cols-3 sm:grid-cols-2 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px] ">
-              {productLists &&
-                productLists.map((item: ProductResponseType, idx: number) => (
-                  <Card
-                    key={`${item.productId}-${idx}`}
-                    idx={idx}
-                    colorAndImage={item.colorAndImage}
-                    productId={item.productId}
-                    series={item.series}
-                    price={item.price}
-                    discount={item.discount}
-                    graphicDiameter={item.graphicDiameter}
-                  />
-                ))}
-            </div>
-            {productLists && (
-              <Pagination
-                currentPage={newProductCurrentPage}
-                setCurrentPage={setNewProductCurrentPage}
-                allCount={productLists.length}
+      ) : data && data === 'Products' ? (
+        <>
+          <div className="flex justify-center ">
+            <span className=" h-[45px] text-center font-[600] px-2 text-[18px] md:text-[24px] mt-[20px] mb-[50px] border-b-[5px] border-solid border-[#1B304A]">
+              {data}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 justify-items-center xl:grid-cols-3 w-[98%] md:w-[96%] mx-auto  md:gap-x-[12px]">
+            {filteredProducts.productData?.slice(0, 9).map((item: any, idx: number) => (
+              <Card
+                idx={idx}
+                key={`${item.productId}-${idx}`}
+                colorAndImage={item.colorAndImage}
+                productId={item.productId}
+                series={item.series}
+                price={item.price}
+                discount={item.discount}
+                graphicDiameter={item.graphicDiameter}
+                isFavorite={item.isFavorite}
               />
-            )}
-          </>
-        )
-      )}
+            ))}
+          </div>
+          {filteredProducts.totalCount && (
+            <Pagination
+              currentPage={filteredProductCurrentPage}
+              setCurrentPage={setFilteredProductCurrentPage}
+              allCount={filteredProducts.totalCount}
+              divide={8}
+            />
+          )}
+        </>
+      ) : null}
     </>
   )
 }

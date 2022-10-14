@@ -14,7 +14,7 @@ const RightSection = () => {
 
   return (
     <div className="flex items-center gap-4">
-      <NavSearch searchValueHandler={searchValueHandler} />
+      <NavSearch searchValueHandler={searchValueHandler} searchValue={searchValue} />
       <RightNavLinks />
     </div>
   )

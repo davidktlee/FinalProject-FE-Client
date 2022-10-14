@@ -7,5 +7,20 @@ export const queryKeys = {
   event: 'event',
   allNotice: 'allNotice',
   cart: 'cart',
-  productDetails: 'productDetails'
+  productDetails: 'productDetails',
+  favorite: 'favorite',
+  review: 'review',
+  coupon: 'coupon',
+  newProduct: 'newProduct',
+  banner: 'banner',
+  productDetailsPeriod: 'productDetailsPeriod',
+  productDetailsColor: 'productDetailsColor',
+  productDetailsGraphic: 'productDetailsGraphic',
+  productDetailsAll: 'productDetailsAll',
+  filterList: 'filterList',
+  recommend: 'recommend',
+  noticeDetail: 'noticeDetail',
+  allReview: 'allReview',
+  searchedProduct: 'searchedProduct',
+  forProductId: 'forProductId'
 }

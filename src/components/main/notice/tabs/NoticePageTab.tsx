@@ -38,7 +38,7 @@ function NoticePageTab() {
               color: isActive ? '#1B304A' : '#d3d3d3'
             })}
             to={title.value}
-            className="xl:w-[200px] md:w-[150px] sm:w-[100px] text-center "
+            className="xl:w-[200px] md:w-[150px] sm:w-[100px] py-2 text-center "
           >
             {title.title}
           </NavLink>
@@ -54,11 +54,12 @@ function NoticePageTab() {
           </div>
 
           {isOpen && (
-            <ul className="absolute top-[36px] right-[2px] py-4 flex flex-col items-start w-[160px] rounded-md shadow-basic bg-[#fff]  z-[9]">
+            <ul className="absolute top-[36px] right-[2px] py-4 flex flex-col items-start w-[160px] rounded-md shadow-basic bg-[#fff]  z-[99]">
               {NoticePageTitle.map((title: Title, index: number) => (
                 <li
-                  className="w-[90%] mx-auto border-b-[1px] border-solid border-lenssisGray py-2"
-                  onClick={(e) => selectOptionHandler(title.title)}
+                  key={`${title.title}-${index}`}
+                  className="w-[90%] mx-auto border-b-[1px] border-solid border-lenssisStroke py-2"
+                  onClick={() => selectOptionHandler(title.title)}
                 >
                   <NavLink
                     key={index}

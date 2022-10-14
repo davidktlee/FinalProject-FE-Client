@@ -1,71 +1,281 @@
 import { graphicDiameter } from '../../constants/filterData'
 import Heart from '/assets/Heart.svg'
-import { useParams } from 'react-router'
-// import { useProductDetails } from './hooks/useProductDetails'
+import FillHeart from '/assets/FillHeart.svg'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { ProductDetailResponseType } from '../main/types/productTypes'
+import { useEffect, useState } from 'react'
+import { useAddFavorite, useDeleteFavorite } from '../main/hooks/useFavorite'
+import { axiosInstance, getJWTToken } from '../axiosinstance'
+import { getStoredToken } from '../local-storage/userStorage'
+import { productDetailsState } from '../../store/productDetails'
+import { useMutation } from 'react-query'
+import { finalProductState, productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
+import { ProductDetailsType } from '../../store/productDetails'
+import { useAddCart } from '../cart/hooks/useCart'
+import { queryKeys } from '../react-query/queryKeys'
+import { MainCartModalState } from '../../store/mainCart'
 
-const ProductInfo = () => {
-  const { id } = useParams()
+interface PropsType {
+  isClose?: boolean
+  productDetails?: ProductDetailResponseType
+  productId: number
+  memberId?: number
+}
 
-  // const details = useProductDetails()
-  // console.log(details)
+const token = getStoredToken()
+
+const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType) => {
+  const [commaPrice, setCommaPrice] = useState({
+    price: '',
+    discount: ''
+  })
+  const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
+  const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
+  const [optionComplete, setOptionComplete] = useState<boolean>(true)
+  const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
+  const [favorite, setFavorite] = useState<boolean>(false)
+  const { addCartMutate } = useAddCart()
+  const addFavor = useAddFavorite()
+  const deleteFavor = useDeleteFavorite()
+  const resetOptions = useResetRecoilState(productDetailsState)
+
+  useEffect(() => {
+    resetOptions()
+  }, [])
+
+  const setModalState = useSetRecoilState(MainCartModalState)
+
+  const getProductByOptions = async (detailState: ProductDetailsType) => {
+    const { data } = await axiosInstance({
+      method: 'GET',
+      url:
+        detailState.colorCode == ''
+          ? '/productDetails/byPeriodOption'
+          : detailState.graphicDiameter == 0
+          ? '/productDetails/byColorCodeOption'
+          : detailState.degree == 0
+          ? '/productDetails/byGraphicOption'
+          : '',
+      params: {
+        productId: productId,
+        period: detailState.period !== 0 ? detailState.period : undefined,
+        colorCode: detailState.colorCode !== '' ? detailState.colorCode : undefined,
+        graphicDiameter: detailState.graphicDiameter !== 0 ? detailState.graphicDiameter : undefined
+      },
+      headers: getJWTToken(token)
+    })
+    console.log(data)
+    return data
+  }
+
+  const { mutate: selectOptionMutate } = useMutation(
+    (detailState: ProductDetailsType) => getProductByOptions(detailState),
+    {
+      mutationKey: ['productByOptions', detailState],
+      onSuccess: (data) => {
+        console.log(data)
+        setProductByOptions({ ...productByOptions, ...data.data })
+      },
+      onError: (error) => {
+        console.log(error)
+      }
+    }
+  )
+
+  const postProductByOptions = async (detailState: ProductDetailsType) => {
+    const { data } = await axiosInstance({
+      method: 'POST',
+      url: '/productDetails/byDetailsOption',
+      params: {
+        memberId: memberId
+      },
+      data: {
+        colorCode: detailState.colorCode,
+        degree: detailState.degree,
+        graphicDiameter: detailState.graphicDiameter,
+        period: detailState.period,
+        productId: productId
+      },
+      headers: getJWTToken(token)
+    })
+    console.log(data)
+    return data
+  }
+
+  const { mutate: postAllOptions } = useMutation(
+    (detailState: ProductDetailsType) => postProductByOptions(detailState),
+    {
+      mutationKey: ['postAllOptions'],
+      onSuccess: (data) => {
+        console.log(data.data)
+        setFinalProduct(data.data)
+      },
+      onError: (error) => {
+        console.log(error)
+      }
+    }
+  )
+
+  const optionHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = e.currentTarget
+
+    if (name === 'period') {
+      selectOptionMutate({ ...detailState, [name]: Number(value) })
+      if (detailState.period === Number(value)) {
+        setDetailState({
+          ...detailState,
+          period: 0
+        })
+      } else {
+        setDetailState(() => ({
+          ...detailState,
+          period: Number(value)
+        }))
+      }
+      console.log(detailState.period)
+    } else if (name === 'color') {
+      console.log(value)
+      selectOptionMutate({ ...detailState, colorCode: value })
+      if (detailState.colorCode === value) {
+        setDetailState({
+          ...detailState,
+          colorCode: ''
+        })
+      } else {
+        setDetailState(() => ({
+          ...detailState,
+          colorCode: value
+        }))
+      }
+      console.log(detailState.colorCode)
+    } else if (name === 'graphicDiameter') {
+      selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
+      if (detailState.graphicDiameter === Number(value)) {
+        setDetailState({
+          ...detailState,
+          graphicDiameter: 0
+        })
+      } else {
+        setDetailState(() => ({
+          ...detailState,
+          graphicDiameter: Number(value)
+        }))
+      }
+      console.log(detailState.graphicDiameter)
+    } else if (name === 'degree') {
+      setDetailState({ ...detailState, degree: Number(value) })
+      postAllOptions(detailState)
+      console.log(detailState.degree)
+    }
+  }
+
+  const addCartHandler = () => {
+    addCartMutate(finalProduct.productDetailsId)
+    setModalState((prev) => (prev = !prev))
+    resetOptions()
+    console.log('제품상세 장바구니 버튼 클릭!')
+  }
+
+  const favoriteHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const productId = Number(e.currentTarget.value)
+    setTimeout(() => {
+      if (!favorite) {
+        addFavor(productId)
+      }
+    }, 500)
+    setFavorite((prev) => !prev)
+    if (favorite) {
+      deleteFavor(productId)
+    }
+  }
+
+  const toComma = () => {
+    const addCommaPrice = productDetails?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    let addCommaDiscount: string | number = (
+      productDetails?.price! *
+      (1 - productDetails?.discount! / 100)
+    ).toFixed(0)
+    addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice! })
+  }
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/assets/noImage.jpeg'
+  }
+
+  useEffect(() => {
+    resetOptions()
+  }, [])
+
+  useEffect(() => {
+    if (productDetails?.isFavorite === 1) {
+      setFavorite(true)
+    } else {
+      setFavorite(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    setOptionComplete(
+      detailState.period !== 0 && detailState.colorCode !== '' && detailState.graphicDiameter !== 0
+        ? false
+        : true
+    )
+    toComma()
+  }, [productDetails?.price, productByOptions, detailState])
 
   return (
-    <section className="text-gray-600 body-font overflow-hidden">
+    <section className="text-gray-600 body-font overflow-hidden relative">
+      {isClose && (
+        <img
+          className="absolute top-[195px] right-[20px] font-bold z-[99999] hover:cursor-pointer"
+          onClick={() => setModalState(false)}
+          onError={(e) => handleImgError(e)}
+          src={'/assets/close.png'}
+        />
+      )}
       <div className="container pt-44 pb-10 mx-auto ">
-        <div className="lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white ">
+        <div className="max-w-[1180px] lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white ">
           <div className="md:flex-row lg:flex-col lg:w-1/2 w-full lg:h-auto flex flex-col gap-4">
             <h2 className="xs:hidden text-center text-[20px] text-lenssisDark font-bold">상품상세</h2>
             <img
               alt="ecommerce"
-              className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px]"
-              src="https://user-images.githubusercontent.com/90392240/193039552-7fc9d4c3-a60b-4491-a4df-1f86bd7a54bc.png"
+              className="object-cover object-center rounded mx-auto xs-max:w-[320px] xs-max:h-[315px] h-[460px]"
+              src={productDetails?.mainImageUrl}
               width="465"
               height="460"
+              onError={(e) => handleImgError(e)}
             />
-            <div className="flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
-              <img
-                className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                src="https://user-images.githubusercontent.com/90392240/193039539-7085fbca-757e-47d3-b80c-372381cfb410.png"
-              />
-              <img
-                className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                src="https://user-images.githubusercontent.com/90392240/193039540-03fe9fd8-53c8-4853-b1a3-5393e57536b3.png"
-              />
-              <img
-                className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                src="https://user-images.githubusercontent.com/90392240/193039546-d561bfa7-30ab-4337-8a91-16824fe588e5.png"
-              />
-              <img
-                className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
-                src="https://user-images.githubusercontent.com/90392240/193039549-32de8393-f93b-4246-ad3f-a9b117d7e6be.png"
-              />
+            <div className="overflow-auto flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
+              {productDetails?.subMainImageUrlList?.map((image) => (
+                <img
+                  key={image}
+                  onError={(e) => handleImgError(e)}
+                  className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
+                  src={image}
+                />
+              ))}
             </div>
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-2 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-lenssisGray mb-2 text-[12px]">60개의 리뷰 &gt;</h2>
             <div className="text-gray-900 text-3xl title-font font-medium mb-2 flex justify-between">
-              <span className="">스텔라</span>
-              <button>
-                <img width={35} height={35} src={Heart} alt="즐겨찾기" />
+              <span className="">{productDetails?.name}</span>
+              <button onClick={(e) => favoriteHandler(e)} value={productDetails?.productId}>
+                {favorite ? (
+                  <img src={FillHeart} width={35} height={35} alt="찬 하트" />
+                ) : (
+                  <img width={35} height={35} src={Heart} alt="빈 하트" />
+                )}
               </button>
             </div>
-
             <div className="leading-relaxed text-[14px]">
               <div className="price flex">
-                <div className="text-xl font-bold">1,800円</div>
-                <p className="ml-4 leading-7">2,000円</p>
+                <div className="text-xl font-bold text-black">{commaPrice.price}円</div>
+                <p className="ml-4 leading-7">{commaPrice.discount}円</p>
               </div>
               <div className="divider h-[1px] bg-[#BCBCBC] my-2 xs-max:hidden"></div>
-              <div className="badge flex gap-2 my-4">
-                {graphicDiameter.map((item, index) => (
-                  <span
-                    key={index}
-                    className="border-solid border-[1px] border-lenssisBadge text-lenssisBadge rounded-[5px] px-2 text-sm"
-                  >
-                    {item.name}
-                  </span>
-                ))}
-              </div>
               <div className="point flex flex-initial my-2 ">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">포인트</p>
                 <p className="flex-1">구매 금액의 1%</p>
@@ -88,96 +298,130 @@ const ProductInfo = () => {
               <div className="delivery flex my-2">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">사용 기간</p>
                 <div className="flex flex-1 gap-2">
-                  <div className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[100px] h-[30px] ">
-                    원데이
-                  </div>
-                  <div className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[100px] h-[30px] ">
-                    먼슬리
-                  </div>
+                  {productDetails?.periodList?.map((period) => (
+                    <button
+                      key={period}
+                      name="period"
+                      value={period}
+                      onClick={(e) => optionHandler(e)}
+                      className={`${
+                        detailState.period === period
+                          ? 'bg-lenssisDark text-white border-lenssisDark'
+                          : 'text-lenssisDeepGray border-lenssisStroke border-[1px]'
+                      } "border-solid rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
+                    >
+                      {period === 1 ? '원데이' : '먼데이'}
+                    </button>
+                  ))}
                 </div>
               </div>
-              <div className="text-center mr-16">★ 1箱に10枚入っております</div>
-              <div className="delivery flex my-2 pt-2">
+              <div className="flex ">
+                <div className="w-[130px] xs-max:w-[70px] lg:w-[160px]"></div>
+                <div className="flex-1 text-[#FF7B02]">★ 1箱に10枚入っております</div>
+              </div>
+              <div className="delivery flex pt-2">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">세부 색상</p>
                 <div className="flex gap-2">
-                  <div
-                    className="w-[30px] h-[30px] rounded-full"
-                    style={{ backgroundColor: '#A76C27' }}
-                  ></div>
-                  <div
-                    className="w-[30px] h-[30px] rounded-full"
-                    style={{ backgroundColor: '#F2EAD1' }}
-                  ></div>
-                  <div
-                    className="w-[30px] h-[30px] rounded-full"
-                    style={{ backgroundColor: '#B9B9B9' }}
-                  ></div>
+                  {productByOptions.colorCodeList.length === 0
+                    ? productDetails?.colorCodeList?.map((color: string) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="color"
+                          value={color}
+                          key={color}
+                          className={` ${
+                            detailState.colorCode === color
+                              ? ' text-white border-lenssisDark border-solid border-4'
+                              : ''
+                          } w-[30px] h-[30px] rounded-full`}
+                          style={{ backgroundColor: `${color}` }}
+                        />
+                      ))
+                    : productByOptions?.colorCodeList?.map((color: string) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="color"
+                          value={color}
+                          key={color}
+                          className={` ${
+                            detailState.colorCode === color
+                              ? ' text-white border-lenssisDark border-solid border-4'
+                              : ''
+                          } w-[30px] h-[30px] rounded-full`}
+                          style={{ backgroundColor: `${color}` }}
+                        />
+                      ))}
                 </div>
               </div>
               <div className="delivery flex my-2 pt-4">
                 <p className="text-black w-[130px] xs-max:w-[70px] lg:w-[160px]">그래프 직경</p>
-                <div className="flex gap-2">
-                  <div className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[55px] h-[30px] ">
-                    13.2
-                  </div>
-                  <div className=" border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-[1px] px-[12px] text-[#5A5A5A] w-[55px] h-[30px] ">
-                    13.2
-                  </div>
+                <div className="badge flex flex-wrap gap-[5px] lg:flex-wrap lg:w-[280px] xl:w-[355px] xs-max:w-[276px]">
+                  {productByOptions.graphicDiameterList.length === 0
+                    ? productDetails?.graphicDiameterList?.map((item, index) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="graphicDiameter"
+                          value={item}
+                          key={index}
+                          className={` ${
+                            detailState.graphicDiameter === item
+                              ? 'bg-lenssisDark text-white border-lenssisDark'
+                              : 'text-lenssisDeepGray'
+                          } w-[55px] h-[30px] text-[14px] text-center leading-6 border-solid border-[1px] border-lenssisStroke rounded-[20px] px-2`}
+                        >
+                          {item}
+                        </button>
+                      ))
+                    : productByOptions?.graphicDiameterList?.map((item, index) => (
+                        <button
+                          onClick={(e) => optionHandler(e)}
+                          name="graphicDiameter"
+                          value={item}
+                          key={index}
+                          className={` ${
+                            detailState.graphicDiameter === item
+                              ? 'bg-lenssisDark text-white border-lenssisDark'
+                              : 'text-lenssisDeepGray'
+                          } w-[55px] h-[30px] text-[14px] text-center leading-6 border-solid border-[1px] border-lenssisStroke rounded-[20px] px-2`}
+                        >
+                          {item}
+                        </button>
+                      ))}
                 </div>
               </div>
             </div>
-            <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+            <div className="flex mt-6 items-center border-b-2 border-gray-100 mb-5">
               <div className="flex ">
                 <span className=" text-black w-[130px] xs-max:w-[70px] lg:w-[160px] text-[14px]">도수</span>
               </div>
               <div className="">
                 <select
-                  name="상품명"
-                  className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[245px] h-[40px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
+                  name="degree"
+                  className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[200px] h-[30px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
+                  disabled={optionComplete}
+                  onChange={(e) => optionHandler(e)}
                 >
-                  <option value="">選択してください</option>
-                  <option value="0.00,0,376">0.00</option>
-                  <option value="-0.5,0,301">-0.5</option>
-                  <option value="-1,0,152">-1</option>
-                  <option value="-1.25,0,93">-1.25</option>
-                  <option value="-1.50,0,37">-1.50</option>
-                  <option value="-1.75,0,18">-1.75</option>
-                  <option value="-2.00,0,51">-2.00</option>
-                  <option value="-2.25,0,39">-2.25</option>
-                  <option value="-2.50,0,2">-2.50</option>
-                  <option value="-2.75,0,-10">-2.75&nbsp;&nbsp;[品切れ]</option>
-                  <option value="-3.00,0,-10">-3.00&nbsp;&nbsp;[品切れ]</option>
-                  <option value="-3.25,0,26">-3.25</option>
-                  <option value="-3.50,0,36">-3.50</option>
-                  <option value="-3.75,0,-10">-3.75&nbsp;&nbsp;[品切れ]</option>
-                  <option value="-4.00,0,20">-4.00</option>
-                  <option value="-4.25,0,11">-4.25</option>
-                  <option value="-4.50,0,95">-4.50</option>
-                  <option value="-4.75,0,5">-4.75</option>
-                  <option value="-5.00,0,71">-5.00</option>
-                  <option value="-5.50,0,16">-5.50</option>
-                  <option value="-6.00,0,59">-6.00</option>
-                  <option value="-6.50,0,94">-6.50</option>
-                  <option value="-7.00,0,44">-7.00</option>
-                  <option value="-7.50,0,161">-7.50</option>
-                  <option value="-8.00,0,32">-8.00</option>
-                  <option value="-8.50,0,2">-8.50</option>
-                  <option value="-9.00,0,10">-9.00</option>
-                  <option value="-9.50,0,2">-9.50</option>
-                  <option value="-10.00,0,1">-10.00</option>
+                  {productByOptions.degreeAndStockList?.map((item: any, index) => (
+                    <option key={index} value={item?.degree}>
+                      {item.degree} 재고: {item.stock}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
             <div className="flex justify-between py-2">
-              <span>총 상품 금액</span>
-              <span className="title-font font-medium text-2xl text-gray-900">1,800円</span>
+              <span className="leading-10 text-black text-[16px] font-bold">총 상품 금액</span>
+              <span className="title-font text-[25px] text-black font-bold">1,800円</span>
             </div>
             <div className="divder h-[2px] bg-slate-700 my-2"></div>
             <div className="flex gap-4 xs-max:flex-col py-2">
-              <button className="w-1/2 cursor-pointer bg-white text-blue-900 border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded xs-max:w-full">
+              <button
+                onClick={addCartHandler}
+                className="w-1/2 cursor-pointer bg-white text-black text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded xs-max:w-full"
+              >
                 장바구니
               </button>
-              <button className="w-1/2 cursor-pointer text-white bg-[#1B304A] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full">
+              <button className="w-1/2 cursor-pointer text-white bg-lenssisDark text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full">
                 바로구매
               </button>
             </div>

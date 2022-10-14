@@ -6,35 +6,30 @@ import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
-import axios, { AxiosResponse } from 'axios'
+import { useGetBanner } from './main/hooks/useBanner'
+import { useRecoilValue } from 'recoil'
+import { filteredProudcts } from '../store/filterVallue'
 
-interface BannerType {
-  title: string
-  bannerImg: string
-  id: string
-}
 // 달라질 부분
 // absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
 const Banner = () => {
-  const mobileImgs = ['/assets/MobileBanner.png', '/assets/MobileBanner.png', '/assets/MobileBanner.png']
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
-  const [imgs, setImgs] = useState([])
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+  const [title, setTitle] = useState<string>('Best')
+
+  const filteredProducts = useRecoilValue(filteredProudcts)
+  console.log(filteredProducts)
+
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
   }
-  const getBanner = async () => {
-    const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/banner')
-    setImgs(res.data)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', changeWindowWidth)
-  }, [])
+
+  const { data: bannerList, isFetching } = useGetBanner(1)
 
   useEffect(() => {
-    getBanner()
+    window.addEventListener('resize', changeWindowWidth)
   }, [])
 
   SwiperCore.use([Navigation, Pagination, Autoplay])
@@ -95,26 +90,30 @@ const Banner = () => {
       {swiperSetting && (
         <Swiper {...swiperSetting} style={{ borderRadius: '15px', overflow: 'hidden' }}>
           {windowWidth > 440
-            ? imgs &&
-              imgs.map((img: BannerType, index: number) => (
+            ? bannerList &&
+              bannerList.map((img: string, index: number) => (
                 <div key={index}>
                   <SwiperSlide key={index}>
                     {/* key값 id 값 넣어주기 */}
                     <img
-                      src={img.bannerImg}
+                      src={
+                        bannerList.length !== 1
+                          ? img
+                          : 'https://user-images.githubusercontent.com/90392240/192770270-0d01350b-1adb-4b08-84c3-069bf9a8b4a0.png'
+                      }
                       alt="banner-image"
                       className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
                     />
                   </SwiperSlide>
                 </div>
               ))
-            : mobileImgs &&
-              mobileImgs.map((img: string, index: number) => (
+            : bannerList &&
+              bannerList.map((img: string, index: number) => (
                 <div key={index}>
                   <SwiperSlide key={index}>
                     {/* key값 id 값 넣어주기 */}
                     <img
-                      src={img}
+                      src={bannerList.length !== 1 ? img : 'assets/MobileBanner.png'}
                       alt="banner-image"
                       className=" w-full h-[500px] md:h-auto object-fit md:object-cover "
                     />

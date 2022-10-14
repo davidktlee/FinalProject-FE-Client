@@ -1,50 +1,48 @@
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useRecoilValue } from 'recoil'
+import { userState } from '../../store/user'
 import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
-import { queryKeys } from '../react-query/queryKeys'
+import { useGetProductRandom } from '../main/hooks/useProductLists'
+import { useUser } from '../auth/hooks/useUser'
 import MobileProductRecommend from './mobile/MobileProductRecommend'
 
-const ProductRecommend = () => {
-  const getProduct = async () => {
-    const res = await axiosInstance({
-      url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/products'
-    })
-    return res.data
-  }
+type ProductRecommendProps = {
+  productId: number
+}
 
-  const { data: productLists } = useQuery(['productRecommend'], getProduct, {
-    refetchOnWindowFocus: false
-  })
+const ProductRecommend = ({ productId }: ProductRecommendProps) => {
+  const { user } = useUser()
+
+  const data = useGetProductRandom(user?.memberId!, productId)
+
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container px-5 py-10 mb-10 mx-auto drop-shadow-basic rounded-[10px] bg-white xs-max:w-[95%]">
+    <section className="text-gray-600 body-font max-w-[1180px] mx-auto mb-10">
+      <div className=" container px-5 py-10 mx-auto drop-shadow-basic rounded-[10px] bg-white xs-max:w-[95%]">
         <div className="flex justify-between px-10 xs-max:p-0">
           <p className="font-bold text-lg text-black xs-max:text-[20px]">이런 상품도 있어요!</p>
           <p className="xs-max:hidden">랜덤으로 상품 4개 보여주기</p>
           <p className="xs:hidden">더보기</p>
         </div>
         <div className="divider h-[1px] mt-4 mb-8 bg-[#BCBCBC] xs-max:mb-0"></div>
-        {/* <div className="xs-max:hidden flex flex-wrap -m-4 p-4">
-          {productLists &&
-            productLists
-              .slice(0, 4)
-              .map((item: any, idx: number) => (
-                <Card
-                  key={`${item.productId}-${idx}`}
-                  idx={idx}
-                  colorAndImage={item.colorAndImage}
-                  productId={item.productId}
-                  series={item.series}
-                  price={item.price}
-                  discount={item.discount}
-                  graphicDiameter={item.graphicDiameter}
-                />
-              ))}
+        <div className="max-w-[1180px] xs-max:hidden flex flex-wrap -m-4 p-4 ">
+          {data?.map((item: any, idx: number) => (
+            <Card
+              key={`${item.productId}-${idx}`}
+              idx={idx}
+              colorAndImage={item.colorAndImage}
+              productId={item.productId}
+              series={item.series}
+              price={item.price}
+              discount={item.discount}
+              graphicDiameter={item.graphicDiameter}
+            />
+          ))}
         </div>
         <div className="xs:hidden ">
-          <MobileProductRecommend />
-        </div> */}
+          <MobileProductRecommend productId={productId} />
+        </div>
       </div>
     </section>
   )

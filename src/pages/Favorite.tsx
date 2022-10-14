@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
-import { Outlet, NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Outlet, NavLink, useNavigate } from 'react-router-dom'
+import { useGetFavorite } from '../components/main/hooks/useFavorite'
 
 const Favorite = () => {
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate('/favorite/all')
+  }, [])
+
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -28,7 +34,7 @@ const Favorite = () => {
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? '#1B304A' : '#d3d3d3'
                   })}
-                  to="oneDay"
+                  to="monthly"
                   className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-2 font-medium text-center text-lenssisDark"
                 >
                   <span className="text-lenssisDark">먼슬리</span>
@@ -40,19 +46,13 @@ const Favorite = () => {
                     fontWeight: isActive ? 700 : 500,
                     color: isActive ? '#1B304A' : '#d3d3d3'
                   })}
-                  to="monthly"
+                  to="oneDay"
                   className="flex-1 xs-max:px-2 py-4 px-6 block hover:text-[#030303] focus:outline-none border-lenssisDeepGray border-solid border-b-2 font-medium text-center"
                 >
                   <span className="text-lenssisDark">원데이</span>
                 </NavLink>
               </nav>
-              <div className="flex justify-between mt-6 xs-max:text-[14px]">
-                <div>
-                  <input type="checkbox" value="품절제외" id="isSale" />
-                  <label className="ml-1" htmlFor="isSale">
-                    품절제외
-                  </label>
-                </div>
+              <div className="flex justify-end mt-6 xs-max:text-[14px]">
                 <div>
                   <button>최근 찜한 순</button>
                 </div>

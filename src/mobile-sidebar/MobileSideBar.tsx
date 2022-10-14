@@ -1,10 +1,12 @@
-import {useCallback,useEffect} from 'react';
+import {useCallback,useEffect, useState} from 'react';
 import {BsX} from 'react-icons/bs'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { useUser } from '../components/auth/hooks/useUser';
 import RightArrow from '../components/common/ui/RightArrow';
+import { clearStoredToken } from '../components/local-storage/userStorage';
 import { sideBarState } from '../store/sideBarToggle';
+
 const MobileSideBar = () => {
   const {user} = useUser()
   const [isShow,setIsShow] = useRecoilState(sideBarState)
@@ -25,8 +27,10 @@ const MobileSideBar = () => {
 
   const signoutHandler = useCallback(() => {
     setIsShow(false);
+    clearStoredToken()
+    location.href = '/'
   },[])
-
+  
   useEffect(() => {
     window.scrollTo(0,0)
   },[pathname])
@@ -41,7 +45,7 @@ const MobileSideBar = () => {
         <button onClick={sideBarToggleHandler}><BsX size={50} color="#ffffff" /></button>
       </div>
       <div className='mt-8 pl-2 h-[66px] flex flex-col items-start justify-end'>
-      {!user && <Link onClick={pageChangeHandler} to="">非会員 注文照会 {'>'}</Link>}
+      {!user && <Link onClick={pageChangeHandler} to="/nonmember">非会員 注文照会 {'>'}</Link>}
       {!user && <p className='mt-[10px]'><span className='font-bold text-2xl'>Lenssisへ ようこそ。</span></p>}
       {user && <p className='mt-[10px]'><span className='font-bold text-2xl'>{user?.name}&nbsp;</span><span className='text-sm font-normal'>さん、こんにちは。</span></p>}
       </div>
@@ -79,9 +83,6 @@ const MobileSideBar = () => {
           <li className='pl-2 pr-4 pb-2 w-full  text-lenssisDark'><Link onClick={pageChangeHandler} className='flex justify-between' to="review"><span>Review</span><RightArrow /></Link></li>
         </ul>
       </div>
-
-    
-
     </div>
   );
 };

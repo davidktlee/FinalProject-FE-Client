@@ -16,7 +16,10 @@ import PaymentTitle from './ui/PaymentTitle'
 import TermsTitle from './ui/TermsTitle'
 import usePost from '../common/util/usePost'
 import OrderProductName from './ui/OrderProductName'
-import { selectProduct } from '../../store/selectProduct'
+import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
+import { axiosInstance, getJWTToken } from '../axiosinstance'
+import { getStoredToken } from '../local-storage/userStorage'
+import { useNavigate } from 'react-router-dom'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -117,25 +120,24 @@ const Payment = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState('')
   const [paymentMethodNumber, setPaymentMethodNumber] = useState<null | number>(null)
-  const [selectedProduct,setSelectedProduct] = useRecoilState(selectProduct)
-
-
+  const [selectedProduct, setSelectedProduct] = useRecoilState(selectProduct)
+  const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState)
   // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
   const [discountCode, setDisCountCode] = useState('')
+  const navigate = useNavigate()
   const currentPaymentMethodHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value }
     } = e
     if (value === 'PayPay') {
       setPaymentMethodNumber(5)
+      setCurrentPaymentMethod(value)
       return
     } else {
       setPaymentMethodNumber(paymentMethodArray.findIndex((item) => item === value))
       setCurrentPaymentMethod(value)
     }
   }
-
-
 
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -194,36 +196,41 @@ const Payment = () => {
     }
   }, [])
 
-  const paymentHandler = () => {
+  const paymentHandler = async () => {
     if (!isChecked) {
       alert('개인정보 수집 이용에 동의해주세요')
       return
     }
+    const extractArray = selectedProduct.map((item) => {
+      return { pcs: item.pcs, productDetailsId: item.productDetailsId }
+    })
+    const token = getStoredToken()
     const obj = {
-      product: [
-        {
-          pcs: 0,
-          productDetailsId: 0
-        }
-      ],
+      totalPrice,
+      address: newFormValue.address || formValue.address,
       couponId: 0,
-      memberId: user?.memberId || 0,
+      detailAddress: newFormValue.detailAddress || formValue.detailAddress,
+      email: formValue.email,
+      memberId: user ? user.memberId : 0,
       method: paymentMethodNumber,
       orderer: formValue.orderer,
-      address: newFormValue.address || formValue.address,
-      detailAddress: newFormValue.detailAddress || formValue.detailAddress,
-      ordererEmail: formValue.email,
-      ordererPhone: formValue.phone,
-      point: 0,
+      phone: formValue.phone,
+      point: totalPrice / 100,
+      postCode: formValue.postCode,
+      products: extractArray,
       receiver: newFormValue.orderer || formValue.orderer,
       receiverPhone: newFormValue.phone || formValue.phone,
-      shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage,
-      totalPrice: 0
+      shippingMessage: newFormValue.shippingMessage || formValue.shippingMessage
     }
-    console.log(obj)
+    try {
+      await axiosInstance.post('/order/add', obj, { headers: getJWTToken(token) })
+      alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  
   useEffect(() => {
     if (user) {
       const splitUserEmail = user.email.split('@')
@@ -240,7 +247,7 @@ const Payment = () => {
         postCode: user.postCode,
         address: user.address,
         phone: user.phone,
-        email: emailFormValue.emailIdentity + '@' + emailFormValue.emailDomain || '',
+        email: `${emailFormValue.emailIdentity}@${emailFormValue.emailDomain}`,
         detailAddress: user.detailAddress,
         shippingMessage: '',
         couponId: null,
@@ -300,7 +307,7 @@ const Payment = () => {
                   {item.pcs}
                 </p>
                 <p className="flex justify-center items-center w-[80px] xs:w-[160px] text-xs xs:text-base">
-                {((item.price * item.pcs) - (item.price * item.pcs) * (item.discount / 100)).toLocaleString()}円
+                  {(item.price * item.pcs - item.price * item.pcs * (item.discount / 100)).toLocaleString()}円
                 </p>
               </div>
             ))}
@@ -377,7 +384,6 @@ const Payment = () => {
         <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
       </CardTemplate>
-
 
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
         <PaymentTitle text="결제수단 선택" />

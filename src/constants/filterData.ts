@@ -1,18 +1,18 @@
-export const duration = [
+export const period = [
   {
-    type: 'duration',
-    name: '상품 전체',
-    value: 'all'
+    type: 'period',
+    name: 'All',
+    value: [1, 30]
   },
   {
-    type: 'duration',
-    name: '원데이',
-    value: 'oneDay'
+    type: 'period',
+    name: '1DAY',
+    value: [1]
   },
   {
-    type: 'duration',
-    name: '먼슬리',
-    value: 'monthly'
+    type: 'period',
+    name: '1MONTH',
+    value: [30]
   }
 ]
 

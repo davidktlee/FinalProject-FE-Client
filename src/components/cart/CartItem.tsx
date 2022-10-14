@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Counter from './Counter'
 
 import CheckBox from '../common/ui/CheckBox'
 import { CartItemsType } from './hooks/useCart'
+import useDeleteCart from './hooks/useDeleteCart'
 
 interface CartItemProps {
   isTotalChecked: boolean
@@ -18,11 +19,21 @@ interface CartItemProps {
 const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,selectProductHandler,setIsTotalChecked,setSelectedProduct}: CartItemProps) => {
   
   const [isChecked,setIsChecked] = useState(false)
-
-  const onClick = () => {
+  const {deleteCart} = useDeleteCart()
+  const onClick = useCallback(() => {
     setIsTotalChecked(false);
     setIsChecked(prev => !prev); 
+  },[])
+
+  const productDeleteHandler = (cId:number) => {
+    // 해당 카트 상품 삭제
+    
+    deleteCart(cId)
+    setSelectedProduct((prev) => prev.filter(selectProduct => selectProduct.cartId !== cId))
+    setProducts((prev) => prev.filter(product => product.cartId !== cId))
+    
   }
+
 
   useEffect(() => {
     if(!isTotalChecked){
@@ -74,7 +85,7 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
         </div>
       </div>
       <div className=" min-w-[30px] xs:min-w-[40px]">
-        <button className="underline text-lenssisStroke">삭제</button>
+        <button className="underline text-lenssisStroke" onClick={() =>productDeleteHandler(item.cartId!)}>삭제</button>
       </div>
     </li>
   )

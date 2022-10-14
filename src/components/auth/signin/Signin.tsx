@@ -96,7 +96,7 @@ const Signin = () => {
             double={false}
             flexDirection="horizontal"
             isRequired={false}
-            inputWidth={'full'}
+            inputWidth="max-w-full"
             inputHeight="12"
             labelColor="gray-400"
             labelBold="bold"
@@ -114,7 +114,7 @@ const Signin = () => {
             double={false}
             flexDirection="horizontal"
             isRequired={false}
-            inputWidth={'full'}
+            inputWidth="max-w-full"
             inputHeight="12"
             labelColor="gray-400"
             labelBold="bold"

@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router'
 
-function MobileNotice() {
+interface PropsType {
+  id: number
+  title: string
+  createdAt: string
+}
+
+function MobileNotice({ id, title, createdAt }: PropsType) {
   const navigate = useNavigate()
-  const id = 1
 
   return (
     <>
@@ -10,11 +15,11 @@ function MobileNotice() {
         <div className="rounded-md items-center my-2 py-2 pl-4 shadow-basic">
           <div className="">
             <span className="hover:cursor-pointer hover:underline" onClick={() => navigate(`/notice/${id}`)}>
-              내용에 용에 들어 달것
+              {title}
             </span>
           </div>
           <div className="flex">
-            <div className="mr-4">◴ 08-09</div>
+            <div className="mr-4">{createdAt.slice(0, 10)}</div>
           </div>
         </div>
       </div>

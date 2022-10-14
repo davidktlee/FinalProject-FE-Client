@@ -4,6 +4,9 @@ import { resolve } from 'path'
 
 const __dirname = 'src'
 export default defineConfig({
+  define: {
+    global: {}
+  },
   plugins: [react()],
   resolve: {
     // 절대 경로 설정

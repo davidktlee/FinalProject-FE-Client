@@ -12,6 +12,7 @@ const MainReview = () => {
           Review
         </span>
       </div>
+      {/* 웹 */}
       <div className="xs-max:hidden flex flex-wrap justify-center gap-6 max-w-[1280px] mx-auto">
         <MainReviewCard />
         <MainReviewCard />
@@ -22,6 +23,7 @@ const MainReview = () => {
         <MainReviewCard />
         <MainReviewCard />
       </div>
+      {/* 모바일 */}
       <div className="xs:hidden  flex flex-wrap justify-center gap-[8px] max-w-[1280px] mx-auto">
         <MobileReviewCard />
         <MobileReviewCard />

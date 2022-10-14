@@ -5,8 +5,6 @@ import { Token } from '../auth/types/userTypes'
 import { getStoredToken, setStoredToken } from '../local-storage/userStorage'
 import { baseUrl } from './constants'
 
-
-
 let isTokenRefreshing = false;
 let refreshSubscribers:any[] = []; 
 
@@ -61,8 +59,7 @@ axiosInstance.interceptors.response.use((res) => {
         setStoredToken(data);
         axiosInstance.defaults.headers.common["X-ACCESS-TOKEN"] = data.accessToken;
         
-        
-        
+
         const retryOriginalRequest = new Promise((resolve) => {
           
           addRefreshSubscriber((accessToken:string,refreshToken:string) => {

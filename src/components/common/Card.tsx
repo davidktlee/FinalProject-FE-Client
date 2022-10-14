@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
 import { useNavigate } from 'react-router-dom'
-import { ColorAndImage, ProductResponseType } from '../main/types/productTypes'
+import { ColorAndImage, ProductPropsType } from '../main/types/productTypes'
 
-interface PropsType extends ProductResponseType {
+interface PropsType extends ProductPropsType {
   idx: number
   isNew?: boolean
 }
@@ -17,21 +17,19 @@ const Card = ({
   colorAndImage,
   graphicDiameter,
   isNew,
-  productId
+  productId,
+  isFavorite
 }: PropsType) => {
   const navigate = useNavigate()
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
   const [commaPrice, setCommaPrice] = useState({
-    price: '',
-    discount: ''
+    price: 0,
+    discount: 0
   })
 
-  const toComma = () => {
-    const addCommaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    let addCommaDiscount: string | number = (price * (1 - discount / 100)).toFixed(0)
-    addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice })
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/assets/errorImage.png'
   }
 
   const changeWindowWidth = () => {
@@ -43,8 +41,12 @@ const Card = ({
   }
 
   useEffect(() => {
-    toComma()
-  }, [])
+    // setCommaPrice({
+    //   ...commaPrice,
+    //   price: (price * (1 - discount / 100)).toFixed(0).toLocaleString(''),
+    //   discount: Number(price.toLocaleString('en'))
+    // })
+  }, [price, discount])
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
@@ -56,7 +58,7 @@ const Card = ({
         {/* 순위 라벨/ 순위 라벨 값이 1일 때 ? 3일 때 ? : 아닐 때 */}
         {idx < 3 ? (
           <>
-            <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4 z-10">
+            <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4 z-[9]">
               {windowWidth < 1020 ? (
                 <>
                   <span className="absolute top-[4px] left-[6px] md:top-[3px] text-white text-[10px] font-bold  xl:font-bold ">
@@ -80,9 +82,10 @@ const Card = ({
         <span className="relative">
           <img
             onClick={() => navigate(`/product/${productId}`)}
-            src={viewImg ? viewImg : '/assets/logo.svg'}
+            src={viewImg && viewImg}
+            onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
-            className=" cursor-pointer rounded-md w-[160px] md:w-full h-[115px] mx-auto md:h-[185px]"
+            className=" cursor-pointer rounded-md w-[160px] md:w-full h-[120px] mx-auto md:h-[190px]"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">
@@ -105,12 +108,14 @@ const Card = ({
             </span>
           )}
         </span>
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <div className="flex items-center">
-            {colorAndImage.map((eachColor: ColorAndImage, idx: number) => (
+            {colorAndImage.slice(0, 4).map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px] md:mr-[15px] rounded-full box-border self-center`}
+                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
+                  colorAndImage.length === 1 ? 'hover:my-[7.5px] ' : 'hover:my-[5px]'
+                }  md:mr-[15px] rounded-full  `}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
@@ -118,23 +123,22 @@ const Card = ({
               ></div>
             ))}
           </div>
-
           <span className="hidden xs:block absolute top-[190px] right-1 ">
-            <CartAndHeart productId={productId} />
+            <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
           <span className="xs:hidden block absolute top-[120px] right-1">
-            <CartAndHeart productId={productId} />
+            <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <div className=" text-[12px] md:text-[14px]">{series}</div>
+          <div className=" text-[14px]ㄴ md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
             <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
-              {commaPrice.price}円
+              {(price * (100 - discount)) / 100}円
             </div>
             <div className="text-lenssisGray line-through font-[700] text-[12px] md:text-[14px]">
-              {commaPrice.discount}円
+              {price}円
             </div>
           </div>
-          <div className="flex justify-start w-full overflow-hidden flex-wrap">
+          <div className="flex justify-start mt-[5px] w-full overflow-hidden flex-wrap">
             {graphicDiameter?.map((item: number, idx: number) => (
               <div
                 key={`${item}-${idx}`}

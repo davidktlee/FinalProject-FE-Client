@@ -6,7 +6,7 @@ const [filter, setFilter] = useRecoilState(filterState)
 export type contentTypes = {
   type: string
   name: string
-  value: string | number | string[]
+  value: any
   color?: string
 }
 
@@ -17,7 +17,7 @@ export const handleFilterValue = (content: contentTypes) => {
   switch (content.type) {
     case 'duration':
       if (typeof content.value === 'string') {
-        setFilter({ ...filter, durationState: content.value })
+        // setFilter({ ...filter, durationState: content.value })
       }
       console.log(filter)
       break

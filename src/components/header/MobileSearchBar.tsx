@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { BsX } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useUser } from '../auth/hooks/useUser'
+import useSearch from './hooks/useSearch'
 
 interface MobileSearchBarHandlerProps {
   popupSearchBarHandler: () => void
@@ -9,18 +11,24 @@ interface MobileSearchBarHandlerProps {
 const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [userSearched,setUserSearched] = useState<string[]>([])
-  
+  const location = useLocation()
+  const navigate = useNavigate()
+  const {searchLens,searchedLens} = useSearch()
+  const {user} = useUser()
   const searchSubmitHandler = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserSearched(prev => [...prev,searchValue])
-   setTimeout(() => {popupSearchBarHandler()},0)
+    searchLens({keyword:searchValue,memberId:user?.memberId})
+    setTimeout(() => {popupSearchBarHandler()},0)
+    navigate('/searchresult',{state:searchValue})
   }
-
+  
   const searchValueChangeHander = (e:ChangeEvent<HTMLInputElement>) => {
     const {target:{value}} = e;
     setSearchValue(value);
+    
   }
-
+ 
   const userSearchedDeleteHandler = (item:string) => {
     setUserSearched(prev => prev.filter(searchword => searchword !== item))
   }
@@ -39,7 +47,6 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   
   useEffect(() => {
     localStorage.setItem('lenssis_search', JSON.stringify(userSearched))
-    
   },[userSearched])
   
 
@@ -75,8 +82,8 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
             </p>
           </div>
           <div className="flex flex-col items-center w-full mt-4">
-            {userSearched.map((item) => (
-              <p className="flex items-center justify-between w-full font-semibold text-lenssisGray py-1">
+            {userSearched.map((item,index) => (
+              <p key={item + index} className="flex items-center justify-between w-full font-semibold text-lenssisGray py-1">
               {item} <BsX size={32} color="#d3d3d3" onClick={() =>userSearchedDeleteHandler(item)} />
             </p>
             ))}

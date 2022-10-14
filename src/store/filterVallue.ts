@@ -1,21 +1,34 @@
 import { atom } from 'recoil'
 
-interface FilterValue {
+export interface FilterValue {
   // [index: string]: string | number[] | string[]
-  durationState: string
+  periodState: number[]
   graphicDiameterState: number[]
   colorState: string[]
   seriesState: string[]
   featureState: string[]
 }
 
+export interface FilteredProductsTypes {
+  productData: object[]
+  totalCount: number
+}
+
 export const filterState = atom<FilterValue>({
   key: 'filterValues',
   default: {
-    durationState: 'all',
+    periodState: [],
     graphicDiameterState: [],
     colorState: [],
     seriesState: [],
     featureState: []
+  }
+})
+
+export const filteredProudcts = atom<FilteredProductsTypes>({
+  key: 'filteredProudct',
+  default: {
+    productData: [],
+    totalCount: 0
   }
 })

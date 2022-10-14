@@ -7,7 +7,6 @@ import NoticePageTab from './tabs/NoticePageTab'
 
 function NoticeTitle() {
   const location = useLocation()
-  const navigate = useNavigate()
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
