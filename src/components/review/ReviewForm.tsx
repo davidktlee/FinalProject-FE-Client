@@ -3,8 +3,7 @@ import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview } from './hooks/useReview'
 // import ReactS3Client from 'react-aws-s3-typescript'
-const { reactS3Cliengt } = require('react-aws-s3-typescript')
-import { s3Config } from './config/s3Config'
+// import { s3Config } from './config/s3Config'
 
 interface ReviewFormProps {
   onClose: Function
