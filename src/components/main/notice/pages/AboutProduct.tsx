@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NoticeDetailSkeleton } from '../../../common/ui/Skeleton'
 import Pagination from '../../common/Pagination'
 import { useGetAllNotice } from '../../hooks/useNotice'
 import { BoardMainList } from '../../types/noticeTypes'
 import MobileNotice from '../utils/MobileNotice'
 import WebNotice from '../utils/WebNotice'
-// 필독에 대한 내용 데이터
+
 function AboutProduct() {
   const [currentPage, setCurrentPage] = useState(1)
   const [boardList, setBoardList] = useState<BoardMainList[]>([])
@@ -18,7 +18,6 @@ function AboutProduct() {
       setBoardList(data?.boardMainList?.slice(indexOfStart, indexOfEnd))
     }
   }, [data, currentPage])
-  // 쿼리 키를 페이지네이션 부분에 내려줘서 버튼 누를 때 가능하게 만들기
   return (
     <>
       {isFetching ? (

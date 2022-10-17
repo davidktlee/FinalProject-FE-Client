@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { selectProduct } from '../../../store/selectProduct'
 
-
 interface CartButtonGroupProps {
   includeVerifyHandler: () => void
   buyAllHandler: () => void
 }
 
-const CartButtonGroup = ({buyAllHandler,includeVerifyHandler,}:CartButtonGroupProps) => {
+const CartButtonGroup = ({ buyAllHandler, includeVerifyHandler }: CartButtonGroupProps) => {
   const selectedProduct = useRecoilValue(selectProduct)
   return (
     <div className="flex gap-4 flex-col xs:flex-row items-center w-full justify-between mt-4">
@@ -28,8 +27,6 @@ const CartButtonGroup = ({buyAllHandler,includeVerifyHandler,}:CartButtonGroupPr
           선택상품구매
         </Link>
       )}
-
-      {/* onClick시 모든 상품을 주문페이지에 request하는 로직 작성해야 함 */}
       <Link
         to="/payment"
         className="flex items-center justify-center text-center border border-solid border-transparent bg-lenssisDark py-2 w-full xs:w-[220px] rounded-[5px] text-white text-sm h-[50px] font-semibold"

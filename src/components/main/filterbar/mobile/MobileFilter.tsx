@@ -1,24 +1,18 @@
-import React, { RefObject } from 'react'
 import MobileBoxLayout from '../common/MobileBoxLayout'
 import { graphicDiameter, series, features, period, colors } from '../../../../constants/filterData'
 import Refresh from '/assets/Refresh.svg'
 import { filterState, FilterValue } from '../../../../store/filterVallue'
 import { useRecoilState, useResetRecoilState } from 'recoil'
-import { useMutation } from 'react-query'
 import { useFilterMutation } from '../hooks/useFilter'
 
 const MobileFilter = () => {
   const resetFilter = useResetRecoilState(filterState)
-  const [filter, setFilter] = useRecoilState(filterState)
   const { requstFilter } = useFilterMutation()
 
   const refreshHandler = () => {
     resetFilter()
   }
-  const handleFilter = (filter: FilterValue) => {
-    if (filter.periodState.length === 0) return
-    requstFilter(filter)
-  }
+
   return (
     <div className="bg-[#fff]">
       <MobileBoxLayout title="사용기간" contents={period} py={'py-[3px]'} w={'w-[80px]'} />

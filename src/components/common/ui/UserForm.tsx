@@ -1,13 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MINLENGTH,
-  
-} from '../../auth/hooks/validator'
+import { VALIDATOR_EMAIL, VALIDATOR_MAXLENGTH, VALIDATOR_MINLENGTH } from '../../auth/hooks/validator'
 import Birth from '../../auth/signup/birth/Birth'
-import Recaptcha from '../../auth/signup/Recaptcha'
 import { SignupRecordType } from '../../auth/signup/Signup'
 import Input from '../Input'
 import Post from '../post/Post'
@@ -20,12 +14,9 @@ interface UserFormProps {
 }
 
 const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFormProps) => {
-  const {addressPopupHandler} = usePost({setFormValue})
-  
+  const { addressPopupHandler } = usePost({ setFormValue })
 
   const [totalValid, setTotalValid] = useState(false)
-
- 
 
   const changeFormHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -75,7 +66,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           flexDirection="horizontal"
           placeholder="성"
           placeholder2="이름"
-          inputWidth='max-w-[400px]'
+          inputWidth="max-w-[400px]"
           inputHeight="10"
           validators={[VALIDATOR_MINLENGTH(0), VALIDATOR_MAXLENGTH(5)]}
           errorText="한 글자 이상, 네 글자 미만으로 작성해주세요."
@@ -94,7 +85,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           flexDirection="horizontal"
           placeholder="세이"
           placeholder2="메이"
-          inputWidth='max-w-[400px]'
+          inputWidth="max-w-[400px]"
           inputHeight="10"
           validators={[VALIDATOR_MINLENGTH(0), VALIDATOR_MAXLENGTH(8)]}
           errorText="한 글자 이상, 여덟 글자 미만으로 작성해주세요!"
@@ -119,7 +110,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           isRequired={false}
           flexDirection="horizontal"
           placeholder="예시:01022743334"
-          inputWidth='max-w-[400px]'
+          inputWidth="max-w-[400px]"
           inputHeight="10"
           validators={[VALIDATOR_MINLENGTH(7), VALIDATOR_MAXLENGTH(13)]}
           errorText="8글자 이상 12글자 이하의 숫자들로 입력해주세요"
@@ -137,8 +128,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
               isRequired={true}
               flexDirection="horizontal"
               placeholder="info@lenssis.jp"
-  
-              inputWidth='max-w-[400px]'
+              inputWidth="max-w-[400px]"
               inputHeight="10"
               validators={[VALIDATOR_MINLENGTH(8), VALIDATOR_EMAIL()]}
               errorText="이메일 형식을 확인해주세요"
@@ -169,7 +159,7 @@ const UserForm = ({ formValue, setFormValue, submitFormHandler, isEdit }: UserFo
           flexDirection="vertical"
           placeholder="반각 영숫자 기호 8, 32문자"
           placeholder2="확인을 위해 다시 한번 입력하세요"
-          inputWidth='max-w-[400px]'
+          inputWidth="max-w-[400px]"
           inputHeight="10"
           validators={[VALIDATOR_MINLENGTH(9), VALIDATOR_MAXLENGTH(20)]}
           errorText="비밀번호는 10글자 이상 20글자 미만으로 작성해주세요."

@@ -1,5 +1,4 @@
-import { ChangeEvent, useEffect } from 'react'
-import { GoTriangleDown } from 'react-icons/go'
+import { ChangeEvent } from 'react'
 import { PaymentFormValueType } from '../Payment'
 import DeliveryRequest from './DeliveryRequest'
 import ShippingAddress from '../ui/ShippingAddress'
@@ -24,9 +23,9 @@ interface OrderPaperProps {
   domainArray: string[]
   phoneFormValueChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
   phoneFormValue: Record<string, string | number>
-  
-  visibleEmail?:boolean
-  visibleRequest?:boolean
+
+  visibleEmail?: boolean
+  visibleRequest?: boolean
 }
 
 const OrderPaper = ({
@@ -41,7 +40,7 @@ const OrderPaper = ({
   domainArray,
   phoneFormValueChangeHandler,
   phoneFormValue,
-  
+
   visibleEmail,
   visibleRequest
 }: OrderPaperProps) => {
@@ -70,18 +69,19 @@ const OrderPaper = ({
         />
       </ShippingCard>
 
-       {visibleEmail && <ShippingCard title="이메일 주소">
-        <ShippingEmail
-          domainArray={domainArray}
-          emailDomainSelectHandler={emailDomainSelectHandler}
-          isOpen={isOpen}
-          onChange={emailChangeHandler}
-          onClick={domainSelectHandler}
-          value1={emailFormValue.emailIdentity}
-          value2={emailFormValue.emailDomain}
-        />
-      </ShippingCard>}
-      
+      {visibleEmail && (
+        <ShippingCard title="이메일 주소">
+          <ShippingEmail
+            domainArray={domainArray}
+            emailDomainSelectHandler={emailDomainSelectHandler}
+            isOpen={isOpen}
+            onChange={emailChangeHandler}
+            onClick={domainSelectHandler}
+            value1={emailFormValue.emailIdentity}
+            value2={emailFormValue.emailDomain}
+          />
+        </ShippingCard>
+      )}
 
       {visibleRequest && <DeliveryRequest onChange={changeFormHandler} value={formValue.shippingMessage} />}
     </>

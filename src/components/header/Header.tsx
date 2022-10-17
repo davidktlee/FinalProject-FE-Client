@@ -1,4 +1,3 @@
-
 import { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import LeftSection from './LeftSection'
@@ -7,20 +6,14 @@ import TopInfomation from './TopInfomation'
 import { TbSearch } from 'react-icons/tb'
 import { FiFilter } from 'react-icons/fi'
 import { useRecoilState } from 'recoil'
-import { filterState } from '../../store/filterOpen'
+import { filterOpenState } from '../../store/filterOpen'
 import { useUser } from '../auth/hooks/useUser'
-
-import NavSearch from './NavSearch'
-
-import MobileFilter from '../main/filterbar/mobile/MobileFilter'
 import MobileSearchBar from './MobileSearchBar'
 
-
 const Header = () => {
-  const [filterOpen, setFilterOpen] = useRecoilState(filterState)
-  const [isSearch,setIsSearch] = useState(false);
-  
-  const { user } = useUser()
+  const [filterOpen, setFilterOpen] = useRecoilState(filterOpenState)
+  const [isSearch, setIsSearch] = useState(false)
+
   const handleFilter = useCallback(() => {
     setFilterOpen((prev) => !prev)
   }, [])
@@ -28,7 +21,7 @@ const Header = () => {
   const { pathname } = useLocation()
 
   const popupSearchBarHandler = () => {
-    setIsSearch(prev => !prev);
+    setIsSearch((prev) => !prev)
   }
 
   return (

@@ -1,8 +1,6 @@
 import { getStoredToken } from '../../local-storage/userStorage'
 import { getJWTToken } from '../../axiosinstance/index'
-
 import { AxiosResponse } from 'axios'
-import React from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import { queryKeys } from '../../react-query/queryKeys'
@@ -32,7 +30,6 @@ const getCartItems = async (): Promise<CartItemsType[]> => {
 
 const useCart = () => {
   const fallback: CartItemsType[] = []
-  const queryClient = useQueryClient()
   const { data: cartItems = fallback, isLoading } = useQuery(queryKeys.cart, () => getCartItems(), {})
 
   return { cartItems, isLoading }
@@ -48,7 +45,6 @@ const addCart = async (id: number) => {
       productDetailsId: id
     }
   })
-  console.log(data)
   return data
 }
 

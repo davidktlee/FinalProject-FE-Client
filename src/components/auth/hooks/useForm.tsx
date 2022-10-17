@@ -1,4 +1,4 @@
-import { useState, useReducer,useCallback } from 'react'
+import { useReducer, useCallback } from 'react'
 
 interface ReducerInitialStateType {
   inputs: {
@@ -6,14 +6,14 @@ interface ReducerInitialStateType {
       value: string
       isValid: boolean
     }
-  },
+  }
   isFormValid: boolean
 }
 
 interface Actions {
-  inputId: string;
-  value:string;
-  isValid:boolean;
+  inputId: string
+  value: string
+  isValid: boolean
 }
 
 const formReducer = (state: ReducerInitialStateType, action: Actions) => {
@@ -22,9 +22,9 @@ const formReducer = (state: ReducerInitialStateType, action: Actions) => {
     if (!state.inputs[inputId]) {
       continue
     }
-    if(inputId === action.inputId){
+    if (inputId === action.inputId) {
       formValid = formValid && action.isValid
-    }else{
+    } else {
       formValid = formValid && state.inputs[inputId].isValid
     }
   }
@@ -32,36 +32,34 @@ const formReducer = (state: ReducerInitialStateType, action: Actions) => {
     ...state,
     inputs: {
       ...state.inputs,
-      [action.inputId]: {value: action.value,isValid:action.isValid}
+      [action.inputId]: { value: action.value, isValid: action.isValid }
     },
     isFormValid: formValid && action.isValid
   }
 }
 
 interface initialInputType {
-  [key:string] : {
+  [key: string]: {
     value: string
     isValid: boolean
   }
 }
-  // {lastname,firstname,firstReadname,lastReadname,postCode,address,detailAddress,phone,email,password,passwordConfirm,birthDay,birthMonth,birthYear} = initialInput;
-const useForm = (initialInput:initialInputType, initialFormValid:boolean) => {
 
-  
+const useForm = (initialInput: initialInputType, initialFormValid: boolean) => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInput,
     isFormValid: initialFormValid
   })
 
-  const makeFormHandler = useCallback((id:string,value:string,isValid:boolean) => {
+  const makeFormHandler = useCallback((id: string, value: string, isValid: boolean) => {
     dispatch({
       value,
       inputId: id,
       isValid
     })
-  },[])
+  }, [])
 
-  return {formState,makeFormHandler}
+  return { formState, makeFormHandler }
 }
 
 export default useForm

@@ -1,5 +1,3 @@
-import axios from 'axios'
-import React from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 import { myPurchaseState } from '../../../store/myPurchase'

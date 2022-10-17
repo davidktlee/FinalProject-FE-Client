@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Scrollbar } from 'swiper'
 import { useGetProductRandom } from '../../main/hooks/useProductLists'
@@ -15,7 +14,6 @@ const MobilePoductRecommend = ({ productId }: any) => {
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
   const { user } = useUser()
   const data = useGetProductRandom(user?.memberId!, productId)
-  console.log(data)
 
   SwiperCore.use([Navigation, Scrollbar])
   useEffect(() => {
@@ -37,15 +35,6 @@ const MobilePoductRecommend = ({ productId }: any) => {
       })
     }
   }, [swiperSetting])
-
-  const reviewImgs = [
-    'https://dummyimage.com/130x130/000/fff',
-    'https://dummyimage.com/130x130/000/fff',
-    'https://dummyimage.com/130x130/000/fff',
-    'https://dummyimage.com/130x130/000/fff',
-    'https://dummyimage.com/130x130/000/fff',
-    'https://dummyimage.com/130x130/000/fff'
-  ]
 
   return (
     <div className="pb-5 relative border-solid border-[#1B304A] border-b-2">

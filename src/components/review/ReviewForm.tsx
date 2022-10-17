@@ -19,11 +19,10 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
   const [selectedFile, setSelectedFile] = useState<File | ''>()
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
-  console.log(reviewItem)
+
   const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
-  console.log(reviewItem)
 
   const ratingChanged = (newRating: number) => {
     setRating(newRating)
@@ -52,7 +51,6 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
       selectedFile as File,
       `${reviewItem.orderId}-${reviewItem.productDetailsId}`
     )
-    console.log(result)
 
     if (!selectedFile) return
 

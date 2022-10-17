@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import RevieItems from '../review/ReviewItems'
 import ProductDescription from './ProductDescription'
-import ProductInquiry from './ProductInquiry'
 import { finalProductState } from '../../store/productByOptions'
 import { useGetAllreview } from '../review/hooks/useReview'
 
 const ProductAbout = ({ productDetails }: any) => {
   const [tabState, setTabState] = useState<boolean>(true)
-  console.log(productDetails?.data?.productId)
 
   const finalProduct = useRecoilValue(finalProductState)
 
   const { allReview } = useGetAllreview(productDetails?.data?.productId)
-  console.log(allReview?.data?.data)
 
   return (
     <section className="text-gray-600 body-font ">

@@ -1,15 +1,10 @@
-import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { reviewState } from '../../../store/review'
-import { useReview } from '../../review/hooks/useReview'
 import CardLayout from '../common/CardLayout'
 
 const reviewArray = []
 
 const MyReview = () => {
-  const data = useReview()
-  console.log(data)
-
   const review = useRecoilValue(reviewState)
   return (
     <CardLayout title="리뷰 관리">

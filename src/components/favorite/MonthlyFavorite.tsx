@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { useGetFavoriteMonthly } from '../main/hooks/useFavorite'
 import Card from '../common/Card'
 

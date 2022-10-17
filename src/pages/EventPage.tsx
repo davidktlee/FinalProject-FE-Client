@@ -25,14 +25,14 @@ function EventPage() {
   }
 
   const { data: eventList, isFetching } = useGetEvent()
-  console.log(eventList)
+
   useEffect(() => {
     if (eventList) {
       setCurrentPost(eventList?.data?.eventMainList.slice(indexOfStart, indexOfLast))
       setFilteredItem(eventList?.data?.eventMainList.filter((item: InEventMainList) => item.topFixed === 0))
     }
   }, [eventList, currentPage])
-  console.log(filteredItem)
+
   return (
     <>
       <PageLayout layoutWidth="max-w-[1180px]" innerTop="top-[40%]">
@@ -50,10 +50,7 @@ function EventPage() {
                   src={event.imageUrl}
                   alt="イヴェントイメージ"
                 />
-                <div className=" h-[95px] rounded-b-xl ml-2">
-                  {/* 이벤트 내용 */}
-                  {event.eventTitle}
-                </div>
+                <div className=" h-[95px] rounded-b-xl ml-2">{event.eventTitle}</div>
               </div>
             ))}
 
@@ -75,10 +72,7 @@ function EventPage() {
                         src={event.imageUrl}
                         alt="イヴェントイメージ"
                       />
-                      <div className=" h-[95px] rounded-b-xl ml-2">
-                        {/* 이벤트 내용 */}
-                        {event.eventTitle}
-                      </div>
+                      <div className=" h-[95px] rounded-b-xl ml-2">{event.eventTitle}</div>
                     </div>
                   ))}
               </>
