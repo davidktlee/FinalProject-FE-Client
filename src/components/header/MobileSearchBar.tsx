@@ -1,6 +1,6 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { BsX } from 'react-icons/bs'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useUser } from '../auth/hooks/useUser'
 import useSearch from './hooks/useSearch'
 
@@ -10,46 +10,45 @@ interface MobileSearchBarHandlerProps {
 
 const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps) => {
   const [searchValue, setSearchValue] = useState('')
-  const [userSearched,setUserSearched] = useState<string[]>([])
-  const location = useLocation()
+  const [userSearched, setUserSearched] = useState<string[]>([])
   const navigate = useNavigate()
-  const {searchLens,searchedLens} = useSearch()
-  const {user} = useUser()
-  const searchSubmitHandler = (e:FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setUserSearched(prev => [...prev,searchValue])
-    searchLens({keyword:searchValue,memberId:user?.memberId})
-    setTimeout(() => {popupSearchBarHandler()},0)
-    navigate('/searchresult',{state:searchValue})
+  const { searchLens, searchedLens } = useSearch()
+  const { user } = useUser()
+  const searchSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setUserSearched((prev) => [...prev, searchValue])
+    searchLens({ keyword: searchValue, memberId: user?.memberId })
+    setTimeout(() => {
+      popupSearchBarHandler()
+    }, 0)
+    navigate('/searchresult', { state: searchValue })
   }
-  
-  const searchValueChangeHander = (e:ChangeEvent<HTMLInputElement>) => {
-    const {target:{value}} = e;
-    setSearchValue(value);
-    
+
+  const searchValueChangeHander = (e: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value }
+    } = e
+    setSearchValue(value)
   }
- 
-  const userSearchedDeleteHandler = (item:string) => {
-    setUserSearched(prev => prev.filter(searchword => searchword !== item))
+
+  const userSearchedDeleteHandler = (item: string) => {
+    setUserSearched((prev) => prev.filter((searchword) => searchword !== item))
   }
   const wholeSearchedValueDeleteHandler = () => {
     localStorage.setItem('lenssis_search', '')
-    setUserSearched([]);
+    setUserSearched([])
   }
 
   useEffect(() => {
-    if(localStorage.getItem('lenssis_search')){
+    if (localStorage.getItem('lenssis_search')) {
       const userSearched = JSON.parse(localStorage.getItem('lenssis_search') || '')
-      console.log(userSearched);
       setUserSearched(userSearched)
     }
-  },[])
-  
+  }, [])
+
   useEffect(() => {
     localStorage.setItem('lenssis_search', JSON.stringify(userSearched))
-  },[userSearched])
-  
-
+  }, [userSearched])
 
   return (
     <div className='fixed top-0 left-0 z-50 text-black w-screen h-screen bg-lenssisLightGray font-["SUIT"]'>
@@ -78,14 +77,19 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
           <div className="flex items-center justify-between w-full">
             <p className="text-lenssisDark font-bold">최근 검색어</p>
             <p>
-              <button className="font-bold text-lenssisGray" onClick={wholeSearchedValueDeleteHandler}>전체 지우기</button>
+              <button className="font-bold text-lenssisGray" onClick={wholeSearchedValueDeleteHandler}>
+                전체 지우기
+              </button>
             </p>
           </div>
           <div className="flex flex-col items-center w-full mt-4">
-            {userSearched.map((item,index) => (
-              <p key={item + index} className="flex items-center justify-between w-full font-semibold text-lenssisGray py-1">
-              {item} <BsX size={32} color="#d3d3d3" onClick={() =>userSearchedDeleteHandler(item)} />
-            </p>
+            {userSearched.map((item, index) => (
+              <p
+                key={item + index}
+                className="flex items-center justify-between w-full font-semibold text-lenssisGray py-1"
+              >
+                {item} <BsX size={32} color="#d3d3d3" onClick={() => userSearchedDeleteHandler(item)} />
+              </p>
             ))}
           </div>
         </div>

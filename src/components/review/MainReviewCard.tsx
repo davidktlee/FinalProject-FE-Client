@@ -1,4 +1,3 @@
-import React, { startTransition } from 'react'
 import star from '/assets/star.svg'
 
 const MainReviewCard = () => {

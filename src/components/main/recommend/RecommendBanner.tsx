@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SwiperCore, { Navigation, Pagination, Autoplay, Scrollbar } from 'swiper'
 import { SwiperSlide, Swiper } from 'swiper/react'
-import { RecommendSkeleton } from '../../common/ui/Skeleton'
 
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'

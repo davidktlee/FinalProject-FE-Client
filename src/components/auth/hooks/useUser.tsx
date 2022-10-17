@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
-import { useIsFetching, useQuery, useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { axiosInstance, getJWTToken } from '../../axiosinstance'
-import { clearStoredToken, getStoredToken, setStoredToken } from '../../local-storage/userStorage'
+import { getStoredToken } from '../../local-storage/userStorage'
 import { queryKeys } from '../../react-query/queryKeys'
 import { Token } from '../types/userTypes'
 
@@ -14,8 +14,6 @@ const getUser = async (token: Token | null): Promise<User | null> => {
   const { data }: AxiosResponse<User> = await axiosInstance.get('/member/info', {
     headers: getJWTToken(token)
   })
-  console.log('user있음')
-  console.log('getUser - data', data)
   return data
 }
 
@@ -41,8 +39,6 @@ export const useUser = (): UseUser => {
         setCurrentUser(received)
         return received
       } else {
-        // clearStoredToken();
-        // clearUser()
       }
     },
     onError: () => console.log('queryError'),
@@ -50,12 +46,10 @@ export const useUser = (): UseUser => {
   })
 
   const updateUser = (newToken: Token): void => {
-    // queryClient.invalidateQueries([queryKeys.user,queryKeys.token])
     queryClient.fetchQuery([queryKeys.user], () => getUser(newToken))
   }
 
   const clearUser = () => {
-    // queryClient.setQueryData(queryKeys.user, null)
     queryClient.removeQueries([queryKeys.user, queryKeys.token])
   }
 

@@ -1,6 +1,5 @@
 import { useState, ChangeEvent } from 'react'
 import Input from '../Input'
-import { SignupFormType,SignupRecordType } from '../../auth/signup/Signup'
 import {
   ValidatorType,
   VALIDATOR_MAXLENGTH,
@@ -9,22 +8,18 @@ import {
 } from '../../auth/hooks/validator'
 import FormErrorMessage from '../shared/FormErrorMessage'
 
-
-
 interface PostProps {
   // 여러가지 다른 형식의 formValue가 들어올 수 있기 때문에 any처리
   formValue: any
   setFormValue: any
   changeFormHandler: (e: ChangeEvent<HTMLInputElement>, validator: ValidatorType[]) => void
   addressPopupHandler: () => void
-  titleText:string;
-  isRequired:boolean;
+  titleText: string
+  isRequired: boolean
 }
 
-const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopupHandler,isRequired }: PostProps) => {
+const Post = ({ formValue, titleText, changeFormHandler, addressPopupHandler, isRequired }: PostProps) => {
   const [isBlur, setIsBlur] = useState(false)
-
-
 
   const onBlur = () => {
     setIsBlur(true)
@@ -32,7 +27,9 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
   return (
     <>
       <div className="flex flex-col gap-1 w-full">
-        <label className="font-semibold text-lenssisDark">{titleText} {isRequired && <span className='text-rose-400'>&nbsp;*</span>}</label>
+        <label className="font-semibold text-lenssisDark">
+          {titleText} {isRequired && <span className="text-rose-400">&nbsp;*</span>}
+        </label>
         <div className="flex justify-start items-center gap-2">
           <input
             name="postCode"
@@ -52,7 +49,14 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
             </button>
           </div>
         </div>
-        <div>{isBlur && !formValue.postCode && <FormErrorMessage errorTitle='우편번호누락' errorText='우편 번호 검색을 통해 주소를 입력해주세요.' />}</div>
+        <div>
+          {isBlur && !formValue.postCode && (
+            <FormErrorMessage
+              errorTitle="우편번호누락"
+              errorText="우편 번호 검색을 통해 주소를 입력해주세요."
+            />
+          )}
+        </div>
       </div>
 
       <Input
@@ -65,13 +69,13 @@ const Post = ({ formValue,titleText, setFormValue, changeFormHandler,addressPopu
         type2="text"
         double={true}
         label="주소"
-        labelColor='text-lenssisDark'
+        labelColor="text-lenssisDark"
         isRequired={true}
         flexDirection="vertical"
         placeholder="기본 주소"
         placeholder2="상세 주소"
-        inputWidth='max-w-[400px]'
-        inputHeight='h-10'
+        inputWidth="max-w-[400px]"
+        inputHeight="h-10"
         readonly={true}
         validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(30)]}
         errorText="상세 주소를 입력해주세요"

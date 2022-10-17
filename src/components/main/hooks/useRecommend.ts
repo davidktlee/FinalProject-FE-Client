@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios'
 import { useQuery } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'

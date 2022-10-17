@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Counter from './Counter'
-
 import CheckBox from '../common/ui/CheckBox'
 import { CartItemsType } from './hooks/useCart'
 import useDeleteCart from './hooks/useDeleteCart'
@@ -9,52 +8,58 @@ interface CartItemProps {
   isTotalChecked: boolean
   setIsTotalChecked: React.Dispatch<React.SetStateAction<boolean>>
   item: CartItemsType
-  selectedProduct:CartItemsType[]
+  selectedProduct: CartItemsType[]
   selectProductHandler: (cart: CartItemsType, checked: boolean) => void
   setSelectedProduct: React.Dispatch<React.SetStateAction<CartItemsType[]>>
-  products:CartItemsType[]
+  products: CartItemsType[]
   setProducts: React.Dispatch<React.SetStateAction<CartItemsType[]>>
 }
 
-const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,selectProductHandler,setIsTotalChecked,setSelectedProduct}: CartItemProps) => {
-  
-  const [isChecked,setIsChecked] = useState(false)
-  const {deleteCart} = useDeleteCart()
+const CartItem = ({
+  setProducts,
+  products,
+  isTotalChecked,
+  item,
+  selectedProduct,
+  selectProductHandler,
+  setIsTotalChecked,
+  setSelectedProduct
+}: CartItemProps) => {
+  const [isChecked, setIsChecked] = useState(false)
+  const { deleteCart } = useDeleteCart()
   const onClick = useCallback(() => {
-    setIsTotalChecked(false);
-    setIsChecked(prev => !prev); 
-  },[])
+    setIsTotalChecked(false)
+    setIsChecked((prev) => !prev)
+  }, [])
 
-  const productDeleteHandler = (cId:number) => {
+  const productDeleteHandler = (cId: number) => {
     // 해당 카트 상품 삭제
-    
+
     deleteCart(cId)
-    setSelectedProduct((prev) => prev.filter(selectProduct => selectProduct.cartId !== cId))
-    setProducts((prev) => prev.filter(product => product.cartId !== cId))
-    
+    setSelectedProduct((prev) => prev.filter((selectProduct) => selectProduct.cartId !== cId))
+    setProducts((prev) => prev.filter((product) => product.cartId !== cId))
   }
 
-
   useEffect(() => {
-    if(!isTotalChecked){
+    if (!isTotalChecked) {
       setIsChecked(false)
     }
-    selectProductHandler(item,isTotalChecked)
-  },[isTotalChecked])
+    selectProductHandler(item, isTotalChecked)
+  }, [isTotalChecked])
 
-  useEffect(() => { 
-    selectProductHandler(item,isChecked);
-  }, [isChecked]);
+  useEffect(() => {
+    selectProductHandler(item, isChecked)
+  }, [isChecked])
 
   useEffect(() => {
     const pcsChangeProduct = products.find((product) => product.cartId === item.cartId)
-    if(!pcsChangeProduct) return;
-    setSelectedProduct(prev => {
-      return prev.map(selectProduct => {
-        if(selectProduct.cartId === item.cartId){
-          return {...selectProduct,pcs:pcsChangeProduct.pcs}
-        }else{
-          return {...selectProduct}
+    if (!pcsChangeProduct) return
+    setSelectedProduct((prev) => {
+      return prev.map((selectProduct) => {
+        if (selectProduct.cartId === item.cartId) {
+          return { ...selectProduct, pcs: pcsChangeProduct.pcs }
+        } else {
+          return { ...selectProduct }
         }
       })
     })
@@ -64,7 +69,7 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
     <li className="flex my-6 text-sm xs:text-base items-center h-[90px] xs:h-[110px] ">
       {/* selectedProduct에 내 cartId가 있으면 true 없으면 false로 작동하게 만든다. */}
       <CheckBox
-        isChecked={selectedProduct.some(product => product.cartId === item.cartId)}
+        isChecked={selectedProduct.some((product) => product.cartId === item.cartId)}
         onClick={onClick}
         bgColor="bg-lenssisDark"
       />
@@ -85,7 +90,9 @@ const CartItem = ({setProducts,products, isTotalChecked, item ,selectedProduct,s
         </div>
       </div>
       <div className=" min-w-[30px] xs:min-w-[40px]">
-        <button className="underline text-lenssisStroke" onClick={() =>productDeleteHandler(item.cartId!)}>삭제</button>
+        <button className="underline text-lenssisStroke" onClick={() => productDeleteHandler(item.cartId!)}>
+          삭제
+        </button>
       </div>
     </li>
   )

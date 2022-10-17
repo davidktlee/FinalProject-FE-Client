@@ -4,7 +4,7 @@ export interface Filter {
   isOpen: boolean
 }
 
-export const filterState = atom({
+export const filterOpenState = atom({
   key: 'filterState',
   default: false
 })

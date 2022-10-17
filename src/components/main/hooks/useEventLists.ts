@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery } from 'react-query'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
 import { queryKeys } from '../../react-query/queryKeys'

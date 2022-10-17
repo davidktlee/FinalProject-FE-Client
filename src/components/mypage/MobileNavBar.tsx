@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 interface MobileNavBarProps {
   selectedOption: string | null
@@ -15,7 +15,6 @@ const MobileNavBar = ({ selectedOption, setSelectedOption }: MobileNavBarProps) 
     setIsOpen((prev) => !prev)
   }
   const selectOptionHandler = useCallback((item: string) => {
-    // setIsOpen((prev) => !prev)
     setSelectedOption(item)
   }, [])
   useEffect(() => {
