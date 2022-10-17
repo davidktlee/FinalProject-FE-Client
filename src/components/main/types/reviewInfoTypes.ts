@@ -5,4 +5,5 @@ export interface ReviewInfo {
   productDetailsId: number
   rating: number
   replyImageUrl: string
+  replyId?: number
 }

@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
-import { useAddReview } from './hooks/useReview'
+import { useAddReview, useUpdateReview } from './hooks/useReview'
 // import ReactS3Client from 'react-aws-s3-typescript'
-import { s3Config } from './config/s3Config'
+// import { s3Config } from './config/s3Config'
 
 interface ReviewFormProps {
   onClose: Function
@@ -11,15 +11,23 @@ interface ReviewFormProps {
   reviewItem: any
   orderId: number
   memberId: number
+  reviewHandleType: string
 }
 
-const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: ReviewFormProps) => {
+const ReviewForm = ({
+  onClose,
+  isModalOpen,
+  reviewItem,
+  orderId,
+  memberId,
+  reviewHandleType
+}: ReviewFormProps) => {
   const [reviewText, setReviewText] = useState('')
   const [rating, setRating] = useState(0)
   const [selectedFile, setSelectedFile] = useState<File | ''>()
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
-
+  const updateReviewMutate = useUpdateReview()
   const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
@@ -34,6 +42,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+    console.log()
     if (!file) {
       setSelectedFile('')
     }
@@ -46,7 +55,8 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
   }
 
   const handleReviewSubmit = async () => {
-    var { reactS3Client } = require('react-aws-s3-typescript')
+    const { reactS3Client } = window.require('react-aws-s3-typescript')
+    // const reactS3Client = new ReactS3Client(s3Config)
 
     const result = await reactS3Client.uploadFile(
       selectedFile as File,
@@ -63,8 +73,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
       rating: rating,
       replyImageUrl: result.location
     }
-
-    addReviewMutate(reviewInfo)
+    reviewHandleType === 'add' ? addReviewMutate(reviewInfo) : updateReviewMutate(reviewInfo)
 
     setReviewText('')
     setRating(0)
@@ -91,7 +100,13 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
                           className=""
                           width={120}
                           height={120}
-                          src={previewImage ? previewImage : '/assets/eyes.png'}
+                          src={
+                            previewImage
+                              ? previewImage
+                              : reviewItem[0].productImageUrl
+                              ? reviewItem[0].productImageUrl
+                              : '/assets/errorImage.png'
+                          }
                         />
                         {!previewImage ? (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
@@ -120,22 +135,22 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
                       />
                     </div>
                     <div className="flex flex-col py-[25px] justify-between">
-                      <div className="xs-max:text-[12px] text-[14px]">{reviewItem[0].productName}</div>
+                      <div className="xs-max:text-[12px] text-[14px]">{reviewItem[0]?.productName}</div>
                       <div>
                         <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
-                          옵션 선택 - 그래픽 직경: {reviewItem[0].graphicDiameter}
+                          옵션 선택 - 그래픽 직경: {reviewItem[0]?.graphicDiameter}
                         </span>
                         <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
                           {' '}
-                          / 도수: {reviewItem[0].degree}
+                          / 도수: {reviewItem[0]?.degree}
                         </span>
                         <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
                           {' '}
-                          / 수량: {reviewItem[0].pcs}개
+                          / 수량: {reviewItem[0]?.pcs}개
                         </span>
                       </div>
                       <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">
-                        {reviewItem[0].price}円
+                        {reviewItem[0]?.price}円
                       </div>
                       <div className="xs:hidden flex gap-[2px]">
                         <ReactStars
