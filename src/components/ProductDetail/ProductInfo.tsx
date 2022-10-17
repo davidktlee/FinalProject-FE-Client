@@ -60,7 +60,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
         colorCode: detailState.colorCode !== '' ? detailState.colorCode : undefined,
         graphicDiameter: detailState.graphicDiameter !== 0 ? detailState.graphicDiameter : undefined
       },
-      headers: getJWTToken(token)
+      headers: token ? getJWTToken(token) : undefined
     })
     return data
   }

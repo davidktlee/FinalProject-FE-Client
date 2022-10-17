@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview } from './hooks/useReview'
-import ReactS3Client from 'react-aws-s3-typescript'
+// import ReactS3Client from 'react-aws-s3-typescript'
 import { s3Config } from './config/s3Config'
 
 interface ReviewFormProps {
@@ -46,7 +46,8 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
   }
 
   const handleReviewSubmit = async () => {
-    const reactS3Client = new ReactS3Client(s3Config)
+    const { reactS3Client } = require('react-aws-s3-typescript')
+
     const result = await reactS3Client.uploadFile(
       selectedFile as File,
       `${reviewItem.orderId}-${reviewItem.productDetailsId}`
