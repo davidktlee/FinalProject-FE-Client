@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Toast } from '../../../store/toast'
-
-
 
 const ToastItem = ({ type, message, position, timer }: Toast) => {
   const [isShow, setIsShow] = useState(true)
-
 
   useEffect(() => {
     let flag = setTimeout(() => {

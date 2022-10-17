@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react' // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 
-// import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
@@ -10,23 +9,17 @@ import { useGetBanner } from './main/hooks/useBanner'
 import { useRecoilValue } from 'recoil'
 import { filteredProudcts } from '../store/filterVallue'
 
-// 달라질 부분
-// absoluteTop, absoluteBtm, absoluteLeft, absoluteRight, slidesView, data
 const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
-  const [title, setTitle] = useState<string>('Best')
-
-  const filteredProducts = useRecoilValue(filteredProudcts)
-  console.log(filteredProducts)
 
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
   }
 
-  const { data: bannerList, isFetching } = useGetBanner(1)
+  const { data: bannerList } = useGetBanner(1)
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)

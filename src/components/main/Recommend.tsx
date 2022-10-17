@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RecommendSkeleton } from '../common/ui/Skeleton'
-import { getRecommendProduct, useGetRecommendProduct } from './hooks/useRecommend'
+import { useGetRecommendProduct } from './hooks/useRecommend'
 
 import RecommendBanner from './recommend/RecommendBanner'
 
@@ -32,7 +32,7 @@ const Recommend = () => {
             <RecommendSkeleton count={2} />
           )
         ) : (
-          <RecommendBanner recommendProductLists={recommendProductLists}/>
+          <RecommendBanner recommendProductLists={recommendProductLists} />
         )}
       </div>
     </div>

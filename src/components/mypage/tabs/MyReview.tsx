@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import React, { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useReview } from '../../review/hooks/useReview'
+=======
+import { useRecoilValue } from 'recoil'
+import { reviewState } from '../../../store/review'
+>>>>>>> 05bede73c1cffc1489d755f4e642c13f36d5e9cc
 import CardLayout from '../common/CardLayout'
 import { reviewItemsType } from '../../review/types/reviewTypes'
 import { ItemDetail } from '../../../store/mainCart'
@@ -8,6 +13,7 @@ import ReviewForm from '../../review/ReviewForm'
 import { useUser } from '../../auth/hooks/useUser'
 
 const MyReview = () => {
+<<<<<<< HEAD
   const [isModal, setIsModal] = useState(false)
   const [updateItem, setUpdateItem] = useState<any>()
   const { reviewItems } = useReview()
@@ -23,6 +29,9 @@ const MyReview = () => {
     setIsModal(true)
   }
 
+=======
+  const review = useRecoilValue(reviewState)
+>>>>>>> 05bede73c1cffc1489d755f4e642c13f36d5e9cc
   return (
     <CardLayout title="리뷰 관리">
       <h4 className="py-2 border-b border-solid border-[#abc8df] text-[#1B304A] font-semibold">

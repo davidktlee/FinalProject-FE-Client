@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { selectedNameState } from '../../../store/review'
 import { axiosInstance, getJWTToken } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
@@ -36,7 +36,6 @@ const getForProudctId = async () => {
     url: '/reply/forProductId',
     method: 'GET'
   })
-  console.log(data)
   return data
 }
 
@@ -54,7 +53,6 @@ const addReviewItems = async (reviewInfo: ReviewInfo) => {
       orderId: reviewInfo.orderId
     }
   })
-  console.log(data)
   return data
 }
 
@@ -97,7 +95,6 @@ export const useGetAllreview = (productId: number) => {
   const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
     enabled: !!productId
   })
-  console.log(allReview)
   return { allReview }
 }
 
@@ -115,7 +112,6 @@ export const useGetReviewByName = () => {
       }
     }
   )
-  console.log(reviews?.data.data)
   return { reviews, GetReviewByNameMutate }
 }
 

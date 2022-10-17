@@ -28,9 +28,6 @@ const ReviewForm = ({
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
   const updateReviewMutate = useUpdateReview()
-
-  console.log(previewImage)
-  console.log(reviewItem)
   const addReviewMutate = useAddReview()
 
   if (!isModalOpen) return <></>
@@ -65,7 +62,6 @@ const ReviewForm = ({
       selectedFile as File,
       `${reviewItem.orderId}-${reviewItem.productDetailsId}`
     )
-    console.log(result)
 
     if (!selectedFile) return
 

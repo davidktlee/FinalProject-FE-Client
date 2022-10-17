@@ -1,18 +1,10 @@
 import { useRecoilValue } from 'recoil'
-import { productState } from '../../../store/product'
 import ReviewForm from '../../review/ReviewForm'
 import CardLayout from '../common/CardLayout'
 import { useEffect, useState } from 'react'
 import useOrder from '../hooks/useOrder'
 import { useUser } from '../../auth/hooks/useUser'
 import { myPurchaseState } from '../../../store/myPurchase'
-import { ItemDetail } from '../../../store/mainCart'
-
-// 0 주문완료
-// 1 배송준비중
-// 2 출하 완료
-// 3 배송 중
-// 4 배송 완료
 
 const MyOrder = () => {
   const [isModal, setIsModal] = useState(false)
@@ -23,7 +15,6 @@ const MyOrder = () => {
   const onModalHandler = () => {
     setIsModal(!isModal)
   }
-  console.log(myPurchase)
 
   const addReviewHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setReviewItem(

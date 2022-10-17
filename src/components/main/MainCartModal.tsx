@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { MainCartModalState, ItemDetail } from './../../store/mainCart'
 import ProductInfo from '../ProductDetail/ProductInfo'
 import { useUser } from '../auth/hooks/useUser'
-import { useProductDetails } from '../ProductDetail/hooks/useProductDetails'
-// import { useProductDetails } from './../ProductDetail/hooks/useProductDetails'
 
 function MainCartModal() {
   const itemDetail = useRecoilValue(ItemDetail)
   const [isLoading, setIsLoading] = useState(false)
   const modalState = useRecoilValue(MainCartModalState)
-  // 상품 id를 recoilState 로 전달하고 받아서 제품 상세 불러오는 리액트 쿼리문에 전달
+
   const { user } = useUser()
   useEffect(() => {
     if (itemDetail) {
-      console.log(itemDetail)
       setIsLoading(true)
     }
   }, [itemDetail])

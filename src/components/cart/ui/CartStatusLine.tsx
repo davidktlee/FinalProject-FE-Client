@@ -1,9 +1,7 @@
-import React from 'react'
 import { useUser } from '../../auth/hooks/useUser'
 
 const CartStatusLine = () => {
-
-  const {user} = useUser()
+  const { user } = useUser()
 
   return (
     <div className="flex items-center justify-between py-1 border-b border-solid border-lenssisGray w-full">

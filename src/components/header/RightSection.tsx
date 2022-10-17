@@ -1,4 +1,3 @@
-
 import { ChangeEvent, useState } from 'react';
 import NavSearch from './NavSearch'
 import RightNavLinks from './RightNavLinks'

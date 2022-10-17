@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import CardTemplate from './common/ui/CardTemplate'
 import PageLayout from './common/ui/PageLayout'
 import { useGetDetailEvent } from './main/hooks/useEventLists'
@@ -14,26 +14,11 @@ function EventDetail() {
   const { state } = useLocation()
   const [startTime, setStartTime] = useState('')
   const { data: detailEvent, isFetching } = useGetDetailEvent(state as number)
-  console.log(detailEvent)
-
-  // const addCoupon = async (couponId: number) => {
-  //   const res = await axios({
-  //     url: 'https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/eventDetail',
-  //     data: {
-  //       couponId
-  //     },
-  //     method: 'POST'
-  //   })
-  //   console.log(res)
-  // }
-  // const { mutate: addCouponMutate } = useMutation((couponId: number) => addCoupon(couponId))
-  // const data = useGetDetailEvent(state as string)
 
   const addCouponMutate = useAddCoupon()
 
   const clickEventBtn = () => {
     addCouponMutate(5)
-    // addCouponMutate(1)
   }
   useEffect(() => {
     if (detailEvent && detailEvent[0]) {

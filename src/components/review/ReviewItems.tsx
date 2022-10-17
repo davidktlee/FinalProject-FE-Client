@@ -9,7 +9,6 @@ const RevieItems = ({ item, productDetails }: any) => {
   const reviewItems = useRecoilValue(selectedNameState)
   const { GetReviewByNameMutate } = useGetReviewByName()
 
-  console.log(item)
   const toggleHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault()
     setIsToggle(!isToggle)
