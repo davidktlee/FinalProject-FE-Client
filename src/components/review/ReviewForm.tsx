@@ -55,12 +55,12 @@ const ReviewForm = ({
   }
 
   const handleReviewSubmit = async () => {
-    const { reactS3Client } = window.require('react-aws-s3-typescript')
+    const { reactS3Client } = require('react-aws-s3-typescript')
     // const reactS3Client = new ReactS3Client(s3Config)
 
     const result = await reactS3Client.uploadFile(
       selectedFile as File,
-      `${reviewItem.orderId}-${reviewItem.productDetailsId}`
+      `${reviewItem?.orderId}-${reviewItem?.productDetailsId}`
     )
 
     if (!selectedFile) return
@@ -136,7 +136,6 @@ const ReviewForm = ({
                     </div>
                     <div className="flex flex-col py-[25px] justify-between">
                       <div className="xs-max:text-[12px] text-[14px]">{reviewItem[0]?.productName}</div>
-                      <div>
                         <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
                           옵션 선택 - 그래픽 직경: {reviewItem[0]?.graphicDiameter}
                         </span>
