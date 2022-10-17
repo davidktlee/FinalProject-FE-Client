@@ -1,4 +1,3 @@
-import React from 'react'
 import { useRecoilState } from 'recoil'
 import { totalPriceState } from '../../../store/selectProduct'
 
@@ -13,7 +12,7 @@ const CartPriceInfo = () => {
             <span className="font-semibold">500円 추가 할인</span> 받을 수 있어요.
           </>
         ) : (
-          <span className='font-semibold'>이대로 구매하시면 500円 할인이 적용됩니다!</span>
+          <span className="font-semibold">이대로 구매하시면 500円 할인이 적용됩니다!</span>
         )}
       </p>
     </>

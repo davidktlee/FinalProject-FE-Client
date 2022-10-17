@@ -10,22 +10,29 @@ import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { filterState } from '../store/filterOpen'
+import { filterState } from '../store/filterVallue'
 import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
 import { filteredProudcts } from '../store/filterVallue'
 import { useUser } from '../components/auth/hooks/useUser'
-import { getFavorite } from '../components/main/hooks/useFavorite'
-import { MainCartFavoriteId } from '../store/mainCart'
+import { useGetNewProduct, useGetProductsList } from '../components/main/hooks/useProductLists'
+import { filterOpenState } from './../store/filterOpen'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
-  const [filterOpen, setFilterOpen] = useRecoilState(filterState)
+  const [filterOpen, setFilterOpen] = useRecoilState(filterOpenState)
   const [title, setTitle] = useState<any>('Best')
   const filteredProducts = useRecoilValue(filteredProudcts)
-  const { user } = useUser()
-  const [isLoading, setIsLoading] = useState(false)
   const MobileFilterRef = useRef<HTMLDivElement>(null)
+  const filterValue = useRecoilValue(filterState)
+
+  const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
+  const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
+
+  const [currentPost, setCurrentPost] = useState([])
+  const indexOfLast = newProductCurrentPage * 8
+  const indexOfStart = indexOfLast - 8
+  const { user } = useUser()
 
   const handleClickOutside = ({ target }: MouseEvent) => {
     if (!MobileFilterRef.current?.contains(target as Node) && filterOpen) {
@@ -43,16 +50,34 @@ const Main = () => {
   }
 
   // 메인에서 filterbar를 클릭했을 때 데이터 변경하는 함수입니다.
-  const changeTitle = (filteredProducts: any) => {
-    if (filteredProducts.productData.length === 0) {
-      setTitle(() => 'Best')
-    } else {
+  const changeTitle = () => {
+    if (
+      filterValue.periodState.length !== 0 ||
+      filterValue.graphicDiameterState.length !== 0 ||
+      filterValue.colorState.length !== 0 ||
+      filterValue.seriesState.length !== 0 ||
+      filterValue.featureState.length !== 0
+    ) {
       setTitle(() => 'Products')
+    } else {
+      setTitle(() => 'Best')
     }
   }
 
+  // 전체 상품 불러오기
+  const { data: productLists, isFetching: allProductFetching } = useGetProductsList(
+    allProductCurrentPage,
+    user ? user?.memberId : 0
+  )
+  const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct(
+    user ? user?.memberId : 0
+  )
+
   useEffect(() => {
-    changeTitle(filteredProducts)
+    setCurrentPost(newProductLists?.productData?.slice(indexOfStart, indexOfLast))
+  }, [newProductLists, newProductCurrentPage])
+  useEffect(() => {
+    changeTitle()
   }, [filteredProducts, title])
 
   useEffect(() => {
@@ -65,9 +90,7 @@ const Main = () => {
     refreshToken(token)
   }, [])
 
-  useEffect(() => {
-    // getFavoriteItem()
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <>
@@ -75,7 +98,6 @@ const Main = () => {
         <div className="relative">
           <Banner />
           <section className="flex justify-between  xs-max:my-[20px] my-[30px]">
-            {/* 메인의 왼쪽 검색 필터 */}
             <div className="xs-max:hidden hidden lg:block xl:block w-[280px] mr-[20px]">
               <FilterBar />
             </div>
@@ -87,13 +109,33 @@ const Main = () => {
                 <MobileFilter />
               </div>
             )}
-            {/*메인에서 상품 리스트 */}
             <div className="w-[880px] xs-max:w-[95%] xs-max:mx-auto  border-none rounded-md shadow-basic bg-white">
-              {<CardContainer data={title} />}
+              {(filterValue.periodState.length !== 0 ||
+                filterValue.graphicDiameterState.length !== 0 ||
+                filterValue.colorState.length !== 0 ||
+                filterValue.seriesState.length !== 0 ||
+                filterValue.featureState.length !== 0) &&
+              filteredProducts.productData.length === 0 ? (
+                <CardContainer data="찾으시는 상품이 없습니다" />
+              ) : filterValue.periodState.length !== 0 ||
+                filterValue.graphicDiameterState.length !== 0 ||
+                filterValue.colorState.length !== 0 ||
+                filterValue.seriesState.length !== 0 ||
+                filterValue.featureState.length !== 0 ? (
+                <CardContainer data={title} productLists={filteredProducts.productData} />
+              ) : (
+                <CardContainer
+                  data={title}
+                  productLists={productLists}
+                  allProductCurrentPage={allProductCurrentPage}
+                  setAllProductCurrentPage={setAllProductCurrentPage}
+                  fetching={allProductFetching}
+                />
+              )}
             </div>
           </section>
           <div
-            onClick={toColorTest} /* 퍼스널 컬러 테스트로 이동 */
+            onClick={toColorTest}
             className="w-full h-auto mb-[30px] mx-auto border-none rounded-md shadow-basic object-fit md:object-cover overflow-hidden cursor-pointer"
           >
             <img
@@ -104,7 +146,14 @@ const Main = () => {
           </div>
 
           <div className="w-full xs-max:w-[95%] xs-max:mx-auto border-none rounded-md pb-1 shadow-basic bg-white">
-            <CardContainer data="New" />
+            <CardContainer
+              data="New"
+              currentPost={currentPost}
+              productLists={newProductLists}
+              newProductCurrentPage={newProductCurrentPage}
+              setNewProductCurrentPage={setNewProductCurrentPage}
+              fetching={newProductFetching}
+            />
           </div>
           <div className="w-full xs-max:w-[95%] xs-max:mx-auto xs-max:my-[20px] my-[30px] border-none rounded-md  shadow-basic bg-white">
             <Event />

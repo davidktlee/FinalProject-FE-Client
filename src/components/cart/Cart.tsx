@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { selectProduct, shippingFeeState, totalPriceState } from '../../store/selectProduct'
 import { useUser } from '../auth/hooks/useUser'
 import Card from '../common/Card'
 import CardTemplate from '../common/ui/CardTemplate'
-import CheckBox from '../common/ui/CheckBox'
 import PageLayout from '../common/ui/PageLayout'
 import { getStoredToken } from '../local-storage/userStorage'
 import { useGetProductRandom } from '../main/hooks/useProductLists'
@@ -13,7 +12,6 @@ import CartItem from './CartItem'
 import useCart, { CartItemsType } from './hooks/useCart'
 import CartButtonGroup from './ui/CartButtonGroup'
 import CartBuyInfo from './ui/CartBuyInfo'
-import CartPriceInfo from './ui/CartPriceInfo'
 import CartPriceTable from './ui/CartPriceTable'
 import CartStatusBar from './ui/CartStatusBar'
 import CartStatusLine from './ui/CartStatusLine'
@@ -26,11 +24,7 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState)
   const [shippingFee, setShippingFee] = useRecoilState(shippingFeeState)
   const [products, setProducts] = useState<CartItemsType[]>([])
-  const [isNotSelected, setIsNowSelected] = useState(false)
   const navigate = useNavigate()
-  // 체크박스를 클릭한다.
-  // isTotalChecked 또는 isChecked가 true이면 해당 아이템이 담긴다.
-  // isTotalChecked 또는 isChecked가 false이면 해당 아이템이 빠진다.
   const selectProductHandler = (cart: CartItemsType, checked: boolean) => {
     if (checked) {
       setSelectedProduct((prev) => [...prev, cart])
@@ -54,15 +48,9 @@ const Cart = () => {
     alert('선택된 상품이 없습니다. 구입하시려는 상품을 체크해주세요')
   }, [])
 
-  // useEffect(() => {
-  //   const token = getStoredToken()
-  //   refreshToken(token)
-  // }, [])
-
-
   useEffect(() => {
-    const token = getStoredToken();
-    if(!token){
+    const token = getStoredToken()
+    if (!token) {
       navigate('/signin')
     }
   }, [])

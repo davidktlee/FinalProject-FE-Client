@@ -3,7 +3,7 @@ import ReviewBanner from '../components/review/ReviewBanner'
 import ReviewContainer from '../components/review/ReviewContainer'
 import Pagination from '../components/main/common/Pagination'
 import { useState } from 'react'
-import { useGetForProductId, useGetReviewByName, useReview } from '../components/review/hooks/useReview'
+import { useGetForProductId, useGetReviewByName } from '../components/review/hooks/useReview'
 import { useRecoilValue } from 'recoil'
 import { selectedNameState } from '../store/review'
 
@@ -21,7 +21,6 @@ const ReviewPage = () => {
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.currentTarget
     GetReviewByNameMutate(value)
-    console.log(value)
   }
 
   return (

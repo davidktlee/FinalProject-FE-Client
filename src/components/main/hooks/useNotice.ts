@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios'
 import { axiosInstance } from './../../axiosinstance/index'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery } from 'react-query'
 import { queryKeys } from '../../react-query/queryKeys'
 import useToast from '../../common/toast/hooks/useToast'
 import { MainBoardList, NoticeResponse, ReturnType } from '../types/noticeTypes'
@@ -39,7 +38,6 @@ const getDetailNotice = async (id: number): Promise<MainBoardList[]> => {
   const {
     data: { data }
   } = await axiosInstance({ url: `/board/details?boardId=${id}` })
-  console.log(data)
   return data
 }
 

@@ -7,12 +7,7 @@ import Input from '../../common/Input'
 import useToast from '../../common/toast/hooks/useToast'
 import { useAuth } from '../hooks/useAuth'
 import { useUser } from '../hooks/useUser'
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE
-} from '../hooks/validator'
+import { VALIDATOR_EMAIL, VALIDATOR_MAXLENGTH, VALIDATOR_MINLENGTH } from '../hooks/validator'
 
 interface formValueType {
   email: string
@@ -82,7 +77,6 @@ const Signin = () => {
         <h3 className="mt-5 text-center">
           <span className="text-lenssisDark text-2xl font-bold">Login</span>
         </h3>
-        {/*label,placeholder,type,double, flexDirection,type2,placeholder2,isRequired,readonly */}
         <div className="px-6 w-full">
           <Input
             name="email"

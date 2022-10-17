@@ -1,45 +1,44 @@
-import React, { ChangeEvent, useCallback } from 'react';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { ChangeEvent, useCallback } from 'react'
+import { useDaumPostcodePopup } from 'react-daum-postcode'
 
 interface usePostProps {
-  setFormValue?:any
-  setNewFormValue?:any
-  setEditFormValue?:any
+  setFormValue?: any
+  setNewFormValue?: any
+  setEditFormValue?: any
 }
 
-const usePost = ({setFormValue,setNewFormValue,setEditFormValue}:usePostProps) => {
+const usePost = ({ setFormValue, setNewFormValue, setEditFormValue }: usePostProps) => {
   const open = useDaumPostcodePopup('//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js')
-  
+
   const formChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if(setFormValue){
+    if (setFormValue) {
       const {
         target: { name, value }
       } = e
-      setFormValue((prev:any) => ({
+      setFormValue((prev: any) => ({
         ...prev,
         [name]: value
       }))
     }
-    if(setNewFormValue){
+    if (setNewFormValue) {
       const {
         target: { name, value }
       } = e
-      setNewFormValue((prev:any) => ({
+      setNewFormValue((prev: any) => ({
         ...prev,
         [name]: value
       }))
     }
-    if(setEditFormValue){
+    if (setEditFormValue) {
       const {
         target: { name, value }
       } = e
-      setEditFormValue((prev:any) => ({
+      setEditFormValue((prev: any) => ({
         ...prev,
         [name]: value
       }))
     }
-    
-  },[])
+  }, [])
 
   const handleComplete = useCallback((data: any) => {
     let fullAddress = data.address
@@ -54,39 +53,38 @@ const usePost = ({setFormValue,setNewFormValue,setEditFormValue}:usePostProps) =
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
     }
-    if(setFormValue){
-      setFormValue((prev:any) => ({
+    if (setFormValue) {
+      setFormValue((prev: any) => ({
         ...prev,
         postCode: data.zonecode,
         address: fullAddress
       }))
     }
-    if(setNewFormValue){
-      setNewFormValue((prev:any) => ({
+    if (setNewFormValue) {
+      setNewFormValue((prev: any) => ({
         ...prev,
         postCode: data.zonecode,
         address: fullAddress
       }))
     }
-    if(setEditFormValue){
-      setEditFormValue((prev:any) => ({
+    if (setEditFormValue) {
+      setEditFormValue((prev: any) => ({
         ...prev,
         postCode: data.zonecode,
         address: fullAddress
       }))
     }
-    
-  },[])
+  }, [])
 
   const addressPopupHandler = useCallback(() => {
     open({ onComplete: handleComplete })
-  },[])
+  }, [])
 
   return {
     addressPopupHandler,
     handleComplete,
     formChangeHandler
   }
-};
+}
 
-export default usePost;
+export default usePost

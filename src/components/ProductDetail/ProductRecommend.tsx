@@ -1,8 +1,3 @@
-import React from 'react'
-import { useQuery } from 'react-query'
-import { useRecoilValue } from 'recoil'
-import { userState } from '../../store/user'
-import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
 import { useGetProductRandom } from '../main/hooks/useProductLists'
 import { useUser } from '../auth/hooks/useUser'

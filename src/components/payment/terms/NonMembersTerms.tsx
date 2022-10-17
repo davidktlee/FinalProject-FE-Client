@@ -1,6 +1,5 @@
 import React from 'react'
 import CheckBox from '../../common/ui/CheckBox'
-import TermsDropdownButton from './TermsDropdownButton'
 
 interface NonMemberTermsProps {
   isChecked: boolean

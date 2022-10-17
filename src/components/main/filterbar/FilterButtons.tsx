@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { filteredProudcts, filterState, FilterValue } from '../../../store/filterVallue'
 import ReactTooltip from 'react-tooltip'
-import { graphicDiameter } from '../../../constants/filterData'
 import { contentTypes } from './FilterButtonFunction'
 import { axiosInstance } from '../../axiosinstance'
-import { useIsFetching, useMutation } from 'react-query'
+import { useMutation } from 'react-query'
 import { useUser } from '../../auth/hooks/useUser'
 
 type filterButtonTypes = {
@@ -24,7 +23,6 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
   const setFilteredProducts = useSetRecoilState(filteredProudcts)
 
   const requestFilterOptions = async (filter: FilterValue) => {
-    console.log(filter)
     const data = await axiosInstance({
       method: 'POST',
       url: '/product/byOption',
@@ -46,14 +44,9 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
       filter.periodState.length === 0
     },
     onSuccess: ({ data }) => {
-      console.log('필터가 적용되었습니다.')
       setFilteredProducts(data.data)
-      console.log(data)
     },
-    onError: (error) => {
-      console.log('필터가 적용에 실패했습니다.')
-      console.log(error)
-    }
+    onError: (error) => {}
   })
   const handleFilterValue = (content: contentTypes) => {
     switch (content.type) {

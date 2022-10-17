@@ -1,6 +1,3 @@
-import React from 'react'
-import { FinalProduct } from '../../store/productByOptions'
-
 const ProductDescripton = ({ finalProduct }: any) => {
   return (
     <div>

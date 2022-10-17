@@ -1,5 +1,3 @@
-import React from 'react'
-import Card from '../common/Card'
 import ViewMoreBtn from '../main/common/ViewMoreBtn'
 import MainReviewCard from './MainReviewCard'
 import MobileReviewCard from './mobile/MobileReviewCard'

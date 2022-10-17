@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
-
 import CardTemplate from '../common/ui/CardTemplate'
 import PageLayout from '../common/ui/PageLayout'
-
 import { getStoredToken } from '../local-storage/userStorage'
 import MobileIndexNavBar from './MobileIndexNavBar'
 import MobileNavBar from './MobileNavBar'

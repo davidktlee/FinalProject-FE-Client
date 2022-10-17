@@ -8,7 +8,7 @@ import { queryKeys } from '../../react-query/queryKeys'
 
 export const addFavorite = async (id: number) => {
   const token = getStoredToken()
-  const res = await axiosInstance({
+  await axiosInstance({
     url: '/favor/add',
     method: 'POST',
     headers: getJWTToken(token),
@@ -16,12 +16,11 @@ export const addFavorite = async (id: number) => {
       productId: id
     }
   })
-  console.log(res)
 }
 
 export const deleteFavorite = async (id: number) => {
   const token = getStoredToken()
-  const res = await axiosInstance({
+  await axiosInstance({
     url: '/favor/delete',
     method: 'POST',
     headers: getJWTToken(token) ? getJWTToken(token) : undefined,
@@ -125,7 +124,6 @@ export const useAddFavorite = () => {
   const { fireToast } = useToast()
   const { mutate: addFavor } = useMutation((productId: number) => addFavorite(productId), {
     onSuccess: () => {
-      console.log('제품상세 즐겨찾기 추가 성공')
       fireToast({
         id: 'favorAddComplete',
         message: '즐겨찾기에 추가되었습니다.',
@@ -135,7 +133,6 @@ export const useAddFavorite = () => {
       })
       queryClient.invalidateQueries(queryKeys.favorite),
         queryClient.invalidateQueries(queryKeys.productDetails)
-      // queryClient.invalidateQueries(queryKeys.product, { exact: true })
     },
     onError: () => {
       fireToast({

@@ -1,7 +1,6 @@
 import { useMutation } from 'react-query'
 import useToast from '../../common/toast/hooks/useToast'
 import { getStoredToken } from '../../local-storage/userStorage'
-import { queryKeys } from '../../react-query/queryKeys'
 import { axiosInstance, getJWTToken } from './../../axiosinstance/index'
 
 const addCoupon = async (couponId: number) => {

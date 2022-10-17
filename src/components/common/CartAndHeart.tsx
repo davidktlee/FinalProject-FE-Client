@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useAddCart } from '../cart/hooks/useCart'
 import { addFavorite, useDeleteFavorite } from './../main/hooks/useFavorite'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { MainCartFavoriteId, MainCartModalState, ItemDetail } from '../../store/mainCart'
 import { useUser } from '../auth/hooks/useUser'
-import { getProductDetails, useProductDetails } from '../ProductDetail/hooks/useProductDetails'
+import { getProductDetails } from '../ProductDetail/hooks/useProductDetails'
 import { useMutation } from 'react-query'
-import { Navigate } from 'react-router'
 
 interface PropsType {
   productId: number
@@ -30,16 +28,12 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
     }
   })
 
-  // useQuery문
-  // const productDetail = useProductDetails(user ? user?.memberId : 0, id)
-
   const ClickHeart = () => {
     if (!user) {
       alert('로그인 해주세요')
       return
     }
     setTimeout(() => {
-      // post 보낼 로직
       if (!onHeartAnimation) {
         addFavorite(productId)
       }
@@ -65,7 +59,7 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
     }
   }, [favoriteId])
 
-  const ClickCart = (id: number) => {
+  const ClickCart = () => {
     if (!user) {
       alert('로그인 해주세요')
       return
@@ -78,10 +72,7 @@ function CartAndHeart({ productId, isFavorite }: PropsType) {
 
   return (
     <div className={`flex justify-center items-center  `}>
-      <div
-        className={`mr-2 cursor-pointer hover:animate-click relative`}
-        onClick={() => ClickCart(productId)}
-      >
+      <div className={`mr-2 cursor-pointer hover:animate-click relative`} onClick={ClickCart}>
         <svg
           width={`${windowWidth < 440 ? 20 : 28}`}
           height={`${windowWidth < 440 ? 20 : 28}`}
