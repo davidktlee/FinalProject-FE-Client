@@ -1,12 +1,5 @@
-import React from 'react'
-import { useQuery } from 'react-query'
-import { axiosInstance } from '../axiosinstance'
 import Card from '../common/Card'
-import CardContainer from '../main/CardContainer'
-import { ProductResponseType } from '../main/types/productTypes'
-import { queryKeys } from '../react-query/queryKeys'
 import { useGetFavorite } from '../main/hooks/useFavorite'
-import { FavorResponseType } from '../main/types/favorTypes'
 
 const AllFavoriteList = () => {
   const data = useGetFavorite()

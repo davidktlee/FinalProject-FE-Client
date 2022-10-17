@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CartAndHeart from './CartAndHeart'
 import { SubtractIcon } from './util/Icon'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { ColorAndImage, ProductPropsType } from '../main/types/productTypes'
 interface PropsType extends ProductPropsType {
   idx: number
   isNew?: boolean
+  needsRank?: boolean
 }
 
 const Card = ({
@@ -18,7 +19,8 @@ const Card = ({
   graphicDiameter,
   isNew,
   productId,
-  isFavorite
+  isFavorite,
+  needsRank
 }: PropsType) => {
   const navigate = useNavigate()
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
@@ -47,16 +49,14 @@ const Card = ({
       discount: price.toLocaleString()
     })
   }, [price, discount])
-  console.log(commaPrice)
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
   }, [])
-  // 첫 번째 인덱스
+
   return (
     <>
       <div className={`relative w-[160px] md:w-[260px] my-[10px] mx-auto px-1`}>
-        {/* 순위 라벨/ 순위 라벨 값이 1일 때 ? 3일 때 ? : 아닐 때 */}
-        {idx < 3 ? (
+        {needsRank && idx < 3 ? (
           <>
             <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4 z-[9]">
               {windowWidth < 1020 ? (
@@ -153,6 +153,5 @@ const Card = ({
     </>
   )
 }
-// }
 
 export default Card

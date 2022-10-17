@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { NoticeTitles, NoticePageTitle } from '../../../constants/NoticeTitles'
-import ViewMoreBtn from '../common/ViewMoreBtn'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import MainNoticeTab from './tabs/MainNoticeTab'
 import NoticePageTab from './tabs/NoticePageTab'
 

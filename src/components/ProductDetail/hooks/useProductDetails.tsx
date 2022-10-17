@@ -1,13 +1,8 @@
 import { useMutation, useQuery } from 'react-query'
 import { axiosInstance, getJWTToken } from '../../axiosinstance'
-import { ProductDetailResponseType } from '../../main/types/productTypes'
 import { queryKeys } from '../../react-query/queryKeys'
-import { Pagination } from 'swiper'
 import { getStoredToken } from '../../local-storage/userStorage'
-import { useUser } from '../../auth/hooks/useUser'
 import { ProductDetailsType } from '../../../store/productDetails'
-import { productByOptionsState, ProductByOptionsType } from '../../../store/productByOptions'
-import { useRecoilState } from 'recoil'
 
 const token = getStoredToken()
 
@@ -45,7 +40,7 @@ const getProductDetailsColor = async (periodAndColor: any) => {
     method: 'GET',
     url: `/productDetails/byColorCodeOption?period=${periodAndColor.period}&colorCode=${periodAndColor.colorCode}`
   })
-  console.log(data)
+
   return data
 }
 
@@ -68,7 +63,6 @@ const getProductDetailsGraphicDiameter = async (
       productId
     }
   })
-  console.log(data)
   return data
 }
 
@@ -92,7 +86,6 @@ const getProductDetailsAll = async (
       productId
     }
   })
-  console.log(data)
   return data
 }
 
@@ -101,7 +94,6 @@ export const useProductDetails = (memberId: number, productId: number) => {
   const { data: productDetails } = useQuery(queryKeys.productDetails, () =>
     getProductDetails(memberId, productId)
   )
-  console.log(productDetails)
   return productDetails
 }
 

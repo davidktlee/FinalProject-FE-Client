@@ -1,6 +1,5 @@
 import React from 'react'
 import CardTemplate from './common/ui/CardTemplate'
-import PageLayout from './common/ui/PageLayout'
 import Footer from './footer/Footer'
 
 const NotFound = () => {

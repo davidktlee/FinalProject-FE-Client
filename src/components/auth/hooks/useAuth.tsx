@@ -1,12 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { MainCartFavoriteId } from '../../../store/mainCart'
 import { axiosInstance } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
 import { setStoredToken } from '../../local-storage/userStorage'
-import { getFavorite } from '../../main/hooks/useFavorite'
-
 import { RegisterType, SigninType, Token } from '../types/userTypes'
 import { useUser } from './useUser'
 

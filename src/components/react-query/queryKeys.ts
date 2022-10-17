@@ -22,5 +22,6 @@ export const queryKeys = {
   noticeDetail: 'noticeDetail',
   allReview: 'allReview',
   searchedProduct: 'searchedProduct',
-  forProductId: 'forProductId'
+  forProductId: 'forProductId',
+  myReview: 'myReview'
 }

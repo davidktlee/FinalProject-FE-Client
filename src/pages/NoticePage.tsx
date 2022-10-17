@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router'
 import PageLayout from '../components/common/ui/PageLayout'
-import Pagination from '../components/main/common/Pagination'
-import Search from '../components/main/common/Search'
+
 import ViewMoreBtn from '../components/main/common/ViewMoreBtn'
 import MainNotice from '../components/main/notice/MainNotice'
 import NoticeTitle from '../components/main/notice/NoticeTitle'
 import CardTemplate from './../components/common/ui/CardTemplate'
 
 function NoticePage() {
-  const navigate = useNavigate()
   const location = useLocation()
-  const [currentPage, setCurrentPage] = useState(1)
 
   return (
     <>

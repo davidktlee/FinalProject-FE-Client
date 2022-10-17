@@ -41,8 +41,6 @@ const Signup = () => {
     birthMonth: '',
     birthDay: ''
   })
-  console.log(formValue);
-  
 
   const submitFormHandler = () => {
     const formData: RegisterType = {

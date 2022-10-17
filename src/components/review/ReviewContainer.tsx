@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { selectedNameState } from '../../store/review'
-import { useGetAllreview, useGetForProductId } from './hooks/useReview'
 import RevieItems from './ReviewItems'
 
 const ReviewContainer = () => {
   const reviewItems = useRecoilValue(selectedNameState)
-  console.log(reviewItems)
+
   return (
     <div className="pt-10 pb-4 xs-max:pt-4">
       <div className="flex flex-col">

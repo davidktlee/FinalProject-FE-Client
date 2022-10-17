@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import DeliveryRequest from './DeliveryRequest'
 import { PaymentFormValueType } from '../Payment'
 import ShippingCard from '../ui/ShippingCard'
@@ -13,13 +13,13 @@ interface NewShippingPaperProps {
   isOpen: boolean
   domainSelectHandler: () => void
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  visibleEmail?:boolean
-  newFormValue:PaymentFormValueType
-  setNewFormValue:React.Dispatch<React.SetStateAction<PaymentFormValueType>>,
-  newPhoneFormValue:Record<string, string | number>
-  setNewPhoneFormValue:React.Dispatch<React.SetStateAction<Record<string, string | number>>>
+  visibleEmail?: boolean
+  newFormValue: PaymentFormValueType
+  setNewFormValue: React.Dispatch<React.SetStateAction<PaymentFormValueType>>
+  newPhoneFormValue: Record<string, string | number>
+  setNewPhoneFormValue: React.Dispatch<React.SetStateAction<Record<string, string | number>>>
   newEmailFormValue: Record<string, string>
-  setNewEmailFormValue:React.Dispatch<React.SetStateAction<Record<string, string>>>
+  setNewEmailFormValue: React.Dispatch<React.SetStateAction<Record<string, string>>>
 }
 
 const NewShippingPaper = ({
@@ -35,7 +35,7 @@ const NewShippingPaper = ({
   setNewFormValue,
   setNewPhoneFormValue
 }: NewShippingPaperProps) => {
-  const {addressPopupHandler,formChangeHandler:newFormChangeHandler} = usePost({setNewFormValue})
+  const { addressPopupHandler, formChangeHandler: newFormChangeHandler } = usePost({ setNewFormValue })
 
   const newEmailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -63,7 +63,6 @@ const NewShippingPaper = ({
     setIsOpen((prev) => !prev)
   }
 
-  
   return (
     <>
       <ShippingCard title="주문자" isRequired>
@@ -89,26 +88,23 @@ const NewShippingPaper = ({
         />
       </ShippingCard>
 
-      {visibleEmail && <ShippingCard title="이메일">
-        <ShippingEmail
-          domainArray={domainArray}
-          emailDomainSelectHandler={newEmailDomainSelectHandler}
-          isOpen={isOpen}
-          onChange={newEmailChangeHandler}
-          onClick={domainSelectHandler}
-          value1={newEmailFormValue.emailIdentity}
-          value2={newEmailFormValue.emailDomain}
-        />
-      </ShippingCard>}
-      
+      {visibleEmail && (
+        <ShippingCard title="이메일">
+          <ShippingEmail
+            domainArray={domainArray}
+            emailDomainSelectHandler={newEmailDomainSelectHandler}
+            isOpen={isOpen}
+            onChange={newEmailChangeHandler}
+            onClick={domainSelectHandler}
+            value1={newEmailFormValue.emailIdentity}
+            value2={newEmailFormValue.emailDomain}
+          />
+        </ShippingCard>
+      )}
+
       <DeliveryRequest onChange={newFormChangeHandler} value={newFormValue.shippingMessage} />
     </>
   )
 }
 
 export default NewShippingPaper
-
-
-
-
-

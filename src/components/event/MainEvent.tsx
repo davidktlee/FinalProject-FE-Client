@@ -10,18 +10,8 @@ import { InEventMainList } from '../main/types/eventTypes'
 
 const MainEvent = () => {
   const navigate = useNavigate()
-  // const [isLoading, setIsLoading] = useState(false)
-  // const [eventList, setEventList] = useState<any>([])
-  // const getEvent = async () => {
-  //   const res = await axios.get('https://633010e5591935f3c8893690.mockapi.io/lenssis/api/v1/event')
-  //   setEventList(res.data)
-  //   setIsLoading(true)
-  // }
-  // useEffect(() => {
-  //   getEvent()
-  // }, [])
+
   const { data: eventList, isFetching } = useGetEvent()
-  // console.log(eventList)
 
   return (
     <div>
@@ -31,7 +21,6 @@ const MainEvent = () => {
         </span>
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 mx-2  md:gap-8 md:px-12">
-        {/* eventList[0]?.data?.eventMainList*/}
         {isFetching ? (
           <EventSkeleton count={4} />
         ) : (
@@ -46,10 +35,7 @@ const MainEvent = () => {
                 src={event.imageUrl}
                 alt=""
               />
-              <div className=" h-[95px] rounded-b-xl ml-4 mt-[16px] font-bold">
-                {/* 이벤트 내용 */}
-                {event.eventTitle}
-              </div>
+              <div className=" h-[95px] rounded-b-xl ml-4 mt-[16px] font-bold">{event.eventTitle}</div>
             </div>
           ))
         )}

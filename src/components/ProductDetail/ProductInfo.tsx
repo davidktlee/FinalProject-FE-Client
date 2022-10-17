@@ -1,4 +1,3 @@
-import { graphicDiameter } from '../../constants/filterData'
 import Heart from '/assets/Heart.svg'
 import FillHeart from '/assets/FillHeart.svg'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
@@ -12,7 +11,6 @@ import { useMutation } from 'react-query'
 import { finalProductState, productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
 import { ProductDetailsType } from '../../store/productDetails'
 import { useAddCart } from '../cart/hooks/useCart'
-import { queryKeys } from '../react-query/queryKeys'
 import { MainCartModalState } from '../../store/mainCart'
 
 interface PropsType {
@@ -64,7 +62,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       },
       headers: token ? getJWTToken(token) : undefined
     })
-    console.log(data)
     return data
   }
 
@@ -98,7 +95,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       },
       headers: getJWTToken(token)
     })
-    console.log(data)
     return data
   }
 

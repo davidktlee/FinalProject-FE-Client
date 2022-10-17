@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Skeleton = () => {
   return (
     <div className="w-[90%] h-[180px] border-2 rounded-md mx-auto mt-20 p-6">

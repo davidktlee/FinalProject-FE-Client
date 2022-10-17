@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
-import { UseMutateFunction, useMutation, useQuery, useQueryClient } from 'react-query'
-import { axiosAuthInstance, axiosInstance, getJWTToken, getNewJWTToken } from '../../axiosinstance'
+import { UseMutateFunction, useMutation, useQueryClient } from 'react-query'
+import { axiosInstance, getNewJWTToken } from '../../axiosinstance'
 import { clearStoredToken, setStoredToken } from '../../local-storage/userStorage'
 import { queryKeys } from '../../react-query/queryKeys'
 import { Token } from '../types/userTypes'
@@ -26,9 +26,6 @@ const getNewToken = async (token: Token | null): Promise<Token | null> => {
       }
     )
     setStoredToken(data)
-    console.log('AT의 잔여 기간이 10분 이하로 남았기에 새 AT로 교체합니다!')
-    console.log('바뀌기 전 토큰', token.accessToken)
-    console.log('바뀐 토큰', data.accessToken)
     return data
   } else {
     return token

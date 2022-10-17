@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { ProductCount } from '../../../store/product'
 
 interface PropsType {
   count: number

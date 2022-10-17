@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
@@ -14,7 +14,7 @@ const ReviewBanner = () => {
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
 
-  SwiperCore.use([Navigation]) // 모바일에서는 [Scrollbar] 추가
+  SwiperCore.use([Navigation])
   useEffect(() => {
     if (!swiperSetting) {
       setSwiperSetting({
@@ -23,11 +23,10 @@ const ReviewBanner = () => {
           prevEl: prevRef.current,
           nextEl: nextRef.current
         },
-        // scrollbar: { draggable: true },
-        // pagination: { clickable: true },
+
         slidesPerView: 6,
         loop: true,
-        // autoplay: { delay: 2000, disableOnInteraction: true },
+
         watchOverflow: true,
         onBeforeInit: (swiper) => {
           if (typeof swiper.params.navigation !== 'boolean') {

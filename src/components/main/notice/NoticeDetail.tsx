@@ -1,4 +1,3 @@
-import React from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import CardTemplate from '../../common/ui/CardTemplate'
 import { useGetDetailNotice } from '../hooks/useNotice'

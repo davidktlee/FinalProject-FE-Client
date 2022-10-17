@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
@@ -6,7 +5,6 @@ import { graphicDiameter, colors, series, features } from '../../../constants/fi
 import { filteredProudcts, filterState, FilterValue } from '../../../store/filterVallue'
 import { useUser } from '../../auth/hooks/useUser'
 import { axiosInstance } from '../../axiosinstance'
-import { useGetProductsList } from '../hooks/useProductLists'
 import BoxLayout from './common/BoxLayout'
 import FilterButtons from './FilterButtons'
 import Refresh from '/assets/Refresh.svg'
@@ -37,14 +35,9 @@ const FilterBar = () => {
   const { mutate: requstFilter } = useMutation((filter: FilterValue) => requestFilterOptions(filter), {
     mutationKey: 'filterOptions',
     onSuccess: ({ data }) => {
-      console.log('필터가 적용되었습니다.')
-      console.log(data)
       setFilteredProducts(data)
     },
-    onError: (error) => {
-      console.log('필터가 적용에 실패했습니다.')
-      console.log(error)
-    }
+    onError: (error) => {}
   })
 
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

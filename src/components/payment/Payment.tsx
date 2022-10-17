@@ -25,27 +25,6 @@ const domainArray = ['google.com', 'naver.com', 'daum.net']
 
 const paymentMethodArray = ['クレジットカード', 'コンビニ', '銀行振込', 'PayEasy', 'あと払いペイディー']
 
-/*{
-  "addOrderDetailsRequestList": [
-    {
-      "pcs": 0,
-      "productDetailsId": 0
-    }
-  ],  
-  "couponId": 0,
-  "memberId": 0,
-  "method": 0,
-  "orderer": "string",
-  "address": "string",
-  "detailAddress": "string",
-  "ordererEmail": "string",
-  "ordererPhone": "string",
-  "point": 0,
-  "receiver": "string", receiver = orderer
-  "receiverPhone": "string", = ordererPhone
-  "shippingMessage": "string",
-  "totalPrice": 0
-} */
 export interface PaymentFormValueType {
   couponId: null | number
   memberId: string | number
@@ -56,7 +35,6 @@ export interface PaymentFormValueType {
   email: string
   detailAddress: string
   postCode: number | string
-  // point - 최종 결제 금액의 1%
   point: number
   totalPrice: number
 
@@ -64,7 +42,7 @@ export interface PaymentFormValueType {
 }
 
 const Payment = () => {
-  const { user, isLoading } = useUser()
+  const { user } = useUser()
 
   const [emailFormValue, setEmailFormValue] = useState({
     emailIdentity: '',
@@ -85,7 +63,6 @@ const Payment = () => {
     email: '',
     detailAddress: '',
     postCode: '',
-    // point - 최종 결제 금액의 1%
     point: 0,
     totalPrice: 0,
     shippingMessage: ''
@@ -122,8 +99,6 @@ const Payment = () => {
   const [paymentMethodNumber, setPaymentMethodNumber] = useState<null | number>(null)
   const [selectedProduct, setSelectedProduct] = useRecoilState(selectProduct)
   const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState)
-  // discountCode === COUPON_CODE ? 10%할인 : '입력한 쿠폰 올바르지 않음' => input value 삭제
-  const [discountCode, setDisCountCode] = useState('')
   const navigate = useNavigate()
   const currentPaymentMethodHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -226,9 +201,7 @@ const Payment = () => {
       await axiosInstance.post('/order/add', obj, { headers: getJWTToken(token) })
       alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
       navigate('/')
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -282,7 +255,7 @@ const Payment = () => {
         <div className="pb-12">
           <PaymentTitle text="주문 상품" />
           <OrderProductName />
-          {/* product api 연결시 item 컴포넌트로 분리 */}
+
           <div className="flex flex-col w-full gap-4 items-center justify-center">
             {selectedProduct.map((item, index) => (
               <div className="flex w-full border-y border-solid border-gray-300" key={item.name + index}>
@@ -294,13 +267,6 @@ const Payment = () => {
                     <div className="text-[#5a5a5a] font-semibold">
                       {item.name} - <span className="text-sm">{item.color}</span>
                     </div>
-
-                    {/* option을 받아야 될 것 같다
-                    <div className="text-xs">
-                      {item.option.map((option, index) => (
-                        <span key={option + index}>{option} /</span>
-                      ))}
-                    </div> */}
                   </div>
                 </div>
                 <p className="flex justify-center items-center w-[40px] xs:w-[80px] text-xs xs:text-base">
