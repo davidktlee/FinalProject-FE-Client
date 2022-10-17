@@ -27,7 +27,7 @@ const getProductRandom = async (memberId: number, productId: number) => {
       memberId: memberId ? memberId : 0,
       productId
     },
-    headers: getJWTToken(token)
+    headers: token ? getJWTToken(token) : undefined
   })
 
   return data
