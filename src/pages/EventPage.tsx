@@ -52,8 +52,7 @@ function EventPage() {
                 />
                 <div className=" h-[95px] rounded-b-xl ml-2">{event.eventTitle}</div>
               </div>
-            </div>
-          ))}
+            ))}
 
           <div className="text-center text-[24px] text-lenssisDark font-[600] my-4">전체 이벤트</div>
           <div className=" grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 justify-items-stretch xs-max:gap-y-[20px] md:gap-8 md:px-12">
