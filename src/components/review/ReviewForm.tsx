@@ -85,7 +85,7 @@ const ReviewForm = ({
   return (
     <>
       {isModalOpen ? (
-        <>
+        <div>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="xs-max:w-[300px] xs-max:h-[600px] w-[900px] h-[700px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
@@ -136,81 +136,81 @@ const ReviewForm = ({
                     </div>
                     <div className="flex flex-col py-[25px] justify-between">
                       <div className="xs-max:text-[12px] text-[14px]">{reviewItem[0]?.productName}</div>
-                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
-                          옵션 선택 - 그래픽 직경: {reviewItem[0]?.graphicDiameter}
-                        </span>
-                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
-                          {' '}
-                          / 도수: {reviewItem[0]?.degree}
-                        </span>
-                        <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
-                          {' '}
-                          / 수량: {reviewItem[0]?.pcs}개
-                        </span>
-                      </div>
-                      <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">
-                        {reviewItem[0]?.price}円
-                      </div>
-                      <div className="xs:hidden flex gap-[2px]">
-                        <ReactStars
-                          count={5}
-                          onChange={ratingChanged}
-                          size={18}
-                          isHalf={true}
-                          emptyIcon={<i className="far fa-star"></i>}
-                          halfIcon={<i className="fa fa-star-half-alt"></i>}
-                          fullIcon={<i className="fa fa-star"></i>}
-                          color="#efefef"
-                          activeColor="#ffd700"
-                        />
-                      </div>
-                      <div className="xs-max:hidden flex gap-[2px]">
-                        <ReactStars
-                          count={5}
-                          onChange={ratingChanged}
-                          size={24}
-                          isHalf={true}
-                          emptyIcon={<i className="far fa-star"></i>}
-                          halfIcon={<i className="fa fa-star-half-alt"></i>}
-                          fullIcon={<i className="fa fa-star"></i>}
-                          color="#efefef"
-                          activeColor="#ffd700"
-                        />
-                      </div>
+                      <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                        옵션 선택 - 그래픽 직경: {reviewItem[0]?.graphicDiameter}
+                      </span>
+                      <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                        {' '}
+                        / 도수: {reviewItem[0]?.degree}
+                      </span>
+                      <span className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                        {' '}
+                        / 수량: {reviewItem[0]?.pcs}개
+                      </span>
+                    </div>
+                    <div className="xs-max:text-[10px] text-[12px] text-lenssisGray">
+                      {reviewItem[0]?.price}円
+                    </div>
+                    <div className="xs:hidden flex gap-[2px]">
+                      <ReactStars
+                        count={5}
+                        onChange={ratingChanged}
+                        size={18}
+                        isHalf={true}
+                        emptyIcon={<i className="far fa-star"></i>}
+                        halfIcon={<i className="fa fa-star-half-alt"></i>}
+                        fullIcon={<i className="fa fa-star"></i>}
+                        color="#efefef"
+                        activeColor="#ffd700"
+                      />
+                    </div>
+                    <div className="xs-max:hidden flex gap-[2px]">
+                      <ReactStars
+                        count={5}
+                        onChange={ratingChanged}
+                        size={24}
+                        isHalf={true}
+                        emptyIcon={<i className="far fa-star"></i>}
+                        halfIcon={<i className="fa fa-star-half-alt"></i>}
+                        fullIcon={<i className="fa fa-star"></i>}
+                        color="#efefef"
+                        activeColor="#ffd700"
+                      />
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div className="w-full mx-auto pb-[20px] px-[20px] pt-[15px]">
-                  <textarea
-                    placeholder="리뷰를 입력해 주세요. (최소 100자)"
-                    value={reviewText}
-                    onChange={(e) => handleReviewText(e)}
-                    className="xs-max:w-[260px] xs-max:h-[260px] text-[14px] box-border px-[12px] py-[14px] w-[860px] h-[335px] outline-none resize-none rounded-[5px] border-solid border-[1px] border-lenssisStroke"
-                  ></textarea>
-                </div>
+              <div className="w-full mx-auto pb-[20px] px-[20px] pt-[15px]">
+                <textarea
+                  placeholder="리뷰를 입력해 주세요. (최소 100자)"
+                  value={reviewText}
+                  onChange={(e) => handleReviewText(e)}
+                  className="xs-max:w-[260px] xs-max:h-[260px] text-[14px] box-border px-[12px] py-[14px] w-[860px] h-[335px] outline-none resize-none rounded-[5px] border-solid border-[1px] border-lenssisStroke"
+                ></textarea>
+              </div>
 
-                <div className="xs:hidden flex items-center justify-center gap-[10px]">
-                  <Button onClick={() => onClose()} bgColor="white" width="w-[120px]">
-                    <span>취소</span>
-                  </Button>
-                  <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[120px]">
-                    <span>저장</span>
-                  </Button>
-                </div>
-                <div className="xs-max:hidden flex items-center justify-center gap-[10px]">
-                  <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
-                    <span>취소</span>
-                  </Button>
-                  <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[150px]">
-                    <span>저장</span>
-                  </Button>
-                </div>
+              <div className="xs:hidden flex items-center justify-center gap-[10px]">
+                <Button onClick={() => onClose()} bgColor="white" width="w-[120px]">
+                  <span>취소</span>
+                </Button>
+                <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[120px]">
+                  <span>저장</span>
+                </Button>
+              </div>
+              <div className="xs-max:hidden flex items-center justify-center gap-[10px]">
+                <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
+                  <span>취소</span>
+                </Button>
+                <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[150px]">
+                  <span>저장</span>
+                </Button>
               </div>
             </div>
           </div>
+
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
+        </div>
       ) : null}
     </>
   )
