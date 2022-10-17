@@ -74,7 +74,6 @@ const getReviewByName = async (productName: string) => {
 
 export const useReview = () => {
   const { data: reviewItems } = useQuery(queryKeys.review, () => getReviewItems(), {})
-  console.log(reviewItems)
   return { reviewItems }
 }
 

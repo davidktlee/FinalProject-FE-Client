@@ -1,57 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { reviewState } from '../../../store/review'
 import { useReview } from '../../review/hooks/useReview'
 import CardLayout from '../common/CardLayout'
-
-const reviewArray = []
+import { reviewItemsType } from '../../review/types/reviewTypes'
+import { ItemDetail } from '../../../store/mainCart'
+import ReviewForm from '../../review/ReviewForm'
+import { useUser } from '../../auth/hooks/useUser'
 
 const MyReview = () => {
-  const data = useReview()
-  console.log(data)
+  const [isModal, setIsModal] = useState(false)
+  const [updateItem, setUpdateItem] = useState<any>()
+  const { reviewItems } = useReview()
+  const { user } = useUser()
+  console.log(reviewItems)
 
-  const review = useRecoilValue(reviewState)
+  const reviewUpdateHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setUpdateItem(
+      reviewItems.filter((item: any) => item.productInfo[0]?.productId === Number(e.currentTarget.value))
+    )
+
+    setIsModal(true)
+  }
+
   return (
     <CardLayout title="리뷰 관리">
       <h4 className="py-2 border-b border-solid border-[#abc8df] text-[#1B304A] font-semibold">
-        내 리뷰 (0)
+        내 리뷰 ({reviewItems && reviewItems.length})
       </h4>
-      {review.map((item) => (
-        <div className="flex flex-col" key={item.createdAt + item.orderNumber}>
-          <div>
-            <p className="flex gap-[2px] items-center font-semibold text-sm py-2">
-              <span className="text-black ">작성일자</span>
-              <span className="text-lenssisGray text-xs">{item.createdAt}</span>
-              <span className="text-black ">주문번호</span>
-              <span className="text-lenssisGray text-xs">{item.orderNumber}</span>
-            </p>
-          </div>
-          <div className="flex gap-1 xs:gap-4">
-            <img src={item.imageURL} alt="" />
-            <div className="text-lenssisGray flex flex-col items-start justify-between gap-y-1 grow">
-              <p className="font-semibold text-sm">{item.lensTitle}</p>
-              <p className="font-bold text-lenssisDark text-base">{item.lensColor}</p>
-              <p className="text-xs">{item.lensOption}</p>
-              <p className="text-xs font-semibold">{item.lensPrice}</p>
+      {reviewItems &&
+        reviewItems.map((item: reviewItemsType) => (
+          <div className="flex flex-col" key={item.replyInfo.replyCreatedAt + item.replyInfo.replyId}>
+            <div>
+              <p className="flex gap-[2px] items-center font-semibold text-sm py-2">
+                <span className="text-black ">작성일자</span>
+                <span className="text-lenssisGray text-xs">{item.replyInfo.replyCreatedAt}</span>
+                <span className="text-black ">주문번호</span>
+                <span className="text-lenssisGray text-xs">{item.replyInfo.orderId}</span>
+              </p>
             </div>
-            <div className="flex flex-col items-center justify-center min-w-[90px] gap-y-2">
-              <button className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm">
-                수정하기
-              </button>
-              <button className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm">
-                삭제하기
-              </button>
+            <div className="flex gap-1 xs:gap-4">
+              <img
+                src={
+                  item.replyInfo.replyImageUrl
+                    ? item.replyInfo.replyImageUrl
+                    : item.productInfo[0].produtImageUrl
+                }
+                width={100}
+                height={100}
+              />
+              <div className="text-lenssisGray flex flex-col items-start justify-between gap-y-1 grow">
+                <p className="font-semibold text-sm">{item.productInfo[0].productName}</p>
+                <p className="font-bold text-lenssisDark text-base">{item.productInfo[0].color}</p>
+                <p className="text-xs">
+                  그래픽 직경: {item.productInfo[0].graphicDiameter}mm/도수: {item.productInfo[0].degree}{' '}
+                  수량: {item.productInfo[0].pcs}
+                </p>
+                {/* <p className="text-xs font-semibold">{item.productInfo.}</p> 가격이 없습니다.. */}
+              </div>
+              <div className="flex flex-col items-center justify-center min-w-[90px] gap-y-2">
+                <button
+                  onClick={reviewUpdateHandler}
+                  value={item.productInfo[0].productId}
+                  className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm"
+                >
+                  수정하기
+                </button>
+                <button className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm">
+                  삭제하기
+                </button>
+              </div>
             </div>
+            <div className="mt- border-b-[1px] border-solid border-lenssisStroke pb-2 mb-2">
+              <p>★★★★★</p>
+              <p className="font-base text-lenssisGray">{item.replyInfo.replyComment}</p>
+            </div>
+            {isModal && (
+              <ReviewForm
+                reviewItem={updateItem[0].productInfo}
+                onClose={setIsModal}
+                isModalOpen={isModal}
+                orderId={updateItem?.replyInfo?.orderId}
+                memberId={user?.memberId!}
+              />
+            )}
           </div>
-          <div className="mt-2">
-            <p>★★★★★</p>
-            <p className="font-base text-lenssisGray">{item.content}</p>
-          </div>
-        </div>
-      ))}
-      {review.length === 0 && (
+        ))}
+      {reviewItems && reviewItems.length === 0 && (
         <p className="flex justify-center items-center h-[200px] text-[#7a7a7a] border-b border-solid border-[#ABC8DF]">
-          {reviewArray.length === 0 && '최근 작성한 리뷰가 없습니다'}
+          {reviewItems.length === 0 && '최근 작성한 리뷰가 없습니다'}
         </p>
       )}
     </CardLayout>
