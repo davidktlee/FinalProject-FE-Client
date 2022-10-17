@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
-import { useAddReview } from './hooks/useReview'
+import { useAddReview, useUpdateReview } from './hooks/useReview'
 // import ReactS3Client from 'react-aws-s3-typescript'
-import { s3Config } from './config/s3Config'
+// import { s3Config } from './config/s3Config'
 
 interface ReviewFormProps {
   onClose: Function
@@ -11,14 +11,23 @@ interface ReviewFormProps {
   reviewItem: any
   orderId: number
   memberId: number
+  reviewHandleType: string
 }
 
-const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: ReviewFormProps) => {
+const ReviewForm = ({
+  onClose,
+  isModalOpen,
+  reviewItem,
+  orderId,
+  memberId,
+  reviewHandleType
+}: ReviewFormProps) => {
   const [reviewText, setReviewText] = useState('')
   const [rating, setRating] = useState(0)
   const [selectedFile, setSelectedFile] = useState<File | ''>()
   const [previewImage, setPreviewImage] = useState<string>()
   const imageRef = useRef<HTMLInputElement>(null)
+  const updateReviewMutate = useUpdateReview()
 
   console.log(previewImage)
   console.log(reviewItem)
@@ -36,6 +45,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+    console.log()
     if (!file) {
       setSelectedFile('')
     }
@@ -48,7 +58,8 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
   }
 
   const handleReviewSubmit = async () => {
-    var { reactS3Client } = require('react-aws-s3-typescript')
+    const { reactS3Client } = window.require('react-aws-s3-typescript')
+    // const reactS3Client = new ReactS3Client(s3Config)
 
     const result = await reactS3Client.uploadFile(
       selectedFile as File,
@@ -66,8 +77,7 @@ const ReviewForm = ({ onClose, isModalOpen, reviewItem, orderId, memberId }: Rev
       rating: rating,
       replyImageUrl: result.location
     }
-
-    addReviewMutate(reviewInfo)
+    reviewHandleType === 'add' ? addReviewMutate(reviewInfo) : updateReviewMutate(reviewInfo)
 
     setReviewText('')
     setRating(0)

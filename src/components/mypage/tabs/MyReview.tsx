@@ -11,14 +11,15 @@ const MyReview = () => {
   const [isModal, setIsModal] = useState(false)
   const [updateItem, setUpdateItem] = useState<any>()
   const { reviewItems } = useReview()
+  const [reviewHandleType, setReviewHandleType] = useState<'add' | 'update'>('add')
   const { user } = useUser()
   console.log(reviewItems)
 
   const reviewUpdateHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setReviewHandleType('update')
     setUpdateItem(
       reviewItems.filter((item: any) => item.productInfo[0]?.productId === Number(e.currentTarget.value))
     )
-
     setIsModal(true)
   }
 
@@ -60,6 +61,7 @@ const MyReview = () => {
               <div className="flex flex-col items-center justify-center min-w-[90px] gap-y-2">
                 <button
                   onClick={reviewUpdateHandler}
+                  name={'update'}
                   value={item.productInfo[0].productId}
                   className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm"
                 >
@@ -76,6 +78,7 @@ const MyReview = () => {
             </div>
             {isModal && (
               <ReviewForm
+                reviewHandleType={reviewHandleType}
                 reviewItem={updateItem[0].productInfo}
                 onClose={setIsModal}
                 isModalOpen={isModal}

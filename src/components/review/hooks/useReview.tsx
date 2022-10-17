@@ -58,6 +58,22 @@ const addReviewItems = async (reviewInfo: ReviewInfo) => {
   return data
 }
 
+const updateReviewItems = async (reviewInfo: ReviewInfo) => {
+  const data = await axiosInstance({
+    url: '/reply/update',
+    method: 'PUT',
+    headers: getJWTToken(token),
+    data: {
+      content: reviewInfo.content,
+      rating: reviewInfo.rating,
+      replyImageUrl: reviewInfo.replyImageUrl,
+      replyId: reviewInfo.replyId
+    }
+  })
+  console.log(data)
+  return data
+}
+
 const getReviewByName = async (productName: string) => {
   const data = await axiosInstance({
     url: '/reply/replyListByName',
@@ -137,4 +153,33 @@ export const useAddReview = () => {
     }
   })
   return addReviewMutate
+}
+
+export const useUpdateReview = () => {
+  const queryClient = useQueryClient()
+  const { fireToast } = useToast()
+  const { mutate: updateReviewMutate } = useMutation((reviewInfo: ReviewInfo) => addReviewItems(reviewInfo), {
+    onError: () => {
+      console.log('리뷰 수정 실패')
+      fireToast({
+        id: 'updateReviewFailed',
+        message: '리뷰 수정에 실패하였습니다.',
+        type: 'failed',
+        position: 'top',
+        timer: 2000
+      })
+    },
+    onSuccess: () => {
+      console.log('리뷰 수정 성공')
+      fireToast({
+        id: 'updateReviewCompleted',
+        message: '리뷰가 수정되었습니다.',
+        type: 'complete',
+        position: 'top',
+        timer: 2000
+      })
+      queryClient.invalidateQueries(queryKeys.review)
+    }
+  })
+  return updateReviewMutate
 }
