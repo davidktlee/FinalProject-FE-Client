@@ -55,7 +55,7 @@ const Card = ({
 
   return (
     <>
-      <div className={`relative w-[160px] md:w-[260px] my-[10px] mx-auto px-1`}>
+      <div className={`relative w-[160px] md:w-[260px] my-[10px] mx-auto`}>
         {needsRank && idx < 3 ? (
           <>
             <span className="absolute top-[1px] left-[4px] md:left-2 xl:w-4 xl:h-4 z-[9]">
@@ -85,7 +85,7 @@ const Card = ({
             src={viewImg && viewImg}
             onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
-            className=" cursor-pointer rounded-md w-[160px] md:w-full h-[120px] mx-auto md:h-[190px]"
+            className=" cursor-pointer rounded-md w-[160px] h-[160px] md:w-full md:h-[255px]  mx-auto"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">
@@ -123,13 +123,13 @@ const Card = ({
               ></div>
             ))}
           </div>
-          <span className="hidden xs:block absolute top-[190px] right-1 ">
+          <span className="hidden xs:block absolute top-[265px] right-1 ">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <span className="xs:hidden block absolute top-[120px] right-1">
+          <span className="xs:hidden block absolute top-[170px] right-1">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <div className=" text-[14px]ㄴ md:text-[18px] font-[600]">{series}</div>
+          <div className=" text-[14px] md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
             <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
               {commaPrice.discount}円
