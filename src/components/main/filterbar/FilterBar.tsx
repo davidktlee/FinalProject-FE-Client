@@ -84,7 +84,7 @@ const FilterBar = () => {
   }
 
   return (
-    <div className="bg-[#fff] rounded-[10px] h-[1180px] w-[280px] px-[18px] py-[20px] shadow-basic">
+    <div className="bg-[#fff] rounded-[10px] h-[1450px] w-[280px] px-[18px] py-[20px] shadow-basic">
       <div className="filter-title">
         <div className="flex justify-between px-[15px] py-[20px]">
           <div className="font-extrabold text-[20px]">Filter</div>
