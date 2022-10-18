@@ -14,6 +14,7 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   const navigate = useNavigate()
   const { searchLens, searchedLens } = useSearch()
   const { user } = useUser()
+  
   const searchSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setUserSearched((prev) => [...prev, searchValue])
