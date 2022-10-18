@@ -32,6 +32,7 @@ const MyOrder = () => {
       orderId: myPurchase ? myPurchase?.[0].orderInfo.orderId! : 0
     })
   }, [user])
+  console.log(myPurchase);
   return (
     <CardLayout title="주문 내역">
       <ReviewForm
@@ -61,11 +62,11 @@ const MyOrder = () => {
             </h4>
             <div className="flex justify-between items-center py-4 gap-1 xs:gap-4 border-b border-solid border-[#abc8df] text-xs xs:text-base w-full">
               {product.productInfo.map((pInfo) => (
-                <div>
+                <div className=' flex flex-row items-center justify-between w-full px-4 gap-4'>
                   <div key={pInfo.productId}>
                     <img width={100} height={100} src={pInfo.imageUrl} alt="눈알" />
                   </div>
-                  <div className="grow">
+                  <div className="grow ">
                     <p className="text-[#7a7a7a]">{pInfo.productName}</p>
                     <p className="font-bold text-[#1b304a] py-1">{pInfo.color}</p>
                     <div className="block xs:flex py-1 text-[#7a7a7a]">

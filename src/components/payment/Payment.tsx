@@ -20,6 +20,7 @@ import { selectProduct, shippingFeeState, totalPriceState } from '../../store/se
 import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { useNavigate } from 'react-router-dom'
+import { graphicDiameter } from '../../constants/filterData'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -199,6 +200,18 @@ const Payment = () => {
     }
     try {
       await axiosInstance.post('/order/add', obj, { headers: getJWTToken(token) })
+      await selectedProduct.forEach((item) => {
+        axiosInstance.post('/cart/delete',
+        {
+          cartId:item.cartId
+        },
+        {
+          headers: getJWTToken(token)
+        })
+        
+      })
+      
+      
       alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
       navigate('/')
     } catch (error) {}
@@ -235,7 +248,7 @@ const Payment = () => {
       })
     }
   }, [user])
-
+  console.log(selectedProduct);
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
       <ConfirmModal
@@ -265,7 +278,8 @@ const Payment = () => {
                   </div>
                   <div className="flex items-start flex-col ">
                     <div className="text-[#5a5a5a] font-semibold">
-                      {item.name} - <span className="text-sm">{item.color}</span>
+                      <p>{item.name} - <span className="text-sm">{item.color}</span></p>
+                      <p>도수: {item.degree} / 직경: {item.graphicDiameter} / 주기: {item.period === 30 ? 'One Month' : 'One Day'}</p>
                     </div>
                   </div>
                 </div>
