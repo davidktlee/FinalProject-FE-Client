@@ -306,7 +306,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                           : 'text-lenssisDeepGray border-lenssisStroke border-[1px]'
                       } "border-solid rounded-[28px] text-center py-[1px] px-[12px] w-[100px] h-[30px] "`}
                     >
-                      {period === 1 ? '원데이' : '먼데이'}
+                      {period === 1 ? '원데이' : '먼슬리'}
                     </button>
                   ))}
                 </div>

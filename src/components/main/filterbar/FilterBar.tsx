@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { graphicDiameter, colors, series, features } from '../../../constants/filterData'
-import { filteredProudcts, filterState, FilterValue } from '../../../store/filterVallue'
+import { filteredProudcts, filterOptionState, FilterValue } from '../../../store/filterVallue'
 import { useUser } from '../../auth/hooks/useUser'
 import { axiosInstance } from '../../axiosinstance'
 import BoxLayout from './common/BoxLayout'
@@ -11,9 +11,9 @@ import Refresh from '/assets/Refresh.svg'
 
 const FilterBar = () => {
   const { user } = useUser()
-  const resetFilter = useResetRecoilState(filterState)
+  const resetFilter = useResetRecoilState(filterOptionState)
   const resetFilteredProducts = useResetRecoilState(filteredProudcts)
-  const [filter, setFilter] = useRecoilState(filterState)
+  const [filter, setFilter] = useRecoilState(filterOptionState)
   const setFilteredProducts = useSetRecoilState(filteredProudcts)
 
   const requestFilterOptions = async (filter: FilterValue) => {
@@ -37,7 +37,9 @@ const FilterBar = () => {
     onSuccess: ({ data }) => {
       setFilteredProducts(data)
     },
-    onError: (error) => {}
+    onError: (error) => {
+      console.log(error, '필터 에러 발생')
+    }
   })
 
   const handleFilterValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -57,6 +59,9 @@ const FilterBar = () => {
           periodState: filter.periodState.filter((item) => item == Number(value))
         })
       } else {
+        console.log('상품 전체 클릭!')
+        resetFilter()
+        resetFilteredProducts()
         setFilter({
           ...filter,
           periodState: [...value].length === 2 ? [...value.map(Number)] : [Number(value)]

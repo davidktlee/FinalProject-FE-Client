@@ -1,7 +1,7 @@
-import { filterState } from '../../../store/filterVallue'
+import { filterOptionState } from '../../../store/filterVallue'
 import { useRecoilState } from 'recoil'
 
-const [filter, setFilter] = useRecoilState(filterState)
+const [filter, setFilter] = useRecoilState(filterOptionState)
 
 export type contentTypes = {
   type: string
