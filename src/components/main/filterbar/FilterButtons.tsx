@@ -163,8 +163,6 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
                 boxSizing: 'border-box'
               }
             }
-            // name={content.type}
-            // value={content.value}
             data-tip={content.color && content.name}
             data-for={content.color && content.color}
             onClick={() => handleFilterValue(content)}
