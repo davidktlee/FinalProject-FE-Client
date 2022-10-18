@@ -60,8 +60,7 @@ const FilterBar = () => {
         })
       } else {
         console.log('상품 전체 클릭!')
-        resetFilter()
-        resetFilteredProducts()
+
         setFilter({
           ...filter,
           periodState: [...value].length === 2 ? [...value.map(Number)] : [Number(value)]
@@ -76,6 +75,7 @@ const FilterBar = () => {
 
   useEffect(() => {
     handleFilter(filter)
+    console.log(filter)
   }, [filter])
 
   const refreshHandler = () => {
@@ -104,7 +104,7 @@ const FilterBar = () => {
                   : ''
               } border-solid border-[#D3D3D3] border-[1px] rounded-[28px] text-center py-1 `}
             >
-              상품 전체
+              기간 전체
             </button>
             <div className="flex justify-between gap-2">
               <button
