@@ -85,7 +85,7 @@ const Card = ({
             src={viewImg && viewImg}
             onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
-            className=" cursor-pointer rounded-md w-[160px] md:w-full h-[120px] mx-auto md:h-[190px]"
+            className=" bg-origin-content cursor-pointer rounded-md w-[160px] md:w-full h-[120px] mx-auto md:h-[210px]"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">
@@ -113,23 +113,25 @@ const Card = ({
             {colorAndImage.slice(0, 4).map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
+                className={`cursor-pointer w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
                   colorAndImage.length === 1 ? 'hover:my-[7.5px] ' : 'hover:my-[5px]'
                 }  md:mr-[15px] rounded-full  `}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
                 }}
+                data-tip={eachColor.colorCode && eachColor.colorCode}
+                data-for={eachColor.colorCode && eachColor.colorCode}
               ></div>
             ))}
           </div>
-          <span className="hidden xs:block absolute top-[190px] right-1 ">
+          <span className="hidden xs:block absolute top-[216px] right-1 ">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <span className="xs:hidden block absolute top-[120px] right-1">
+          <span className="xs:hidden block absolute top-[126px] right-1">
             <CartAndHeart productId={productId} isFavorite={isFavorite} />
           </span>
-          <div className=" text-[14px]ㄴ md:text-[18px] font-[600]">{series}</div>
+          <div className=" text-[14px] md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
             <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
               {commaPrice.discount}円
