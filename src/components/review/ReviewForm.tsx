@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview, useUpdateReview } from './hooks/useReview'
-import ReactS3Client from 'react-aws-s3-typescript'
-import { s3Config } from './config/s3Config'
+import AWS from 'aws-sdk'
+const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 
 interface ReviewFormProps {
   onClose: Function
@@ -30,6 +30,12 @@ const ReviewForm = ({
   const updateReviewMutate = useUpdateReview()
   const addReviewMutate = useAddReview()
 
+  AWS.config.update({
+    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: VITE_SECRET_ACCESS_KEY,
+    region: 'ap-northeast-2'
+  })
+
   if (!isModalOpen) return <></>
 
   const ratingChanged = (newRating: number) => {
@@ -55,25 +61,42 @@ const ReviewForm = ({
   }
 
   const handleReviewSubmit = async () => {
-    // const { reactS3Client } = require('react-aws-s3-typescript')
-    const reactS3Client = new ReactS3Client(s3Config)
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: 'iko-amazon-s3',
+        Key: `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
+        Body: selectedFile
+      }
+    })
 
-    const result = await reactS3Client.uploadFile(
-      selectedFile as File,
-      `${reviewItem?.orderId}-${reviewItem?.productDetailsId}`
+    const promise = upload.promise()
+
+    promise.then(
+      function (data) {
+        console.log('이미지 S3 업로드 성공', data)
+      },
+      function (err) {
+        console.error('이미지 S3 업로드 실패', err.message)
+      }
     )
 
-    if (!selectedFile) return
-
-    const reviewInfo = {
-      content: reviewText,
-      productDetailsId: reviewItem[0].productDetailsId,
-      orderId,
-      memberId,
-      rating: rating,
-      replyImageUrl: result.location
+    if (reviewHandleType === 'add') {
+      addReviewMutate({
+        orderId: orderId,
+        memberId: memberId,
+        productDetailsId: reviewItem[0].productDetailsId,
+        rating: rating,
+        content: reviewText,
+        replyImageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
+      })
+    } else {
+      updateReviewMutate({
+        replyId: reviewItem.replyId,
+        rating: rating,
+        content: reviewText,
+        imageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
+      })
     }
-    reviewHandleType === 'add' ? addReviewMutate(reviewInfo) : updateReviewMutate(reviewInfo)
 
     setReviewText('')
     setRating(0)
@@ -86,9 +109,9 @@ const ReviewForm = ({
     <>
       {isModalOpen ? (
         <div>
-          <div className="right-[20%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
+          <div className="top-[10%] left-[27%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto">
-              <div className="xs-max:w-[350px] xs-max:h-[600px] w-[900px] h-[700px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
+              <div className="xs-max:w-[350px] xs-max:h-[600px] w-[700px] h-[500px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-center pt-[26px] ">
                   <h3 className="text-[22px] font-semibold">리뷰작성</h3>
                 </div>
@@ -181,7 +204,7 @@ const ReviewForm = ({
                     placeholder="리뷰를 입력해 주세요. (최소 100자)"
                     value={reviewText}
                     onChange={(e) => handleReviewText(e)}
-                    className="xs-max:w-[310px] xs-max:h-[260px] text-[14px] box-border px-[12px] py-[14px] w-[860px] h-[335px] outline-none resize-none rounded-[5px] border-solid border-[1px] border-lenssisStroke"
+                    className="xs-max:w-[310px] xs-max:h-[260px] text-[14px] box-border px-[12px] py-[14px] w-[660px] h-[200px] outline-none resize-none rounded-[5px] border-solid border-[1px] border-lenssisStroke"
                   ></textarea>
                 </div>
                 <div className="xs:hidden flex items-center justify-center gap-[10px]">

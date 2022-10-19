@@ -4,7 +4,7 @@ import { selectedNameState } from '../../../store/review'
 import { axiosInstance, getJWTToken } from '../../axiosinstance'
 import useToast from '../../common/toast/hooks/useToast'
 import { getStoredToken } from '../../local-storage/userStorage'
-import { ReviewInfo } from '../../main/types/reviewInfoTypes'
+import { ReviewInfo, ReviewUpdateInfo } from '../../main/types/reviewInfoTypes'
 import { queryKeys } from '../../react-query/queryKeys'
 
 const token = getStoredToken()
@@ -56,7 +56,7 @@ const addReviewItems = async (reviewInfo: ReviewInfo) => {
   return data
 }
 
-const updateReviewItems = async (reviewInfo: ReviewInfo) => {
+const updateReviewItems = async (reviewInfo: ReviewUpdateInfo) => {
   const data = await axiosInstance({
     url: '/reply/update',
     method: 'PUT',
@@ -64,7 +64,7 @@ const updateReviewItems = async (reviewInfo: ReviewInfo) => {
     data: {
       content: reviewInfo.content,
       rating: reviewInfo.rating,
-      replyImageUrl: reviewInfo.replyImageUrl,
+      replyImageUrl: reviewInfo.imageUrl,
       replyId: reviewInfo.replyId
     }
   })
@@ -154,28 +154,31 @@ export const useAddReview = () => {
 export const useUpdateReview = () => {
   const queryClient = useQueryClient()
   const { fireToast } = useToast()
-  const { mutate: updateReviewMutate } = useMutation((reviewInfo: ReviewInfo) => addReviewItems(reviewInfo), {
-    onError: () => {
-      console.log('리뷰 수정 실패')
-      fireToast({
-        id: 'updateReviewFailed',
-        message: '리뷰 수정에 실패하였습니다.',
-        type: 'failed',
-        position: 'top',
-        timer: 2000
-      })
-    },
-    onSuccess: () => {
-      console.log('리뷰 수정 성공')
-      fireToast({
-        id: 'updateReviewCompleted',
-        message: '리뷰가 수정되었습니다.',
-        type: 'complete',
-        position: 'top',
-        timer: 2000
-      })
-      queryClient.invalidateQueries(queryKeys.review)
+  const { mutate: updateReviewMutate } = useMutation(
+    (reviewInfo: ReviewUpdateInfo) => updateReviewItems(reviewInfo),
+    {
+      onError: () => {
+        console.log('리뷰 수정 실패')
+        fireToast({
+          id: 'updateReviewFailed',
+          message: '리뷰 수정에 실패하였습니다.',
+          type: 'failed',
+          position: 'top',
+          timer: 2000
+        })
+      },
+      onSuccess: () => {
+        console.log('리뷰 수정 성공')
+        fireToast({
+          id: 'updateReviewCompleted',
+          message: '리뷰가 수정되었습니다.',
+          type: 'complete',
+          position: 'top',
+          timer: 2000
+        })
+        queryClient.invalidateQueries(queryKeys.review)
+      }
     }
-  })
+  )
   return updateReviewMutate
 }
