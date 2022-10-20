@@ -101,6 +101,20 @@ const deleteReviewItems = async (replyId: number) => {
   return data
 }
 
+const getAllReviewItems = async () => {
+  const token = getStoredToken()
+  const data = await axiosInstance({
+    url: '/reply/allReply',
+    method: 'GET',
+    headers: getJWTToken(token),
+    params: {
+      page: 1,
+      size: 10
+    }
+  })
+  return data?.data?.data
+}
+
 export const useReview = () => {
   const { data: reviewItems } = useQuery(queryKeys.review, () => getReviewItems(), {})
   return { reviewItems }
@@ -225,4 +239,9 @@ export const useDeleteReview = () => {
     }
   })
   return deleteReviewMutate
+}
+
+export const useGetAllReview = () => {
+  const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
+  return { allReview }
 }

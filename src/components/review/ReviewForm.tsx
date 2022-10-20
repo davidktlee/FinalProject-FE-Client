@@ -52,12 +52,12 @@ const ReviewForm = ({
     region: 'ap-northeast-2'
   })
 
-  useEffect(() => {
-    console.log(reviewItem)
-    console.log(reviewInfo)
-    console.log(previewImage)
-    console.log(orderId)
-  }, [reviewItem, reviewInfo, orderId, updatePreviewImage])
+  // useEffect(() => {
+  //   console.log(reviewItem)
+  //   console.log(reviewInfo)
+  //   console.log(previewImage)
+  //   console.log(orderId)
+  // }, [reviewItem, reviewInfo, orderId, updatePreviewImage])
 
   useEffect(() => {
     if (reviewInfo) {
@@ -65,7 +65,7 @@ const ReviewForm = ({
       setReviewText(reviewInfo.replyComment)
       setRating(reviewInfo.replyRating)
     }
-  }, [reviewInfo, previewImage])
+  }, [reviewInfo])
 
   if (!isModalOpen) return <></>
 

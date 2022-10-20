@@ -1,8 +1,24 @@
 import ViewMoreBtn from '../main/common/ViewMoreBtn'
+import { useGetAllReview } from './hooks/useReview'
 import MainReviewCard from './MainReviewCard'
 import MobileReviewCard from './mobile/MobileReviewCard'
 
+export interface reviewItemType {
+  color: string
+  content: string
+  createdAt: string
+  email: string
+  graphicDiameter: number
+  period: number
+  productImageUrl: string
+  productName: string
+  rating: number
+  reviewImageUrl: string
+}
+
 const MainReview = () => {
+  const { allReview } = useGetAllReview()
+  console.log(allReview)
   return (
     <div className=" bg-white rounded-[5px]">
       <div className="flex justify-center items-center text-[24px]">
@@ -12,21 +28,15 @@ const MainReview = () => {
       </div>
       {/* 웹 */}
       <div className="xs-max:hidden flex flex-wrap justify-center gap-6 max-w-[1280px] mx-auto">
-        <MainReviewCard />
-        <MainReviewCard />
-        <MainReviewCard />
-        <MainReviewCard />
-        <MainReviewCard />
-        <MainReviewCard />
-        <MainReviewCard />
-        <MainReviewCard />
+        {allReview?.map((review: reviewItemType) => (
+          <MainReviewCard review={review} />
+        ))}
       </div>
       {/* 모바일 */}
       <div className="xs:hidden  flex flex-wrap justify-center gap-[8px] max-w-[1280px] mx-auto">
-        <MobileReviewCard />
-        <MobileReviewCard />
-        <MobileReviewCard />
-        <MobileReviewCard />
+        {allReview?.map((review: reviewItemType) => (
+          <MobileReviewCard review={review} />
+        ))}
       </div>
       <ViewMoreBtn moveTo="/review" />
     </div>

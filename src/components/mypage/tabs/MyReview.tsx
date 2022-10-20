@@ -44,9 +44,12 @@ const MyReview = () => {
             <div className="flex gap-1 xs:gap-4">
               <img
                 src={
-                  item.replyInfo.replyImageUrl
-                    ? item.replyInfo.replyImageUrl
-                    : item.productInfo[0].produtImageUrl
+                  item.replyInfo.replyImageUrl ||
+                  item.productInfo[0]?.produtImageUrl ||
+                  '/assets/errorImage.png'
+                  // item.replyInfo.replyImageUrl
+                  //   ? item.replyInfo.replyImageUrl
+                  //   : item.productInfo[0].produtImageUrl
                 }
                 width={100}
                 height={100}
