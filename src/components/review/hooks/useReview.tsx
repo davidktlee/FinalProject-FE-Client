@@ -7,15 +7,14 @@ import { getStoredToken } from '../../local-storage/userStorage'
 import { ReviewInfo, ReviewUpdateInfo } from '../../main/types/reviewInfoTypes'
 import { queryKeys } from '../../react-query/queryKeys'
 
-const token = getStoredToken()
-
 const getReviewItems = async () => {
+  const token = getStoredToken()
   const data = await axiosInstance({
     url: '/reply/myReply',
     method: 'GET',
     headers: getJWTToken(token)
   })
-  return data.data.data
+  return data?.data?.data
 }
 
 const getAllReview = async (productId: number) => {
@@ -40,6 +39,7 @@ const getForProudctId = async () => {
 }
 
 const addReviewItems = async (reviewInfo: ReviewInfo) => {
+  const token = getStoredToken()
   const data = await axiosInstance({
     url: '/reply/add',
     method: 'POST',
@@ -57,6 +57,7 @@ const addReviewItems = async (reviewInfo: ReviewInfo) => {
 }
 
 const updateReviewItems = async (reviewInfo: ReviewUpdateInfo) => {
+  const token = getStoredToken()
   const data = await axiosInstance({
     url: '/reply/update',
     method: 'PUT',
@@ -64,7 +65,7 @@ const updateReviewItems = async (reviewInfo: ReviewUpdateInfo) => {
     data: {
       content: reviewInfo.content,
       rating: reviewInfo.rating,
-      replyImageUrl: reviewInfo.imageUrl,
+      imageUrl: reviewInfo.imageUrl,
       replyId: reviewInfo.replyId
     }
   })
@@ -73,6 +74,7 @@ const updateReviewItems = async (reviewInfo: ReviewUpdateInfo) => {
 }
 
 const getReviewByName = async (productName: string) => {
+  const token = getStoredToken()
   const data = await axiosInstance({
     url: '/reply/replyListByName',
     method: 'GET',
@@ -81,6 +83,19 @@ const getReviewByName = async (productName: string) => {
       page: 1,
       productName,
       size: 10
+    }
+  })
+  return data
+}
+
+const deleteReviewItems = async (replyId: number) => {
+  const token = getStoredToken()
+  const data = await axiosInstance({
+    url: '/reply/delete',
+    method: 'POST',
+    headers: getJWTToken(token),
+    data: {
+      replyId
     }
   })
   return data
@@ -108,7 +123,7 @@ export const useGetReviewByName = () => {
         console.log('성공')
       },
       onError: (error) => {
-        console.log('review를 불러오지 못했습니다!')
+        console.log(error, 'review를 불러오지 못했습니다!')
       }
     }
   )
@@ -181,4 +196,33 @@ export const useUpdateReview = () => {
     }
   )
   return updateReviewMutate
+}
+
+export const useDeleteReview = () => {
+  const queryClient = useQueryClient()
+  const { fireToast } = useToast()
+  const { mutate: deleteReviewMutate } = useMutation((replyId: number) => deleteReviewItems(replyId), {
+    onError: () => {
+      console.log('리뷰 삭제 실패')
+      fireToast({
+        id: 'deleteReviewFailed',
+        message: '리뷰 삭제에 실패하였습니다.',
+        type: 'failed',
+        position: 'top',
+        timer: 2000
+      })
+    },
+    onSuccess: () => {
+      console.log('리뷰 삭제 성공')
+      fireToast({
+        id: 'deleteReviewCompleted',
+        message: '리뷰가 삭제되었습니다.',
+        type: 'complete',
+        position: 'top',
+        timer: 2000
+      })
+      queryClient.invalidateQueries(queryKeys.review)
+    }
+  })
+  return deleteReviewMutate
 }

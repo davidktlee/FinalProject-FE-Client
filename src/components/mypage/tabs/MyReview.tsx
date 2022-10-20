@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { useReview } from '../../review/hooks/useReview'
+import { useDeleteReview, useReview } from '../../review/hooks/useReview'
 import CardLayout from '../common/CardLayout'
 import { reviewItemsType } from '../../review/types/reviewTypes'
-import { ItemDetail } from '../../../store/mainCart'
 import ReviewForm from '../../review/ReviewForm'
 import { useUser } from '../../auth/hooks/useUser'
+import ReactStars from 'react-rating-stars-component'
 
 const MyReview = () => {
   const [isModal, setIsModal] = useState(false)
@@ -13,15 +12,18 @@ const MyReview = () => {
   const { reviewItems } = useReview()
   const [reviewHandleType, setReviewHandleType] = useState<'add' | 'update'>('add')
   const { user } = useUser()
-  console.log(reviewItems)
+  const deleteReviewMutate = useDeleteReview()
 
   const reviewUpdateHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setReviewHandleType('update')
-    setUpdateItem(
-      reviewItems.filter((item: any) => item.productInfo[0]?.productId === Number(e.currentTarget.value))
-    )
+    setUpdateItem(reviewItems.filter((item: any) => item.replyInfo.replyId === Number(e.currentTarget.value)))
     setIsModal(true)
   }
+
+  const reviewDeleteHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    deleteReviewMutate(Number(e.currentTarget.value))
+  }
+  console.log(reviewItems)
 
   return (
     <CardLayout title="리뷰 관리">
@@ -62,27 +64,43 @@ const MyReview = () => {
                 <button
                   onClick={reviewUpdateHandler}
                   name={'update'}
-                  value={item.productInfo[0].productId}
+                  value={item.replyInfo.replyId}
                   className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm"
                 >
                   수정하기
                 </button>
-                <button className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm">
+                <button
+                  value={item.replyInfo.replyId}
+                  onClick={reviewDeleteHandler}
+                  className="border border-solid border-lenssisStroke text-lenssisGray text-xs w-[70px] h-[25px] rounded-sm"
+                >
                   삭제하기
                 </button>
               </div>
             </div>
             <div className="mt- border-b-[1px] border-solid border-lenssisStroke pb-2 mb-2">
-              <p>★★★★★</p>
+              <ReactStars
+                count={5}
+                value={item.replyInfo.replyRating}
+                size={18}
+                isHalf={true}
+                emptyIcon={<i className="far fa-star"></i>}
+                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                fullIcon={<i className="fa fa-star"></i>}
+                color="#efefef"
+                activeColor="#ffd700"
+                edit={false}
+              />
               <p className="font-base text-lenssisGray">{item.replyInfo.replyComment}</p>
             </div>
             {isModal && (
               <ReviewForm
                 reviewHandleType={reviewHandleType}
-                reviewItem={updateItem[0].productInfo}
+                reviewItem={updateItem[0]?.productInfo}
+                reviewInfo={updateItem[0]?.replyInfo}
                 onClose={setIsModal}
                 isModalOpen={isModal}
-                orderId={updateItem?.replyInfo?.orderId}
+                orderId={updateItem[0]?.replyInfo?.orderId!}
                 memberId={user?.memberId!}
               />
             )}
