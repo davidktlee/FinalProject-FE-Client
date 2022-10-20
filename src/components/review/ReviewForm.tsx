@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview, useUpdateReview } from './hooks/useReview'
-import ReactS3Client from 'react-aws-s3-typescript'
-import { s3Config } from './config/s3Config'
+import AWS from 'aws-sdk'
+const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 
 interface ReviewFormProps {
   onClose: Function
@@ -12,6 +12,17 @@ interface ReviewFormProps {
   orderId: number
   memberId: number
   reviewHandleType: string
+  reviewInfo?: ReviewInfo
+}
+
+interface ReviewInfo {
+  orderId: number
+  productDetailsId: number
+  replyComment: string
+  replyCreatedAt: string
+  replyId: number
+  replyImageUrl: string
+  replyRating: number
 }
 
 const ReviewForm = ({
@@ -20,19 +31,46 @@ const ReviewForm = ({
   reviewItem,
   orderId,
   memberId,
-  reviewHandleType
+  reviewHandleType,
+  reviewInfo
 }: ReviewFormProps) => {
-  const [reviewText, setReviewText] = useState('')
-  const [rating, setRating] = useState(0)
+  const [reviewText, setReviewText] = useState(reviewInfo?.replyComment)
+  const [rating, setRating] = useState(reviewInfo ? reviewInfo.replyRating : 0)
   const [selectedFile, setSelectedFile] = useState<File | ''>()
-  const [previewImage, setPreviewImage] = useState<string>()
-  const imageRef = useRef<HTMLInputElement>(null)
+  const [previewImage, setPreviewImage] = useState<any>('')
+
   const updateReviewMutate = useUpdateReview()
   const addReviewMutate = useAddReview()
+  const [oldReviewInfo, setOldReviewInfo] = useState<ReviewInfo>()
+  const [updatePreviewImage, setUpdatePreviewImage] = useState<any>(
+    reviewInfo ? reviewInfo?.replyImageUrl : ''
+  )
+
+  AWS.config.update({
+    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: VITE_SECRET_ACCESS_KEY,
+    region: 'ap-northeast-2'
+  })
+
+  // useEffect(() => {
+  //   console.log(reviewItem)
+  //   console.log(reviewInfo)
+  //   console.log(previewImage)
+  //   console.log(orderId)
+  // }, [reviewItem, reviewInfo, orderId, updatePreviewImage])
+
+  useEffect(() => {
+    if (reviewInfo) {
+      setOldReviewInfo(reviewInfo)
+      setReviewText(reviewInfo.replyComment)
+      setRating(reviewInfo.replyRating)
+    }
+  }, [reviewInfo])
 
   if (!isModalOpen) return <></>
 
   const ratingChanged = (newRating: number) => {
+    oldReviewInfo && setOldReviewInfo({ ...oldReviewInfo, replyRating: newRating })
     setRating(newRating)
   }
 
@@ -41,44 +79,82 @@ const ReviewForm = ({
   }
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatePreviewImage('')
+    setPreviewImage('')
     const file = e.target.files?.[0]
-    console.log()
-    if (!file) {
-      setSelectedFile('')
-    }
+    if (!file) return
     setSelectedFile(file)
     const reader = new FileReader()
     reader.onloadend = () => {
-      setPreviewImage(reader.result as string)
+      console.log('이미지 읽기 완료')
+      if (reviewHandleType === 'update') {
+        setUpdatePreviewImage(reader.result)
+      } else {
+        setPreviewImage(reader.result)
+      }
     }
     reader.readAsDataURL(file as Blob)
   }
 
   const handleReviewSubmit = async () => {
-    // const { reactS3Client } = require('react-aws-s3-typescript')
-    const reactS3Client = new ReactS3Client(s3Config)
-
-    const result = await reactS3Client.uploadFile(
-      selectedFile as File,
-      `${reviewItem?.orderId}-${reviewItem?.productDetailsId}`
-    )
-
-    if (!selectedFile) return
-
-    const reviewInfo = {
-      content: reviewText,
-      productDetailsId: reviewItem[0].productDetailsId,
-      orderId,
-      memberId,
-      rating: rating,
-      replyImageUrl: result.location
+    if (reviewHandleType === 'update') {
+      // 기존 이미지 삭제
+      const s3 = new AWS.S3()
+      const params = {
+        Bucket: 'iko-amazon-s3',
+        Key: `review/${orderId}-${reviewInfo?.productDetailsId!}`
+      }
+      s3.deleteObject(params, function (err, data) {
+        if (err) console.log(err, err.stack)
+        else console.log(data)
+      })
     }
-    reviewHandleType === 'add' ? addReviewMutate(reviewInfo) : updateReviewMutate(reviewInfo)
+
+    if (selectedFile) {
+      console.log('이미지 등록 시도')
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: 'iko-amazon-s3',
+          Key: `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
+          Body: selectedFile
+        }
+      })
+      const promise = upload.promise()
+
+      promise.then(
+        function (data) {
+          console.log('이미지 S3 업로드 성공', data)
+        },
+        function (err) {
+          console.error('이미지 S3 업로드 실패', err.message)
+        }
+      )
+    }
+
+    if (reviewHandleType === 'add') {
+      addReviewMutate({
+        orderId: orderId,
+        memberId: memberId,
+        productDetailsId: reviewItem[0].productDetailsId,
+        rating: rating,
+        content: reviewText!,
+        replyImageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
+      })
+    } else {
+      updateReviewMutate({
+        replyId: oldReviewInfo?.replyId!,
+        rating: oldReviewInfo?.replyRating!,
+        content: reviewText!,
+        imageUrl: reviewInfo
+          ? `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewInfo?.productDetailsId}`
+          : `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
+      })
+    }
 
     setReviewText('')
     setRating(0)
     setSelectedFile(undefined)
-    setPreviewImage(undefined)
+    setPreviewImage('')
     onClose()
   }
 
@@ -86,21 +162,33 @@ const ReviewForm = ({
     <>
       {isModalOpen ? (
         <div>
-          <div className="right-[20%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
+          <div className="top-[10%] left-[27%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto">
-              <div className="xs-max:w-[350px] xs-max:h-[600px] w-[900px] h-[700px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
+              <div className="xs-max:w-[350px] xs-max:h-[600px] w-[700px] h-[500px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-center pt-[26px] ">
-                  <h3 className="text-[22px] font-semibold">리뷰작성</h3>
+                  <h3 className="text-[22px] font-semibold">
+                    {reviewHandleType === 'update' ? '리뷰수정' : '리뷰작성'}
+                  </h3>
                 </div>
                 <div className=" pt-[10px] px-[20px]">
                   <div className="xs-max:gap-[10px] flex gap-[20px] border-solid border-lenssisStroke border-[1px] rounded-[5px]">
                     <div className="py-[15px] px-[14px] xs-max:p-2 ">
                       <label htmlFor="selectImage" className="relative cursor-pointer hover:contrast-[.6]">
-                        <img
-                          width={120}
-                          height={120}
-                          src={previewImage ? previewImage : '/assets/errorImage.png'}
-                        />
+                        {reviewHandleType === 'update' ? (
+                          <img
+                            width={120}
+                            height={120}
+                            // '/assets/errorImage.png'
+                            src={updatePreviewImage ? updatePreviewImage : '/assets/errorImage.png'}
+                          />
+                        ) : (
+                          <img
+                            width={120}
+                            height={120}
+                            // '/assets/errorImage.png'
+                            src={previewImage ? previewImage : '/assets/errorImage.png'}
+                          />
+                        )}
                         {!previewImage ? (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
                             <span className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]">
@@ -109,17 +197,13 @@ const ReviewForm = ({
                           </div>
                         ) : (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
-                            <span
-                              onClick={() => setPreviewImage('')}
-                              className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]"
-                            >
+                            <span className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]">
                               사진 변경하기
                             </span>
                           </div>
                         )}
                       </label>
                       <input
-                        ref={imageRef}
                         onChange={(e) => handleImageInput(e)}
                         type="file"
                         name="image"
@@ -154,9 +238,11 @@ const ReviewForm = ({
                           fullIcon={<i className="fa fa-star"></i>}
                           color="#efefef"
                           activeColor="#ffd700"
+                          value={rating}
                         />
                         <div className="ml-2 text-[14px] text-lenssisGray">
-                          {(rating * 10) / 10}/{(rating * 10) % 10 === 0 ? 5 : 5}
+                          {((oldReviewInfo?.replyRating! || rating * 10) / 10) * 10}/
+                          {(oldReviewInfo?.replyRating! || rating * 10) % 10 === 0 ? 5 : 5}
                         </div>
                       </div>
                       {/* 모바일 버전 별점 */}
@@ -171,6 +257,7 @@ const ReviewForm = ({
                           fullIcon={<i className="fa fa-star"></i>}
                           color="#efefef"
                           activeColor="#ffd700"
+                          value={rating}
                         />
                       </div>
                     </div>
@@ -181,23 +268,25 @@ const ReviewForm = ({
                     placeholder="리뷰를 입력해 주세요. (최소 100자)"
                     value={reviewText}
                     onChange={(e) => handleReviewText(e)}
-                    className="xs-max:w-[310px] xs-max:h-[260px] text-[14px] box-border px-[12px] py-[14px] w-[860px] h-[335px] outline-none resize-none rounded-[5px] border-solid border-[1px] border-lenssisStroke"
+                    className="xs-max:w-[310px] xs-max:h-[260px] text-[14px] box-border px-[12px] py-[14px] w-[660px] h-[200px] outline-none resize-none rounded-[5px] border-solid border-[1px] border-lenssisStroke"
                   ></textarea>
                 </div>
                 <div className="xs:hidden flex items-center justify-center gap-[10px]">
+                  {/* 모바일 버전 */}
                   <Button onClick={() => onClose()} bgColor="white" width="w-[120px]">
                     <span>취소</span>
                   </Button>
                   <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[120px]">
-                    <span>저장</span>
+                    <span>{reviewHandleType === 'update' ? '수정' : '저장'}</span>
                   </Button>
                 </div>
+                {/* 웹 버전 */}
                 <div className="xs-max:hidden flex items-center justify-center gap-[10px]">
                   <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
                     <span>취소</span>
                   </Button>
                   <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[150px]">
-                    <span>저장</span>
+                    <span>{reviewHandleType === 'update' ? '수정' : '저장'}</span>
                   </Button>
                 </div>
               </div>
