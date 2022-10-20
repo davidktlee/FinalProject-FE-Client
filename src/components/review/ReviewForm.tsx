@@ -4,6 +4,8 @@ import ReactStars from 'react-rating-stars-component'
 import { useAddReview, useUpdateReview } from './hooks/useReview'
 import AWS from 'aws-sdk'
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
+import { useResetRecoilState, useRecoilState } from 'recoil'
+import { selectFileState, updateReviewState } from '../../store/reviewImage'
 
 interface ReviewFormProps {
   onClose: Function
@@ -37,14 +39,13 @@ const ReviewForm = ({
   const [reviewText, setReviewText] = useState(reviewInfo?.replyComment)
   const [rating, setRating] = useState(reviewInfo ? reviewInfo.replyRating : 0)
   const [selectedFile, setSelectedFile] = useState<File | ''>()
-  const [previewImage, setPreviewImage] = useState<any>('')
-
+  const imageRef = useRef<HTMLInputElement>(null)
   const updateReviewMutate = useUpdateReview()
   const addReviewMutate = useAddReview()
   const [oldReviewInfo, setOldReviewInfo] = useState<ReviewInfo>()
-  const [updatePreviewImage, setUpdatePreviewImage] = useState<any>(
-    reviewInfo ? reviewInfo?.replyImageUrl : ''
-  )
+  const [updateReview, setUpdateReview] = useRecoilState(updateReviewState)
+  const [selectFile, setSelectFile] = useRecoilState(selectFileState)
+  const resetSelectFile = useResetRecoilState(updateReviewState)
 
   AWS.config.update({
     accessKeyId: VITE_AWS_ACCESS_KEY_ID,
@@ -52,20 +53,13 @@ const ReviewForm = ({
     region: 'ap-northeast-2'
   })
 
-  // useEffect(() => {
-  //   console.log(reviewItem)
-  //   console.log(reviewInfo)
-  //   console.log(previewImage)
-  //   console.log(orderId)
-  // }, [reviewItem, reviewInfo, orderId, updatePreviewImage])
-
   useEffect(() => {
     if (reviewInfo) {
       setOldReviewInfo(reviewInfo)
       setReviewText(reviewInfo.replyComment)
       setRating(reviewInfo.replyRating)
     }
-  }, [reviewInfo])
+  }, [reviewInfo, selectedFile])
 
   if (!isModalOpen) return <></>
 
@@ -79,57 +73,40 @@ const ReviewForm = ({
   }
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatePreviewImage('')
-    setPreviewImage('')
+    setSelectedFile(() => e.target.files![0])
     const file = e.target.files?.[0]
     if (!file) return
-    setSelectedFile(file)
+    setSelectFile(file)
     const reader = new FileReader()
     reader.onloadend = () => {
       console.log('이미지 읽기 완료')
-      if (reviewHandleType === 'update') {
-        setUpdatePreviewImage(reader.result)
-      } else {
-        setPreviewImage(reader.result)
-      }
+      setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
     }
     reader.readAsDataURL(file as Blob)
   }
 
   const handleReviewSubmit = async () => {
-    if (reviewHandleType === 'update') {
-      // 기존 이미지 삭제
-      const s3 = new AWS.S3()
-      const params = {
+    console.log('이미지 등록 시도')
+    console.log(selectedFile)
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
         Bucket: 'iko-amazon-s3',
-        Key: `review/${orderId}-${reviewInfo?.productDetailsId!}`
+        Key: reviewInfo
+          ? `review/${orderId}-${reviewInfo?.productDetailsId}`
+          : `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
+        Body: selectFile
       }
-      s3.deleteObject(params, function (err, data) {
-        if (err) console.log(err, err.stack)
-        else console.log(data)
-      })
-    }
+    })
+    const promise = upload.promise()
 
-    if (selectedFile) {
-      console.log('이미지 등록 시도')
-      const upload = new AWS.S3.ManagedUpload({
-        params: {
-          Bucket: 'iko-amazon-s3',
-          Key: `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
-          Body: selectedFile
-        }
-      })
-      const promise = upload.promise()
-
-      promise.then(
-        function (data) {
-          console.log('이미지 S3 업로드 성공', data)
-        },
-        function (err) {
-          console.error('이미지 S3 업로드 실패', err.message)
-        }
-      )
-    }
+    promise.then(
+      function (data) {
+        console.log('이미지 S3 업로드 성공', data)
+      },
+      function (err) {
+        console.error('이미지 S3 업로드 실패', err.message)
+      }
+    )
 
     if (reviewHandleType === 'add') {
       addReviewMutate({
@@ -153,8 +130,8 @@ const ReviewForm = ({
 
     setReviewText('')
     setRating(0)
-    setSelectedFile(undefined)
-    setPreviewImage('')
+    setSelectFile('')
+    resetSelectFile()
     onClose()
   }
 
@@ -174,22 +151,18 @@ const ReviewForm = ({
                   <div className="xs-max:gap-[10px] flex gap-[20px] border-solid border-lenssisStroke border-[1px] rounded-[5px]">
                     <div className="py-[15px] px-[14px] xs-max:p-2 ">
                       <label htmlFor="selectImage" className="relative cursor-pointer hover:contrast-[.6]">
-                        {reviewHandleType === 'update' ? (
-                          <img
-                            width={120}
-                            height={120}
-                            // '/assets/errorImage.png'
-                            src={updatePreviewImage ? updatePreviewImage : '/assets/errorImage.png'}
-                          />
-                        ) : (
-                          <img
-                            width={120}
-                            height={120}
-                            // '/assets/errorImage.png'
-                            src={previewImage ? previewImage : '/assets/errorImage.png'}
-                          />
-                        )}
-                        {!previewImage ? (
+                        <img
+                          width={120}
+                          height={120}
+                          // '/assets/errorImage.png'
+                          src={
+                            updateReview.replyImageUrl ||
+                            reviewInfo?.replyImageUrl! ||
+                            reviewItem[0]?.productImageUrl ||
+                            '/assets/errorImage.png'
+                          }
+                        />
+                        {!updateReview.replyImageUrl ? (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
                             <span className="text-white px-2 py-1 border-solid border-white border-[2px] rounded-[5px]">
                               사진 첨부하기
@@ -204,7 +177,8 @@ const ReviewForm = ({
                         )}
                       </label>
                       <input
-                        onChange={(e) => handleImageInput(e)}
+                        ref={imageRef}
+                        onChange={handleImageInput}
                         type="file"
                         name="image"
                         id="selectImage"
@@ -276,7 +250,7 @@ const ReviewForm = ({
                   <Button onClick={() => onClose()} bgColor="white" width="w-[120px]">
                     <span>취소</span>
                   </Button>
-                  <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[120px]">
+                  <Button onClick={handleReviewSubmit} bgColor="dark" width="w-[120px]">
                     <span>{reviewHandleType === 'update' ? '수정' : '저장'}</span>
                   </Button>
                 </div>
@@ -285,7 +259,7 @@ const ReviewForm = ({
                   <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
                     <span>취소</span>
                   </Button>
-                  <Button onClick={() => handleReviewSubmit()} bgColor="dark" width="w-[150px]">
+                  <Button onClick={handleReviewSubmit} bgColor="dark" width="w-[150px]">
                     <span>{reviewHandleType === 'update' ? '수정' : '저장'}</span>
                   </Button>
                 </div>
