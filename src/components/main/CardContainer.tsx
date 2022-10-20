@@ -4,7 +4,7 @@ import { ProductPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
 import { useRecoilValue } from 'recoil'
 import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
-import { filterState } from '../../store/filterVallue'
+import { filterOptionState } from '../../store/filterVallue'
 
 const CardContainer = ({
   data,
@@ -16,11 +16,11 @@ const CardContainer = ({
   setNewProductCurrentPage,
   currentPost
 }: any) => {
-  const filterValue = useRecoilValue(filterState)
+  const filterValue = useRecoilValue(filterOptionState)
   // 필터링된 상품 리스트입니다.
 
   const [filteredProductCurrentPage, setFilteredProductCurrentPage] = useState(1)
-  console.log(productLists)
+  // console.log(productLists)
   return (
     <>
       {data !== 'New' ? (
