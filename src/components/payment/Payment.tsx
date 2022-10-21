@@ -208,10 +208,7 @@ const Payment = () => {
         {
           headers: getJWTToken(token)
         })
-        
       })
-      
-      
       alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
       navigate('/')
     } catch (error) {}

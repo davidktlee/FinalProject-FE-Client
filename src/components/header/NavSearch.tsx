@@ -15,6 +15,11 @@ const NavSearch = ({searchValueHandler,searchValue}:NavSearchProps) => {
   const navigate = useNavigate()
   const searchSubmitHandler = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(!searchValue.trim()) {
+      alert('검색어를 입력해주세요')
+      return;
+    }
+    
     searchLens({keyword:searchValue,memberId:user?.memberId})
     navigate('/searchresult',{state:searchValue})
   }

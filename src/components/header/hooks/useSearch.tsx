@@ -30,6 +30,7 @@ interface productDataType {
 }
 
 const getSearchedLens = async ({ keyword, memberId = 0 }: SearchValueType) => {
+  
   const { data } = await axiosInstance.get<SearchedLensType>(
     `/product/searchName?keyWord=${keyword}&memberId=${memberId}`
   )

@@ -17,6 +17,11 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   
   const searchSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(!searchValue.trim()) {
+      alert('검색어를 입력해주세요')
+      return;
+    }
+    
     setUserSearched((prev) => [...prev, searchValue])
     searchLens({ keyword: searchValue, memberId: user?.memberId })
     setTimeout(() => {
