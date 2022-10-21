@@ -2,9 +2,22 @@
 
 ## 🛠 사용기술
 
+<img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=React-Query&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Recoil-af42dc?style=for-the-badge&logo=Recoil&logoColor=white"/>
+<img src="https://img.shields.io/badge/TAILWIND CSS-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=white"/>
+
+## backend
+
+<img src="https://img.shields.io/badge/JAVA-2e60a0?style=for-the-badge&logo=JAVA&logoColor=white"/>
+<img src="https://img.shields.io/badge/SPRING BOOT-6DB33F?style=for-the-badge&logo=SPRINGBOOT&logoColor=white"/>
+<img src="https://img.shields.io/badge/MYSQL-4479A1?style=for-the-badge&logo=MYSQL&logoColor=white"/>
+<img src="https://img.shields.io/badge/DOCKER-2496ED?style=for-the-badge&logo=DOCKER&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"/>
+
 ## 📅 기간
 
-### 커밋 컨벤션
+**2022.9.2 ~ 2022.10.14**
+
+## 커밋 컨벤션
 
 - prefix: 영어로 작성
 - 설명: 한글로 작성
@@ -25,21 +38,3 @@ chore: 자잘한 수정이나 빌드 업데이트
 rename: 파일 혹은 폴더명을 수정만 한 경우
 remove: 파일을 삭제만 한 경우
 ```
-
-### 색상
-
-브라운 - ブラウン
-
-초코 - チョコ
-
-그레이 - グレー
-
-블루 - ブルー
-
-핑크 - ピンク
-
-블랙 - ブラック
-
-베이지 - ベージュ
-
-올리브 - オリーヴ

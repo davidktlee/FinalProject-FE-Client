@@ -1,18 +1,36 @@
-import star from '/assets/star.svg'
+import ReactStars from 'react-rating-stars-component'
 
-const MainReviewCard = () => {
+const MainReviewCard = ({ review }: any) => {
   return (
-    <div className=" p-[10px] rounded-[10px] border-lenssisLightStroke border-solid border-[1px]">
+    <div
+      key={review.content}
+      className=" p-[10px] rounded-[10px] border-lenssisLightStroke border-solid border-[1px]"
+    >
       <div>
         <img
+          width={230}
+          height={210}
           className=" rounded rounded-t-[5px]"
-          src="https://user-images.githubusercontent.com/90392240/191562901-054caaf5-0245-44fd-8715-848853dcca4e.png"
+          src={review.reviewImageUrl || review.productImageUrl}
         />
       </div>
-      <div className="p-2 w-[230px] h-[60px]">
-        <p className="text-[14px]">샌드 플러스 그레이 착용</p>
-        <p className="text-[#7F7F7F] text-[12px]">@velvet.ineffable</p>
-        <img className="" src={star} width="100" alt="star" />
+      <div className="p-2 w-[230px] h-[60px] mb-2">
+        <p className="text-[14px]">
+          {review.productName} <span className="ml-[2px]">착용</span>
+        </p>
+        <p className="text-[#7F7F7F] text-[12px]">{review.email}</p>
+        <ReactStars
+          count={5}
+          size={18}
+          isHalf={true}
+          emptyIcon={<i className="far fa-star"></i>}
+          halfIcon={<i className="fa fa-star-half-alt"></i>}
+          fullIcon={<i className="fa fa-star"></i>}
+          color="#efefef"
+          activeColor="#ffd700"
+          value={review.rating}
+          edit={false}
+        />
       </div>
     </div>
   )

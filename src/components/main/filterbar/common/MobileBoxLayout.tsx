@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { filteredProudcts, filterState, FilterValue } from '../../../../store/filterVallue'
+import { filteredProudcts, filterOptionState, FilterValue } from '../../../../store/filterVallue'
 import { useUser } from '../../../auth/hooks/useUser'
 import { axiosInstance } from '../../../axiosinstance'
 import { contentTypes } from '../FilterButtonFunction'
@@ -19,7 +19,7 @@ type MobileBoxLayoutProps = {
 
 const MobileBoxLayout = ({ title, contents, px, py, w, h, gapX, gapY }: MobileBoxLayoutProps) => {
   const { user } = useUser()
-  const [filter, setFilter] = useRecoilState(filterState)
+  const [filter, setFilter] = useRecoilState(filterOptionState)
   const setFilteredProducts = useSetRecoilState(filteredProudcts)
 
   const requestFilterOptions = async (filter: FilterValue) => {
