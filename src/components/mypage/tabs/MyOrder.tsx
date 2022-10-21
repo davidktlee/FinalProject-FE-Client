@@ -24,15 +24,16 @@ const MyOrder = () => {
   }
 
   useEffect(() => {
-    if (!user) return
+    if (!user || !myPurchase) return
+    
     getMyOrders({
       email: user.email,
       memberId: user.memberId,
       orderer: user.name,
-      orderId: myPurchase ? myPurchase?.[0].orderInfo.orderId! : 0
+      orderId: myPurchase ? myPurchase?.[0].orderInfo.orderId : 0
     })
-  }, [user])
-  console.log(myPurchase);
+  }, [user,myPurchase])
+  
   return (
     <CardLayout title="주문 내역">
       <ReviewForm
