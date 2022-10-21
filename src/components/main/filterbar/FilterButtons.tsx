@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { filteredProudcts, filterState, FilterValue } from '../../../store/filterVallue'
+import { filteredProudcts, filterOptionState, FilterValue } from '../../../store/filterVallue'
 import ReactTooltip from 'react-tooltip'
 import { contentTypes } from './FilterButtonFunction'
 import { axiosInstance } from '../../axiosinstance'
@@ -19,7 +19,7 @@ type filterButtonTypes = {
 
 const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes) => {
   const { user } = useUser()
-  const [filter, setFilter] = useRecoilState(filterState)
+  const [filter, setFilter] = useRecoilState(filterOptionState)
   const setFilteredProducts = useSetRecoilState(filteredProudcts)
 
   const requestFilterOptions = async (filter: FilterValue) => {
@@ -163,8 +163,6 @@ const FilterButtons = ({ contents, px, py, w, h, gapX, gapY }: filterButtonTypes
                 boxSizing: 'border-box'
               }
             }
-            // name={content.type}
-            // value={content.value}
             data-tip={content.color && content.name}
             data-for={content.color && content.color}
             onClick={() => handleFilterValue(content)}

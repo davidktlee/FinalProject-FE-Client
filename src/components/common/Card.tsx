@@ -85,7 +85,7 @@ const Card = ({
             src={viewImg && viewImg}
             onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
-            className=" cursor-pointer rounded-md w-[160px] h-[160px] md:w-full md:h-[255px]  mx-auto"
+            className=" bg-origin-content cursor-pointer rounded-md w-[160px] h-[160px] md:w-full md:h-[255px] mx-auto"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">
@@ -113,13 +113,15 @@ const Card = ({
             {colorAndImage.slice(0, 4).map((eachColor: ColorAndImage, idx: number) => (
               <div
                 key={idx}
-                className={`w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
+                className={`cursor-pointer w-[15px] my-[10px] h-[15px] hover:w-[20px] hover:h-[20px] mr-[10px] hover:mr-[10px] md:w-[20px] md:h-[20px] md:hover:w-[25px] md:hover:h-[25px]  ${
                   colorAndImage.length === 1 ? 'hover:my-[7.5px] ' : 'hover:my-[5px]'
                 }  md:mr-[15px] rounded-full  `}
                 style={{ backgroundColor: `${eachColor.colorCode}` }}
                 onMouseEnter={(e) => {
                   changeImageHandler(e, idx)
                 }}
+                data-tip={eachColor.colorCode && eachColor.colorCode}
+                data-for={eachColor.colorCode && eachColor.colorCode}
               ></div>
             ))}
           </div>

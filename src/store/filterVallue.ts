@@ -14,8 +14,9 @@ export interface FilteredProductsTypes {
   totalCount: number
 }
 
-export const filterState = atom<FilterValue>({
-  key: 'filterValues',
+// 필터링된 옵션들을 저장하는 atom
+export const filterOptionState = atom<FilterValue>({
+  key: 'filterOptions',
   default: {
     periodState: [],
     graphicDiameterState: [],
@@ -25,6 +26,7 @@ export const filterState = atom<FilterValue>({
   }
 })
 
+// 필터링된 상품들을 저장하는 atom
 export const filteredProudcts = atom<FilteredProductsTypes>({
   key: 'filteredProudct',
   default: {

@@ -10,7 +10,7 @@ import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { getStoredToken } from '../components/local-storage/userStorage'
 import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { filterState } from '../store/filterVallue'
+import { filterOptionState } from '../store/filterVallue'
 import MainCartModal from '../components/main/MainCartModal'
 import Footer from '../components/footer/Footer'
 import { filteredProudcts } from '../store/filterVallue'
@@ -24,7 +24,7 @@ const Main = () => {
   const [title, setTitle] = useState<any>('Best')
   const filteredProducts = useRecoilValue(filteredProudcts)
   const MobileFilterRef = useRef<HTMLDivElement>(null)
-  const filterValue = useRecoilValue(filterState)
+  const filterValue = useRecoilValue(filterOptionState)
 
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)

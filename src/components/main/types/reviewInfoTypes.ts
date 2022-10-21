@@ -7,3 +7,10 @@ export interface ReviewInfo {
   replyImageUrl: string
   replyId?: number
 }
+
+export interface ReviewUpdateInfo {
+  content: string
+  imageUrl: string
+  rating: number
+  replyId: number
+}

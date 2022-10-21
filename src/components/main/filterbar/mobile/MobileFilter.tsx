@@ -1,12 +1,12 @@
 import MobileBoxLayout from '../common/MobileBoxLayout'
 import { graphicDiameter, series, features, period, colors } from '../../../../constants/filterData'
 import Refresh from '/assets/Refresh.svg'
-import { filterState, FilterValue } from '../../../../store/filterVallue'
+import { filterOptionState, FilterValue } from '../../../../store/filterVallue'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { useFilterMutation } from '../hooks/useFilter'
 
 const MobileFilter = () => {
-  const resetFilter = useResetRecoilState(filterState)
+  const resetFilter = useResetRecoilState(filterOptionState)
   const { requstFilter } = useFilterMutation()
 
   const refreshHandler = () => {

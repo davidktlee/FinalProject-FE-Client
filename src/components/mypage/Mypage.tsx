@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useRefreshToken } from '../auth/hooks/useRefreshToken'
 import { useUser } from '../auth/hooks/useUser'
 import CardTemplate from '../common/ui/CardTemplate'
@@ -15,21 +15,24 @@ const Mypage = () => {
   const { user } = useUser()
   const refreshToken = useRefreshToken()
   const { pathname } = useLocation()
-
+  const navigate = useNavigate()
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
   }, [])
 
-  if (!user) {
-    return <div>Loading...</div>
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin')
+    }
+  }, [])
+  
 
   return (
     <PageLayout layoutWidth="w-[90%]" innerTop="top-[30%]">
       <CardTemplate title="마이페이지" isTitleVisible={true}>
         <div className="w-full xs:w-[90%] mx-auto">
-          {pathname === '/mypage' && <MypageBanner user={user} />}
+          {user && pathname === '/mypage' && <MypageBanner user={user} />}
           <div className="flex flex-col xs:flex-row mt-8">
             <div className="hidden xs:block mx-auto">
               <SideNavBar />
