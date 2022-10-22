@@ -169,7 +169,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
 
   const addCartHandler = () => {
     addCartMutate(finalProduct.productDetailsId)
-    setModalState((prev) => (prev = !prev))
+    setModalState((prev) => (prev = false))
     resetOptions()
     console.log('제품상세 장바구니 버튼 클릭!')
   }
