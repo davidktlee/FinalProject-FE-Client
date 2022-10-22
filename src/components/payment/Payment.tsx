@@ -21,6 +21,7 @@ import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { useNavigate } from 'react-router-dom'
 import { graphicDiameter } from '../../constants/filterData'
+import Portal from '../common/ui/Portal'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -186,7 +187,7 @@ const Payment = () => {
       address: newFormValue.address || formValue.address,
       couponId: 0,
       detailAddress: newFormValue.detailAddress || formValue.detailAddress,
-      email: formValue.email,
+      email: user ? user.email : formValue.email,
       memberId: user ? user.memberId : 0,
       method: paymentMethodNumber,
       orderer: formValue.orderer,
@@ -213,7 +214,7 @@ const Payment = () => {
       navigate('/')
     } catch (error) {}
   }
-
+  
   useEffect(() => {
     if (user) {
       const splitUserEmail = user.email.split('@')
@@ -245,9 +246,10 @@ const Payment = () => {
       })
     }
   }, [user])
-  console.log(selectedProduct);
+  console.log(formValue);
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
+      <Portal>
       <ConfirmModal
         title="배송지 정보"
         isModalOpen={isModalOpen}
@@ -260,7 +262,7 @@ const Payment = () => {
           주문자 정보와 배송지 정보가 일치하십니까?{' '}
         </span>
       </ConfirmModal>
-
+      </Portal>
       <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <PaymentTitle text="주문 상품" />
