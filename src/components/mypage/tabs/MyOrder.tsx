@@ -45,7 +45,7 @@ const MyOrder = () => {
         isModalOpen={isModal}
         reviewItem={reviewItem}
         memberId={user.memberId}
-        orderId={myPurchase[0].orderInfo ? myPurchase[0].orderInfo.orderId : 0}
+        orderId={myPurchase[0].orderInfo.orderId}
       />}
 
       <h4 className="py-0 xs:py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold">
