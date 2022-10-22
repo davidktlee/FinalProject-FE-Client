@@ -174,7 +174,7 @@ const Payment = () => {
   }, [])
 
   const paymentHandler = async () => {
-    if (!isChecked) {
+    if (!isChecked && user?.memberId === 0) {
       alert('개인정보 수집 이용에 동의해주세요')
       return
     }
@@ -246,7 +246,7 @@ const Payment = () => {
       })
     }
   }, [user])
-  console.log(formValue);
+  
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
       <Portal>
@@ -359,10 +359,10 @@ const Payment = () => {
         <MembersTerms />
       </CardTemplate>
 
-      <CardTemplate title="비회원 구매시..." isTitleVisible={false} marginTop="mt-6">
+      {user?.memberId === 0 && <CardTemplate title="비회원 구매시..." isTitleVisible={false} marginTop="mt-6">
         <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
         <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
-      </CardTemplate>
+      </CardTemplate>}
 
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
         <PaymentTitle text="결제수단 선택" />
