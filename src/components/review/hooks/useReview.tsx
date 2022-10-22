@@ -112,7 +112,7 @@ const getAllReviewItems = async () => {
       size: 10
     }
   })
-  return data?.data?.data
+  return data
 }
 
 export const useReview = () => {
@@ -242,6 +242,6 @@ export const useDeleteReview = () => {
 }
 
 export const useGetAllReview = () => {
-  const data = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
-  return { data }
+  const { data } = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
+  return data?.data?.data
 }
