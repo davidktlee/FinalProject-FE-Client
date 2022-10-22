@@ -24,31 +24,35 @@ const MyOrder = () => {
   }
 
   useEffect(() => {
-    if (!user || !myPurchase) return
+    if (!user) return
     
     getMyOrders({
       email: user.email,
       memberId: user.memberId,
       orderer: user.name,
-      orderId: myPurchase ? myPurchase?.[0].orderInfo.orderId : 0
+      orderId: myPurchase ? myPurchase[0].orderInfo.orderId : 0
     })
-  }, [user,myPurchase])
+  }, [user])
+  console.log(myPurchase);
   
   return (
     <CardLayout title="주문 내역">
+      
+      {myPurchase && myPurchase.length !==0 && user &&
       <ReviewForm
         reviewHandleType="add"
         onClose={onModalHandler}
         isModalOpen={isModal}
         reviewItem={reviewItem}
-        memberId={user?.memberId!}
-        orderId={myPurchase?.[0].orderInfo.orderId!}
-      />
+        memberId={user.memberId}
+        orderId={myPurchase[0].orderInfo ? myPurchase[0].orderInfo.orderId : 0}
+      />}
+
       <h4 className="py-0 xs:py-2 border-b border-solid border-[#abc8df] text-[#5a5a5a] font-semibold">
         상품 정보
       </h4>
 
-      {myPurchase &&
+      {myPurchase && myPurchase.length !==0 ?
         myPurchase.map((product) => (
           <div className="flex flex-col hover:bg-slate-50" key={product.orderInfo.orderId}>
             <h4 className="py-2 text-[#5a5a5a] font-semibold flex justify-start items-center gap-4 text-xs xs:text-base">
@@ -91,7 +95,7 @@ const MyOrder = () => {
               ))}
             </div>
           </div>
-        ))}
+        )) : null}
     </CardLayout>
   )
 }
