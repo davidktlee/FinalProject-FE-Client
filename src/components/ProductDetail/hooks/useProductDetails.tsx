@@ -15,8 +15,9 @@ export const getProductDetails = async (memberId: number, productId: number) => 
       productId,
       memberId: memberId ? memberId : 0
     },
-    headers: getJWTToken(token)
+    headers: memberId ? getJWTToken(token) : undefined
   })
+  console.log(memberId)
   return data?.data
 }
 
