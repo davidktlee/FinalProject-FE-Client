@@ -11,7 +11,6 @@ const ProductAbout = ({ productDetails }: any) => {
   const finalProduct = useRecoilValue(finalProductState)
 
   const allReview = useGetAllreview(productDetails?.data?.productId)
-  console.log(allReview)
 
   return (
     <section className="text-gray-600 body-font ">

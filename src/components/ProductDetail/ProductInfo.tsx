@@ -8,10 +8,18 @@ import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { productDetailsState } from '../../store/productDetails'
 import { useMutation } from 'react-query'
-import { finalProductState, productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
+import {
+  FinalProduct,
+  finalProductState,
+  productByOptionsState,
+  ProductByOptionsType
+} from '../../store/productByOptions'
 import { ProductDetailsType } from '../../store/productDetails'
 import { useAddCart } from '../cart/hooks/useCart'
 import { MainCartModalState } from '../../store/mainCart'
+import { selectProduct } from '../../store/selectProduct'
+import OptionAndCount from './OptionAndCount'
+import { useNavigate } from 'react-router-dom'
 
 interface PropsType {
   isClose?: boolean
@@ -30,17 +38,19 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
   const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
   const [optionComplete, setOptionComplete] = useState<boolean>(true)
-  const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
+  const [finalProduct, setFinalProduct] = useRecoilState<FinalProduct>(finalProductState)
   const [favorite, setFavorite] = useState<boolean>(false)
   const { addCartMutate } = useAddCart()
   const addFavor = useAddFavorite()
   const deleteFavor = useDeleteFavorite()
   const resetOptions = useResetRecoilState(productDetailsState)
+  const [selectedProduct, setSelectedProduct] = useRecoilState(selectProduct)
+  const [finalOption, setFinalOption] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     resetOptions()
   }, [])
-
   const setModalState = useSetRecoilState(MainCartModalState)
 
   const getProductByOptions = async (detailState: ProductDetailsType) => {
@@ -104,7 +114,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       mutationKey: ['postAllOptions'],
       onSuccess: (data) => {
         console.log(data.data)
-        setFinalProduct(data.data)
+        setFinalProduct({ ...finalProduct, ...data.data, pcs: 1 })
       },
       onError: (error) => {
         console.log(error)
@@ -163,6 +173,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     } else if (name === 'degree') {
       setDetailState({ ...detailState, degree: Number(value) })
       postAllOptions(detailState)
+      setFinalOption(true)
       console.log(detailState.degree)
     }
   }
@@ -218,8 +229,36 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
         ? false
         : true
     )
+
+    if (detailState.period === 0) setFinalOption(false)
+
+    console.log('옵션 선택 state', detailState)
+    console.log('도수까지 선택했을때/최종상품', finalProduct)
+    console.log('옵션 순차적으로', productByOptions)
+
     toComma()
-  }, [productDetails?.price, productByOptions, detailState])
+  }, [productDetails?.price, productByOptions, detailState, finalProduct])
+
+  const buyHandler = () => {
+    if (finalOption) {
+      // setSelectedProduct((prev) => )
+      navigate('/payment')
+    } else {
+      alert('옵션을 선택해주세요.')
+    }
+  }
+  // color: finalProduct.color,
+  //         colorCode: detailState.colorCode,
+  //         degree: detailState.degree,
+  //         graphicDiameter: detailState.graphicDiameter,
+  //         imageUrl: finalProduct.imageUrlList[0],
+  //         discount: finalProduct.discount,
+  //         name: finalProduct.productName,
+  //         period: detailState.period,
+  //         price: productDetails?.price,
+  //         productDetailsId: finalProduct.productDetailsId,
+  //         // stock:
+  //         pcs: finalProduct.pcs
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
@@ -406,6 +445,12 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                 </select>
               </div>
             </div>
+            <div className="flex mt-5 items-center border-b-2 border-gray-100 mb-5">
+              <div className="flex">
+                <p className="w-[130px] xs-max:w-[70px] lg:w-[160px]"></p>
+              </div>
+              {finalOption && <OptionAndCount onClose={setFinalOption} />}
+            </div>
             <div className="flex justify-between py-2">
               <span className="leading-10 text-black text-[16px] font-bold">총 상품 금액</span>
               <span className="title-font text-[25px] text-black font-bold">1,800円</span>
@@ -418,7 +463,10 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
               >
                 장바구니
               </button>
-              <button className="w-1/2 cursor-pointer text-white bg-lenssisDark text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full">
+              <button
+                onClick={buyHandler}
+                className="w-1/2 cursor-pointer text-white bg-lenssisDark text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full"
+              >
                 바로구매
               </button>
             </div>
