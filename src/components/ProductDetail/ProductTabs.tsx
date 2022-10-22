@@ -10,7 +10,8 @@ const ProductAbout = ({ productDetails }: any) => {
 
   const finalProduct = useRecoilValue(finalProductState)
 
-  const { allReview } = useGetAllreview(productDetails?.data?.productId)
+  const allReview = useGetAllreview(productDetails?.data?.productId)
+  console.log(allReview)
 
   return (
     <section className="text-gray-600 body-font ">
@@ -31,15 +32,13 @@ const ProductAbout = ({ productDetails }: any) => {
                 !tabState && 'border-[#030303] border-b-4 text-[#030303]'
               } flex-1 text-gray-600 py-4 px-6 block hover:text-[#030303] focus:outline-none border-[#1B304A] border-b-2 font-medium`}
             >
-              <span>리뷰({allReview?.data?.data?.length})</span>
+              <span>리뷰({allReview?.length})</span>
             </button>
           </nav>
           {tabState ? (
             <ProductDescription finalProduct={finalProduct} />
           ) : (
-            allReview?.data.data.map((item: any) => (
-              <RevieItems productDetails={productDetails} item={item} />
-            ))
+            allReview?.map((item: any) => <RevieItems productDetails={productDetails} item={item} />)
           )}
         </div>
       </div>

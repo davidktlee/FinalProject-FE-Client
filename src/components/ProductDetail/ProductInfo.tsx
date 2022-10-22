@@ -397,8 +397,9 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                   disabled={optionComplete}
                   onChange={(e) => optionHandler(e)}
                 >
+                  <option>選択してください</option>
                   {productByOptions.degreeAndStockList?.map((item: any, index) => (
-                    <option key={index} value={item?.degree}>
+                    <option key={index + 1} value={item?.degree}>
                       {item.degree} 재고: {item.stock}
                     </option>
                   ))}

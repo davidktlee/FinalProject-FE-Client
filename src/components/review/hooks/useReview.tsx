@@ -121,10 +121,10 @@ export const useReview = () => {
 }
 
 export const useGetAllreview = (productId: number) => {
-  const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
+  const { data } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
     enabled: !!productId
   })
-  return { allReview }
+  return data?.data?.data
 }
 
 export const useGetReviewByName = () => {

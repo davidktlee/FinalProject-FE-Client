@@ -18,7 +18,6 @@ export interface reviewItemType {
 
 const MainReview = () => {
   const allReview = useGetAllReview()
-  console.log(allReview)
   return (
     <div className=" bg-white rounded-[5px]">
       <div className="flex justify-center items-center text-[24px]">
