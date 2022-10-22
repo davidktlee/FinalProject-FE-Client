@@ -242,6 +242,6 @@ export const useDeleteReview = () => {
 }
 
 export const useGetAllReview = () => {
-  const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
-  return { allReview }
+  const { data } = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
+  return { data }
 }
