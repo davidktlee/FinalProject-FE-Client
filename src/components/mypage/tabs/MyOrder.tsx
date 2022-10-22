@@ -10,12 +10,14 @@ const MyOrder = () => {
   const [isModal, setIsModal] = useState(false)
   const [reviewItem, setReviewItem] = useState<any>()
   const myPurchase = useRecoilValue(myPurchaseState)
-  const { getMyOrders } = useOrder()
+  const { getMyOrders, orderData } = useOrder()
   const { user } = useUser()
   const onModalHandler = () => {
     setIsModal(!isModal)
   }
-
+  console.log(user)
+  console.log(orderData)
+  console.log(myPurchase)
   const addReviewHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setReviewItem(
       myPurchase?.[0].productInfo.filter((item) => item.productDetailsId === Number(e.currentTarget.value))
@@ -25,15 +27,15 @@ const MyOrder = () => {
 
   useEffect(() => {
     if (!user || !myPurchase) return
-    
+
     getMyOrders({
       email: user.email,
       memberId: user.memberId,
       orderer: user.name,
       orderId: myPurchase ? myPurchase?.[0].orderInfo.orderId : 0
     })
-  }, [user,myPurchase])
-  
+  }, [user, myPurchase])
+
   return (
     <CardLayout title="주문 내역">
       <ReviewForm
@@ -63,7 +65,7 @@ const MyOrder = () => {
             </h4>
             <div className="flex justify-between items-center py-4 gap-1 xs:gap-4 border-b border-solid border-[#abc8df] text-xs xs:text-base w-full">
               {product.productInfo.map((pInfo) => (
-                <div className=' flex flex-row items-center justify-between w-full px-4 gap-4'>
+                <div className=" flex flex-row items-center justify-between w-full px-4 gap-4">
                   <div key={pInfo.productId}>
                     <img width={100} height={100} src={pInfo.imageUrl} alt="눈알" />
                   </div>
