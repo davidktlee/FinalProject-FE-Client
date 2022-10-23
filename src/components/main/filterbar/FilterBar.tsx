@@ -69,7 +69,6 @@ const FilterBar = () => {
     }
   }
   const handleFilter = (filter: FilterValue) => {
-    if (filter.periodState.length === 0) return
     requstFilter(filter)
   }
 
@@ -84,7 +83,7 @@ const FilterBar = () => {
   }
 
   return (
-    <div className="bg-[#fff] rounded-[10px] h-[1450px] w-[280px] px-[18px] py-[20px] shadow-basic">
+    <div className="bg-[#fff] rounded-[10px] h-[1510px] w-[280px] px-[18px] py-[20px] shadow-basic">
       <div className="filter-title">
         <div className="flex justify-between px-[15px] py-[20px]">
           <div className="font-extrabold text-[20px]">Filter</div>

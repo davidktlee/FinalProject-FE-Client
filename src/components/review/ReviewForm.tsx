@@ -6,6 +6,8 @@ import AWS from 'aws-sdk'
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 import { useResetRecoilState, useRecoilState } from 'recoil'
 import { selectFileState, updateReviewState } from '../../store/reviewImage'
+import { storage } from '../../firebase/firebaseConfig'
+import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
 interface ReviewFormProps {
   onClose: Function
@@ -38,7 +40,7 @@ const ReviewForm = ({
 }: ReviewFormProps) => {
   const [reviewText, setReviewText] = useState(reviewInfo?.replyComment)
   const [rating, setRating] = useState(reviewInfo ? reviewInfo.replyRating : 0)
-  const [selectedFile, setSelectedFile] = useState<File | ''>()
+  const [reviewImage, setReviewImage] = useState<any>(null)
   const imageRef = useRef<HTMLInputElement>(null)
   const updateReviewMutate = useUpdateReview()
   const addReviewMutate = useAddReview()
@@ -46,12 +48,7 @@ const ReviewForm = ({
   const [updateReview, setUpdateReview] = useRecoilState(updateReviewState)
   const [selectFile, setSelectFile] = useRecoilState(selectFileState)
   const resetSelectFile = useResetRecoilState(updateReviewState)
-
-  AWS.config.update({
-    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: VITE_SECRET_ACCESS_KEY,
-    region: 'ap-northeast-2'
-  })
+  const [downloadImage, setDownloadImage] = useState<string>()
 
   useEffect(() => {
     if (reviewInfo) {
@@ -59,12 +56,18 @@ const ReviewForm = ({
       setReviewText(reviewInfo.replyComment)
       setRating(reviewInfo.replyRating)
     }
-  }, [reviewInfo, selectedFile])
+    console.log(reviewItem)
+  }, [reviewInfo, reviewItem])
 
   if (!isModalOpen) return <></>
 
   const ratingChanged = (newRating: number) => {
-    oldReviewInfo && setOldReviewInfo({ ...oldReviewInfo, replyRating: newRating })
+    if (reviewHandleType === 'update') {
+      setUpdateReview({
+        ...updateReview,
+        replyRating: newRating
+      })
+    }
     setRating(newRating)
   }
 
@@ -73,61 +76,78 @@ const ReviewForm = ({
   }
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(() => e.target.files![0])
     const file = e.target.files?.[0]
     if (!file) return
-    setSelectFile(file)
     const reader = new FileReader()
     reader.onloadend = () => {
       console.log('이미지 읽기 완료')
-      setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
+      setReviewImage(reader.result)
+      if (reviewHandleType === 'update')
+        setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
     }
     reader.readAsDataURL(file as Blob)
   }
 
   const handleReviewSubmit = async () => {
-    console.log('이미지 등록 시도')
-    console.log(selectedFile)
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: 'iko-amazon-s3',
-        Key: reviewInfo
-          ? `review/${orderId}-${reviewInfo?.productDetailsId}`
-          : `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
-        Body: selectFile
+    if (!reviewImage && !updateReview.replyImageUrl) {
+      // console.log('이미지 없이 리뷰 등록 or 수정')
+      if (reviewHandleType === 'add') {
+        addReviewMutate({
+          orderId: orderId,
+          memberId: memberId,
+          productDetailsId: reviewItem[0]?.productDetailsId!,
+          rating: rating,
+          content: reviewText!,
+          replyImageUrl: ''
+        })
+        onClose()
+        return
+      } else {
+        updateReviewMutate({
+          replyId: oldReviewInfo?.replyId!,
+          rating: updateReview.replyRating || reviewInfo?.replyRating!,
+          content: reviewText!,
+          imageUrl: reviewInfo?.replyImageUrl!
+        })
+        onClose()
+        return
+      }
+    }
+    const imageRef = ref(
+      storage,
+      reviewInfo
+        ? `review/${orderId}-${reviewInfo?.productDetailsId}`
+        : `review/${orderId}-${reviewItem[0]?.productDetailsId}`
+    )
+    // console.log('이미지 있음, 등록, 수정', reviewImage)
+    uploadString(
+      imageRef,
+      reviewHandleType === 'add' ? reviewImage : updateReview.replyImageUrl,
+      'data_url'
+    ).then(async (snapshot) => {
+      console.log('Uploaded a data_url string!', snapshot.ref)
+      const downloadUrl = await getDownloadURL(snapshot.ref)
+      setDownloadImage(downloadUrl)
+      if (reviewHandleType === 'add') {
+        addReviewMutate({
+          orderId: orderId,
+          memberId: memberId,
+          productDetailsId: reviewItem[0].productDetailsId,
+          rating: rating,
+          content: reviewText!,
+          replyImageUrl: downloadUrl ? downloadUrl : ''
+        })
+      } else {
+        console.log('리뷰 수정!')
+        updateReviewMutate({
+          replyId: oldReviewInfo?.replyId!,
+          rating: updateReview.replyRating || reviewInfo?.replyRating!,
+          content: reviewText!,
+          imageUrl: downloadUrl ? downloadUrl : ''
+        })
       }
     })
-    const promise = upload.promise()
-
-    promise.then(
-      function (data) {
-        console.log('이미지 S3 업로드 성공', data)
-      },
-      function (err) {
-        console.error('이미지 S3 업로드 실패', err.message)
-      }
-    )
-
-    if (reviewHandleType === 'add') {
-      addReviewMutate({
-        orderId: orderId,
-        memberId: memberId,
-        productDetailsId: reviewItem[0].productDetailsId,
-        rating: rating,
-        content: reviewText!,
-        replyImageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
-      })
-    } else {
-      updateReviewMutate({
-        replyId: oldReviewInfo?.replyId!,
-        rating: oldReviewInfo?.replyRating!,
-        content: reviewText!,
-        imageUrl: reviewInfo
-          ? `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewInfo?.productDetailsId}`
-          : `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
-      })
-    }
-
+    setOldReviewInfo(undefined)
     setReviewText('')
     setRating(0)
     setSelectFile('')
@@ -154,8 +174,8 @@ const ReviewForm = ({
                         <img
                           width={120}
                           height={120}
-                          // '/assets/errorImage.png'
                           src={
+                            reviewImage ||
                             updateReview.replyImageUrl ||
                             reviewInfo?.replyImageUrl! ||
                             reviewItem[0]?.productImageUrl ||
@@ -216,8 +236,11 @@ const ReviewForm = ({
                           value={rating}
                         />
                         <div className="ml-2 text-[14px] text-lenssisGray">
-                          {((oldReviewInfo?.replyRating! || rating * 10) / 10) * 10}/
-                          {(oldReviewInfo?.replyRating! || rating * 10) % 10 === 0 ? 5 : 5}
+                          {((updateReview.replyRating || oldReviewInfo?.replyRating! || rating) * 10) / 10}/
+                          {((updateReview.replyRating || oldReviewInfo?.replyRating! || rating) * 10) % 10 ===
+                          0
+                            ? 5
+                            : 5}
                         </div>
                       </div>
                       {/* 모바일 버전 별점 */}
