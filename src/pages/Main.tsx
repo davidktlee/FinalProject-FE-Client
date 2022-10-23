@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Suspense, lazy } from 'react'
 import Event from '../components/event/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Banner from './../components/Banner'
@@ -89,8 +89,6 @@ const Main = () => {
     const token = getStoredToken()
     refreshToken(token)
   }, [])
-
-  useEffect(() => {}, [])
 
   return (
     <>
