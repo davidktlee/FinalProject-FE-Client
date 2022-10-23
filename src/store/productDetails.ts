@@ -4,7 +4,7 @@ export interface ProductDetailsType {
   period: number
   colorCode?: string
   graphicDiameter?: number
-  degree?: number
+  degree: number[]
   productId: number
 }
 
@@ -15,6 +15,6 @@ export const productDetailsState = atom<ProductDetailsType>({
     period: 0,
     colorCode: '',
     graphicDiameter: 0,
-    degree: 0
+    degree: []
   }
 })

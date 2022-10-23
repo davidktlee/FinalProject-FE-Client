@@ -250,6 +250,10 @@ const Payment = () => {
     }
   }, [user])
 
+  useEffect(() => {
+    console.log(selectedProduct)
+  }, [selectedProduct])
+
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
       <Portal>

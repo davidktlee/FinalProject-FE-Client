@@ -61,7 +61,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
           ? '/productDetails/byPeriodOption'
           : detailState.graphicDiameter == 0
           ? '/productDetails/byColorCodeOption'
-          : detailState.degree == 0
+          : detailState.degree?.length === 0
           ? '/productDetails/byGraphicOption'
           : '',
       params: {
@@ -98,7 +98,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       },
       data: {
         colorCode: detailState.colorCode,
-        degree: detailState.degree,
+        degree: detailState?.degree[0],
         graphicDiameter: detailState.graphicDiameter,
         period: detailState.period,
         productId: productId
@@ -126,56 +126,59 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
+    if (e.currentTarget)
+      if (name === 'period') {
+        selectOptionMutate({ ...detailState, [name]: Number(value) })
+        if (detailState.period === Number(value)) {
+          setDetailState({
+            ...detailState,
+            period: 0
+          })
+        } else {
+          setDetailState(() => ({
+            ...detailState,
+            period: Number(value)
+          }))
+        }
+        console.log(detailState.period)
+      } else if (name === 'color') {
+        console.log(value)
+        selectOptionMutate({ ...detailState, colorCode: value })
+        if (detailState.colorCode === value) {
+          setDetailState({
+            ...detailState,
+            colorCode: ''
+          })
+        } else {
+          setDetailState(() => ({
+            ...detailState,
+            colorCode: value
+          }))
+        }
+        console.log(detailState.colorCode)
+      } else if (name === 'graphicDiameter') {
+        selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
+        if (detailState.graphicDiameter === Number(value)) {
+          setDetailState({
+            ...detailState,
+            graphicDiameter: 0
+          })
+        } else {
+          setDetailState(() => ({
+            ...detailState,
+            graphicDiameter: Number(value)
+          }))
+        }
+        console.log(detailState.graphicDiameter)
+      } else if (name === 'degree') {
+        const degreeInfo = value.split(',').map(Number)
+        setDetailState({
+          ...detailState,
+          degree: degreeInfo
+        })
 
-    if (name === 'period') {
-      selectOptionMutate({ ...detailState, [name]: Number(value) })
-      if (detailState.period === Number(value)) {
-        setDetailState({
-          ...detailState,
-          period: 0
-        })
-      } else {
-        setDetailState(() => ({
-          ...detailState,
-          period: Number(value)
-        }))
+        setFinalOption(true)
       }
-      console.log(detailState.period)
-    } else if (name === 'color') {
-      console.log(value)
-      selectOptionMutate({ ...detailState, colorCode: value })
-      if (detailState.colorCode === value) {
-        setDetailState({
-          ...detailState,
-          colorCode: ''
-        })
-      } else {
-        setDetailState(() => ({
-          ...detailState,
-          colorCode: value
-        }))
-      }
-      console.log(detailState.colorCode)
-    } else if (name === 'graphicDiameter') {
-      selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
-      if (detailState.graphicDiameter === Number(value)) {
-        setDetailState({
-          ...detailState,
-          graphicDiameter: 0
-        })
-      } else {
-        setDetailState(() => ({
-          ...detailState,
-          graphicDiameter: Number(value)
-        }))
-      }
-      console.log(detailState.graphicDiameter)
-    } else if (name === 'degree') {
-      setDetailState({ ...detailState, degree: Number(value) })
-      postAllOptions(detailState)
-      setFinalOption(true)
-      console.log(detailState.degree)
-    }
   }
 
   const addCartHandler = () => {
@@ -198,15 +201,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     }
   }
 
-  const toComma = () => {
-    const addCommaPrice = productDetails?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    let addCommaDiscount: string | number = (
-      productDetails?.price! *
-      (1 - productDetails?.discount! / 100)
-    ).toFixed(0)
-    addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice! })
-  }
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/assets/noImage.jpeg'
   }
@@ -231,34 +225,38 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     )
 
     if (detailState.period === 0) setFinalOption(false)
-
+    // if (detailState.degree.length !== 0) {
+    //   postAllOptions(detailState)
+    // }
     console.log('옵션 선택 state', detailState)
+    console.log('degree', detailState.degree)
     console.log('도수까지 선택했을때/최종상품', finalProduct)
     console.log('옵션 순차적으로', productByOptions)
-
-    toComma()
   }, [productDetails?.price, productByOptions, detailState, finalProduct])
+
+  useEffect(() => {}, [])
 
   const buyHandler = () => {
     if (finalOption) {
-      // setSelectedProduct((prev) => )
+      // setSelectedProduct([{
+      //   color: finalProduct.color,
+      //   colorCode: detailState.colorCode!,
+      //   degree: detailState.degree!,
+      //   graphicDiameter: detailState.graphicDiameter!,
+      //   imageUrl: finalProduct.imageUrlList[0].imageUrl,
+      //   discount: finalProduct.discount,
+      //   name: finalProduct.productName,
+      //   period: detailState.period,
+      //   price: productDetails?.price!,
+      //   productDetailsId: finalProduct.productDetailsId,
+      //   stock:1,
+      //   pcs: finalProduct.pcs
+      // }])
       navigate('/payment')
     } else {
       alert('옵션을 선택해주세요.')
     }
   }
-  // color: finalProduct.color,
-  //         colorCode: detailState.colorCode,
-  //         degree: detailState.degree,
-  //         graphicDiameter: detailState.graphicDiameter,
-  //         imageUrl: finalProduct.imageUrlList[0],
-  //         discount: finalProduct.discount,
-  //         name: finalProduct.productName,
-  //         period: detailState.period,
-  //         price: productDetails?.price,
-  //         productDetailsId: finalProduct.productDetailsId,
-  //         // stock:
-  //         pcs: finalProduct.pcs
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
@@ -307,8 +305,15 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             </div>
             <div className="leading-relaxed text-[14px]">
               <div className="price flex">
-                <div className="text-xl font-bold text-black">{commaPrice.price}円</div>
-                <p className="ml-4 leading-7">{commaPrice.discount}円</p>
+                <div className="text-xl font-bold text-black">
+                  {Number(productDetails?.price).toLocaleString()}円
+                </div>
+                <p className="ml-4 leading-7">
+                  {Number(productDetails?.price! * (1 - productDetails?.discount! / 100))
+                    .toFixed(0)
+                    .toLocaleString()}
+                  円
+                </p>
               </div>
               <div className="divider h-[1px] bg-[#BCBCBC] my-2 xs-max:hidden"></div>
               <div className="point flex flex-initial my-2 ">
@@ -439,7 +444,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                 >
                   {!finalOption && <option>選択してください</option>}
                   {productByOptions.degreeAndStockList?.map((item: any, index) => (
-                    <option key={index + 1} value={item?.degree}>
+                    <option key={index + 1} value={[item.degree, item.stock]}>
                       {item.degree} 재고: {item.stock}
                     </option>
                   ))}
