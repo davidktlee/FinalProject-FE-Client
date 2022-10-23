@@ -225,37 +225,38 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     )
 
     if (detailState.period === 0) setFinalOption(false)
-    // if (detailState.degree.length !== 0) {
-    //   postAllOptions(detailState)
-    // }
+    // 도수 선택시 detailState 값이 변경되지 않는문제 -> useEffect로 감시
+    if (finalProduct.productName === '' && detailState.graphicDiameter) postAllOptions(detailState)
+
     console.log('옵션 선택 state', detailState)
     console.log('degree', detailState.degree)
     console.log('도수까지 선택했을때/최종상품', finalProduct)
     console.log('옵션 순차적으로', productByOptions)
   }, [productDetails?.price, productByOptions, detailState, finalProduct])
 
-  useEffect(() => {}, [])
-
   const buyHandler = () => {
     if (finalOption) {
-      // setSelectedProduct([{
-      //   color: finalProduct.color,
-      //   colorCode: detailState.colorCode!,
-      //   degree: detailState.degree!,
-      //   graphicDiameter: detailState.graphicDiameter!,
-      //   imageUrl: finalProduct.imageUrlList[0].imageUrl,
-      //   discount: finalProduct.discount,
-      //   name: finalProduct.productName,
-      //   period: detailState.period,
-      //   price: productDetails?.price!,
-      //   productDetailsId: finalProduct.productDetailsId,
-      //   stock:1,
-      //   pcs: finalProduct.pcs
-      // }])
+      setSelectedProduct([
+        {
+          color: finalProduct.color,
+          colorCode: detailState.colorCode!,
+          degree: detailState.degree[0],
+          graphicDiameter: detailState.graphicDiameter!,
+          imageUrl: finalProduct.imageUrlList[0].imageUrl,
+          discount: finalProduct.discount,
+          name: finalProduct.productName,
+          period: detailState.period,
+          price: productDetails?.price!,
+          productDetailsId: finalProduct.productDetailsId,
+          stock: detailState.degree[0],
+          pcs: finalProduct.pcs
+        }
+      ])
       navigate('/payment')
     } else {
       alert('옵션을 선택해주세요.')
     }
+    navigate('/payment')
   }
 
   return (
