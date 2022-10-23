@@ -62,7 +62,12 @@ const ReviewForm = ({
   if (!isModalOpen) return <></>
 
   const ratingChanged = (newRating: number) => {
-    oldReviewInfo && setOldReviewInfo({ ...oldReviewInfo, replyRating: newRating })
+    if (reviewHandleType === 'update') {
+      setUpdateReview({
+        ...updateReview,
+        replyRating: newRating
+      })
+    }
     setRating(newRating)
   }
 
@@ -77,19 +82,49 @@ const ReviewForm = ({
     reader.onloadend = () => {
       console.log('이미지 읽기 완료')
       setReviewImage(reader.result)
-      // setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
+      if (reviewHandleType === 'update')
+        setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
     }
     reader.readAsDataURL(file as Blob)
   }
 
   const handleReviewSubmit = async () => {
+    if (!reviewImage && !updateReview.replyImageUrl) {
+      // console.log('이미지 없이 리뷰 등록 or 수정')
+      if (reviewHandleType === 'add') {
+        addReviewMutate({
+          orderId: orderId,
+          memberId: memberId,
+          productDetailsId: reviewItem[0]?.productDetailsId!,
+          rating: rating,
+          content: reviewText!,
+          replyImageUrl: ''
+        })
+        onClose()
+        return
+      } else {
+        updateReviewMutate({
+          replyId: oldReviewInfo?.replyId!,
+          rating: updateReview.replyRating || reviewInfo?.replyRating!,
+          content: reviewText!,
+          imageUrl: reviewInfo?.replyImageUrl!
+        })
+        onClose()
+        return
+      }
+    }
     const imageRef = ref(
       storage,
       reviewInfo
         ? `review/${orderId}-${reviewInfo?.productDetailsId}`
         : `review/${orderId}-${reviewItem[0]?.productDetailsId}`
     )
-    uploadString(imageRef, reviewImage, 'data_url').then(async (snapshot) => {
+    // console.log('이미지 있음, 등록, 수정', reviewImage)
+    uploadString(
+      imageRef,
+      reviewHandleType === 'add' ? reviewImage : updateReview.replyImageUrl,
+      'data_url'
+    ).then(async (snapshot) => {
       console.log('Uploaded a data_url string!', snapshot.ref)
       const downloadUrl = await getDownloadURL(snapshot.ref)
       setDownloadImage(downloadUrl)
@@ -106,62 +141,19 @@ const ReviewForm = ({
         console.log('리뷰 수정!')
         updateReviewMutate({
           replyId: oldReviewInfo?.replyId!,
-          rating: oldReviewInfo?.replyRating!,
+          rating: updateReview.replyRating || reviewInfo?.replyRating!,
           content: reviewText!,
-          imageUrl: downloadUrl ? downloadUrl : oldReviewInfo?.replyImageUrl!
+          imageUrl: downloadUrl ? downloadUrl : ''
         })
       }
     })
-
+    setOldReviewInfo(undefined)
     setReviewText('')
     setRating(0)
     setSelectFile('')
     resetSelectFile()
     onClose()
-    // const upload = new AWS.S3.ManagedUpload({
-    //   params: {
-    //     Bucket: 'iko-amazon-s3',
-    //     Key: reviewInfo
-    //       ? `review/${orderId}-${reviewInfo?.productDetailsId}`
-    //       : `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
-    //     Body: selectFile
-    //   }
-    // })
-    // const promise = upload.promise()
-
-    // promise.then(
-    //   function (data) {
-    //     console.log('이미지 S3 업로드 성공', data)
-    //   },
-    //   function (err) {
-    //     console.error('이미지 S3 업로드 실패', err.message)
-    //   }
-    // )
-
-    // if (reviewHandleType === 'add') {
-    //   addReviewMutate({
-    //     orderId: orderId,
-    //     memberId: memberId,
-    //     productDetailsId: reviewItem[0].productDetailsId,
-    //     rating: rating,
-    //     content: reviewText!,
-    //     replyImageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
-    //   })
-    // } else {
-    //   updateReviewMutate({
-    //     replyId: oldReviewInfo?.replyId!,
-    //     rating: oldReviewInfo?.replyRating!,
-    //     content: reviewText!,
-    //     imageUrl: reviewInfo
-    //       ? `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewInfo?.productDetailsId}`
-    //       : `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
-    //   })
-    // }
   }
-  // updateReview.replyImageUrl ||
-  // reviewInfo?.replyImageUrl! ||
-  // reviewItem[0]?.productImageUrl ||
-  // '/assets/errorImage.png'
 
   return (
     <>
@@ -182,10 +174,10 @@ const ReviewForm = ({
                         <img
                           width={120}
                           height={120}
-                          // '/assets/errorImage.png'
                           src={
                             reviewImage ||
-                            reviewInfo?.replyImageUrl ||
+                            updateReview.replyImageUrl ||
+                            reviewInfo?.replyImageUrl! ||
                             reviewItem[0]?.productImageUrl ||
                             '/assets/errorImage.png'
                           }
@@ -243,8 +235,11 @@ const ReviewForm = ({
                           value={rating}
                         />
                         <div className="ml-2 text-[14px] text-lenssisGray">
-                          {((oldReviewInfo?.replyRating! || rating * 10) / 10) * 10}/
-                          {(oldReviewInfo?.replyRating! || rating * 10) % 10 === 0 ? 5 : 5}
+                          {((updateReview.replyRating || oldReviewInfo?.replyRating! || rating) * 10) / 10}/
+                          {((updateReview.replyRating || oldReviewInfo?.replyRating! || rating) * 10) % 10 ===
+                          0
+                            ? 5
+                            : 5}
                         </div>
                       </div>
                       {/* 모바일 버전 별점 */}

@@ -159,7 +159,7 @@ export const useAddReview = () => {
       console.log('리뷰 등록 실패')
       fireToast({
         id: 'addReviewFailed',
-        message: '리뷰 등록에 실패하였습니다.',
+        message: '리뷰 등록에 실패하였습니다. 이미 리뷰를 등록하셨는지 확인해주세요.',
         type: 'failed',
         position: 'top',
         timer: 2000
@@ -205,7 +205,7 @@ export const useUpdateReview = () => {
           position: 'top',
           timer: 2000
         })
-        queryClient.invalidateQueries(queryKeys.review)
+        queryClient.invalidateQueries(queryKeys.myReview)
       }
     }
   )
