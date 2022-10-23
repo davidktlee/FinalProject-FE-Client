@@ -435,8 +435,9 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                   className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[200px] h-[30px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
                   disabled={optionComplete}
                   onChange={(e) => optionHandler(e)}
+                  value={!finalOption ? '選択してください' : ''}
                 >
-                  <option>選択してください</option>
+                  {!finalOption && <option>選択してください</option>}
                   {productByOptions.degreeAndStockList?.map((item: any, index) => (
                     <option key={index + 1} value={item?.degree}>
                       {item.degree} 재고: {item.stock}
