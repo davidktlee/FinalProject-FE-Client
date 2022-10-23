@@ -161,6 +161,7 @@ const ReviewForm = ({
                             reviewItem[0]?.productImageUrl ||
                             '/assets/errorImage.png'
                           }
+                          alt="error-image"
                         />
                         {!updateReview.replyImageUrl ? (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">

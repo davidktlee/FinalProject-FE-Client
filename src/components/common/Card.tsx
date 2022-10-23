@@ -85,7 +85,7 @@ const Card = ({
             src={viewImg && viewImg}
             onError={(e) => handleImgError(e)}
             alt="プロダクトイメージ"
-            className=" bg-origin-content cursor-pointer rounded-md w-[160px] h-[160px] md:w-full md:h-[255px] mx-auto"
+            className=" bg-origin-content cursor-pointer rounded-md w-[160px] h-[160px] md:w-[260px] md:h-[255px] mx-auto"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">

@@ -37,7 +37,7 @@ function EventDetail() {
         ) : (
           detailEvent &&
           detailEvent.map((item: EventDetailResponseType) => (
-            <div className="w-[100%]">
+            <div>
               <div className="flex items-center py-4 border-t-[1px] border-solid">
                 <div className="font-[500] ml-10 mr-28">제목</div>
                 <div className="font-[500]">{item.eventTitle}</div>

@@ -229,6 +229,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
           onClick={() => setModalState(false)}
           onError={(e) => handleImgError(e)}
           src={'/assets/close.png'}
+          alt="close-image"
         />
       )}
       <div className="container pt-44 pb-10 mx-auto ">
@@ -250,6 +251,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                   onError={(e) => handleImgError(e)}
                   className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
                   src={image}
+                  alt="sub-image"
                 />
               ))}
             </div>

@@ -95,7 +95,7 @@ const Banner = () => {
                           : 'https://user-images.githubusercontent.com/90392240/192770270-0d01350b-1adb-4b08-84c3-069bf9a8b4a0.png'
                       }
                       alt="banner-image"
-                      className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
+                      className=" mx-auto w-[1180px] h-[500px] md:h-auto object-fit md:object-cover "
                     />
                   </SwiperSlide>
                 </div>
@@ -108,7 +108,7 @@ const Banner = () => {
                     <img
                       src={bannerList.length !== 1 ? img : 'assets/MobileBanner.png'}
                       alt="banner-image"
-                      className=" w-full h-[500px] md:h-auto object-fit md:object-cover "
+                      className=" w-[400px] h-[500px] md:h-auto object-fit md:object-cover "
                     />
                   </SwiperSlide>
                 </div>
@@ -142,9 +142,3 @@ const Banner = () => {
 }
 
 export default Banner
-
-{
-  /* {imgs.map((img: string, index: number) => (
-      <SwiperSlide key={`${img}-${index}`}>{img}</SwiperSlide>
-    ))} */
-}

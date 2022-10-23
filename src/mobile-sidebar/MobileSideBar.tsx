@@ -111,7 +111,7 @@ const MobileSideBar = () => {
               to="/notice"
               className="flex flex-col items-center font-bold gap-[5px]"
             >
-              <img className="w-[30px] h-[30px]" src="/assets/ringbell.png" alt="" />
+              <img className="w-[30px] h-[30px]" src="/assets/ringbell.png" alt="ringbell" />
               <p className="h-6 text-sm">公知事項</p>
             </Link>
           </li>
@@ -121,7 +121,7 @@ const MobileSideBar = () => {
               to="/favorite"
               className="flex flex-col items-center font-bold gap-[5px]"
             >
-              <img className="w-[30px] h-[30px]" src="/assets/heart.png" alt="" />
+              <img className="w-[30px] h-[30px]" src="/assets/heart.png" alt="heart" />
               <p className="h-6 text-sm">お気に入り</p>
             </Link>
           </li>

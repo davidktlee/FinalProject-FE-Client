@@ -23,11 +23,11 @@ const MainEvent = () => {
           eventList?.data?.eventMainList.slice(0, 4).map((event: InEventMainList) => (
             <div
               key={event.eventId}
-              className="relative w-full h-[330px] xs-max:h-[215px] rounded-xl flex flex-col items-start my-2 shadow-basic hover:cursor-pointer"
+              className="relative w-[518px] h-[330px] xs-max:h-[215px] rounded-xl flex flex-col items-start my-2 shadow-basic hover:cursor-pointer"
               onClick={() => navigate('/event')}
             >
               <img
-                className="w-full h-[145px] md:h-[226px] rounded-t-xl object-fit md:object-cover overflow-hidden"
+                className="w-[518px] h-[145px] md:h-[226px] rounded-t-xl object-fit md:object-cover overflow-hidden"
                 src={event.imageUrl}
                 alt="event-image"
               />

@@ -138,7 +138,7 @@ const Main = () => {
           >
             <img
               src="https://user-images.githubusercontent.com/90392240/193073587-58b90f5a-e06c-4f2c-baec-87351fbf4b96.png"
-              alt=""
+              alt="color-test-banner"
               className="w-full h-auto object-contain"
             />
           </div>
@@ -170,7 +170,7 @@ const Main = () => {
       </div>
       <div className="xs-max:hidden flex justify-end mt-[-60px] mb-[-70px] mr-2">
         <span className="hover:cursor-pointer">
-          <img className="inline" src={'/assets/toTopBtn.png'} onClick={toTopHandler} />
+          <img className="inline" src={'/assets/toTopBtn.png'} onClick={toTopHandler} alt="to-top-btn" />
         </span>
       </div>
       <Footer />
