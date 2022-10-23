@@ -6,6 +6,8 @@ import AWS from 'aws-sdk'
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 import { useResetRecoilState, useRecoilState } from 'recoil'
 import { selectFileState, updateReviewState } from '../../store/reviewImage'
+import { storage } from '../../firebase/firebaseConfig'
+import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
 interface ReviewFormProps {
   onClose: Function
@@ -38,7 +40,7 @@ const ReviewForm = ({
 }: ReviewFormProps) => {
   const [reviewText, setReviewText] = useState(reviewInfo?.replyComment)
   const [rating, setRating] = useState(reviewInfo ? reviewInfo.replyRating : 0)
-  const [selectedFile, setSelectedFile] = useState<File | ''>()
+  const [reviewImage, setReviewImage] = useState<any>(null)
   const imageRef = useRef<HTMLInputElement>(null)
   const updateReviewMutate = useUpdateReview()
   const addReviewMutate = useAddReview()
@@ -46,12 +48,7 @@ const ReviewForm = ({
   const [updateReview, setUpdateReview] = useRecoilState(updateReviewState)
   const [selectFile, setSelectFile] = useRecoilState(selectFileState)
   const resetSelectFile = useResetRecoilState(updateReviewState)
-
-  AWS.config.update({
-    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: VITE_SECRET_ACCESS_KEY,
-    region: 'ap-northeast-2'
-  })
+  const [downloadImage, setDownloadImage] = useState<string>()
 
   useEffect(() => {
     if (reviewInfo) {
@@ -59,7 +56,8 @@ const ReviewForm = ({
       setReviewText(reviewInfo.replyComment)
       setRating(reviewInfo.replyRating)
     }
-  }, [reviewInfo, selectedFile])
+    console.log(reviewItem)
+  }, [reviewInfo, reviewItem])
 
   if (!isModalOpen) return <></>
 
@@ -73,67 +71,97 @@ const ReviewForm = ({
   }
 
   const handleImageInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(() => e.target.files![0])
     const file = e.target.files?.[0]
     if (!file) return
-    setSelectFile(file)
     const reader = new FileReader()
     reader.onloadend = () => {
       console.log('이미지 읽기 완료')
-      setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
+      setReviewImage(reader.result)
+      // setUpdateReview({ ...updateReview, replyImageUrl: reader.result as string })
     }
     reader.readAsDataURL(file as Blob)
   }
 
   const handleReviewSubmit = async () => {
-    console.log('이미지 등록 시도')
-    console.log(selectedFile)
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: 'iko-amazon-s3',
-        Key: reviewInfo
-          ? `review/${orderId}-${reviewInfo?.productDetailsId}`
-          : `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
-        Body: selectFile
+    const imageRef = ref(
+      storage,
+      reviewInfo
+        ? `review/${orderId}-${reviewInfo?.productDetailsId}`
+        : `review/${orderId}-${reviewItem[0]?.productDetailsId}`
+    )
+    uploadString(imageRef, reviewImage, 'data_url').then(async (snapshot) => {
+      console.log('Uploaded a data_url string!', snapshot.ref)
+      const downloadUrl = await getDownloadURL(snapshot.ref)
+      setDownloadImage(downloadUrl)
+      if (reviewHandleType === 'add') {
+        addReviewMutate({
+          orderId: orderId,
+          memberId: memberId,
+          productDetailsId: reviewItem[0].productDetailsId,
+          rating: rating,
+          content: reviewText!,
+          replyImageUrl: downloadUrl ? downloadUrl : ''
+        })
+      } else {
+        console.log('리뷰 수정!')
+        updateReviewMutate({
+          replyId: oldReviewInfo?.replyId!,
+          rating: oldReviewInfo?.replyRating!,
+          content: reviewText!,
+          imageUrl: downloadUrl ? downloadUrl : oldReviewInfo?.replyImageUrl!
+        })
       }
     })
-    const promise = upload.promise()
-
-    promise.then(
-      function (data) {
-        console.log('이미지 S3 업로드 성공', data)
-      },
-      function (err) {
-        console.error('이미지 S3 업로드 실패', err.message)
-      }
-    )
-
-    if (reviewHandleType === 'add') {
-      addReviewMutate({
-        orderId: orderId,
-        memberId: memberId,
-        productDetailsId: reviewItem[0].productDetailsId,
-        rating: rating,
-        content: reviewText!,
-        replyImageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
-      })
-    } else {
-      updateReviewMutate({
-        replyId: oldReviewInfo?.replyId!,
-        rating: oldReviewInfo?.replyRating!,
-        content: reviewText!,
-        imageUrl: reviewInfo
-          ? `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewInfo?.productDetailsId}`
-          : `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
-      })
-    }
 
     setReviewText('')
     setRating(0)
     setSelectFile('')
     resetSelectFile()
     onClose()
+    // const upload = new AWS.S3.ManagedUpload({
+    //   params: {
+    //     Bucket: 'iko-amazon-s3',
+    //     Key: reviewInfo
+    //       ? `review/${orderId}-${reviewInfo?.productDetailsId}`
+    //       : `review/${orderId}-${reviewItem[0]?.productDetailsId}`,
+    //     Body: selectFile
+    //   }
+    // })
+    // const promise = upload.promise()
+
+    // promise.then(
+    //   function (data) {
+    //     console.log('이미지 S3 업로드 성공', data)
+    //   },
+    //   function (err) {
+    //     console.error('이미지 S3 업로드 실패', err.message)
+    //   }
+    // )
+
+    // if (reviewHandleType === 'add') {
+    //   addReviewMutate({
+    //     orderId: orderId,
+    //     memberId: memberId,
+    //     productDetailsId: reviewItem[0].productDetailsId,
+    //     rating: rating,
+    //     content: reviewText!,
+    //     replyImageUrl: `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
+    //   })
+    // } else {
+    //   updateReviewMutate({
+    //     replyId: oldReviewInfo?.replyId!,
+    //     rating: oldReviewInfo?.replyRating!,
+    //     content: reviewText!,
+    //     imageUrl: reviewInfo
+    //       ? `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewInfo?.productDetailsId}`
+    //       : `https://iko-amazon-s3.s3.ap-northeast-2.amazonaws.com/review/${orderId}-${reviewItem[0]?.productDetailsId}`
+    //   })
+    // }
   }
+  // updateReview.replyImageUrl ||
+  // reviewInfo?.replyImageUrl! ||
+  // reviewItem[0]?.productImageUrl ||
+  // '/assets/errorImage.png'
 
   return (
     <>
@@ -156,8 +184,8 @@ const ReviewForm = ({
                           height={120}
                           // '/assets/errorImage.png'
                           src={
-                            updateReview.replyImageUrl ||
-                            reviewInfo?.replyImageUrl! ||
+                            reviewImage ||
+                            reviewInfo?.replyImageUrl ||
                             reviewItem[0]?.productImageUrl ||
                             '/assets/errorImage.png'
                           }
