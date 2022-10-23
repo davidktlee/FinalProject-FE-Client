@@ -456,7 +456,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
               <div className="flex">
                 <p className="w-[130px] xs-max:w-[70px] lg:w-[160px]"></p>
               </div>
-              {finalOption && <OptionAndCount onClose={setFinalOption} />}
+              {finalOption && <OptionAndCount onClose={setFinalOption}/>}
             </div>
             <div className="flex justify-between py-2">
               <span className="leading-10 text-black text-[16px] font-bold">총 상품 금액</span>

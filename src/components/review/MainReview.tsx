@@ -31,7 +31,6 @@ const MainReview = () => {
           <MainReviewCard review={review} />
         ))}
       </div>
-      {/* 모바일 */}
       <div className="xs:hidden  flex flex-wrap justify-center gap-[8px] max-w-[1280px] mx-auto">
         {allReview?.map((review: reviewItemType) => (
           <MobileReviewCard review={review} />

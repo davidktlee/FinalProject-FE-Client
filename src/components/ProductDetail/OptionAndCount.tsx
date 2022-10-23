@@ -1,8 +1,8 @@
 import React from 'react'
 import { HiMinus, HiOutlineX, HiPlus, HiX } from 'react-icons/hi'
 import { useRecoilState, useResetRecoilState } from 'recoil'
-import { finalProductState } from '../../store/productByOptions'
-import { productDetailsState } from '../../store/productDetails'
+import { FinalProduct, finalProductState } from '../../store/productByOptions'
+import { productDetailsState, ProductDetailsType } from '../../store/productDetails'
 
 interface Props {
   onClose: React.Dispatch<React.SetStateAction<boolean>>
@@ -10,7 +10,8 @@ interface Props {
 
 const OptionAndCount = ({ onClose }: Props) => {
   const resetOptions = useResetRecoilState(productDetailsState)
-  const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
+  const [finalProduct, setFinalProduct] = useRecoilState<FinalProduct>(finalProductState)
+  const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
 
   const closeHanlder = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     onClose(false)
@@ -28,7 +29,10 @@ const OptionAndCount = ({ onClose }: Props) => {
   return (
     <div className="w-full h-[60px] text-[12px] text-black px-[7px] py-[6px] border-solid border-[#dadada] border-[1px] rounded-[5px] ">
       <div className="py-[2px] pb-[4px] flex justify-between">
-        <span>사용기간: 원데이 / 직경: 13.5mm / 그레이 / 도수: -6.00</span>
+        <span className="text-[10px] lg:text-[12px]">
+          사용기간: {detailState.period === 1 ? '원데이' : '먼슬리'} / 직경: {detailState.graphicDiameter} /{' '}
+          {finalProduct.color} / 도수: {detailState.degree[0]}{' '}
+        </span>
         <button
           onClick={(e) => closeHanlder(e)}
           className="border-solid border-[1px] border-[#dadada] rounded-[5px] p-[2px]"
