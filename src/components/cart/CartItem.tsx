@@ -32,6 +32,10 @@ const CartItem = ({
     setIsChecked((prev) => !prev)
   }, [])
 
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/assets/errorImage.png'
+  }
+
   const productDeleteHandler = (cId: number) => {
     // 해당 카트 상품 삭제
 
@@ -73,7 +77,12 @@ const CartItem = ({
         onClick={onClick}
         bgColor="bg-lenssisDark"
       />
-      <img className="w-[90px] xs:w-[120px] h-[100px] xs:h-[120px]" src={item.imageUrl} alt="" />
+      <img
+        className="w-[90px] xs:w-[120px] h-[100px] xs:h-[120px]"
+        onError={(e) => handleImgError(e)}
+        src={item.imageUrl}
+        alt=""
+      />
       <div className="ml-[6px] xs:ml-4 grow flex flex-col">
         <div className="mb-2 text-xs xs:text-sm">
           {item.name} - {item.color}

@@ -18,7 +18,6 @@ export interface reviewItemType {
 
 const MainReview = () => {
   const allReview = useGetAllReview()
-  console.log(allReview)
   return (
     <div className=" bg-white rounded-[5px]">
       <div className="flex justify-center items-center text-[24px]">
@@ -32,7 +31,6 @@ const MainReview = () => {
           <MainReviewCard review={review} />
         ))}
       </div>
-      {/* 모바일 */}
       <div className="xs:hidden  flex flex-wrap justify-center gap-[8px] max-w-[1280px] mx-auto">
         {allReview?.map((review: reviewItemType) => (
           <MobileReviewCard review={review} />

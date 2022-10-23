@@ -4,7 +4,7 @@ const Skeleton = () => {
   return (
     <div className="container pt-44 pb-10 mx-auto ">
       <div className="max-w-[1180px] lg:w-full mx-auto flex flex-wrap drop-shadow-basic rounded-[10px] p-8 xs-max:w-[95%] xs-max:px-[18px] bg-white">
-        <div className=" animate-pulse md:flex-row lg:flex-col lg:w-1/2 w-full lg:h-auto flex flex-col gap-4">
+        <div className=" animate-pulse md:flex-row lg:flex-col lg:w-1/2 w-full lg:h-auto flex flex-col gap-6">
           <div className="xs:hidden text-center text-[20px] text-lenssisDark font-bold"></div>
           <div className="w-[465px] h-[460px] bg-lenssisStroke mx-auto"></div>
           <div className="overflow-auto flex xs:justify-between sm:justify-center md:justify-between lg:justify-between gap-3 md:mx-auto md:flex-col lg:gap-[14px] lg:flex-row xl:w-[460px] xl:mx-auto xl:gap-[14.2px] xs-max:w-[320px] xs-max:mx-auto xs-max:gap-2">
@@ -14,9 +14,9 @@ const Skeleton = () => {
             <div className="bg-lenssisStroke rounded h-[105px] xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"></div>
           </div>
         </div>
-        <div className=" animate-pulse lg:w-1/2 w-full lg:pl-10 lg:py-2 mt-6 lg:mt-0">
+        <div className=" animate-pulse lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className=" bg-lenssisStroke mb-2 w-[75px] h-[15px] rounded-md"></h2>
-          <div className="mb-2 flex justify-between">
+          <div className="mb-4 flex justify-between">
             <span className="bg-lenssisStroke w-[200px] rounded-md"></span>
             <div className="button bg-lenssisStroke w-[35px] h-[35px] rounded-full"></div>
           </div>
@@ -37,15 +37,15 @@ const Skeleton = () => {
             </div>
             <div className="divider h-[1px] animate-pulse bg-lenssisStroke mt-2 mb-4 sm:hidden"></div>
             <div className="divider"></div>
-            <div className="flex gap-20 my-2">
+            <div className="flex gap-20 my-4">
               <div className="bg-lenssisStroke rounded-md w-[70px] h-[30px] xs-max:w-[50px] lg:w-[90px]"></div>
               <div className="bg-lenssisStroke rounded-md w-[200px] h-[30px]"></div>
             </div>
-            <div className="flex gap-20 my-2">
+            <div className="flex gap-20 my-4">
               <div className="bg-lenssisStroke rounded-md w-[70px] h-[30px] xs-max:w-[50px] lg:w-[90px]"></div>
               <div className="bg-lenssisStroke rounded-md w-[200px] h-[30px]"></div>
             </div>
-            <div className="flex gap-20 my-2">
+            <div className="flex gap-20 my-4">
               <div className="bg-lenssisStroke rounded-md w-[70px] h-[30px] xs-max:w-[50px] lg:w-[90px]"></div>
               <div className="bg-lenssisStroke rounded-md w-[200px] h-[30px]"></div>
             </div>
@@ -83,7 +83,7 @@ const Skeleton = () => {
             <span className="title-font text-[25px] text-black font-bold"></span>
           </div>
           <div className="divder h-[2px] bg-lenssisStroke my-2"></div>
-          <div className="flex gap-4 xs-max:flex-col py-2">
+          <div className="mt-6 flex gap-4 xs-max:flex-col py-2">
             <button className="w-1/2 cursor-pointer h-[45px] bg-lenssisStroke text-black text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded xs-max:w-full"></button>
             <button className="w-1/2 cursor-pointer h-[45px] bg-lenssisStroke text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full"></button>
           </div>

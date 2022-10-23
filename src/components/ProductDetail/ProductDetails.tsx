@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import ProductBanner from './ProductBanner'
 import ProductRecommend from './ProductRecommend'
 import ProductTabs from './ProductTabs'

@@ -123,7 +123,7 @@ const Cart = () => {
           <h3 className="text-[20px] font-bold text-lenssisDark pb-2 border-b border-solid border-lenssisGray">
             이런 상품도 있어요!
           </h3>
-          <div className="flex items-center gap-4 mt-12">
+          <div className="flex items-start gap-4 mt-12">
             {data &&
               data.map((item: any, idx: number) => (
                 <Card

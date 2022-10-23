@@ -19,7 +19,7 @@ const RevieItems = ({ item, productDetails }: any) => {
   }, [productDetails])
 
   return (
-    <section className="text-gray-600 body-font">
+    <section key={item.content} className="text-gray-600 body-font">
       <div className="container mt-2 mx-auto block">
         {reviewItems.length > 0 ? (
           <div
