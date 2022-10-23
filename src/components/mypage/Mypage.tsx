@@ -22,7 +22,8 @@ const Mypage = () => {
   }, [])
 
   useEffect(() => {
-    if (!user) {
+    const token = getStoredToken()
+    if (!token) {
       navigate('/signin')
     }
   }, [])

@@ -112,7 +112,7 @@ const getAllReviewItems = async () => {
       size: 10
     }
   })
-  return data?.data?.data
+  return data
 }
 
 export const useReview = () => {
@@ -121,10 +121,10 @@ export const useReview = () => {
 }
 
 export const useGetAllreview = (productId: number) => {
-  const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
+  const { data } = useQuery(queryKeys.allReview, () => getAllReview(productId), {
     enabled: !!productId
   })
-  return { allReview }
+  return data?.data?.data
 }
 
 export const useGetReviewByName = () => {
@@ -159,7 +159,7 @@ export const useAddReview = () => {
       console.log('리뷰 등록 실패')
       fireToast({
         id: 'addReviewFailed',
-        message: '리뷰 등록에 실패하였습니다.',
+        message: '리뷰 등록에 실패하였습니다. 이미 리뷰를 등록하셨는지 확인해주세요.',
         type: 'failed',
         position: 'top',
         timer: 2000
@@ -205,7 +205,7 @@ export const useUpdateReview = () => {
           position: 'top',
           timer: 2000
         })
-        queryClient.invalidateQueries(queryKeys.review)
+        queryClient.invalidateQueries(queryKeys.myReview)
       }
     }
   )
@@ -242,6 +242,6 @@ export const useDeleteReview = () => {
 }
 
 export const useGetAllReview = () => {
-  const { data: allReview } = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
-  return { allReview }
+  const { data } = useQuery(queryKeys.allReview, () => getAllReviewItems(), {})
+  return data?.data?.data
 }

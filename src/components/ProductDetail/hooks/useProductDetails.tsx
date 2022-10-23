@@ -15,9 +15,9 @@ export const getProductDetails = async (memberId: number, productId: number) => 
       productId,
       memberId: memberId ? memberId : 0
     },
-    headers: token ? getJWTToken(token) : undefined
+    headers: memberId ? getJWTToken(token) : undefined
   })
-  return data.data
+  return data?.data
 }
 
 // 제품 상세 사용기간 선택 API

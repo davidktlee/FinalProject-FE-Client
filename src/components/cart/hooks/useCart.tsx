@@ -51,7 +51,7 @@ const addCart = async (id: number) => {
 export const useAddCart = () => {
   const { fireToast } = useToast()
   const { data, mutate: addCartMutate } = useMutation(addCart, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       console.log(data)
       fireToast({
         id: 'addCartCompleted',

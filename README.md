@@ -36,6 +36,23 @@
 
 ## 🛠 사용기술
 
+<img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=React-Query&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Recoil-af42dc?style=for-the-badge&logo=Recoil&logoColor=white"/>
+<img src="https://img.shields.io/badge/TAILWIND CSS-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=white"/>
+
+## backend
+
+<img src="https://img.shields.io/badge/JAVA-2e60a0?style=for-the-badge&logo=JAVA&logoColor=white"/>
+<img src="https://img.shields.io/badge/SPRING BOOT-6DB33F?style=for-the-badge&logo=SPRINGBOOT&logoColor=white"/>
+<img src="https://img.shields.io/badge/MYSQL-4479A1?style=for-the-badge&logo=MYSQL&logoColor=white"/>
+<img src="https://img.shields.io/badge/DOCKER-2496ED?style=for-the-badge&logo=DOCKER&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"/>
+
+## 📅 기간
+
+**2022.9.2 ~ 2022.10.14**
+
+## 커밋 컨벤션
+
 ### Front-End
 
 <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=React-Query&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Recoil-af42dc?style=for-the-badge&logo=Recoil&logoColor=white"/>

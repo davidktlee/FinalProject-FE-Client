@@ -21,6 +21,7 @@ import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { useNavigate } from 'react-router-dom'
 import { graphicDiameter } from '../../constants/filterData'
+import Portal from '../common/ui/Portal'
 
 const domainArray = ['google.com', 'naver.com', 'daum.net']
 
@@ -114,6 +115,7 @@ const Payment = () => {
       setCurrentPaymentMethod(value)
     }
   }
+  console.log(selectedProduct)
 
   const phoneFormValueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -173,7 +175,7 @@ const Payment = () => {
   }, [])
 
   const paymentHandler = async () => {
-    if (!isChecked) {
+    if (!isChecked && user?.memberId === 0) {
       alert('개인정보 수집 이용에 동의해주세요')
       return
     }
@@ -186,7 +188,7 @@ const Payment = () => {
       address: newFormValue.address || formValue.address,
       couponId: 0,
       detailAddress: newFormValue.detailAddress || formValue.detailAddress,
-      email: formValue.email,
+      email: user ? user.email : formValue.email,
       memberId: user ? user.memberId : 0,
       method: paymentMethodNumber,
       orderer: formValue.orderer,
@@ -201,17 +203,16 @@ const Payment = () => {
     try {
       await axiosInstance.post('/order/add', obj, { headers: getJWTToken(token) })
       await selectedProduct.forEach((item) => {
-        axiosInstance.post('/cart/delete',
-        {
-          cartId:item.cartId
-        },
-        {
-          headers: getJWTToken(token)
-        })
-        
+        axiosInstance.post(
+          '/cart/delete',
+          {
+            cartId: item.cartId
+          },
+          {
+            headers: getJWTToken(token)
+          }
+        )
       })
-      
-      
       alert('결제가 완료되었습니다. 시작 페이지로 이동합니다.')
       navigate('/')
     } catch (error) {}
@@ -248,22 +249,27 @@ const Payment = () => {
       })
     }
   }, [user])
-  console.log(selectedProduct);
+
+  useEffect(() => {
+    console.log(selectedProduct)
+  }, [selectedProduct])
+
   return (
     <PageLayout innerTop="xs:top-[60%] top-1/2" layoutWidth="w-[90%]" layoutHeight="h-fit">
-      <ConfirmModal
-        title="배송지 정보"
-        isModalOpen={isModalOpen}
-        onClose={() => {
-          setIsNew(true), setIsModalOpen(false)
-        }}
-        onConfirm={() => setIsNew(false)}
-      >
-        <span className=" text-lenssisDark text-lg font-semibold ">
-          주문자 정보와 배송지 정보가 일치하십니까?{' '}
-        </span>
-      </ConfirmModal>
-
+      <Portal>
+        <ConfirmModal
+          title="배송지 정보"
+          isModalOpen={isModalOpen}
+          onClose={() => {
+            setIsNew(true), setIsModalOpen(false)
+          }}
+          onConfirm={() => setIsNew(false)}
+        >
+          <span className=" text-lenssisDark text-lg font-semibold ">
+            주문자 정보와 배송지 정보가 일치하십니까?{' '}
+          </span>
+        </ConfirmModal>
+      </Portal>
       <CardTemplate title="주문/결제" isTitleVisible={true} marginTop="mt-40">
         <div className="pb-12">
           <PaymentTitle text="주문 상품" />
@@ -278,8 +284,13 @@ const Payment = () => {
                   </div>
                   <div className="flex items-start flex-col ">
                     <div className="text-[#5a5a5a] font-semibold">
-                      <p>{item.name} - <span className="text-sm">{item.color}</span></p>
-                      <p>도수: {item.degree} / 직경: {item.graphicDiameter} / 주기: {item.period === 30 ? 'One Month' : 'One Day'}</p>
+                      <p>
+                        {item.name} - <span className="text-sm">{item.color}</span>
+                      </p>
+                      <p>
+                        도수: {item.degree} / 직경: {item.graphicDiameter} / 주기:{' '}
+                        {item.period === 30 ? 'One Month' : 'One Day'}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -360,10 +371,12 @@ const Payment = () => {
         <MembersTerms />
       </CardTemplate>
 
-      <CardTemplate title="비회원 구매시..." isTitleVisible={false} marginTop="mt-6">
-        <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
-        <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
-      </CardTemplate>
+      {user?.memberId === 0 && (
+        <CardTemplate title="비회원 구매시..." isTitleVisible={false} marginTop="mt-6">
+          <TermsTitle text="비회원 구매시 개인정보 수집 이용동의" />
+          <NonMembersTerms isChecked={isChecked} setIsChecked={setIsChecked} />
+        </CardTemplate>
+      )}
 
       <CardTemplate title="결제수단" isTitleVisible={false} marginTop="mt-6">
         <PaymentTitle text="결제수단 선택" />

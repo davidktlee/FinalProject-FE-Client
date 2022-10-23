@@ -2,6 +2,7 @@ import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 import { myPurchaseState } from '../../../store/myPurchase'
 import { axiosInstance, getJWTToken } from '../../axiosinstance'
+import useToast from '../../common/toast/hooks/useToast'
 import { getStoredToken } from '../../local-storage/userStorage'
 
 interface orderRequestType {
@@ -67,13 +68,26 @@ const getMyOrder = async ({ email, memberId, orderId, orderer }: orderRequestTyp
 
 const useOrder = () => {
   const [myPurchase, setMyPurchase] = useRecoilState(myPurchaseState)
-  const { mutate: getMyOrders } = useMutation((orderInfo: orderRequestType) => getMyOrder(orderInfo), {
-    onSuccess: (data) => {
-      setMyPurchase(data)
+  const { fireToast } = useToast()
+  const { mutate: getMyOrders, data: orderData } = useMutation(
+    (orderInfo: orderRequestType) => getMyOrder(orderInfo),
+    {
+      onSuccess: (data) => {
+        setMyPurchase(data)
+      },
+      onError: () => {
+        fireToast({
+          id: 'getOrder',
+          message: '주문 내역을 불러오는데 실패했습니다.',
+          type: 'failed',
+          position: 'top',
+          timer: 2000
+        })
+      }
     }
-  })
+  )
 
-  return { getMyOrders }
+  return { getMyOrders, orderData }
 }
 
 export default useOrder
