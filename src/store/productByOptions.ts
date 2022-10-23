@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { CartItemsType } from '../components/cart/hooks/useCart'
 
 export interface ProductByOptionsType {
   colorCodeList: string[]
@@ -27,6 +28,16 @@ export interface FinalProduct {
   isFavorite: number
   productDetailsId: number
   productName: string
+  // 바로구매시에만 필요한 값
+  pcs: number
+  degree?: number
+  graphicDiameter?: number
+  name?: string
+  period?: number
+  stock?: number
+  colorCode?: string
+  imageUrl?: string
+  price?: number
 }
 
 export const productByOptionsState = atom<ProductByOptionsType>({
@@ -56,6 +67,16 @@ export const finalProductState = atom<FinalProduct>({
     imageUrlList: [],
     isFavorite: 0,
     productDetailsId: 0,
-    productName: ''
+    productName: '',
+    // 바로구매시에만 사용
+    pcs: 1,
+    colorCode: '',
+    imageUrl: '',
+    price: 0
+    // degree: 0,
+    // graphicDiameter: 0,
+    // name: '',
+    // period: 0,
+    // stock: 0
   }
 })

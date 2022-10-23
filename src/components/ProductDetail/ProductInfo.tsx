@@ -2,16 +2,24 @@ import Heart from '/assets/Heart.svg'
 import FillHeart from '/assets/FillHeart.svg'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { ProductDetailResponseType } from '../main/types/productTypes'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useAddFavorite, useDeleteFavorite } from '../main/hooks/useFavorite'
 import { axiosInstance, getJWTToken } from '../axiosinstance'
 import { getStoredToken } from '../local-storage/userStorage'
 import { productDetailsState } from '../../store/productDetails'
 import { useMutation } from 'react-query'
-import { finalProductState, productByOptionsState, ProductByOptionsType } from '../../store/productByOptions'
+import {
+  FinalProduct,
+  finalProductState,
+  productByOptionsState,
+  ProductByOptionsType
+} from '../../store/productByOptions'
 import { ProductDetailsType } from '../../store/productDetails'
 import { useAddCart } from '../cart/hooks/useCart'
 import { MainCartModalState } from '../../store/mainCart'
+import { selectProduct } from '../../store/selectProduct'
+import OptionAndCount from './OptionAndCount'
+import { useNavigate } from 'react-router-dom'
 
 interface PropsType {
   isClose?: boolean
@@ -30,17 +38,19 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
   const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
   const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
   const [optionComplete, setOptionComplete] = useState<boolean>(true)
-  const [finalProduct, setFinalProduct] = useRecoilState(finalProductState)
+  const [finalProduct, setFinalProduct] = useRecoilState<FinalProduct>(finalProductState)
   const [favorite, setFavorite] = useState<boolean>(false)
   const { addCartMutate } = useAddCart()
   const addFavor = useAddFavorite()
   const deleteFavor = useDeleteFavorite()
   const resetOptions = useResetRecoilState(productDetailsState)
+  const [selectedProduct, setSelectedProduct] = useRecoilState(selectProduct)
+  const [finalOption, setFinalOption] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     resetOptions()
   }, [])
-
   const setModalState = useSetRecoilState(MainCartModalState)
 
   const getProductByOptions = async (detailState: ProductDetailsType) => {
@@ -51,7 +61,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
           ? '/productDetails/byPeriodOption'
           : detailState.graphicDiameter == 0
           ? '/productDetails/byColorCodeOption'
-          : detailState.degree == 0
+          : detailState.degree?.length === 0
           ? '/productDetails/byGraphicOption'
           : '',
       params: {
@@ -88,7 +98,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       },
       data: {
         colorCode: detailState.colorCode,
-        degree: detailState.degree,
+        degree: detailState?.degree[0],
         graphicDiameter: detailState.graphicDiameter,
         period: detailState.period,
         productId: productId
@@ -104,7 +114,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
       mutationKey: ['postAllOptions'],
       onSuccess: (data) => {
         console.log(data.data)
-        setFinalProduct(data.data)
+        setFinalProduct({ ...finalProduct, ...data.data, pcs: 1 })
       },
       onError: (error) => {
         console.log(error)
@@ -116,60 +126,64 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget
+    if (e.currentTarget)
+      if (name === 'period') {
+        selectOptionMutate({ ...detailState, [name]: Number(value) })
+        if (detailState.period === Number(value)) {
+          setDetailState({
+            ...detailState,
+            period: 0
+          })
+        } else {
+          setDetailState(() => ({
+            ...detailState,
+            period: Number(value)
+          }))
+        }
+        console.log(detailState.period)
+      } else if (name === 'color') {
+        console.log(value)
+        selectOptionMutate({ ...detailState, colorCode: value })
+        if (detailState.colorCode === value) {
+          setDetailState({
+            ...detailState,
+            colorCode: ''
+          })
+        } else {
+          setDetailState(() => ({
+            ...detailState,
+            colorCode: value
+          }))
+        }
+        console.log(detailState.colorCode)
+      } else if (name === 'graphicDiameter') {
+        selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
+        if (detailState.graphicDiameter === Number(value)) {
+          setDetailState({
+            ...detailState,
+            graphicDiameter: 0
+          })
+        } else {
+          setDetailState(() => ({
+            ...detailState,
+            graphicDiameter: Number(value)
+          }))
+        }
+        console.log(detailState.graphicDiameter)
+      } else if (name === 'degree') {
+        const degreeInfo = value.split(',').map(Number)
+        setDetailState({
+          ...detailState,
+          degree: degreeInfo
+        })
 
-    if (name === 'period') {
-      selectOptionMutate({ ...detailState, [name]: Number(value) })
-      if (detailState.period === Number(value)) {
-        setDetailState({
-          ...detailState,
-          period: 0
-        })
-      } else {
-        setDetailState(() => ({
-          ...detailState,
-          period: Number(value)
-        }))
+        setFinalOption(true)
       }
-      console.log(detailState.period)
-    } else if (name === 'color') {
-      console.log(value)
-      selectOptionMutate({ ...detailState, colorCode: value })
-      if (detailState.colorCode === value) {
-        setDetailState({
-          ...detailState,
-          colorCode: ''
-        })
-      } else {
-        setDetailState(() => ({
-          ...detailState,
-          colorCode: value
-        }))
-      }
-      console.log(detailState.colorCode)
-    } else if (name === 'graphicDiameter') {
-      selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
-      if (detailState.graphicDiameter === Number(value)) {
-        setDetailState({
-          ...detailState,
-          graphicDiameter: 0
-        })
-      } else {
-        setDetailState(() => ({
-          ...detailState,
-          graphicDiameter: Number(value)
-        }))
-      }
-      console.log(detailState.graphicDiameter)
-    } else if (name === 'degree') {
-      setDetailState({ ...detailState, degree: Number(value) })
-      postAllOptions(detailState)
-      console.log(detailState.degree)
-    }
   }
 
   const addCartHandler = () => {
     addCartMutate(finalProduct.productDetailsId)
-    setModalState((prev) => (prev = !prev))
+    setModalState((prev) => (prev = false))
     resetOptions()
     console.log('제품상세 장바구니 버튼 클릭!')
   }
@@ -187,15 +201,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     }
   }
 
-  const toComma = () => {
-    const addCommaPrice = productDetails?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    let addCommaDiscount: string | number = (
-      productDetails?.price! *
-      (1 - productDetails?.discount! / 100)
-    ).toFixed(0)
-    addCommaDiscount = addCommaDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    setCommaPrice({ ...commaPrice, price: addCommaDiscount, discount: addCommaPrice! })
-  }
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/assets/noImage.jpeg'
   }
@@ -218,8 +223,41 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
         ? false
         : true
     )
-    toComma()
-  }, [productDetails?.price, productByOptions, detailState])
+
+    if (detailState.period === 0) setFinalOption(false)
+    // 도수 선택시 detailState 값이 변경되지 않는문제 -> useEffect로 감시
+    if (finalProduct.productName === '' && detailState.graphicDiameter) postAllOptions(detailState)
+
+    console.log('옵션 선택 state', detailState)
+    console.log('degree', detailState.degree)
+    console.log('도수까지 선택했을때/최종상품', finalProduct)
+    console.log('옵션 순차적으로', productByOptions)
+  }, [productDetails?.price, productByOptions, detailState, finalProduct])
+
+  const buyHandler = () => {
+    if (finalOption) {
+      setSelectedProduct([
+        {
+          color: finalProduct.color,
+          colorCode: detailState.colorCode!,
+          degree: detailState.degree[0],
+          graphicDiameter: detailState.graphicDiameter!,
+          imageUrl: finalProduct.imageUrlList[0].imageUrl,
+          discount: finalProduct.discount,
+          name: finalProduct.productName,
+          period: detailState.period,
+          price: productDetails?.price!,
+          productDetailsId: finalProduct.productDetailsId,
+          stock: detailState.degree[0],
+          pcs: finalProduct.pcs
+        }
+      ])
+      navigate('/payment')
+    } else {
+      alert('옵션을 선택해주세요.')
+    }
+    navigate('/payment')
+  }
 
   return (
     <section className="text-gray-600 body-font overflow-hidden relative">
@@ -268,8 +306,15 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             </div>
             <div className="leading-relaxed text-[14px]">
               <div className="price flex">
-                <div className="text-xl font-bold text-black">{commaPrice.price}円</div>
-                <p className="ml-4 leading-7">{commaPrice.discount}円</p>
+                <div className="text-xl font-bold text-black">
+                  {Number(productDetails?.price).toLocaleString()}円
+                </div>
+                <p className="ml-4 leading-7">
+                  {Number(productDetails?.price! * (1 - productDetails?.discount! / 100))
+                    .toFixed(0)
+                    .toLocaleString()}
+                  円
+                </p>
               </div>
               <div className="divider h-[1px] bg-[#BCBCBC] my-2 xs-max:hidden"></div>
               <div className="point flex flex-initial my-2 ">
@@ -396,14 +441,22 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                   className="border-solid border-[1px] border-r-0 border-lenssisStroke text-lenssisGray w-[200px] h-[30px] rounded-[5px] pl-[20px] appearance-none bg-[url('/assets/selectArrow.svg')] bg-no-repeat bg-right"
                   disabled={optionComplete}
                   onChange={(e) => optionHandler(e)}
+                  value={!finalOption ? '選択してください' : ''}
                 >
+                  {!finalOption && <option>選択してください</option>}
                   {productByOptions.degreeAndStockList?.map((item: any, index) => (
-                    <option key={index} value={item?.degree}>
+                    <option key={index + 1} value={[item.degree, item.stock]}>
                       {item.degree} 재고: {item.stock}
                     </option>
                   ))}
                 </select>
               </div>
+            </div>
+            <div className="flex mt-5 items-center border-b-2 border-gray-100 mb-5">
+              <div className="flex">
+                <p className="w-[130px] xs-max:w-[70px] lg:w-[160px]"></p>
+              </div>
+              {finalOption && <OptionAndCount onClose={setFinalOption} />}
             </div>
             <div className="flex justify-between py-2">
               <span className="leading-10 text-black text-[16px] font-bold">총 상품 금액</span>
@@ -417,7 +470,10 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
               >
                 장바구니
               </button>
-              <button className="w-1/2 cursor-pointer text-white bg-lenssisDark text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full">
+              <button
+                onClick={buyHandler}
+                className="w-1/2 cursor-pointer text-white bg-lenssisDark text-[14px] border-0 ring-1 ring-gray-300 py-2 px-6 focus:outline-none rounded xs-max:w-full"
+              >
                 바로구매
               </button>
             </div>
