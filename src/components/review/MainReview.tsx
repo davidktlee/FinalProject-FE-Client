@@ -26,7 +26,7 @@ const MainReview = () => {
         </span>
       </div>
       {/* 웹 */}
-      <div className="xs-max:hidden flex flex-wrap gap-6 max-w-[1280px] justify-between mx-12">
+      <div className="xs-max:hidden flex flex-wrap gap-6 max-w-[1280px] justify-between xl:justify-center mx-12">
         {allReview?.map((review: reviewItemType) => (
           <MainReviewCard review={review} />
         ))}
