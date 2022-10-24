@@ -155,11 +155,19 @@ const ReviewForm = ({
     onClose()
   }
 
+  const canncelHandler = () => {
+    onClose()
+    setOldReviewInfo(undefined)
+    setReviewImage(null)
+    setReviewText('')
+    setRating(0)
+  }
+
   return (
     <>
       {isModalOpen ? (
         <div>
-          <div className="top-[10%] left-[27%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
+          <div className="top-[20%] left-[27%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto">
               <div className="xs-max:w-[350px] xs-max:h-[600px] w-[700px] h-[500px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-center pt-[26px] ">
@@ -279,7 +287,7 @@ const ReviewForm = ({
                 </div>
                 {/* 웹 버전 */}
                 <div className="xs-max:hidden flex items-center justify-center gap-[10px]">
-                  <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
+                  <Button onClick={() => canncelHandler()} bgColor="white" width="w-[150px]">
                     <span>취소</span>
                   </Button>
                   <Button onClick={handleReviewSubmit} bgColor="dark" width="w-[150px]">
