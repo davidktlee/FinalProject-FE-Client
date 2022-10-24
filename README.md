@@ -51,8 +51,6 @@
 
 **2022.9.2 ~ 2022.10.14**
 
-## 커밋 컨벤션
-
 ### Front-End
 
 <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=React-Query&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Recoil-af42dc?style=for-the-badge&logo=Recoil&logoColor=white"/>
