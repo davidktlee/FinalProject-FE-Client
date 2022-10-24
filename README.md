@@ -168,7 +168,7 @@
 ## 결과
 
 ### 피그마 디자인
-<img src="https://user-images.githubusercontent.com/90392240/196653569-a20d5351-81ad-45c4-91c0-ef4f618ff9ae.png" />
+<img src="https://user-images.githubusercontent.com/90392240/197428779-5e4a4872-e941-4cde-9306-d96644269399.png" />
 
 ### 플로우차트
 
@@ -204,3 +204,7 @@
 [X] 회원정보 수정
 
 [X] 배송조회
+
+[X] 스켈레톤 UI - 메인 상품, 제품상세
+
+[X] 제품상세 바로구매 -> 주문서페이지
