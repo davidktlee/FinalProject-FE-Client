@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, Suspense, lazy } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Event from '../components/event/MainEvent'
 import Recommend from '../components/main/Recommend'
 import Banner from './../components/Banner'
@@ -41,13 +41,14 @@ const Main = () => {
     }
   }
 
-  const toColorTest = () => {
+  const toColorTest = useCallback(() => {
     window.location.href =
       'https://www.lenssiscolor.com/?utm_source=homapage_main&utm_medium=personal+color&utm_campaign=personal+color'
-  }
-  const toTopHandler = () => {
+  }, [])
+
+  const toTopHandler = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  }, [])
 
   // 메인에서 filterbar를 클릭했을 때 데이터 변경하는 함수입니다.
   const changeTitle = () => {
@@ -74,7 +75,7 @@ const Main = () => {
   )
 
   useEffect(() => {
-    setCurrentPost(newProductLists?.productData?.slice(indexOfStart, indexOfLast))
+    setCurrentPost(newProductLists?.slice(indexOfStart, indexOfLast))
   }, [newProductLists, newProductCurrentPage])
   useEffect(() => {
     changeTitle()

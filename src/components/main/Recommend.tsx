@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { RecommendSkeleton } from '../common/ui/Skeleton'
 import { useGetRecommendProduct } from './hooks/useRecommend'
 
@@ -6,6 +6,7 @@ import RecommendBanner from './recommend/RecommendBanner'
 
 const Recommend = () => {
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
   }

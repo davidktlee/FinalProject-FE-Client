@@ -13,6 +13,7 @@ function EventDetail() {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [startTime, setStartTime] = useState('')
+
   const { data: detailEvent, isFetching } = useGetDetailEvent(state as number)
 
   const addCouponMutate = useAddCoupon()
@@ -20,6 +21,7 @@ function EventDetail() {
   const clickEventBtn = () => {
     addCouponMutate(5)
   }
+
   useEffect(() => {
     if (detailEvent && detailEvent[0]) {
       const time = new Date(detailEvent[0].startTime)

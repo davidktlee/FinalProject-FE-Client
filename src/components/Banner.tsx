@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react' // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 
@@ -6,8 +6,6 @@ import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
 import { useGetBanner } from './main/hooks/useBanner'
-import { useRecoilValue } from 'recoil'
-import { filteredProudcts } from '../store/filterVallue'
 
 const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
@@ -15,9 +13,9 @@ const Banner = () => {
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
 
-  const changeWindowWidth = () => {
+  const changeWindowWidth = useCallback(() => {
     setWindowWidth(window.innerWidth)
-  }
+  }, [window.innerWidth])
 
   const { data: bannerList } = useGetBanner(1)
 
