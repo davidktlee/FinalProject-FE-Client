@@ -51,8 +51,6 @@
 
 **2022.9.2 ~ 2022.10.14**
 
-## 커밋 컨벤션
-
 ### Front-End
 
 <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=React-Query&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Recoil-af42dc?style=for-the-badge&logo=Recoil&logoColor=white"/>
@@ -168,7 +166,7 @@
 ## 결과
 
 ### 피그마 디자인
-<img src="https://user-images.githubusercontent.com/90392240/196653569-a20d5351-81ad-45c4-91c0-ef4f618ff9ae.png" />
+<img src="https://user-images.githubusercontent.com/90392240/197428779-5e4a4872-e941-4cde-9306-d96644269399.png" />
 
 ### 플로우차트
 
@@ -204,3 +202,7 @@
 [X] 회원정보 수정
 
 [X] 배송조회
+
+[X] 스켈레톤 UI - 메인 상품, 제품상세
+
+[X] 제품상세 바로구매 -> 주문서페이지
