@@ -5,7 +5,6 @@ import { useGetRecommendProduct } from './hooks/useRecommend'
 import RecommendBanner from './recommend/RecommendBanner'
 
 const Recommend = () => {
-  const [isLoading, setIsLoading] = useState(false)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
   const changeWindowWidth = () => {
     setWindowWidth(window.innerWidth)
@@ -13,9 +12,7 @@ const Recommend = () => {
   useEffect(() => {
     window.addEventListener('resize', changeWindowWidth)
   }, [])
-  setTimeout(() => {
-    setIsLoading(true)
-  }, 2000)
+
   const { data: recommendProductLists, isFetching } = useGetRecommendProduct()
   return (
     <div>

@@ -21,7 +21,7 @@ import { filterOpenState } from './../store/filterOpen'
 const Main = () => {
   const refreshToken = useRefreshToken()
   const [filterOpen, setFilterOpen] = useRecoilState(filterOpenState)
-  const [title, setTitle] = useState<any>('Best')
+  const [title, setTitle] = useState<string>('Best')
   const filteredProducts = useRecoilValue(filteredProudcts)
   const MobileFilterRef = useRef<HTMLDivElement>(null)
   const filterValue = useRecoilValue(filterOptionState)
@@ -29,7 +29,7 @@ const Main = () => {
   const [allProductCurrentPage, setAllProductCurrentPage] = useState(1)
   const [newProductCurrentPage, setNewProductCurrentPage] = useState(1)
 
-  const [currentPost, setCurrentPost] = useState([])
+  const [currentPost, setCurrentPost] = useState<[]>([])
   const indexOfLast = newProductCurrentPage * 8
   const indexOfStart = indexOfLast - 8
   const { user } = useUser()
