@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview, useUpdateReview } from './hooks/useReview'
-import AWS from 'aws-sdk'
-const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 import { useResetRecoilState, useRecoilState } from 'recoil'
 import { selectFileState, updateReviewState } from '../../store/reviewImage'
 import { storage } from '../../firebase/firebaseConfig'
@@ -189,6 +187,7 @@ const ReviewForm = ({
                             reviewItem[0]?.productImageUrl ||
                             '/assets/errorImage.png'
                           }
+                          alt="error-image"
                         />
                         {!updateReview.replyImageUrl ? (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">

@@ -5,10 +5,9 @@ import { MainBoardList } from '../types/noticeTypes'
 import PageLayout from './../../common/ui/PageLayout'
 
 function NoticeDetail() {
-  const content = "<p><div style={{fontSize: '30px'}}>많으 ㄴ내용</div></p>"
   const navigate = useNavigate()
   const { state } = useLocation()
-  const { data, isFetching } = useGetDetailNotice(state as number)
+  const { data } = useGetDetailNotice(state as number)
 
   return (
     <>

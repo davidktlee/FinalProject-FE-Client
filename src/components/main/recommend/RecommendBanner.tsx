@@ -104,7 +104,7 @@ function RecommendBanner({ recommendProductLists }: PropsType) {
                   <>
                     <img
                       src={item.imageUrl}
-                      alt=""
+                      alt="recommend-image"
                       style={{
                         width: '230px',
                         height: '280px',
@@ -173,7 +173,7 @@ function RecommendBanner({ recommendProductLists }: PropsType) {
                   <>
                     <img
                       src={item.imageUrl}
-                      alt=""
+                      alt="recommend-image"
                       style={{
                         width: '160px',
                         height: '200px',
