@@ -18,11 +18,13 @@ function AboutCredit() {
       setBoardList(data?.boardMainList?.slice(indexOfStart, indexOfEnd))
     }
   }, [data, currentPage])
+  console.log(data)
+  console.log(boardList)
   return (
     <>
       {isFetching ? (
         <NoticeDetailSkeleton />
-      ) : data?.totalCount ? (
+      ) : data && data?.totalCount === 0 ? (
         <div className="text-center text-[24px] mt-10 text-lenssisDark">등록된 내용이 없습니다</div>
       ) : (
         boardList.map((item: BoardMainList) => (
