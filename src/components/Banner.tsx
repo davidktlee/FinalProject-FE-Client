@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react' // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 
@@ -6,8 +6,6 @@ import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
 import { useGetBanner } from './main/hooks/useBanner'
-import { useRecoilValue } from 'recoil'
-import { filteredProudcts } from '../store/filterVallue'
 
 const Banner = () => {
   const prevRef = useRef<HTMLButtonElement>(null)
@@ -15,9 +13,9 @@ const Banner = () => {
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
 
-  const changeWindowWidth = () => {
+  const changeWindowWidth = useCallback(() => {
     setWindowWidth(window.innerWidth)
-  }
+  }, [window.innerWidth])
 
   const { data: bannerList } = useGetBanner(1)
 
@@ -95,7 +93,7 @@ const Banner = () => {
                           : 'https://user-images.githubusercontent.com/90392240/192770270-0d01350b-1adb-4b08-84c3-069bf9a8b4a0.png'
                       }
                       alt="banner-image"
-                      className=" mx-auto w-full h-[500px] md:h-auto object-fit md:object-cover "
+                      className=" mx-auto w-[1180px] h-[500px] md:h-auto object-fit md:object-cover "
                     />
                   </SwiperSlide>
                 </div>
@@ -108,7 +106,7 @@ const Banner = () => {
                     <img
                       src={bannerList.length !== 1 ? img : 'assets/MobileBanner.png'}
                       alt="banner-image"
-                      className=" w-full h-[500px] md:h-auto object-fit md:object-cover "
+                      className=" w-[400px] h-[500px] md:h-auto object-fit md:object-cover "
                     />
                   </SwiperSlide>
                 </div>
@@ -142,9 +140,3 @@ const Banner = () => {
 }
 
 export default Banner
-
-{
-  /* {imgs.map((img: string, index: number) => (
-      <SwiperSlide key={`${img}-${index}`}>{img}</SwiperSlide>
-    ))} */
-}

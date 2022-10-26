@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useUser } from '../../auth/hooks/useUser'
 import { usePrefetchProductLists } from '../hooks/useProductLists'
 
@@ -14,6 +14,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
   const [pagesCount, setPagesCount] = useState<number[] | []>([])
 
   const maxPage = Math.ceil(allCount / divide)
+
   useEffect(() => {
     const arr = []
     if (maxPage) {
@@ -28,6 +29,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
     if (currentPage >= maxPage) return
     setCurrentPage(currentPage + 1)
   }
+  
   const minusPage = () => {
     if (currentPage <= 1) return
     setCurrentPage(currentPage - 1)

@@ -13,6 +13,7 @@ function EventDetail() {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [startTime, setStartTime] = useState('')
+
   const { data: detailEvent, isFetching } = useGetDetailEvent(state as number)
 
   const addCouponMutate = useAddCoupon()
@@ -20,6 +21,7 @@ function EventDetail() {
   const clickEventBtn = () => {
     addCouponMutate(5)
   }
+
   useEffect(() => {
     if (detailEvent && detailEvent[0]) {
       const time = new Date(detailEvent[0].startTime)
@@ -37,7 +39,7 @@ function EventDetail() {
         ) : (
           detailEvent &&
           detailEvent.map((item: EventDetailResponseType) => (
-            <div className="w-[100%]">
+            <div>
               <div className="flex items-center py-4 border-t-[1px] border-solid">
                 <div className="font-[500] ml-10 mr-28">제목</div>
                 <div className="font-[500]">{item.eventTitle}</div>

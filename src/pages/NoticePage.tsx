@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 import PageLayout from '../components/common/ui/PageLayout'
 
 import ViewMoreBtn from '../components/main/common/ViewMoreBtn'

@@ -27,14 +27,14 @@ const MainReview = () => {
       </div>
       {/* 웹 */}
       <div className="xs-max:hidden flex flex-wrap gap-6 max-w-[1280px] justify-between xl:justify-center mx-12">
-        {allReview?.map((review: reviewItemType) => (
-          <MainReviewCard review={review} />
+        {allReview?.map((review: reviewItemType, idx: number) => (
+          <MainReviewCard key={idx} review={review} />
         ))}
       </div>
       {/* 모바일 */}
       <div className="xs:hidden  flex flex-wrap justify-center gap-[8px] max-w-[1280px] mx-auto">
-        {allReview?.map((review: reviewItemType) => (
-          <MobileReviewCard review={review} />
+        {allReview?.map((review: reviewItemType, idx: number) => (
+          <MobileReviewCard key={idx} review={review} />
         ))}
       </div>
       <ViewMoreBtn moveTo="/review" />

@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import Card from '../common/Card'
-import { ProductPropsType, ProductResponseType } from './types/productTypes'
+import { CardContainerPropsType, ProductPropsType, ProductResponseType } from './types/productTypes'
 import Pagination from './common/Pagination'
-import { useRecoilValue } from 'recoil'
 import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
-import { filterOptionState } from '../../store/filterVallue'
+
+
 
 const CardContainer = ({
   data,
@@ -15,12 +14,7 @@ const CardContainer = ({
   setAllProductCurrentPage,
   setNewProductCurrentPage,
   currentPost
-}: any) => {
-  const filterValue = useRecoilValue(filterOptionState)
-  // 필터링된 상품 리스트입니다.
-
-  const [filteredProductCurrentPage, setFilteredProductCurrentPage] = useState(1)
-  // console.log(productLists)
+}: CardContainerPropsType) => {
   return (
     <>
       {data !== 'New' ? (
@@ -54,8 +48,8 @@ const CardContainer = ({
           </div>
           {productLists && productLists[0] && (
             <Pagination
-              currentPage={allProductCurrentPage}
-              setCurrentPage={setAllProductCurrentPage}
+              currentPage={allProductCurrentPage as number}
+              setCurrentPage={setAllProductCurrentPage as (param: number) => void}
               allCount={productLists[0].totalCount}
               divide={9}
             />
@@ -88,11 +82,11 @@ const CardContainer = ({
               ))
             )}
           </div>
-          {productLists.totalCount && (
+          {productLists?.length && (
             <Pagination
-              currentPage={newProductCurrentPage}
-              setCurrentPage={setNewProductCurrentPage}
-              allCount={productLists.totalCount}
+              currentPage={newProductCurrentPage as number}
+              setCurrentPage={setNewProductCurrentPage as (param: number) => void}
+              allCount={productLists?.length}
               divide={8}
             />
           )}

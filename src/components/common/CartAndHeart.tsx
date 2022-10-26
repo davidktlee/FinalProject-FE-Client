@@ -16,10 +16,9 @@ interface PropsType {
 function CartAndHeart({ productId, isFavorite }: PropsType) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [onHeartAnimation, setOnHeartAnimation] = useState(false)
-  const [isCartModalOpen, setIsCartModalOpen] = useRecoilState(MainCartModalState)
+  const setIsCartModalOpen = useSetRecoilState(MainCartModalState)
   const deleteFavor = useDeleteFavorite()
   const favoriteId: number[] = useRecoilValue(MainCartFavoriteId)
-  const [id, setId] = useState(0)
   const navigate = useNavigate()
   const { fireToast } = useToast()
   const setDetail = useSetRecoilState(ItemDetail)
