@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview, useUpdateReview } from './hooks/useReview'
-import AWS from 'aws-sdk'
-const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 import { useResetRecoilState, useRecoilState } from 'recoil'
 import { selectFileState, updateReviewState } from '../../store/reviewImage'
 import { storage } from '../../firebase/firebaseConfig'
