@@ -88,7 +88,6 @@ const ReviewForm = ({
 
   const handleReviewSubmit = async () => {
     if (!reviewImage && !updateReview.replyImageUrl) {
-      // console.log('이미지 없이 리뷰 등록 or 수정')
       if (reviewHandleType === 'add') {
         addReviewMutate({
           orderId: orderId,
@@ -117,7 +116,7 @@ const ReviewForm = ({
         ? `review/${orderId}-${reviewInfo?.productDetailsId}`
         : `review/${orderId}-${reviewItem[0]?.productDetailsId}`
     )
-    // console.log('이미지 있음, 등록, 수정', reviewImage)
+
     uploadString(
       imageRef,
       reviewHandleType === 'add' ? reviewImage : updateReview.replyImageUrl,
