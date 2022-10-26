@@ -106,7 +106,6 @@ const getAllReviewItems = async () => {
   const data = await axiosInstance({
     url: '/reply/allReply',
     method: 'GET',
-    headers: getJWTToken(token),
     params: {
       page: 1,
       size: 10
