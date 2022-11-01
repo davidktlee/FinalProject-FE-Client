@@ -12,7 +12,7 @@ function EventPage() {
   const navigate = useNavigate()
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [currentPost, setCurrentPost] = useState<any>([])
+  const [currentPost, setCurrentPost] = useState<InEventMainList[]>([])
   const indexOfLast = currentPage * 8
   const indexOfStart = indexOfLast - 8
 
