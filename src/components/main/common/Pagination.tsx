@@ -14,7 +14,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
   const { user } = useUser()
   const [pagesCount, setPagesCount] = useState<number[] | []>([])
 
-  const maxPage = Math.ceil(allCount / divide)
+  const maxPage = Math.ceil(allCount || 1 / divide)
 
   useEffect(() => {
     if (maxPage) {
