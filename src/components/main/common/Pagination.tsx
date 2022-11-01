@@ -14,8 +14,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
   const { user } = useUser()
   const [pagesCount, setPagesCount] = useState<number[] | []>([])
 
-  const maxPage = Math.ceil(allCount || 1 / divide)
-
+  const maxPage = Math.ceil(allCount / divide)
   useEffect(() => {
     if (maxPage) {
       const arr = []
@@ -49,6 +48,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
         </svg>
       </span>
       {pagesCount &&
+        allCount &&
         pagesCount.map((page: number) => (
           <span
             key={page}

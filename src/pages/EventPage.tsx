@@ -49,7 +49,7 @@ function EventPage() {
               <Pagination
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                allCount={eventList.data.totalCount}
+                allCount={eventList.data.totalCount || 1}
                 divide={8}
               />
             )}

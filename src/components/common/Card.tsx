@@ -4,7 +4,9 @@ import { useRecoilValue } from 'recoil'
 import { CurrentInnerWidth } from '../../store/currentInnerWidth'
 
 import { ColorAndImage, ProductPropsType } from '../main/types/productTypes'
-import CartAndHeart from './CartAndHeart'
+import CartIcon from './CartIcon'
+import CartAndHeart from './CartIcon'
+import FavoriteIcon from './FavoriteIcon'
 import Img from './Img'
 import { SubtractIcon } from './util/Icon'
 interface PropsType extends ProductPropsType {
@@ -104,11 +106,13 @@ const Card: React.FC<PropsType> = ({
               ></div>
             ))}
           </div>
-          <span className="hidden xs:block absolute top-[265px] right-1 ">
-            <CartAndHeart productId={productId} isFavorite={isFavorite} />
+          <span className="hidden xs:flex absolute top-[265px] right-1 justify-center items-center  ">
+            <CartIcon productId={productId} isFavorite={isFavorite} />
+            <FavoriteIcon productId={productId} isFavorite={isFavorite} />
           </span>
-          <span className="xs:hidden block absolute top-[170px] right-1">
-            <CartAndHeart productId={productId} isFavorite={isFavorite} />
+          <span className="xs:hidden flex absolute top-[170px] right-1">
+            <CartIcon productId={productId} isFavorite={isFavorite} />
+            <FavoriteIcon productId={productId} isFavorite={isFavorite} />
           </span>
           <div className=" text-[14px] md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">

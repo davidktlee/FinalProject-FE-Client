@@ -48,7 +48,7 @@ const CardContainer = ({
             <Pagination
               currentPage={allProductCurrentPage as number}
               setCurrentPage={setAllProductCurrentPage as () => void}
-              allCount={productLists[0].totalCount}
+              allCount={productLists[0]?.totalCount || 1}
               divide={9}
             />
           )}
@@ -84,7 +84,7 @@ const CardContainer = ({
             <Pagination
               currentPage={newProductCurrentPage as number}
               setCurrentPage={setNewProductCurrentPage as () => void}
-              allCount={productLists?.length}
+              allCount={productLists?.length || 1}
               divide={8}
             />
           )}

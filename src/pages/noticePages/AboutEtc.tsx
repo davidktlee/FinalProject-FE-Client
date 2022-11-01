@@ -38,7 +38,7 @@ function AboutEtc() {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            allCount={data.totalCount}
+            allCount={data.totalCount || 1}
             divide={divideCount}
           />
         )}
